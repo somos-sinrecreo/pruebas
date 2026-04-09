@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test envío de mails | SIN RECREO</title>
+  <style>
+    body{margin:0;padding:24px;background:#faf9f6;color:#1a1a1b;font-family:Arial,Helvetica,sans-serif}
+    .card{max-width:760px;margin:0 auto;background:#fff;border:1px solid #e9e2d8;border-radius:24px;padding:28px;box-shadow:0 16px 40px rgba(26,26,27,.08)}
+    h1{margin:0 0 10px;font-size:34px;line-height:1;color:#1a1a1b}
+    p{color:#6b6560;line-height:1.6}
+    label{display:block;margin:18px 0 8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#b35c44}
+    input,button{font:inherit}
+    input{width:100%;box-sizing:border-box;padding:14px 16px;border:1px solid #e3dbd1;border-radius:14px;background:#fff}
+    button{margin-top:18px;background:#1a1a1b;color:#fff;border:0;border-radius:999px;padding:14px 18px;font-weight:700;cursor:pointer}
+    button:hover{opacity:.92}
+    pre{margin-top:18px;background:#111;color:#f4f4f4;padding:16px;border-radius:16px;white-space:pre-wrap;word-break:break-word;overflow:auto}
+    .hint{background:#fff6f0;border:1px solid #f0d4c7;color:#6c3c2e;border-radius:16px;padding:14px 16px;margin-top:18px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Test manual de mails</h1>
+    <p>Esto dispara la función <strong>send-order-emails</strong> para una orden real. La idea es probar primero que el mail salga lindo al cliente y a <strong>somos.sinrecreo@gmail.com</strong>.</p>
+
+    <label for="orderId">Order ID</label>
+    <input id="orderId" placeholder="Pegá acá un order_id real de Supabase" />
+
+    <button id="sendBtn">Enviar mails de prueba</button>
+
+    <div class="hint">
+      Usá un <strong>order_id</strong> real de la tabla <strong>orders</strong>, idealmente uno que tenga <strong>customer_email</strong> cargado.
+    </div>
+
+    <pre id="output">Todavía sin probar.</pre>
+  </div>
+
+  <script>
+    const FUNCTION_URL = "https://xedhdojvynmwaadmkcby.supabase.co/functions/v1/send-order-emails";
+    const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlZGhkb2p2eW5td2FhZG1rY2J5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NjQ4MjYsImV4cCI6MjA5MTI0MDgyNn0.Keaskg8KUqFz4JyuUJJxGCjIDdD6iaDnEAUyvwPgZrA";
+
+    document.getElementById("sendBtn").addEventListener("click", async () => {
+      const orderId = document.getElementById("orderId").value.trim();
+      const output = document.getElementById("output");
+
+      if (!orderId) {
+        output.textContent = "Pegá primero un order_id.";
+        return;
+      }
+
+      output.textContent = "Enviando...";
+
+      try {
+        const res = await fetch(FUNCTION_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": ANON_KEY,
+            "Authorization": `Bearer ${ANON_KEY}`
+          },
+          body: JSON.stringify({ order_id: orderId })
+        });
+
+        const data = await res.json();
+        output.textContent = JSON.stringify({ status: res.status, data }, null, 2);
+      } catch (err) {
+        output.textContent = "Error de red o CORS:\n" + (err && err.message ? err.message : String(err));
+      }
+    });
+  </script>
+</body>
+</html>
