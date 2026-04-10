@@ -1661,241 +1661,6 @@
       cursor: pointer;
     }
 
-
-    /* ── CAPSULE SHOWCASE ── */
-    .capsule-showcase-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
-    .capsule-card-rich {
-      padding: 0;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-    .capsule-card-media {
-      position: relative;
-      aspect-ratio: 1.16 / 1;
-      background: linear-gradient(160deg, #eceae4, #e2dfd8);
-      overflow: hidden;
-    }
-    .capsule-card-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .capsule-card-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(14,14,16,.5), rgba(14,14,16,.05));
-      pointer-events: none;
-    }
-    .capsule-card-count {
-      position: absolute;
-      right: 14px;
-      bottom: 14px;
-      z-index: 2;
-      font-size: .72rem;
-      font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.92);
-      border: 1px solid rgba(14,14,16,.08);
-      color: var(--ink);
-      backdrop-filter: blur(8px);
-    }
-    .capsule-card-body {
-      padding: 22px 22px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      flex: 1;
-    }
-    .capsule-card-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      color: var(--muted);
-      font-size: .82rem;
-      font-weight: 600;
-    }
-    .capsule-card-actions {
-      margin-top: auto;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .capsule-card-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px 18px;
-      border-radius: 999px;
-      border: 1px solid var(--ink);
-      background: var(--ink);
-      color: #fff;
-      font-size: .84rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all .18s;
-    }
-    .capsule-card-btn:hover { background: #222; }
-    .capsule-card-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: .84rem;
-      font-weight: 700;
-      color: var(--accent);
-      cursor: pointer;
-    }
-
-    /* ── CAPSULE MODAL ── */
-    .capsule-modal {
-      max-width: min(1240px, calc(100vw - 32px));
-      width: 100%;
-    }
-    .capsule-modal .modal-body {
-      padding-top: 16px;
-    }
-    .capsule-modal-hero {
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 18px;
-      margin-bottom: 24px;
-    }
-    .capsule-modal-gallery {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    .capsule-modal-main {
-      width: 100%;
-      aspect-ratio: 1.25 / 1;
-      border-radius: var(--r-lg);
-      overflow: hidden;
-      background: linear-gradient(160deg, #eceae4, #e2dfd8);
-      border: 1px solid var(--line);
-    }
-    .capsule-modal-main img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .capsule-modal-thumbs {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 2px;
-    }
-    .capsule-modal-thumb {
-      width: 68px;
-      height: 84px;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1.5px solid var(--line);
-      background: #fff;
-      padding: 0;
-      cursor: pointer;
-      flex: none;
-    }
-    .capsule-modal-thumb.active { border-color: var(--ink); }
-    .capsule-modal-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .capsule-modal-copy {
-      background: var(--cream);
-      border: 1px solid var(--line);
-      border-radius: var(--r-xl);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .capsule-modal-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      width: fit-content;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: var(--accent-pale);
-      color: var(--accent);
-      font-size: .72rem;
-      font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-    .capsule-modal-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 3rem);
-      letter-spacing: .03em;
-      line-height: .96;
-      margin: 0;
-    }
-    .capsule-modal-text {
-      font-size: .95rem;
-      line-height: 1.75;
-      color: var(--muted);
-    }
-    .capsule-modal-stats {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .capsule-chip {
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: #fff;
-      font-size: .78rem;
-      font-weight: 700;
-      color: var(--ink);
-    }
-    .capsule-modal-grid-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-    .capsule-modal-grid-title h3 {
-      font-family: var(--font-display);
-      font-size: 1.8rem;
-      letter-spacing: .03em;
-      margin: 0;
-    }
-    .capsule-modal-grid-title p {
-      font-size: .84rem;
-      color: var(--muted);
-      margin: 0;
-    }
-    .capsule-modal-products {
-      max-height: min(58vh, 760px);
-      overflow-y: auto;
-      padding-right: 4px;
-    }
-    .capsule-modal-products .products-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    /* ── BEST SELLERS ── */
-    .best-sellers-meta {
-      font-size: .88rem;
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
-
     /* ── RESPONSIVE ── */
     @media (max-width: 1100px) {
       .hero-grid { grid-template-columns: 1fr; }
@@ -1903,9 +1668,6 @@
       .hero-stat-card { flex: 1; }
       .hero-promo-card { flex: 1; }
       .capsule-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .capsule-showcase-grid { grid-template-columns: 1fr; }
-      .capsule-modal-hero { grid-template-columns: 1fr; }
-      .capsule-modal-products .products-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .catalog-layout { grid-template-columns: 1fr; }
       .sidebar { display: none; }
       .mobile-filter-btn { display: flex; }
@@ -1942,9 +1704,6 @@
       .hero-title { font-size: 3.2rem; }
       .payment-status-title { font-size: 1.45rem; }
       .capsule-grid { grid-template-columns: 1fr; }
-      .capsule-showcase-grid { grid-template-columns: 1fr; }
-      .capsule-modal-products .products-grid { grid-template-columns: 1fr; }
-      .capsule-modal-thumb { width: 56px; height: 72px; }
       .products-grid { grid-template-columns: 1fr; }
       .pcard-actions { flex-direction: column; }
       .trust-grid { grid-template-columns: 1fr 1fr; }
@@ -1969,6 +1728,263 @@
         overflow-wrap: anywhere;
         word-break: break-word;
       }
+    }
+
+
+    /* ── UI/UX REWORK · CÁPSULAS + CATÁLOGO EDITORIAL ── */
+    .capsule-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .capsule-card {
+      padding: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, .92fr);
+      min-height: 300px;
+      overflow: hidden;
+    }
+    .capsule-card::after { display: none; }
+    .capsule-media {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 8px;
+      min-height: 100%;
+      padding: 12px;
+      background: linear-gradient(160deg, #f3efe8, #ebe5db);
+      border-right: 1px solid var(--line);
+    }
+    .capsule-media-main,
+    .capsule-media-side img,
+    .capsule-media-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .capsule-media-main {
+      min-height: 276px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid rgba(14,14,16,.06);
+      box-shadow: var(--sh);
+    }
+    .capsule-media-side {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .capsule-media-side .thumb {
+      border-radius: 18px;
+      overflow: hidden;
+      min-height: 128px;
+      background: #fff;
+      border: 1px solid rgba(14,14,16,.06);
+      box-shadow: var(--sh);
+    }
+    .capsule-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 26px 24px 26px 10px;
+    }
+    .capsule-copy-top { display:flex; flex-direction:column; gap:12px; }
+    .capsule-copy .capsule-name { font-size: 2.05rem; margin-bottom: 0; }
+    .capsule-desc { font-size: .92rem; line-height: 1.75; }
+    .capsule-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: auto;
+    }
+    .capsule-count {
+      font-size: .82rem;
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .capsule-open {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: #fff;
+      font-size: .84rem;
+      font-weight: 700;
+      border: 1px solid var(--ink);
+      cursor: pointer;
+    }
+    .capsule-open:hover { background:#222; }
+
+    .catalog-layout { grid-template-columns: 1fr; }
+    .sidebar { display: none !important; }
+    .editorial-toolbar {
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 24px;
+    }
+    .catalog-controls { width: 100%; display:flex; justify-content:flex-end; }
+    .catalog-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      border-radius: 999px;
+      background: #f1ece4;
+      border: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+    .catalog-pill {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 11px 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: .84rem;
+      cursor: pointer;
+      transition: all .18s;
+    }
+    .catalog-pill.active {
+      background: var(--ink);
+      color: #fff;
+      box-shadow: var(--sh);
+    }
+    .products-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .modal-wide {
+      max-width: min(1260px, calc(100vw - 36px));
+      width: 100%;
+    }
+    .capsule-modal-shell {
+      overflow: hidden;
+      max-height: 92vh;
+    }
+    .capsule-modal-header {
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .capsule-modal-sub {
+      max-width: 72ch;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: .92rem;
+      margin-top: 8px;
+    }
+    .capsule-modal-body {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .capsule-modal-summary {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+    .capsule-modal-gallery {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 10px;
+      min-height: 300px;
+    }
+    .capsule-modal-gallery-main,
+    .capsule-modal-gallery-side .thumb {
+      overflow: hidden;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: var(--cream);
+      box-shadow: var(--sh);
+    }
+    .capsule-modal-gallery-main img,
+    .capsule-modal-gallery-side .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .capsule-modal-gallery-side {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .capsule-modal-meta {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: #fff;
+      padding: 24px;
+      box-shadow: var(--sh);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .capsule-modal-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--accent-pale);
+      color: var(--accent);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+    .capsule-modal-count {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      letter-spacing: .03em;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .capsule-modal-text,
+    .capsule-modal-subtle {
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.7;
+    }
+    .capsule-modal-products-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .capsule-modal-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: 1180px) {
+      .capsule-card { grid-template-columns: 1fr; }
+      .capsule-copy { padding: 24px; }
+      .products-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .capsule-modal-summary { grid-template-columns: 1fr; }
+      .capsule-modal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 680px) {
+      .capsule-grid { grid-template-columns: 1fr; }
+      .capsule-media,
+      .capsule-modal-gallery { grid-template-columns: 1fr; }
+      .capsule-copy { padding: 18px; }
+      .capsule-copy .capsule-name { font-size: 1.7rem; }
+      .capsule-media-side,
+      .capsule-modal-gallery-side { grid-template-columns: repeat(2, 1fr); }
+      .catalog-controls { justify-content: flex-start; }
+      .catalog-switch { width: 100%; }
+      .catalog-pill { flex: 1; min-width: 0; }
+      .products-grid,
+      .capsule-modal-grid { grid-template-columns: 1fr; }
+      .modal-wide { max-width: calc(100vw - 16px); }
     }
 
     /* ── SCROLL ANIMATE ── */
@@ -2040,10 +2056,10 @@
 
   <nav class="nav-strip" aria-label="Navegación principal">
     <div class="container nav-scroll">
-      <a class="nav-link active" href="#capsulas">Catálogo</a>
+      <a class="nav-link active" href="#catalogo">Catálogo</a>
       <a class="nav-link" href="#capsulas">Cápsulas</a>
-      <a class="nav-link" href="#mas-vendidos">Más vendidos</a>
-      <a class="nav-link" href="#capsulas">Drop destacado</a>
+      <a class="nav-link" href="#catalogo" data-catalog-view="bestsellers">Más vendidas</a>
+      <a class="nav-link" href="#catalogo" data-catalog-view="featured">Destacadas</a>
       <a class="nav-link" href="https://instagram.com/somos.sinrecreo" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
     </div>
   </nav>
@@ -2062,12 +2078,12 @@
       <article class="hero-main">
         <div class="hero-deco" aria-hidden="true">SR</div>
         <div class="hero-main-content">
-          <div class="eyebrow">Nueva temporada · Abril 2026</div>
+          <div class="eyebrow">TEMPORADA 2026</div>
           <h1 class="hero-title">Vestite con<br>una <em>idea,</em><br>no con una<br>excusa.</h1>
           <p class="hero-body">Cápsulas editoriales con concepto, memoria y actitud. Diseño premium para gente que no quiere vestirse en automático.</p>
           <div class="cta-row">
-            <a class="btn-primary" href="#capsulas">
-              Explorar cápsulas
+            <a class="btn-primary" href="#catalogo">
+              Explorar catálogo
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
             <a class="btn-outline" href="https://instagram.com/somos.sinrecreo" target="_blank" rel="noopener noreferrer">Ver universo</a>
@@ -2104,7 +2120,7 @@
           <div class="promo-label" id="featuredCapsuleLabel">✦ Drop Destacado</div>
           <h2 class="promo-title" id="featuredCapsuleTitle">Cápsula &quot;Memoria y archivo&quot;</h2>
           <p class="promo-body" id="featuredCapsuleBody">Prendas que trabajan con imágenes, hitos y tensiones culturales. Edición corta, diseño con intención.</p>
-          <a class="btn-ghost-white" href="#capsulas" id="featuredCapsuleCta" onclick="handleFeaturedCapsuleCta(event)">
+          <a class="btn-ghost-white" href="#catalogo" id="featuredCapsuleCta" onclick="handleFeaturedCapsuleCta(event)">
             <span id="featuredCapsuleCtaText">Ver cápsula</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
@@ -2146,69 +2162,69 @@
       <div class="section-head fade-up">
         <div>
           <div class="section-label">Cápsulas editoriales</div>
-          <h2 class="section-title">Explorá por cápsula, no por scroll infinito</h2>
-          <p class="section-sub">Cada tarjeta abre una cápsula completa en modal, con toda la colección disponible en una vista vertical mucho más limpia.</p>
+          <h2 class="section-title">Universos listos para abrir</h2>
+          <p class="section-sub">Cada cápsula ahora se presenta como una mini portada editorial. Entrás por la historia, y recién después ves las prendas.</p>
         </div>
-        <span class="link-arrow" style="border-bottom:none;opacity:1">Abrí una cápsula y recorré sus prendas</span>
+        <a class="link-arrow" href="#catalogo">Ir a la selección editorial →</a>
       </div>
-      <div class="capsule-showcase-grid" id="capsuleGrid">
+      <div class="capsule-grid" id="capsuleGrid">
         <!-- rendered by JS -->
       </div>
     </div>
   </section>
 
-  <!-- ── BEST SELLERS ── -->
-  <section class="catalog-section" id="mas-vendidos">
+  <!-- ── CATALOG ── -->
+  <section class="catalog-section" id="catalogo">
     <div class="container">
-      <div class="section-head fade-up">
-        <div>
-          <div class="section-label">Más vendidos</div>
-          <h2 class="section-title">La parte de abajo queda solo para lo que más sale</h2>
-          <p class="section-sub">Un recorte corto, útil y real, armado con la salida efectiva de tus prendas.</p>
+      <div class="catalog-layout">
+
+        <!-- Sidebar escondido: se conserva en DOM por compatibilidad -->
+        <aside class="sidebar" aria-label="Filtros" hidden>
+          <div class="filter-card">
+            <h4>Cápsula</h4>
+            <div class="filter-stack" id="capsuleFilters"></div>
+          </div>
+          <div class="filter-card">
+            <h4>Corte</h4>
+            <div class="filter-stack" id="cutFilters"></div>
+          </div>
+          <div class="filter-card">
+            <h4>Talles</h4>
+            <div class="filter-stack" id="sizeFilters"></div>
+          </div>
+          <div class="filter-card">
+            <h4>Precio</h4>
+            <div class="price-inputs">
+              <input id="minPrice" class="field" type="number" min="0" step="1000" placeholder="Desde" aria-label="Precio mínimo" />
+              <input id="maxPrice" class="field" type="number" min="0" step="1000" placeholder="Hasta" aria-label="Precio máximo" />
+            </div>
+          </div>
+          <button id="resetFilters" class="btn-reset" type="button">Limpiar filtros</button>
+        </aside>
+
+        <!-- Main content -->
+        <div class="catalog-main">
+          <div class="catalog-toolbar editorial-toolbar fade-up">
+            <div class="toolbar-copy">
+              <div class="section-label" style="margin-bottom:6px">Selección editorial</div>
+              <h2 class="section-title" style="font-size:clamp(1.7rem,2.6vw,2.35rem)">Catálogo corto, entrada fuerte</h2>
+              <p id="resultsCount" class="section-sub" style="max-width:72ch">Acá abajo no aparece todo el universo. Solo las prendas destacadas y las que mejor convierten para que la home siga respirando.</p>
+            </div>
+            <div class="catalog-controls">
+              <div class="catalog-switch" id="catalogSwitch" aria-label="Cambiar colección visible">
+                <button class="catalog-pill active" type="button" data-catalog-view="featured">Destacadas</button>
+                <button class="catalog-pill" type="button" data-catalog-view="bestsellers">Más vendidas</button>
+              </div>
+            </div>
+          </div>
+          <div class="products-grid" id="productsGrid"></div>
         </div>
+
       </div>
-      <p class="best-sellers-meta" id="bestSellersMeta">Cargando selección…</p>
-      <div class="products-grid" id="bestSellersGrid"></div>
     </div>
   </section>
 
 </main>
-
-<!-- ── CAPSULE MODAL ── -->
-<div class="modal-overlay" id="capsuleModal" role="dialog" aria-modal="true" aria-label="Ver cápsula">
-  <div class="modal capsule-modal">
-    <div class="modal-header">
-      <h2 class="modal-title" id="capsuleModalHeaderTitle">Cápsula</h2>
-      <button class="modal-close" onclick="closeCapsuleModal()" aria-label="Cerrar cápsula">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="capsule-modal-hero">
-        <div class="capsule-modal-gallery">
-          <div class="capsule-modal-main"><img id="capsuleModalMainImage" alt="Imagen principal de la cápsula" /></div>
-          <div class="capsule-modal-thumbs" id="capsuleModalThumbs"></div>
-        </div>
-        <div class="capsule-modal-copy">
-          <span class="capsule-modal-badge" id="capsuleModalBadge">✦ Cápsula</span>
-          <h3 class="capsule-modal-title" id="capsuleModalTitle">Cápsula</h3>
-          <p class="capsule-modal-text" id="capsuleModalText"></p>
-          <div class="capsule-modal-stats">
-            <span class="capsule-chip" id="capsuleModalProductsCount">0 prendas</span>
-            <span class="capsule-chip" id="capsuleModalDropState">Colección activa</span>
-          </div>
-        </div>
-      </div>
-      <div class="capsule-modal-grid-title">
-        <div>
-          <h3>Prendas de esta cápsula</h3>
-          <p>La grilla mantiene la lógica actual: 3 columnas en PC y 1 columna en celular.</p>
-        </div>
-      </div>
-      <div class="capsule-modal-products">
-        <div class="products-grid" id="capsuleProductsGrid"></div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ── FOOTER ── -->
 <footer class="footer">
@@ -2220,10 +2236,10 @@
       </div>
       <div class="footer-col">
         <h5>Tienda</h5>
+        <a href="#catalogo">Catálogo completo</a>
         <a href="#capsulas">Cápsulas</a>
-        <a href="#capsulas">Cápsulas</a>
-        <a href="#mas-vendidos">Más vendidos</a>
-        <a href="#mas-vendidos">Más vendidos</a>
+        <a href="#catalogo">Nuevos drops</a>
+        <a href="#catalogo">Destacados</a>
       </div>
       <div class="footer-col">
         <h5>Contacto</h5>
@@ -2392,6 +2408,37 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         Compra 100% segura · Tus datos están protegidos
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CAPSULE MODAL ── -->
+<div class="modal-overlay" id="capsuleModal" role="dialog" aria-modal="true" aria-label="Explorar cápsula">
+  <div class="modal modal-wide capsule-modal-shell">
+    <div class="modal-header capsule-modal-header">
+      <div>
+        <div class="modal-section-title" id="capsuleModalEyebrow">Cápsula editorial</div>
+        <h2 class="modal-title" id="capsuleModalTitle">Cápsula</h2>
+        <p class="capsule-modal-sub" id="capsuleModalDescription">Descripción de la cápsula</p>
+      </div>
+      <button class="modal-close" onclick="closeCapsuleModal()" aria-label="Cerrar cápsula">✕</button>
+    </div>
+    <div class="modal-body capsule-modal-body">
+      <div class="capsule-modal-summary">
+        <div class="capsule-modal-gallery" id="capsuleModalGallery"></div>
+        <div class="capsule-modal-meta">
+          <div class="capsule-modal-kicker" id="capsuleModalTag">Activa ahora</div>
+          <div class="capsule-modal-count" id="capsuleModalCount">0 prendas</div>
+          <p class="capsule-modal-text">Entrá a la cápsula y resolvé desde ahí. La idea es que el usuario vea primero el relato, y recién después navegue la selección completa.</p>
+        </div>
+      </div>
+      <div class="capsule-modal-products-head">
+        <div>
+          <div class="modal-section-title" style="margin-bottom:6px">Prendas de la cápsula</div>
+          <p class="capsule-modal-subtle">Cada tarjeta mantiene sus 3 fotos, compra directa y acceso al carrito.</p>
+        </div>
+      </div>
+      <div class="capsule-modal-grid products-grid" id="capsuleModalGrid"></div>
     </div>
   </div>
 </div>
@@ -2617,14 +2664,15 @@
     }
   };
 
-  const state = { query:'', sort:'featured', capsules:new Set(), cuts:new Set(), sizes:new Set(), minPrice:'', maxPrice:'' };
+  const state = { query:'', catalogView:'featured', sort:'featured', capsules:new Set(), cuts:new Set(), sizes:new Set(), minPrice:'', maxPrice:'' };
   const cart = [];
 
   let capsulesData = [];
   let featuredCapsule = null;
+  let currentCapsuleView = null;
+  let productSalesMap = {};
+  let productSalesSource = 'fallback';
   let storeMetrics = { activeDrops: 0, activeCapsules: 0, customersCount: null };
-  let bestSellerRanking = [];
-  let currentCapsuleModal = null;
   let currentProduct = null;
   let selectedSize = null;
   let selectedFit = 'unisex';
@@ -2764,6 +2812,12 @@
     });
   };
 
+  const refreshBodyScrollLock = () => {
+    const hasOpenLayer = ['buyModal', 'capsuleModal'].some(id => document.getElementById(id)?.classList.contains('open'))
+      || document.getElementById('cartDrawer')?.classList.contains('open');
+    document.body.style.overflow = hasOpenLayer ? 'hidden' : '';
+  };
+
 
   const isSupabaseConfigured = () => {
     return Boolean(
@@ -2859,18 +2913,6 @@
     });
   };
 
-  const buildCapsuleImagesFromProducts = (capsuleName = '') => {
-    const images = products
-      .filter(product => String(product.capsule || '').trim() === String(capsuleName || '').trim())
-      .flatMap(product => getImageList(product))
-      .filter(Boolean);
-    return [...new Set(images)].slice(0, 5);
-  };
-
-  const getProductsByCapsule = (capsuleName = '') => {
-    return products.filter(product => String(product.capsule || '').trim() === String(capsuleName || '').trim() && getTotalStock(product) > 0);
-  };
-
   const normalizeCapsuleRecord = (row = {}, count = 0) => ({
     id: row.id || row.slug || row.name || '',
     name: row.name || row.capsule || '',
@@ -2882,35 +2924,22 @@
     heroCtaText: row.hero_cta_text || 'Ver cápsula',
     featured: Boolean(row.is_featured_drop || row.featured),
     isActive: row.is_active !== false,
-    productCount: Number(count || 0),
-    images: Array.isArray(row.images) ? row.images.filter(Boolean).slice(0, 5) : []
+    productCount: Number(count || 0)
   });
-
-  const enrichCapsulesWithProducts = (list = []) => {
-    return (list || []).map(item => {
-      const productCount = getProductsByCapsule(item.name).length;
-      const fallbackImages = buildCapsuleImagesFromProducts(item.name);
-      return {
-        ...item,
-        productCount,
-        images: (item.images && item.images.length ? item.images : fallbackImages).slice(0, 5)
-      };
-    });
-  };
 
   const getCapsuleFallbackData = () => {
     const counts = products.reduce((acc, product) => {
-      acc[product.capsule] = (acc[product.capsule] || 0) + (getTotalStock(product) > 0 ? 1 : 0);
+      acc[product.capsule] = (acc[product.capsule] || 0) + 1;
       return acc;
     }, {});
-    return Object.keys(counts).map(name => normalizeCapsuleRecord({ ...(capsuleInfoFallback[name] || { name }), images: buildCapsuleImagesFromProducts(name) }, counts[name]));
+    return Object.keys(counts).map(name => normalizeCapsuleRecord(capsuleInfoFallback[name] || { name }, counts[name]));
   };
 
   const loadCapsulesFromSupabase = async () => {
     const client = initSupabaseClient();
     if (!client) return getCapsuleFallbackData();
 
-    const [{ data: capsuleRows, error: capsulesError }, { data: imageRows, error: imagesError }] = await Promise.all([
+    const [{ data: capsuleRows, error: capsulesError }, { data: productRows, error: productsError }] = await Promise.all([
       client
         .from('capsules')
         .select('id, name, slug, badge_label, short_description, hero_title, hero_body, hero_cta_text, is_active, is_featured_drop')
@@ -2918,22 +2947,21 @@
         .order('is_featured_drop', { ascending: false })
         .order('name', { ascending: true }),
       client
-        .from('capsule_images')
-        .select('capsule_id, image_url, position')
+        .from('products')
+        .select('capsule, is_active')
         .eq('is_active', true)
-        .order('position', { ascending: true })
     ]);
 
     if (capsulesError) throw capsulesError;
-    if (imagesError) throw imagesError;
+    if (productsError) throw productsError;
 
-    const imagesByCapsule = {};
-    (imageRows || []).forEach(row => {
-      if (!imagesByCapsule[row.capsule_id]) imagesByCapsule[row.capsule_id] = [];
-      imagesByCapsule[row.capsule_id].push(row.image_url);
-    });
+    const counts = (productRows || []).reduce((acc, row) => {
+      if (!row.capsule) return acc;
+      acc[row.capsule] = (acc[row.capsule] || 0) + 1;
+      return acc;
+    }, {});
 
-    const normalized = (capsuleRows || []).map(row => normalizeCapsuleRecord({ ...row, images: imagesByCapsule[row.id] || [] }));
+    const normalized = (capsuleRows || []).map(row => normalizeCapsuleRecord(row, counts[row.name] || 0));
     return normalized.length ? normalized : getCapsuleFallbackData();
   };
 
@@ -2955,7 +2983,7 @@
   const handleFeaturedCapsuleCta = (event) => {
     if (!featuredCapsule?.name) return;
     event.preventDefault();
-    openCapsuleModalByName(featuredCapsule.name);
+    filterByCapsule(featuredCapsule.name);
   };
 
   const renderAnnounceFeaturedCapsule = () => {
@@ -3020,10 +3048,120 @@
   };
 
 
+  const loadBestSellerData = async () => {
+    const client = initSupabaseClient();
+    if (!client) return {};
+
+    try {
+      const [{ data: approvedOrders, error: ordersError }, { data: orderItems, error: itemsError }] = await Promise.all([
+        client.from('orders').select('id, status').eq('status', 'approved'),
+        client.from('order_items').select('order_id, product_title, quantity')
+      ]);
+      if (ordersError) throw ordersError;
+      if (itemsError) throw itemsError;
+
+      const approvedIds = new Set((approvedOrders || []).map(row => row.id));
+      const counts = {};
+      (orderItems || []).forEach(item => {
+        if (!approvedIds.has(item.order_id)) return;
+        const key = String(item.product_title || '').trim();
+        if (!key) return;
+        counts[key] = (counts[key] || 0) + Number(item.quantity || 0);
+      });
+      productSalesSource = Object.keys(counts).length ? 'sales' : 'fallback';
+      return counts;
+    } catch (error) {
+      productSalesSource = 'fallback';
+      console.warn('No se pudo cargar el ranking de ventas. Uso fallback editorial.', error);
+      return {};
+    }
+  };
+
+  const getBestSellerScore = (product) => {
+    const titleKey = String(product.title || '').trim();
+    const sales = Number(productSalesMap[titleKey] || 0);
+    if (sales > 0) return sales * 1000;
+    return (product.featured ? 100 : 0) + getTotalStock(product) + (new Date(product.sortDate || 0).getTime() / 1000000000000);
+  };
+
+  const getCatalogCollections = () => {
+    const active = products.filter(product => getTotalStock(product) > 0);
+    const featured = active
+      .filter(product => product.featured)
+      .sort((a, b) => new Date(b.sortDate || 0) - new Date(a.sortDate || 0))
+      .slice(0, 12);
+
+    const bestsellers = [...active]
+      .sort((a, b) => getBestSellerScore(b) - getBestSellerScore(a) || new Date(b.sortDate || 0) - new Date(a.sortDate || 0))
+      .slice(0, 12);
+
+    return {
+      featured: featured.length ? featured : bestsellers,
+      bestsellers
+    };
+  };
+
+  const getCapsuleProducts = (capsuleName = '') => {
+    return products
+      .filter(product => String(product.capsule || '').trim() === String(capsuleName || '').trim())
+      .sort((a, b) => Number(b.featured) - Number(a.featured) || new Date(b.sortDate || 0) - new Date(a.sortDate || 0));
+  };
+
+  const getCapsulePreviewImages = (capsuleName = '') => {
+    const capsuleProducts = getCapsuleProducts(capsuleName);
+    const images = [];
+    capsuleProducts.forEach(product => {
+      getImageList(product).forEach(image => {
+        if (images.length < 5) images.push(image);
+      });
+    });
+    while (images.length < 5) {
+      images.push(placeholderImage(capsuleName || 'Cápsula', images.length + 1));
+    }
+    return images.slice(0, 5);
+  };
+
+  const openCapsuleModal = (capsuleName) => {
+    const capsule = (capsulesData.length ? capsulesData : getCapsuleFallbackData()).find(item => item.name === capsuleName);
+    if (!capsule) return;
+    currentCapsuleView = capsule.name;
+
+    const productsInCapsule = getCapsuleProducts(capsule.name);
+    const previewImages = getCapsulePreviewImages(capsule.name);
+
+    document.getElementById('capsuleModalEyebrow').textContent = 'Cápsula editorial';
+    document.getElementById('capsuleModalTitle').textContent = capsule.name;
+    document.getElementById('capsuleModalDescription').textContent = capsule.heroBody || capsule.desc || 'Seleccioná una prenda para abrir su compra directa.';
+    document.getElementById('capsuleModalTag').textContent = capsule.tag || 'Activa ahora';
+    document.getElementById('capsuleModalCount').textContent = `${productsInCapsule.length} ${productsInCapsule.length === 1 ? 'prenda' : 'prendas'}`;
+    document.getElementById('capsuleModalGallery').innerHTML = `
+      <div class="capsule-modal-gallery-main"><img src="${previewImages[0]}" alt="${escapeHtml(capsule.name)} principal" /></div>
+      <div class="capsule-modal-gallery-side">
+        ${previewImages.slice(1, 5).map((image, idx) => `<div class="thumb"><img src="${image}" alt="${escapeHtml(capsule.name)} vista ${idx + 2}" /></div>`).join('')}
+      </div>
+    `;
+
+    renderProducts(productsInCapsule, 'capsuleModalGrid');
+    document.getElementById('capsuleModal').classList.add('open');
+    refreshBodyScrollLock();
+  };
+
+  const closeCapsuleModal = () => {
+    document.getElementById('capsuleModal').classList.remove('open');
+    refreshBodyScrollLock();
+  };
+
   const refreshCatalogData = () => {
-    capsulesData = enrichCapsulesWithProducts(capsulesData.length ? capsulesData : getCapsuleFallbackData());
+    const { allCapsules, allCuts, allSizes } = getFilterLists();
+    if (document.getElementById('capsuleFilters')) renderCheckboxes(allCapsules, 'capsuleFilters', 'capsules');
+    if (document.getElementById('cutFilters')) renderCheckboxes(allCuts, 'cutFilters', 'cuts');
+    if (document.getElementById('sizeFilters')) renderCheckboxes(allSizes, 'sizeFilters', 'sizes');
     renderFeaturedCapsule();
     renderHeroStats();
+    renderCapsules();
+    document.querySelectorAll('[data-catalog-view]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.catalogView === state.catalogView);
+    });
     applyFilters();
     updateCartUI();
   };
@@ -3043,17 +3181,17 @@
         } else {
           console.warn('Supabase no devolvió productos activos. Se mantienen los productos de ejemplo.');
         }
-        capsulesData = enrichCapsulesWithProducts(remoteCapsules?.length ? remoteCapsules : getCapsuleFallbackData());
+        capsulesData = remoteCapsules?.length ? remoteCapsules : getCapsuleFallbackData();
       } else {
         console.warn('Supabase no está configurado. Se muestran los productos de ejemplo.');
-        capsulesData = enrichCapsulesWithProducts(getCapsuleFallbackData());
+        capsulesData = getCapsuleFallbackData();
       }
     } catch (error) {
       console.error('Error cargando catálogo desde Supabase:', error);
-      capsulesData = enrichCapsulesWithProducts(getCapsuleFallbackData());
+      capsulesData = getCapsuleFallbackData();
     } finally {
+      productSalesMap = await loadBestSellerData();
       storeMetrics = await loadPublicStoreMetrics();
-      bestSellerRanking = await loadBestSellerRanking();
       wireAdminAccessLinks();
       wireCheckoutCustomerInputs();
       refreshCatalogData();
@@ -3120,7 +3258,7 @@
           <div class="payment-status-body">${meta.body}</div>
         </div>
         <div class="payment-status-actions">
-          <a class="btn-primary" href="#capsulas">Seguir comprando</a>
+          <a class="btn-primary" href="#catalogo">Seguir comprando</a>
           <button class="btn-soft-dark" type="button" onclick="openPaymentHelp()">Necesito ayuda</button>
         </div>
       </div>
@@ -3239,103 +3377,35 @@
     btn.classList.add('active');
   };
 
-  /* ─── HOME CATALOG ─── */
-  const getCapsuleImageList = (capsule = {}) => {
-    const images = Array.isArray(capsule.images) ? capsule.images.filter(Boolean).slice(0, 5) : [];
-    if (images.length) return images;
-    const fallbackProducts = getProductsByCapsule(capsule.name);
-    if (fallbackProducts.length) {
-      return [...new Set(fallbackProducts.flatMap(product => getImageList(product)))].slice(0, 5);
-    }
-    return [placeholderImage(capsule.name || 'Cápsula', 1)];
-  };
-
-  const loadBestSellerRanking = async () => {
-    const client = initSupabaseClient();
-    if (!client) return [];
-    try {
-      const { data, error } = await client.rpc('get_public_best_sellers', { limit_count: 6 });
-      if (error) throw error;
-      return Array.isArray(data) ? data : [];
-    } catch (error) {
-      console.warn('No se pudieron cargar los más vendidos públicos:', error);
-      return [];
-    }
-  };
-
-  const getBestSellerProducts = () => {
-    const activeProducts = products.filter(product => getTotalStock(product) > 0);
-    if (!bestSellerRanking.length) {
-      return activeProducts
-        .sort((a,b) => Number(b.featured) - Number(a.featured) || new Date(b.sortDate) - new Date(a.sortDate))
-        .slice(0, 6);
-    }
-
-    const byDbId = new Map(activeProducts.map(product => [product.dbId, product]));
-    const fromRanking = bestSellerRanking
-      .map(row => byDbId.get(row.product_id))
-      .filter(Boolean);
-
-    if (!fromRanking.length) {
-      return activeProducts
-        .sort((a,b) => Number(b.featured) - Number(a.featured) || new Date(b.sortDate) - new Date(a.sortDate))
-        .slice(0, 6);
-    }
-    return fromRanking.slice(0, 6);
-  };
-
-  const renderBestSellers = () => {
-    const items = getBestSellerProducts();
-    const meta = document.getElementById('bestSellersMeta');
-    if (meta) {
-      meta.textContent = items.length
-        ? `Mostrando ${items.length} prendas con mejor salida real o, si todavía no hay historial suficiente, una selección fuerte de la tienda.`
-        : 'Todavía no hay prendas para mostrar en esta sección.';
-    }
-    renderProducts(items, 'bestSellersGrid', 'Todavía no hay más vendidos para mostrar.');
-  };
-
+  /* ─── CAPSULES ─── */
   const renderCapsules = () => {
     const grid = document.getElementById('capsuleGrid');
     const activeCapsules = (capsulesData.length ? capsulesData : getCapsuleFallbackData())
       .filter(item => item.isActive !== false)
-      .filter(item => getProductsByCapsule(item.name).length > 0)
-      .filter(item => {
-        if (!state.query) return true;
-        const haystack = `${item.name} ${item.tag || ''} ${item.desc || ''} ${item.heroBody || ''}`.toLowerCase();
-        return haystack.includes(state.query.toLowerCase());
-      });
-
-    if (!activeCapsules.length) {
-      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">No encontramos cápsulas para ese criterio. Probá con otro nombre o bajá directo a más vendidos.</div>`;
-      return;
-    }
+      .filter(item => (item.productCount || getCapsuleProducts(item.name).length) > 0);
 
     grid.innerHTML = activeCapsules.map(capsule => {
-      const count = getProductsByCapsule(capsule.name).length;
-      const images = getCapsuleImageList(capsule);
-      const cover = images[0];
-      const capsuleArg = encodeURIComponent(capsule.name || '');
-      return `<article class="capsule-card capsule-card-rich fade-up">
-        <div class="capsule-card-media">
-          <img src="${cover}" alt="${escapeHtml(capsule.name)}" />
-          <div class="capsule-card-overlay"></div>
-          <span class="capsule-card-count">${count} prendas</span>
-        </div>
-        <div class="capsule-card-body">
-          <div class="capsule-tag">✦ ${escapeHtml(capsule.tag || 'Activa ahora')}</div>
-          <h3 class="capsule-name">${escapeHtml(capsule.name)}</h3>
-          <p class="capsule-desc">${escapeHtml(capsule.desc || '')}</p>
-          <div class="capsule-card-meta">
-            <span>${capsule.featured ? 'Drop destacado activo' : 'Colección activa'}</span>
-            <span>${Math.min(images.length, 5)} foto${Math.min(images.length, 5) !== 1 ? 's' : ''}</span>
+      const count = capsule.productCount || getCapsuleProducts(capsule.name).length;
+      const previewImages = getCapsulePreviewImages(capsule.name);
+      const capsuleArg = JSON.stringify(capsule.name || '');
+      return `<article class="capsule-card fade-up" onclick='openCapsuleModal(${capsuleArg})'>
+        <div class="capsule-media">
+          <div class="capsule-media-main"><img src="${previewImages[0]}" alt="${escapeHtml(capsule.name)} principal" /></div>
+          <div class="capsule-media-side">
+            ${previewImages.slice(1, 5).map((image, idx) => `<div class="thumb"><img src="${image}" alt="${escapeHtml(capsule.name)} vista ${idx + 2}" /></div>`).join('')}
           </div>
-          <div class="capsule-card-actions">
-            <button class="capsule-card-btn" type="button" onclick="openCapsuleModalByName(decodeURIComponent('${capsuleArg}'))">
-              Ver cápsula
+        </div>
+        <div class="capsule-copy">
+          <div class="capsule-copy-top">
+            <div class="capsule-tag">✦ ${escapeHtml(capsule.tag || 'Activa')}</div>
+            <h3 class="capsule-name">${escapeHtml(capsule.name)}</h3>
+            <p class="capsule-desc">${escapeHtml(capsule.desc || capsule.heroBody || '')}</p>
+          </div>
+          <div class="capsule-meta-row">
+            <span class="capsule-count">${count} ${count === 1 ? 'prenda' : 'prendas'} disponibles</span>
+            <button class="capsule-open" type="button" onclick='event.stopPropagation(); openCapsuleModal(${capsuleArg})'>Abrir cápsula
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
-            <span class="capsule-card-link" onclick="openCapsuleModalByName(decodeURIComponent('${capsuleArg}'))">Abrir colección completa →</span>
           </div>
         </div>
       </article>`;
@@ -3343,75 +3413,64 @@
     observeElements();
   };
 
-  const setCapsuleModalMainImage = (btn, src) => {
-    const main = document.getElementById('capsuleModalMainImage');
-    if (main) main.src = src;
-    document.querySelectorAll('.capsule-modal-thumb').forEach(node => node.classList.remove('active'));
-    btn.classList.add('active');
+  /* ─── FILTERS ─── */
+  const getFilterLists = () => {
+    const sizeOrder = ['XS','S','M','L','XL','XXL'];
+    return {
+      allCapsules: [...new Set(products.map(p => p.capsule).filter(Boolean))].sort((a,b) => a.localeCompare(b, 'es')),
+      allCuts: [...new Set(products.map(p => p.cut).filter(Boolean))].sort((a,b) => a.localeCompare(b, 'es')),
+      allSizes: [...new Set(products.flatMap(p => getAvailableSizes(p)).filter(Boolean))]
+        .sort((a,b) => {
+          const ai = sizeOrder.indexOf(a);
+          const bi = sizeOrder.indexOf(b);
+          if (ai === -1 && bi === -1) return a.localeCompare(b, 'es');
+          if (ai === -1) return 1;
+          if (bi === -1) return -1;
+          return ai - bi;
+        })
+    };
   };
 
-  const renderCapsuleModal = () => {
-    if (!currentCapsuleModal) return;
-    const title = document.getElementById('capsuleModalHeaderTitle');
-    const badge = document.getElementById('capsuleModalBadge');
-    const heroTitle = document.getElementById('capsuleModalTitle');
-    const text = document.getElementById('capsuleModalText');
-    const count = document.getElementById('capsuleModalProductsCount');
-    const dropState = document.getElementById('capsuleModalDropState');
-    const mainImage = document.getElementById('capsuleModalMainImage');
-    const thumbs = document.getElementById('capsuleModalThumbs');
-    const productsInCapsule = getProductsByCapsule(currentCapsuleModal.name);
-    const images = getCapsuleImageList(currentCapsuleModal);
-
-    if (title) title.textContent = `Cápsula "${currentCapsuleModal.name}"`;
-    if (badge) badge.textContent = `✦ ${currentCapsuleModal.tag || 'Cápsula activa'}`;
-    if (heroTitle) heroTitle.textContent = currentCapsuleModal.name;
-    if (text) text.textContent = currentCapsuleModal.heroBody || currentCapsuleModal.desc || 'Esta cápsula todavía no tiene presentación cargada.';
-    if (count) count.textContent = `${productsInCapsule.length} prenda${productsInCapsule.length !== 1 ? 's' : ''}`;
-    if (dropState) dropState.textContent = currentCapsuleModal.featured ? 'Drop destacado activo' : 'Colección activa';
-    if (mainImage) mainImage.src = images[0];
-    if (thumbs) {
-      thumbs.innerHTML = images.map((img, idx) => `
-        <button class="capsule-modal-thumb ${idx === 0 ? 'active' : ''}" type="button" onclick="setCapsuleModalMainImage(this, '${img}')" aria-label="Ver imagen ${idx + 1}">
-          <img src="${img}" alt="${escapeHtml(currentCapsuleModal.name)} imagen ${idx + 1}" />
-        </button>
-      `).join('');
-    }
-    renderProducts(productsInCapsule, 'capsuleProductsGrid', 'Esta cápsula todavía no tiene prendas activas con stock.');
-  };
-
-  const openCapsuleModalByName = (capsuleName = '') => {
-    currentCapsuleModal = (capsulesData || []).find(item => item.name === capsuleName) || null;
-    if (!currentCapsuleModal) return;
-    renderCapsuleModal();
-    document.getElementById('capsuleModal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeCapsuleModal = () => {
-    document.getElementById('capsuleModal').classList.remove('open');
-    currentCapsuleModal = null;
-    if (!document.getElementById('buyModal').classList.contains('open') && !document.getElementById('cartDrawer').classList.contains('open')) {
-      document.body.style.overflow = '';
-    }
+  const renderCheckboxes = (items, id, group) => {
+    document.getElementById(id).innerHTML = items.map(item =>
+      `<label class="check-row"><input type="checkbox" data-group="${group}" value="${item}"/><span>${item}</span></label>`
+    ).join('');
   };
 
   const filterByCapsule = (cap) => {
-    openCapsuleModalByName(cap);
+    openCapsuleModal(cap);
   };
 
   const applyFilters = () => {
-    renderCapsules();
-    renderBestSellers();
+    const collections = getCatalogCollections();
+    const base = state.catalogView === 'bestsellers' ? collections.bestsellers : collections.featured;
+
+    const filtered = base.filter(product => {
+      if (!state.query) return true;
+      return `${product.title} ${product.capsule} ${product.description} ${product.sku || ''}`.toLowerCase().includes(state.query.toLowerCase());
+    });
+
+    renderProducts(filtered, 'productsGrid');
+    const rc = document.getElementById('resultsCount');
+    if (rc) {
+      const label = state.catalogView === 'bestsellers' ? 'más vendidas' : 'destacadas';
+      const sourceHint = state.catalogView === 'bestsellers' && productSalesSource !== 'sales'
+        ? ' Hoy este bloque usa una priorización editorial hasta conectar ranking público de ventas.'
+        : '';
+      rc.textContent = filtered.length
+        ? `${filtered.length} prenda${filtered.length !== 1 ? 's' : ''} en la vista de ${label}.${sourceHint}`
+        : `No encontramos prendas en la vista de ${label} con esa búsqueda.`;
+    }
   };
 
-  const renderProducts = (items, targetId = 'bestSellersGrid', emptyMessage = 'Sin resultados') => {
+  const renderProducts = (items, targetId = 'productsGrid') => {
     const grid = document.getElementById(targetId);
     if (!grid) return;
     if (!items.length) {
       grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px 0;color:var(--muted)">
-        <div style="font-size:2rem;margin-bottom:12px">🛍️</div>
-        <strong>${emptyMessage}</strong>
+        <div style="font-size:2rem;margin-bottom:12px">🔍</div>
+        <strong>Sin resultados</strong>
+        <p style="margin-top:6px">Probá con otra búsqueda o cambiando de vista.</p>
       </div>`;
       return;
     }
@@ -3529,12 +3588,12 @@
     hideCustomerPrompt();
     updateModalTotal();
     document.getElementById('buyModal').classList.add('open');
-    document.body.style.overflow = 'hidden';
+    refreshBodyScrollLock();
   };
 
   const closeModal = () => {
     document.getElementById('buyModal').classList.remove('open');
-    document.body.style.overflow = '';
+    refreshBodyScrollLock();
   };
 
   const selectFit = (btn, fit) => {
@@ -3950,22 +4009,22 @@ Mientras tanto, la transferencia por WhatsApp ya queda operativa.`);
   const openCartDrawer = () => {
     document.getElementById('cartDrawer').classList.add('open');
     document.getElementById('drawerBackdrop').classList.add('open');
-    document.body.style.overflow = 'hidden';
+    refreshBodyScrollLock();
   };
 
   const closeCartDrawer = () => {
     document.getElementById('cartDrawer').classList.remove('open');
     document.getElementById('drawerBackdrop').classList.remove('open');
-    document.body.style.overflow = '';
+    refreshBodyScrollLock();
   };
 
   const goBackToCatalogFromCart = () => {
     closeCartDrawer();
-    const catalog = document.getElementById('capsulas');
+    const catalog = document.getElementById('catalogo');
     if (catalog) {
       catalog.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
-      window.location.hash = '#capsulas';
+      window.location.hash = '#catalogo';
     }
   };
 
@@ -4045,25 +4104,74 @@ Mientras tanto, la transferencia por WhatsApp ya queda operativa.`);
   initStore();
 
   /* ─── EVENT LISTENERS ─── */
-  document.getElementById('searchInput')?.addEventListener('input', e => {
+  document.getElementById('searchInput').addEventListener('input', e => {
     state.query = e.target.value.trim();
     applyFilters();
   });
 
-  document.getElementById('buyModal')?.addEventListener('click', e => {
+  document.getElementById('minPrice')?.addEventListener('input', e => {
+    state.minPrice = e.target.value;
+  });
+
+  document.getElementById('maxPrice')?.addEventListener('input', e => {
+    state.maxPrice = e.target.value;
+  });
+
+  document.addEventListener('change', e => {
+    if (!e.target.matches('input[type="checkbox"][data-group]')) return;
+    const g = e.target.dataset.group;
+    const v = e.target.value;
+    if (e.target.checked) state[g].add(v);
+    else state[g].delete(v);
+  });
+
+  document.getElementById('resetFilters')?.addEventListener('click', () => {
+    state.query = '';
+    state.catalogView = 'featured';
+    state.sort = 'featured';
+    state.capsules.clear();
+    state.cuts.clear();
+    state.sizes.clear();
+    state.minPrice = '';
+    state.maxPrice = '';
+    document.getElementById('searchInput').value = '';
+    document.getElementById('minPrice').value = '';
+    document.getElementById('maxPrice').value = '';
+    document.querySelectorAll('input[type="checkbox"][data-group]').forEach(i => { i.checked = false; });
+    document.querySelectorAll('[data-catalog-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.catalogView === 'featured'));
+    applyFilters();
+  });
+
+  document.querySelectorAll('[data-catalog-view]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.catalogView = btn.dataset.catalogView || 'featured';
+      document.querySelectorAll('[data-catalog-view]').forEach(item => item.classList.toggle('active', item === btn));
+      applyFilters();
+    });
+  });
+
+  document.getElementById('buyModal').addEventListener('click', e => {
     if (e.target === e.currentTarget) closeModal();
   });
 
-  document.getElementById('capsuleModal')?.addEventListener('click', e => {
+  document.getElementById('capsuleModal').addEventListener('click', e => {
     if (e.target === e.currentTarget) closeCapsuleModal();
   });
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       closeModal();
-      closeCartDrawer();
       closeCapsuleModal();
+      closeCartDrawer();
     }
+  });
+
+  document.querySelectorAll('.nav-link[data-catalog-view]').forEach(link => {
+    link.addEventListener('click', () => {
+      state.catalogView = link.dataset.catalogView || 'featured';
+      document.querySelectorAll('[data-catalog-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.catalogView === state.catalogView));
+      applyFilters();
+    });
   });
 
   /* ─── SCROLL ANIMATIONS ─── */
