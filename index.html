@@ -2056,10 +2056,10 @@
 
   <nav class="nav-strip" aria-label="Navegación principal">
     <div class="container nav-scroll">
-      <a class="nav-link active" href="#catalogo">Catálogo</a>
+      <a class="nav-link" href="#catalogo">Catálogo</a>
       <a class="nav-link" href="#capsulas">Cápsulas</a>
       <a class="nav-link" href="#catalogo" data-catalog-view="bestsellers">Más vendidas</a>
-      <a class="nav-link" href="#catalogo" data-catalog-view="featured">Destacadas</a>
+      <a class="nav-link active" href="#catalogo" data-catalog-view="featured">Destacadas</a>
       <a class="nav-link" href="https://instagram.com/somos.sinrecreo" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
     </div>
   </nav>
@@ -2162,10 +2162,10 @@
       <div class="section-head fade-up">
         <div>
           <div class="section-label">Cápsulas editoriales</div>
-          <h2 class="section-title">Universos listos para abrir</h2>
-          <p class="section-sub">Cada cápsula ahora se presenta como una mini portada editorial. Entrás por la historia, y recién después ves las prendas.</p>
+          <h2 class="section-title">Colecciones con voz propia</h2>
+          <p class="section-sub">Cada cápsula es un universo. Elegí la que habla tu idioma.</p>
         </div>
-        <a class="link-arrow" href="#catalogo">Ir a la selección editorial →</a>
+        <a class="link-arrow" href="#catalogo">Ver todo el catálogo →</a>
       </div>
       <div class="capsule-grid" id="capsuleGrid">
         <!-- rendered by JS -->
@@ -2207,8 +2207,8 @@
           <div class="catalog-toolbar editorial-toolbar fade-up">
             <div class="toolbar-copy">
               <div class="section-label" style="margin-bottom:6px">Selección editorial</div>
-              <h2 class="section-title" style="font-size:clamp(1.7rem,2.6vw,2.35rem)">Catálogo corto, entrada fuerte</h2>
-              <p id="resultsCount" class="section-sub" style="max-width:72ch">Acá abajo no aparece todo el universo. Solo las prendas destacadas y las que mejor convierten para que la home siga respirando.</p>
+              <h2 class="section-title" style="font-size:clamp(1.7rem,2.6vw,2.35rem)">Catálogo</h2>
+              <p id="resultsCount" class="section-sub" style="max-width:72ch">Nuestras destacadas del mes</p>
             </div>
             <div class="catalog-controls">
               <div class="catalog-switch" id="catalogSwitch" aria-label="Cambiar colección visible">
@@ -2429,13 +2429,13 @@
         <div class="capsule-modal-meta">
           <div class="capsule-modal-kicker" id="capsuleModalTag">Activa ahora</div>
           <div class="capsule-modal-count" id="capsuleModalCount">0 prendas</div>
-          <p class="capsule-modal-text">Entrá a la cápsula y resolvé desde ahí. La idea es que el usuario vea primero el relato, y recién después navegue la selección completa.</p>
+          <p class="capsule-modal-text">Explorá la cápsula completa y elegí la prenda que mejor conecte con tu idea.</p>
         </div>
       </div>
       <div class="capsule-modal-products-head">
         <div>
           <div class="modal-section-title" style="margin-bottom:6px">Prendas de la cápsula</div>
-          <p class="capsule-modal-subtle">Las prendas se muestran con la misma estética premium que ves en destacadas.</p>
+          <p class="capsule-modal-subtle">Todas las prendas de esta cápsula, con la misma estética del catálogo principal.</p>
         </div>
       </div>
       <div class="capsule-modal-grid products-grid" id="capsuleModalGrid"></div>
@@ -2777,6 +2777,11 @@
   /* ─── HELPERS ─── */
   const fmt = v => new Intl.NumberFormat('es-AR', { style:'currency', currency:'ARS', maximumFractionDigits:0 }).format(v);
   const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[m]));
+  const normalizeTextKey = value => String(value || '')
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '');
   const getWhatsAppBase = () => `https://wa.me/${STORE_CONFIG.whatsappNumber}`;
   const getTransferPrice = p => p.transferPrice ?? Math.round(p.price * (1 - ((p.transferDiscount ?? STORE_CONFIG.transferDiscount) / 100)));
   const normalizeFit = fit => ({ femenino:'femenino', femenina:'femenino', masculino:'masculino', masculina:'masculino', unisex:'unisex' }[String(fit || '').toLowerCase()] || 'unisex');
@@ -3063,14 +3068,18 @@
       const approvedIds = new Set((approvedOrders || []).map(row => row.id));
       const variantToProductKeys = {};
       products.forEach(product => {
+        const baseKeys = [
+          String(product.id || '').trim(),
+          String(product.dbId || '').trim(),
+          String(product.title || '').trim(),
+          String(product.sku || '').trim(),
+          normalizeTextKey(product.title),
+          normalizeTextKey(product.sku)
+        ].filter(Boolean);
+
         Object.values(product.variantIdsByKey || {}).forEach(variantId => {
           if (!variantId) return;
-          variantToProductKeys[variantId] = [
-            String(product.id || '').trim(),
-            String(product.dbId || '').trim(),
-            String(product.title || '').trim(),
-            String(product.sku || '').trim()
-          ].filter(Boolean);
+          variantToProductKeys[variantId] = baseKeys;
         });
       });
 
@@ -3081,12 +3090,16 @@
         if (!quantity) return;
 
         const variantKeys = variantToProductKeys[item.variant_id] || [];
-        const fallbackKeys = [String(item.product_title || '').trim()].filter(Boolean);
+        const fallbackKeys = [
+          String(item.product_title || '').trim(),
+          normalizeTextKey(item.product_title)
+        ].filter(Boolean);
         const keys = [...new Set([...variantKeys, ...fallbackKeys])];
         keys.forEach(key => {
           counts[key] = (counts[key] || 0) + quantity;
         });
       });
+
       productSalesSource = Object.keys(counts).length ? 'sales' : 'fallback';
       return counts;
     } catch (error) {
@@ -3101,7 +3114,9 @@
       String(product.id || '').trim(),
       String(product.dbId || '').trim(),
       String(product.title || '').trim(),
-      String(product.sku || '').trim()
+      String(product.sku || '').trim(),
+      normalizeTextKey(product.title),
+      normalizeTextKey(product.sku)
     ].filter(Boolean);
     const sales = Math.max(0, ...keys.map(key => Number(productSalesMap[key] || 0)));
     if (sales > 0) return sales * 1000;
@@ -3133,8 +3148,9 @@
   };
 
   const getCapsuleProducts = (capsuleName = '') => {
+    const wanted = normalizeTextKey(capsuleName);
     return products
-      .filter(product => String(product.capsule || '').trim() === String(capsuleName || '').trim())
+      .filter(product => normalizeTextKey(product.capsule) === wanted)
       .sort((a, b) => Number(b.featured) - Number(a.featured) || new Date(b.sortDate || 0) - new Date(a.sortDate || 0));
   };
 
@@ -3153,7 +3169,7 @@
   };
 
   const openCapsuleModal = (capsuleName) => {
-    const capsule = (capsulesData.length ? capsulesData : getCapsuleFallbackData()).find(item => item.name === capsuleName);
+    const capsule = (capsulesData.length ? capsulesData : getCapsuleFallbackData()).find(item => normalizeTextKey(item.name) === normalizeTextKey(capsuleName));
     if (!capsule) return;
     currentCapsuleView = capsule.name;
 
@@ -3162,7 +3178,7 @@
 
     document.getElementById('capsuleModalEyebrow').textContent = 'Cápsula editorial';
     document.getElementById('capsuleModalTitle').textContent = capsule.name;
-    document.getElementById('capsuleModalDescription').textContent = capsule.heroBody || capsule.desc || 'Seleccioná una prenda para abrir su compra directa.';
+    document.getElementById('capsuleModalDescription').textContent = capsule.heroBody || capsule.desc || 'Explorá las prendas de esta cápsula.';
     document.getElementById('capsuleModalTag').textContent = capsule.tag || 'Activa ahora';
     document.getElementById('capsuleModalCount').textContent = `${productsInCapsule.length} ${productsInCapsule.length === 1 ? 'prenda' : 'prendas'}`;
     document.getElementById('capsuleModalGallery').innerHTML = `
@@ -3172,7 +3188,11 @@
       </div>
     `;
 
-    renderProducts(productsInCapsule, 'capsuleModalGrid');
+    if (productsInCapsule.length) {
+      renderProducts(productsInCapsule, 'capsuleModalGrid');
+    } else {
+      document.getElementById('capsuleModalGrid').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px 0;color:var(--muted)"><div style="font-size:2rem;margin-bottom:12px">🧵</div><strong>Esta cápsula todavía no tiene prendas visibles</strong><p style="margin-top:6px">Cuando cargues productos vinculados a esta cápsula en Supabase, van a aparecer acá automáticamente.</p></div>`;
+    }
     document.getElementById('capsuleModal').classList.add('open');
     refreshBodyScrollLock();
   };
@@ -3190,8 +3210,11 @@
     renderFeaturedCapsule();
     renderHeroStats();
     renderCapsules();
-    document.querySelectorAll('[data-catalog-view]').forEach(btn => {
+    document.querySelectorAll('.catalog-pill[data-catalog-view]').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.catalogView === state.catalogView);
+    });
+    document.querySelectorAll('.nav-link[data-catalog-view]').forEach(link => {
+      link.classList.toggle('active', link.dataset.catalogView === state.catalogView);
     });
     applyFilters();
     updateCartUI();
@@ -4165,14 +4188,16 @@ Mientras tanto, la transferencia por WhatsApp ya queda operativa.`);
     document.getElementById('minPrice').value = '';
     document.getElementById('maxPrice').value = '';
     document.querySelectorAll('input[type="checkbox"][data-group]').forEach(i => { i.checked = false; });
-    document.querySelectorAll('[data-catalog-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.catalogView === 'featured'));
+    document.querySelectorAll('.catalog-pill[data-catalog-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.catalogView === 'featured'));
+    document.querySelectorAll('.nav-link[data-catalog-view]').forEach(link => link.classList.toggle('active', link.dataset.catalogView === 'featured'));
     applyFilters();
   });
 
-  document.querySelectorAll('[data-catalog-view]').forEach(btn => {
+  document.querySelectorAll('.catalog-pill[data-catalog-view]').forEach(btn => {
     btn.addEventListener('click', () => {
       state.catalogView = btn.dataset.catalogView || 'featured';
-      document.querySelectorAll('[data-catalog-view]').forEach(item => item.classList.toggle('active', item === btn));
+      document.querySelectorAll('.catalog-pill[data-catalog-view]').forEach(item => item.classList.toggle('active', item.dataset.catalogView === state.catalogView));
+      document.querySelectorAll('.nav-link[data-catalog-view]').forEach(link => link.classList.toggle('active', link.dataset.catalogView === state.catalogView));
       applyFilters();
     });
   });
@@ -4196,7 +4221,8 @@ Mientras tanto, la transferencia por WhatsApp ya queda operativa.`);
   document.querySelectorAll('.nav-link[data-catalog-view]').forEach(link => {
     link.addEventListener('click', () => {
       state.catalogView = link.dataset.catalogView || 'featured';
-      document.querySelectorAll('[data-catalog-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.catalogView === state.catalogView));
+      document.querySelectorAll('.nav-link[data-catalog-view]').forEach(item => item.classList.toggle('active', item.dataset.catalogView === state.catalogView));
+      document.querySelectorAll('.catalog-pill[data-catalog-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.catalogView === state.catalogView));
       applyFilters();
     });
   });
