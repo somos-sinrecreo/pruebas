@@ -1960,7 +1960,7 @@
       gap: 16px;
     }
     .capsule-modal-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     @media (max-width: 1180px) {
@@ -2435,7 +2435,7 @@
       <div class="capsule-modal-products-head">
         <div>
           <div class="modal-section-title" style="margin-bottom:6px">Prendas de la cápsula</div>
-          <p class="capsule-modal-subtle">Cada tarjeta mantiene sus 3 fotos, compra directa y acceso al carrito.</p>
+          <p class="capsule-modal-subtle">Las prendas se muestran con la misma estética premium que ves en destacadas.</p>
         </div>
       </div>
       <div class="capsule-modal-grid products-grid" id="capsuleModalGrid"></div>
@@ -3055,48 +3055,79 @@
     try {
       const [{ data: approvedOrders, error: ordersError }, { data: orderItems, error: itemsError }] = await Promise.all([
         client.from('orders').select('id, status').eq('status', 'approved'),
-        client.from('order_items').select('order_id, product_title, quantity')
+        client.from('order_items').select('order_id, product_title, quantity, variant_id')
       ]);
       if (ordersError) throw ordersError;
       if (itemsError) throw itemsError;
 
       const approvedIds = new Set((approvedOrders || []).map(row => row.id));
+      const variantToProductKeys = {};
+      products.forEach(product => {
+        Object.values(product.variantIdsByKey || {}).forEach(variantId => {
+          if (!variantId) return;
+          variantToProductKeys[variantId] = [
+            String(product.id || '').trim(),
+            String(product.dbId || '').trim(),
+            String(product.title || '').trim(),
+            String(product.sku || '').trim()
+          ].filter(Boolean);
+        });
+      });
+
       const counts = {};
       (orderItems || []).forEach(item => {
         if (!approvedIds.has(item.order_id)) return;
-        const key = String(item.product_title || '').trim();
-        if (!key) return;
-        counts[key] = (counts[key] || 0) + Number(item.quantity || 0);
+        const quantity = Number(item.quantity || 0);
+        if (!quantity) return;
+
+        const variantKeys = variantToProductKeys[item.variant_id] || [];
+        const fallbackKeys = [String(item.product_title || '').trim()].filter(Boolean);
+        const keys = [...new Set([...variantKeys, ...fallbackKeys])];
+        keys.forEach(key => {
+          counts[key] = (counts[key] || 0) + quantity;
+        });
       });
       productSalesSource = Object.keys(counts).length ? 'sales' : 'fallback';
       return counts;
     } catch (error) {
       productSalesSource = 'fallback';
-      console.warn('No se pudo cargar el ranking de ventas. Uso fallback editorial.', error);
+      console.warn('No se pudo cargar el ranking de ventas desde órdenes aprobadas.', error);
       return {};
     }
   };
 
   const getBestSellerScore = (product) => {
-    const titleKey = String(product.title || '').trim();
-    const sales = Number(productSalesMap[titleKey] || 0);
+    const keys = [
+      String(product.id || '').trim(),
+      String(product.dbId || '').trim(),
+      String(product.title || '').trim(),
+      String(product.sku || '').trim()
+    ].filter(Boolean);
+    const sales = Math.max(0, ...keys.map(key => Number(productSalesMap[key] || 0)));
     if (sales > 0) return sales * 1000;
     return (product.featured ? 100 : 0) + getTotalStock(product) + (new Date(product.sortDate || 0).getTime() / 1000000000000);
   };
 
   const getCatalogCollections = () => {
     const active = products.filter(product => getTotalStock(product) > 0);
-    const featured = active
-      .filter(product => product.featured)
-      .sort((a, b) => new Date(b.sortDate || 0) - new Date(a.sortDate || 0))
-      .slice(0, 12);
+    const byNewest = [...active].sort((a, b) => new Date(b.sortDate || 0) - new Date(a.sortDate || 0));
+
+    const featuredBase = byNewest.filter(product => product.featured);
+    const featured = [...featuredBase];
+    if (featured.length < 6) {
+      byNewest.forEach(product => {
+        if (featured.length >= 6) return;
+        if (featured.some(existing => existing.id === product.id)) return;
+        featured.push(product);
+      });
+    }
 
     const bestsellers = [...active]
       .sort((a, b) => getBestSellerScore(b) - getBestSellerScore(a) || new Date(b.sortDate || 0) - new Date(a.sortDate || 0))
-      .slice(0, 12);
+      .slice(0, 6);
 
     return {
-      featured: featured.length ? featured : bestsellers,
+      featured: featured.slice(0, 6).length ? featured.slice(0, 6) : bestsellers,
       bestsellers
     };
   };
@@ -3453,13 +3484,9 @@
     renderProducts(filtered, 'productsGrid');
     const rc = document.getElementById('resultsCount');
     if (rc) {
-      const label = state.catalogView === 'bestsellers' ? 'más vendidas' : 'destacadas';
-      const sourceHint = state.catalogView === 'bestsellers' && productSalesSource !== 'sales'
-        ? ' Hoy este bloque usa una priorización editorial hasta conectar ranking público de ventas.'
-        : '';
-      rc.textContent = filtered.length
-        ? `${filtered.length} prenda${filtered.length !== 1 ? 's' : ''} en la vista de ${label}.${sourceHint}`
-        : `No encontramos prendas en la vista de ${label} con esa búsqueda.`;
+      rc.textContent = state.catalogView === 'bestsellers'
+        ? 'los 6 conceptos mas vendidos en SIN RECREO'
+        : 'Nuestras destacadas del mes';
     }
   };
 
