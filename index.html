@@ -3,70 +3,4084 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Test envío de mails | SIN RECREO</title>
+  <title>SIN RECREO | Remeras de concepto · Store v2</title>
+  <meta name="description" content="SIN RECREO. Remeras de concepto, cápsulas editoriales y tienda con diseño premium." />
+  <meta name="theme-color" content="#0e0e10" />
+  <link rel="canonical" href="https://sinrecreo.com.ar/" />
+  <meta property="og:title" content="SIN RECREO | Remeras de concepto" />
+  <meta property="og:description" content="Una tienda editorial de cápsulas, ideas y prendas con intención." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sinrecreo.com.ar/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body{margin:0;padding:24px;background:#faf9f6;color:#1a1a1b;font-family:Arial,Helvetica,sans-serif}
-    .card{max-width:760px;margin:0 auto;background:#fff;border:1px solid #e9e2d8;border-radius:24px;padding:28px;box-shadow:0 16px 40px rgba(26,26,27,.08)}
-    h1{margin:0 0 10px;font-size:34px;line-height:1;color:#1a1a1b}
-    p{color:#6b6560;line-height:1.6}
-    label{display:block;margin:18px 0 8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#b35c44}
-    input,button{font:inherit}
-    input{width:100%;box-sizing:border-box;padding:14px 16px;border:1px solid #e3dbd1;border-radius:14px;background:#fff}
-    button{margin-top:18px;background:#1a1a1b;color:#fff;border:0;border-radius:999px;padding:14px 18px;font-weight:700;cursor:pointer}
-    button:hover{opacity:.92}
-    pre{margin-top:18px;background:#111;color:#f4f4f4;padding:16px;border-radius:16px;white-space:pre-wrap;word-break:break-word;overflow:auto}
-    .hint{background:#fff6f0;border:1px solid #f0d4c7;color:#6c3c2e;border-radius:16px;padding:14px 16px;margin-top:18px}
+    :root {
+      --ink: #0e0e10;
+      --paper: #f5f3ee;
+      --cream: #faf8f3;
+      --accent: #c05a3a;
+      --accent-light: #e8785a;
+      --accent-pale: rgba(192,90,58,.10);
+      --muted: #6b6560;
+      --line: rgba(14,14,16,.09);
+      --card: #ffffff;
+      --r-xl: 28px;
+      --r-lg: 20px;
+      --r-md: 14px;
+      --r-sm: 10px;
+      --container: min(1400px, calc(100vw - 40px));
+      --sh: 0 2px 24px rgba(14,14,16,.07);
+      --sh-md: 0 8px 48px rgba(14,14,16,.10);
+      --sh-lg: 0 20px 80px rgba(14,14,16,.12);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button, input, select { font: inherit; }
+    .container { width: var(--container); margin: 0 auto; }
+    .hidden { display: none !important; }
+
+    /* ── ANNOUNCE BAR ── */
+    .announce {
+      background: var(--ink);
+      color: rgba(255,255,255,.82);
+      font-family: var(--font-body);
+      font-size: .74rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .announce-track {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      padding: 11px 0;
+      animation: marquee 32s linear infinite;
+    }
+    .announce-track span { padding-right: 72px; }
+    .announce-track .dot { color: var(--accent); padding-right: 72px; font-size: .6rem; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* ── HEADER ── */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(245,243,238,.94);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+      min-height: 72px;
+      padding: 12px 0;
+    }
+    .logo-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      text-align: center;
+    }
+    .logo-wordmark {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      letter-spacing: .04em;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .logo-tagline {
+      font-size: .62rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    .header-right { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+
+    .search-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,.75);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 16px 0 14px;
+      height: 42px;
+      flex: 1;
+      max-width: 340px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .search-pill:focus-within {
+      border-color: rgba(14,14,16,.25);
+      box-shadow: 0 0 0 3px rgba(192,90,58,.08);
+    }
+    .search-pill svg { opacity: .4; flex: none; }
+    .search-pill input {
+      flex: 1;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font-size: .9rem;
+      color: var(--ink);
+      min-width: 0;
+    }
+    .search-pill input::placeholder { color: var(--muted); }
+
+    .hbtn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      height: 42px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.75);
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: .84rem;
+      transition: all .18s;
+      white-space: nowrap;
+    }
+    .hbtn:hover { background: #fff; border-color: rgba(14,14,16,.18); box-shadow: var(--sh); }
+    .hbtn.icon { width: 42px; padding: 0; }
+    .hbtn.accent-fill {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+    .hbtn.accent-fill:hover { background: #222; }
+    .cart-badge {
+      position: relative;
+    }
+    .cart-badge .count {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 18px;
+      height: 18px;
+      background: var(--accent);
+      color: #fff;
+      font-size: .65rem;
+      font-weight: 700;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+    }
+
+    /* ── NAV ── */
+    .nav-strip {
+      border-top: 1px solid var(--line);
+      background: transparent;
+    }
+    .nav-scroll {
+      display: flex;
+      gap: 4px;
+      padding: 10px 0;
+      overflow: auto;
+      scrollbar-width: none;
+    }
+    .nav-scroll::-webkit-scrollbar { display: none; }
+    .nav-link {
+      white-space: nowrap;
+      font-size: .84rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: all .15s;
+      opacity: .7;
+    }
+    .nav-link:hover, .nav-link.active {
+      background: var(--ink);
+      color: #fff;
+      opacity: 1;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 32px 0 0;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    /* Main hero card */
+    .hero-main {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--r-xl);
+      min-height: 480px;
+      background: var(--ink);
+      color: #fff;
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .hero-main::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 80% 0%, rgba(192,90,58,.35), transparent 50%),
+        radial-gradient(ellipse at -10% 80%, rgba(192,90,58,.12), transparent 50%);
+    }
+    .hero-main-content { position: relative; z-index: 1; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 20px;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 1.5px;
+      background: var(--accent-light);
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.6rem, 7vw, 6.4rem);
+      letter-spacing: .03em;
+      line-height: .92;
+      margin-bottom: 20px;
+    }
+    .hero-title em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--accent-light);
+      font-size: .82em;
+    }
+    .hero-body {
+      font-size: 1rem;
+      line-height: 1.72;
+      color: rgba(255,255,255,.7);
+      max-width: 48ch;
+      margin-bottom: 32px;
+    }
+    .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 28px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .92rem;
+      letter-spacing: .02em;
+      border: none;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 12px 32px rgba(192,90,58,.35); }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 28px;
+      background: transparent;
+      color: rgba(255,255,255,.85);
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: .92rem;
+      border: 1px solid rgba(255,255,255,.2);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.06); }
+
+    /* Decorative big text */
+    .hero-deco {
+      position: absolute;
+      right: -10px;
+      top: 30px;
+      font-family: var(--font-display);
+      font-size: clamp(8rem, 18vw, 14rem);
+      letter-spacing: -.02em;
+      color: rgba(255,255,255,.03);
+      line-height: 1;
+      pointer-events: none;
+      z-index: 0;
+      user-select: none;
+    }
+
+    /* Hero right side */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .hero-stat-card {
+      background: #fff;
+      border-radius: var(--r-xl);
+      padding: 28px;
+      border: 1px solid var(--line);
+      box-shadow: var(--sh);
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .stat-item { }
+    .stat-item strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      letter-spacing: .02em;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-item span {
+      font-size: .8rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .divider { height: 1px; background: var(--line); margin: 16px 0; }
+    .pay-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .pay-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .85rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .pay-row .icon { width: 20px; height: 20px; flex: none; }
+    .pay-row strong { color: var(--ink); }
+
+    .hero-promo-card {
+      background: var(--ink);
+      border-radius: var(--r-xl);
+      padding: 26px;
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+    }
+    .hero-promo-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 100% 0%, rgba(192,90,58,.4), transparent 60%);
+    }
+    .hero-promo-card > * { position: relative; z-index: 1; }
+    .promo-label {
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--accent-light);
+      margin-bottom: 10px;
+    }
+    .promo-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .promo-body {
+      font-size: .85rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,.65);
+      margin-bottom: 18px;
+    }
+    .btn-ghost-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 20px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 999px;
+      font-size: .84rem;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      transition: all .2s;
+      background: transparent;
+    }
+    .btn-ghost-white:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.45); }
+
+    /* ── CAPSULES ── */
+    .section { padding: 56px 0; }
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+    .section-label {
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      letter-spacing: .03em;
+      line-height: 1.05;
+      color: var(--ink);
+    }
+    .section-sub {
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 50ch;
+      margin-top: 6px;
+    }
+    .link-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .84rem;
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+      padding-bottom: 2px;
+      border-bottom: 1.5px solid var(--ink);
+      opacity: .6;
+      transition: opacity .18s;
+    }
+    .link-arrow:hover { opacity: 1; }
+
+    .capsule-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .capsule-card {
+      position: relative;
+      padding: 26px 22px 28px;
+      border-radius: var(--r-xl);
+      background: #fff;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .22s, box-shadow .22s, border-color .22s;
+    }
+    .capsule-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--sh-md);
+      border-color: rgba(14,14,16,.14);
+    }
+    .capsule-card::after {
+      content: "";
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--c, rgba(192,90,58,.12)), transparent 70%);
+      transform: translate(30%, 30%);
+    }
+    .capsule-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-pale);
+      padding: 6px 10px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+    .capsule-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: .03em;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .capsule-desc {
+      font-size: .87rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    /* ── CATALOG ── */
+    .catalog-section { padding: 0 0 72px; }
+    .catalog-layout {
+      display: grid;
+      grid-template-columns: 268px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: sticky;
+      top: 130px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .filter-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      padding: 18px;
+    }
+    .filter-card h4 {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .filter-stack { display: flex; flex-direction: column; gap: 8px; }
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: .9rem;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .check-row input { accent-color: var(--accent); width: 16px; height: 16px; flex: none; }
+    .price-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .field {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--r-sm);
+      padding: 10px 12px;
+      font-size: .78rem;
+      outline: none;
+      background: var(--cream);
+      transition: border-color .18s;
+    }
+    .field:focus { border-color: var(--accent); }
+    .btn-reset {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-sm);
+      background: #fff;
+      font-weight: 600;
+      font-size: .84rem;
+      cursor: pointer;
+      transition: all .18s;
+      color: var(--ink);
+    }
+    .btn-reset:hover { border-color: var(--ink); }
+
+    /* Catalog content */
+    .catalog-main { display: flex; flex-direction: column; gap: 16px; }
+    .catalog-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      padding: 16px 20px;
+    }
+    .toolbar-left h2 {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      letter-spacing: .03em;
+      line-height: 1;
+    }
+    .toolbar-left p {
+      font-size: .82rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .sort-select {
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-sm);
+      background: var(--cream);
+      font-size: .88rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+    .mobile-filter-btn { display: none; }
+
+    /* Products grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    /* Product card */
+    .pcard {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .22s, box-shadow .22s, border-color .22s;
+    }
+    .pcard:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--sh-md);
+      border-color: rgba(14,14,16,.14);
+    }
+    .pcard-figure {
+      position: relative;
+      aspect-ratio: 1 / 1.05;
+      background: linear-gradient(160deg, #eceae4, #e2dfd8);
+      overflow: hidden;
+    }
+    .pcard-figure::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 20%, rgba(192,90,58,.1), transparent 40%);
+    }
+    .pcard-badge {
+      position: absolute;
+      top: 12px; left: 12px;
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+    .badge-featured { background: var(--ink); color: #fff; }
+    .badge-new { background: var(--accent); color: #fff; }
+    .stock-badge {
+      position: absolute;
+      top: 12px; right: 12px;
+      font-size: .65rem;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.9);
+      border: 1px solid var(--line);
+    }
+    .stock-badge.low { background: rgba(192,90,58,.12); color: var(--accent); border-color: rgba(192,90,58,.2); }
+    .mockup-wrap {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+    }
+    .mockup-wrap svg { width: 90%; height: 90%; filter: drop-shadow(0 16px 32px rgba(0,0,0,.25)); }
+
+    /* Quick-add overlay */
+    .pcard-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(14,14,16,.55);
+      backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity .22s;
+    }
+    .pcard:hover .pcard-overlay { opacity: 1; }
+    .overlay-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .84rem;
+      cursor: pointer;
+      transition: all .18s;
+      border: none;
+    }
+    .overlay-btn.primary { background: #fff; color: var(--ink); }
+    .overlay-btn.primary:hover { background: var(--accent); color: #fff; }
+    .overlay-btn.ghost { background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.25); }
+    .overlay-btn.ghost:hover { background: rgba(255,255,255,.25); }
+
+    .pcard-body {
+      padding: 18px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .pcard-cap {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .pcard-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: .03em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+    .pcard-desc {
+      font-size: .84rem;
+      line-height: 1.65;
+      color: var(--muted);
+      flex: 1;
+    }
+    .pcard-price-block { }
+    .pcard-price {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      letter-spacing: .02em;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .pcard-cuotas { font-size: .8rem; color: #5a5652; margin-top: 3px; }
+    .pcard-transfer { font-size: .8rem; color: var(--accent); font-weight: 600; margin-top: 2px; }
+    .size-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .size-chip {
+      min-width: 38px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      font-size: .74rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    .size-chip.low { background: rgba(192,90,58,.08); border-color: rgba(192,90,58,.2); color: var(--accent); }
+    .pcard-actions { display: flex; gap: 8px; margin-top: 6px; }
+    .action-buy {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px;
+      background: var(--ink);
+      color: #fff;
+      border-radius: var(--r-md);
+      font-weight: 700;
+      font-size: .84rem;
+      cursor: pointer;
+      border: none;
+      transition: background .18s;
+    }
+    .action-buy:hover { background: #222; }
+    .action-wa {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px;
+      background: #f5f3ee;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      font-weight: 600;
+      font-size: .84rem;
+      cursor: pointer;
+      min-width: 52px;
+      transition: all .18s;
+    }
+    .action-wa:hover { background: #e8f5e9; border-color: #25D366; color: #1a7a3a; }
+
+
+    /* ── PRODUCT GALLERY / MULTI-IMAGE ── */
+    .pcard-media {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      z-index: 1;
+    }
+    .pcard-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .pcard-photo.fallback {
+      object-fit: contain;
+      padding: 16px;
+      background: linear-gradient(160deg, #eceae4, #e2dfd8);
+    }
+    .pcard-media-count {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      z-index: 3;
+      font-size: .64rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(14,14,16,.08);
+      color: var(--ink);
+      backdrop-filter: blur(6px);
+    }
+    .pcard-thumbs {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      display: flex;
+      gap: 8px;
+      z-index: 3;
+    }
+    .pcard-thumb {
+      width: 42px;
+      height: 52px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid rgba(255,255,255,.55);
+      background: rgba(255,255,255,.88);
+      box-shadow: 0 8px 20px rgba(14,14,16,.12);
+      padding: 0;
+      cursor: pointer;
+      transition: transform .18s, border-color .18s, box-shadow .18s;
+    }
+    .pcard-thumb:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(14,14,16,.16); }
+    .pcard-thumb.active { border-color: var(--ink); }
+    .pcard-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .modal-product-row {
+      display: grid;
+      grid-template-columns: 124px 1fr;
+      align-items: start;
+    }
+    .modal-gallery-block {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .modal-product-main {
+      width: 124px;
+      height: 148px;
+      border-radius: var(--r-md);
+      overflow: hidden;
+      background: var(--cream);
+      border: 1px solid var(--line);
+    }
+    .modal-product-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .modal-product-main img.fallback {
+      object-fit: contain;
+      padding: 10px;
+      background: linear-gradient(160deg, #eceae4, #e2dfd8);
+    }
+    .modal-product-thumbs {
+      display: flex;
+      gap: 6px;
+    }
+    .modal-thumb {
+      width: 36px;
+      height: 44px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      padding: 0;
+      cursor: pointer;
+    }
+    .modal-thumb.active { border-color: var(--ink); }
+    .modal-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .transfer-panel {
+      margin-bottom: 22px;
+      padding: 16px;
+      border-radius: var(--r-lg);
+      background: rgba(26,122,58,.06);
+      border: 1px solid rgba(26,122,58,.14);
+    }
+    .transfer-panel[hidden] { display: none; }
+    .transfer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .transfer-head strong {
+      font-size: .92rem;
+    }
+    .transfer-head span {
+      font-size: .74rem;
+      color: #1a7a3a;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .transfer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .transfer-item {
+      background: rgba(255,255,255,.74);
+      border: 1px solid rgba(26,122,58,.12);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+    .transfer-item label {
+      display: block;
+      font-size: .68rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .transfer-item strong,
+    .transfer-item span {
+      display: block;
+      font-size: .9rem;
+      color: var(--ink);
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    .transfer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .transfer-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(26,122,58,.18);
+      background: #fff;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: .82rem;
+      color: #1a7a3a;
+      transition: all .18s;
+    }
+    .transfer-btn:hover {
+      background: #1a7a3a;
+      color: #fff;
+      border-color: #1a7a3a;
+    }
+    .modal-note {
+      margin-top: 10px;
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 680px) {
+      .modal-product-row {
+        grid-template-columns: 1fr;
+      }
+      .modal-gallery-block {
+        width: 100%;
+      }
+      .modal-product-main {
+        width: 100%;
+        height: 260px;
+      }
+      .modal-product-thumbs {
+        justify-content: center;
+      }
+      .pcard-thumb {
+        width: 36px;
+        height: 46px;
+      }
+    }
+
+
+
+
+    
+    .modal-customer-prompt {
+      margin: 10px 0 2px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(179,92,68,.10);
+      border: 1px solid rgba(179,92,68,.18);
+      color: #8a4836;
+      font-size: .84rem;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+    .modal-customer-prompt.hidden { display: none !important; }
+
+.customer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .customer-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .customer-field.full { grid-column: 1 / -1; }
+    .customer-label {
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .customer-input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 12px 14px;
+      background: #fff;
+      outline: none;
+      font-size: .92rem;
+      transition: border-color .18s, box-shadow .18s;
+    }
+    .customer-input:focus {
+      border-color: rgba(14,14,16,.24);
+      box-shadow: 0 0 0 3px rgba(192,90,58,.08);
+    }
+
+    /* ── PAYMENT MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(14,14,16,.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: var(--r-xl);
+      max-width: 560px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--sh-lg);
+      animation: modalIn .28s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    @keyframes modalIn { from { transform: scale(.9) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+    .modal-header {
+      padding: 24px 24px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: .03em;
+    }
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--cream);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      flex: none;
+      font-size: 1.2rem;
+      line-height: 1;
+      color: var(--muted);
+      transition: all .15s;
+    }
+    .modal-close:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .modal-body { padding: 20px 24px 24px; }
+    .modal-product-row {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding: 16px;
+      background: var(--cream);
+      border-radius: var(--r-lg);
+      margin-bottom: 20px;
+    }
+    .modal-product-img {
+      width: 72px;
+      height: 80px;
+      border-radius: var(--r-md);
+      background: var(--ink);
+      display: grid;
+      place-items: center;
+      flex: none;
+      overflow: hidden;
+    }
+    .modal-product-img svg { width: 100%; height: 100%; }
+    .modal-product-info { flex: 1; }
+    .modal-product-cap {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .modal-product-name { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: .03em; margin-bottom: 2px; }
+    .modal-product-price { font-size: .9rem; color: var(--muted); }
+
+    .modal-section-title {
+      font-weight: 700;
+      font-size: .84rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .size-selector { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .sz-btn {
+      min-width: 48px;
+      padding: 10px 14px;
+      border-radius: var(--r-sm);
+      border: 1.5px solid var(--line);
+      background: #fff;
+      font-weight: 700;
+      font-size: .88rem;
+      cursor: pointer;
+      transition: all .15s;
+      text-align: center;
+    }
+    .sz-btn:hover, .sz-btn.selected {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .fit-selector { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .fit-btn {
+      min-width: 92px;
+      padding: 10px 14px;
+      border-radius: var(--r-sm);
+      border: 1.5px solid var(--line);
+      background: #fff;
+      font-weight: 700;
+      font-size: .84rem;
+      cursor: pointer;
+      transition: all .15s;
+      text-align: center;
+    }
+    .fit-btn:hover, .fit-btn.selected {
+      border-color: var(--accent);
+      background: rgba(192,90,58,.08);
+      color: var(--ink);
+    }
+    .modal-secondary-cta {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px;
+      margin-top: 14px;
+      margin-bottom: 10px;
+      background: #b35c44;
+      color: #fff;
+      border: 1.5px solid #b35c44;
+      border-radius: var(--r-lg);
+      font-weight: 700;
+      font-size: .88rem;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .modal-secondary-cta:hover { background: #a4533d; border-color: #a4533d; color: #fff; }
+
+    .pay-methods { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+    .pay-method-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--r-lg);
+      cursor: pointer;
+      transition: all .2s;
+      background: #fff;
+      text-align: left;
+    }
+    .pay-method-btn:hover, .pay-method-btn.selected {
+      border-color: var(--accent);
+      background: rgba(192,90,58,.04);
+    }
+    .pay-method-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--r-md);
+      display: grid;
+      place-items: center;
+      flex: none;
+      font-size: 1.4rem;
+    }
+    .pay-method-icon.mp { background: #00bcff; }
+    .pay-method-icon.card { background: #1a1a2e; }
+    .pay-method-icon.transfer { background: #1a3a2e; }
+    .pay-method-info { flex: 1; }
+    .pay-method-name { font-weight: 700; font-size: .94rem; margin-bottom: 2px; }
+    .pay-method-detail { font-size: .8rem; color: var(--muted); }
+    .pay-method-badge {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+    .badge-discount { background: rgba(26,122,58,.12); color: #1a7a3a; }
+    .badge-cuotas { background: rgba(0,188,255,.12); color: #0086b5; }
+
+    .modal-total {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 16px;
+      background: var(--cream);
+      border-radius: var(--r-md);
+      margin-bottom: 16px;
+    }
+    .modal-total-label { font-weight: 600; color: var(--muted); }
+    .modal-total-price { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: .03em; }
+    .modal-cta {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 17px;
+      margin-bottom: 0;
+      background: var(--ink);
+      color: #fff;
+      border-radius: var(--r-lg);
+      font-weight: 700;
+      font-size: .88rem;
+      white-space: nowrap;
+      cursor: pointer;
+      border: none;
+      transition: all .2s;
+    }
+    .modal-cta:hover { background: #222; transform: translateY(-1px); box-shadow: 0 8px 32px rgba(14,14,16,.2); }
+    .modal-cta.mp-style { background: #009ee3; }
+    .modal-cta.mp-style:hover { background: #0086c5; }
+    .modal-secure {
+      text-align: center;
+      font-size: .76rem;
+      color: var(--muted);
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* ── CART DRAWER ── */
+    .cart-drawer {
+      position: fixed;
+      top: 0; right: 0;
+      width: min(420px, 100vw);
+      height: 100vh;
+      z-index: 200;
+      background: #fff;
+      box-shadow: -20px 0 60px rgba(14,14,16,.15);
+      transform: translateX(100%);
+      transition: transform .3s cubic-bezier(.4,0,.2,1);
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-header {
+      padding: 22px 22px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cart-title { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: .04em; }
+    .cart-body { flex: 1; overflow-y: auto; padding: 16px 22px; }
+    .cart-empty { text-align: center; padding: 48px 0; color: var(--muted); }
+    .cart-empty-icon { font-size: 3rem; margin-bottom: 12px; }
+    .cart-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .cart-item-img {
+      width: 64px;
+      height: 72px;
+      border-radius: var(--r-md);
+      background: var(--ink);
+      flex: none;
+      overflow: hidden;
+    }
+    .cart-item-img svg { width: 100%; height: 100%; }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-weight: 700; font-size: .9rem; margin-bottom: 2px; }
+    .cart-item-meta { font-size: .78rem; color: var(--muted); margin-bottom: 8px; }
+    .cart-item-price { font-family: var(--font-display); font-size: 1.1rem; }
+    .cart-item-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 1.1rem;
+      padding: 4px;
+      transition: color .15s;
+    }
+    .cart-item-remove:hover { color: var(--accent); }
+    .cart-footer {
+      padding: 16px 22px 24px;
+      border-top: 1px solid var(--line);
+    }
+    .cart-subtotal {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 16px;
+    }
+    .cart-subtotal-label { font-size: .88rem; color: var(--muted); font-weight: 600; }
+    .cart-subtotal-price { font-family: var(--font-display); font-size: 1.5rem; }
+
+    .cart-browse-btn {
+      width: 100%;
+      padding: 14px;
+      background: #f5f3ee;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      font-weight: 700;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: all .18s;
+      margin-bottom: 10px;
+    }
+    .cart-browse-btn:hover { background: #ebe7df; border-color: rgba(14,14,16,.18); }
+    .cart-checkout-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--ink);
+      color: #fff;
+      border: none;
+      border-radius: var(--r-lg);
+      font-weight: 700;
+      font-size: .96rem;
+      cursor: pointer;
+      transition: background .18s;
+      margin-bottom: 10px;
+    }
+    .cart-checkout-btn:hover { background: #222; }
+    .cart-mp-btn {
+      width: 100%;
+      padding: 14px;
+      background: #009ee3;
+      color: #fff;
+      border: none;
+      border-radius: var(--r-lg);
+      font-weight: 700;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: background .18s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .cart-mp-btn:hover { background: #0086c5; }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      padding: 32px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+    }
+    .trust-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+    .trust-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--r-md);
+      background: var(--cream);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+    }
+    .trust-item strong { font-weight: 700; font-size: .92rem; }
+    .trust-item span { font-size: .8rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── FLOATING WA ── */
+    .float-wa {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #25D366;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 28px rgba(37,211,102,.4);
+      z-index: 80;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .float-wa:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(37,211,102,.5); }
+    .float-wa svg { fill: #fff; }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 48px 0 32px;
+      background: var(--ink);
+      color: rgba(255,255,255,.6);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 40px;
+    }
+    .footer-brand .brand-name {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      letter-spacing: .04em;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .footer-brand p { font-size: .88rem; line-height: 1.72; max-width: 34ch; }
+    .footer-col h5 {
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: rgba(255,255,255,.4);
+      margin-bottom: 14px;
+    }
+    .footer-col a {
+      display: block;
+      font-size: .88rem;
+      margin-bottom: 10px;
+      transition: color .15s;
+    }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-size: .78rem;
+      flex-wrap: wrap;
+    }
+    .pay-logos { display: flex; align-items: center; gap: 8px; }
+    .pay-logo {
+      padding: 6px 10px;
+      border-radius: var(--r-sm);
+      background: rgba(255,255,255,.08);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+    }
+
+    /* ── OVERLAY BACKDROP ── */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(14,14,16,.5);
+      z-index: 190;
+      display: none;
+      backdrop-filter: blur(2px);
+    }
+    .drawer-backdrop.open { display: block; }
+
+    /* ── SKELETON ── */
+    @keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+    .skeleton {
+      background: linear-gradient(90deg, #e8e4dd 25%, #f0ede6 50%, #e8e4dd 75%);
+      background-size: 400px 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--r-sm);
+    }
+
+
+    /* ── PAYMENT STATUS ── */
+    .payment-status-wrap {
+      padding: 20px 0 0;
+    }
+    .payment-status-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 18px;
+      align-items: center;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--r-xl);
+      padding: 18px 22px;
+      box-shadow: var(--sh);
+    }
+    .payment-status-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 1.6rem;
+      flex: none;
+    }
+    .payment-status-card.success .payment-status-icon { background: rgba(26,122,58,.12); }
+    .payment-status-card.pending .payment-status-icon { background: rgba(179,92,68,.12); }
+    .payment-status-card.failure .payment-status-icon { background: rgba(156,47,47,.12); }
+    .payment-status-eyebrow {
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .payment-status-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: .03em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .payment-status-body {
+      font-size: .92rem;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 60ch;
+    }
+    .payment-status-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .btn-soft-dark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: .84rem;
+      cursor: pointer;
+    }
+
+
+    /* ── CAPSULE SHOWCASE ── */
+    .capsule-showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .capsule-card-rich {
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .capsule-card-media {
+      position: relative;
+      aspect-ratio: 1.16 / 1;
+      background: linear-gradient(160deg, #eceae4, #e2dfd8);
+      overflow: hidden;
+    }
+    .capsule-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .capsule-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(14,14,16,.5), rgba(14,14,16,.05));
+      pointer-events: none;
+    }
+    .capsule-card-count {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      z-index: 2;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(14,14,16,.08);
+      color: var(--ink);
+      backdrop-filter: blur(8px);
+    }
+    .capsule-card-body {
+      padding: 22px 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+    .capsule-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 600;
+    }
+    .capsule-card-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .capsule-card-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #fff;
+      font-size: .84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .18s;
+    }
+    .capsule-card-btn:hover { background: #222; }
+    .capsule-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .84rem;
+      font-weight: 700;
+      color: var(--accent);
+      cursor: pointer;
+    }
+
+    /* ── CAPSULE MODAL ── */
+    .capsule-modal {
+      max-width: min(1240px, calc(100vw - 32px));
+      width: 100%;
+    }
+    .capsule-modal .modal-body {
+      padding-top: 16px;
+    }
+    .capsule-modal-hero {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .capsule-modal-gallery {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .capsule-modal-main {
+      width: 100%;
+      aspect-ratio: 1.25 / 1;
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      background: linear-gradient(160deg, #eceae4, #e2dfd8);
+      border: 1px solid var(--line);
+    }
+    .capsule-modal-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .capsule-modal-thumbs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .capsule-modal-thumb {
+      width: 68px;
+      height: 84px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      padding: 0;
+      cursor: pointer;
+      flex: none;
+    }
+    .capsule-modal-thumb.active { border-color: var(--ink); }
+    .capsule-modal-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .capsule-modal-copy {
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: var(--r-xl);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .capsule-modal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-pale);
+      color: var(--accent);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .capsule-modal-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: .03em;
+      line-height: .96;
+      margin: 0;
+    }
+    .capsule-modal-text {
+      font-size: .95rem;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+    .capsule-modal-stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .capsule-chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .capsule-modal-grid-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .capsule-modal-grid-title h3 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: .03em;
+      margin: 0;
+    }
+    .capsule-modal-grid-title p {
+      font-size: .84rem;
+      color: var(--muted);
+      margin: 0;
+    }
+    .capsule-modal-products {
+      max-height: min(58vh, 760px);
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .capsule-modal-products .products-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* ── BEST SELLERS ── */
+    .best-sellers-meta {
+      font-size: .88rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-right { flex-direction: row; }
+      .hero-stat-card { flex: 1; }
+      .hero-promo-card { flex: 1; }
+      .capsule-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .capsule-showcase-grid { grid-template-columns: 1fr; }
+      .capsule-modal-hero { grid-template-columns: 1fr; }
+      .capsule-modal-products .products-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .catalog-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .mobile-filter-btn { display: flex; }
+      .products-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .payment-status-card { grid-template-columns: 1fr; align-items: start; }
+      .payment-status-actions { justify-content: flex-start; }
+      .header-inner { grid-template-columns: 1fr auto; grid-template-areas: 'search actions' 'logo logo'; }
+      .logo-block { grid-area: logo; align-items: flex-start; padding-top: 6px; }
+      .header-left { grid-area: search; }
+    }
+
+    @media (max-width: 680px) {
+      :root { --container: calc(100vw - 24px); }
+      html, body { max-width: 100%; overflow-x: hidden; }
+      .container, .catalog-layout, .catalog-main, .catalog-toolbar, .toolbar-left,
+      .payment-status-card, .hero-grid, .hero-right, .footer-grid, .footer-bottom,
+      .modal, .modal-body, .modal-product-row, .transfer-grid { min-width: 0; max-width: 100%; }
+      .header-inner { min-height: 60px; grid-template-areas: 'logo actions' 'search search'; }
+      .logo-block { align-items: flex-start; }
+      .logo-wordmark { font-size: 1.8rem; }
+      .header-right { gap: 6px; }
+      .header-right .hbtn {
+        width: 42px;
+        min-width: 42px;
+        padding: 0;
+        flex: none;
+      }
+      .header-right .hbtn > span:not(.cart-badge) { display: none; }
+      .search-pill { max-width: none; }
+      .hero-main { padding: 32px 24px; min-height: 380px; }
+      .hero-right { flex-direction: column; }
+      .hero-title { font-size: 3.2rem; }
+      .payment-status-title { font-size: 1.45rem; }
+      .capsule-grid { grid-template-columns: 1fr; }
+      .capsule-showcase-grid { grid-template-columns: 1fr; }
+      .capsule-modal-products .products-grid { grid-template-columns: 1fr; }
+      .capsule-modal-thumb { width: 56px; height: 72px; }
+      .products-grid { grid-template-columns: 1fr; }
+      .pcard-actions { flex-direction: column; }
+      .trust-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .catalog-toolbar { flex-direction: column; align-items: stretch; }
+      .pcard-thumbs,
+      .modal-product-thumbs {
+        max-width: 100%;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+      .pcard-name,
+      .pcard-desc,
+      .promo-title,
+      .payment-status-body,
+      .transfer-item strong,
+      .transfer-item span,
+      .modal-product-name,
+      .modal-note,
+      .footer-brand p,
+      .footer-bottom {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+    }
+
+    /* ── SCROLL ANIMATE ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Test manual de mails</h1>
-    <p>Esto dispara la función <strong>send-order-emails</strong> para una orden real. La idea es probar primero que el mail salga lindo al cliente y a <strong>somos.sinrecreo@gmail.com</strong>.</p>
 
-    <label for="orderId">Order ID</label>
-    <input id="orderId" placeholder="Pegá acá un order_id real de Supabase" />
+<!-- Announce bar -->
+<div class="announce" aria-label="Novedades">
+  <div class="announce-track">
+    <span>ENVÍO GRATIS COMPRANDO 3 PRENDAS O MAS</span>
+    <span class="dot">✦</span>
+    <span>3 CUOTAS SIN INTERÉS CON MERCADOPAGO</span>
+    <span class="dot">✦</span>
+    <span>10% OFF PAGANDO POR TRANSFERENCIA</span>
+    <span class="dot">✦</span>
+    <span class="announce-featured-capsule">CÁPSULA DESTACADA DEL MES</span>
+    <span class="dot">✦</span>
+    <span>ENVÍO GRATIS COMPRANDO 3 PRENDAS O MAS</span>
+    <span class="dot">✦</span>
+    <span>3 CUOTAS SIN INTERÉS CON MERCADOPAGO</span>
+    <span class="dot">✦</span>
+    <span>10% OFF PAGANDO POR TRANSFERENCIA</span>
+    <span class="dot">✦</span>
+    <span class="announce-featured-capsule">CÁPSULA DESTACADA DEL MES</span>
+    <span class="dot">✦</span>
+  </div>
+</div>
 
-    <button id="sendBtn">Enviar mails de prueba</button>
-
-    <div class="hint">
-      Usá un <strong>order_id</strong> real de la tabla <strong>orders</strong>, idealmente uno que tenga <strong>customer_email</strong> cargado.
+<!-- Header -->
+<header class="header">
+  <div class="container header-inner">
+    <div class="header-left">
+      <div class="search-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="searchInput" type="search" placeholder="Buscá cápsulas o diseños…" aria-label="Buscar productos" />
+      </div>
     </div>
 
-    <pre id="output">Todavía sin probar.</pre>
+    <a class="logo-block" href="/" aria-label="SIN RECREO – Inicio">
+      <span class="logo-wordmark">SIN RECREO</span>
+      <span class="logo-tagline">Remeras de concepto</span>
+    </a>
+
+    <div class="header-right">
+      <button class="hbtn" type="button" onclick="openCartDrawer()" aria-label="Carrito">
+        <span class="cart-badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M3 4h2l2.2 10.2a1 1 0 001 .8h8.8a1 1 0 001-.8L21 7H7"/></svg>
+          <span class="count" id="cartCount">0</span>
+        </span>
+        <span>Carrito</span>
+      </button>
+      <a class="hbtn" href="https://wa.me/5491138614767" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.76-.87-2.03-.97-.27-.1-.47-.14-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.52.14-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12 2a10 10 0 00-8.5 15.27L2 22l4.86-1.48A10 10 0 1012 2z"/></svg>
+        <span>Consultar</span>
+      </a>
+      <a class="hbtn" id="adminAccessLink" href="./admin.html" aria-label="Acceso administrador">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 4.5-2.6 7.9-7 9-4.4-1.1-7-4.5-7-9V7l7-4z"/><path d="M9.5 12.5l1.7 1.7 3.3-3.4"/></svg>
+        <span>Admin</span>
+      </a>
+    </div>
   </div>
 
-  <script>
-    const FUNCTION_URL = "https://xedhdojvynmwaadmkcby.supabase.co/functions/v1/send-order-emails";
-    const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlZGhkb2p2eW5td2FhZG1rY2J5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NjQ4MjYsImV4cCI6MjA5MTI0MDgyNn0.Keaskg8KUqFz4JyuUJJxGCjIDdD6iaDnEAUyvwPgZrA";
+  <nav class="nav-strip" aria-label="Navegación principal">
+    <div class="container nav-scroll">
+      <a class="nav-link active" href="#capsulas">Catálogo</a>
+      <a class="nav-link" href="#capsulas">Cápsulas</a>
+      <a class="nav-link" href="#mas-vendidos">Más vendidos</a>
+      <a class="nav-link" href="#capsulas">Drop destacado</a>
+      <a class="nav-link" href="https://instagram.com/somos.sinrecreo" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+    </div>
+  </nav>
+</header>
 
-    document.getElementById("sendBtn").addEventListener("click", async () => {
-      const orderId = document.getElementById("orderId").value.trim();
-      const output = document.getElementById("output");
+<div id="paymentStatusMount" class="payment-status-wrap hidden" aria-live="polite">
+  <div class="container" id="paymentStatusInner"></div>
+</div>
 
-      if (!orderId) {
-        output.textContent = "Pegá primero un order_id.";
-        return;
-      }
+<main>
 
-      output.textContent = "Enviando...";
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="container hero-grid">
 
-      try {
-        const res = await fetch(FUNCTION_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": ANON_KEY,
-            "Authorization": `Bearer ${ANON_KEY}`
-          },
-          body: JSON.stringify({ order_id: orderId })
-        });
+      <article class="hero-main">
+        <div class="hero-deco" aria-hidden="true">SR</div>
+        <div class="hero-main-content">
+          <div class="eyebrow">Nueva temporada · Abril 2026</div>
+          <h1 class="hero-title">Vestite con<br>una <em>idea,</em><br>no con una<br>excusa.</h1>
+          <p class="hero-body">Cápsulas editoriales con concepto, memoria y actitud. Diseño premium para gente que no quiere vestirse en automático.</p>
+          <div class="cta-row">
+            <a class="btn-primary" href="#capsulas">
+              Explorar cápsulas
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a class="btn-outline" href="https://instagram.com/somos.sinrecreo" target="_blank" rel="noopener noreferrer">Ver universo</a>
+          </div>
+        </div>
+      </article>
 
-        const data = await res.json();
-        output.textContent = JSON.stringify({ status: res.status, data }, null, 2);
-      } catch (err) {
-        output.textContent = "Error de red o CORS:\n" + (err && err.message ? err.message : String(err));
+      <div class="hero-right">
+        <div class="hero-stat-card fade-up">
+          <div class="stat-grid">
+            <div class="stat-item"><strong id="statActiveDrops">0</strong><span>drops activos</span></div>
+            <div class="stat-item"><strong id="statActiveCapsules">0</strong><span>cápsulas</span></div>
+            <div class="stat-item"><strong id="statCustomers">0</strong><span>clientes</span></div>
+            <div class="stat-item"><strong id="statInstallments">3x</strong><span>cuotas sin interés</span></div>
+          </div>
+          <div class="divider"></div>
+          <div class="pay-info">
+            <div class="pay-row">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              <span id="heroMpText"><strong>MercadoPago:</strong> 3 cuotas sin interés</span>
+            </div>
+            <div class="pay-row">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              <span id="heroTransferText"><strong>Transferencia:</strong> 10% de descuento</span>
+            </div>
+            <div class="pay-row">
+              <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.1-.198.05-.372-.025-.521-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.075-.792.372-.272.297-1.04 1.016-1.04 2.48 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 2C6.555 2 2.1 6.455 2.1 11.95c0 1.76.46 3.414 1.265 4.848L2 22l5.348-1.402a9.909 9.909 0 0 0 4.702 1.19h.004c5.492 0 9.95-4.455 9.95-9.95S17.546 2 12.05 2Z"/></svg>
+              <span id="heroWhatsAppText"><strong>WhatsApp:</strong> atención personalizada</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-promo-card fade-up">
+          <div class="promo-label" id="featuredCapsuleLabel">✦ Drop Destacado</div>
+          <h2 class="promo-title" id="featuredCapsuleTitle">Cápsula &quot;Memoria y archivo&quot;</h2>
+          <p class="promo-body" id="featuredCapsuleBody">Prendas que trabajan con imágenes, hitos y tensiones culturales. Edición corta, diseño con intención.</p>
+          <a class="btn-ghost-white" href="#capsulas" id="featuredCapsuleCta" onclick="handleFeaturedCapsuleCta(event)">
+            <span id="featuredCapsuleCtaText">Ver cápsula</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── TRUST BAR ── -->
+  <div class="trust-bar fade-up" style="margin-top: 40px;">
+    <div class="container trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon">🚚</div>
+        <strong>Envío gratis</strong>
+        <span>Comprando tres o más prendas</span>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">💳</div>
+        <strong>3 cuotas sin interés</strong>
+        <span>Con MercadoPago · Visa · Mastercard</span>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">💸</div>
+        <strong>10% off transferencia</strong>
+        <span>Pagando por transferencia bancaria</span>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">💬</div>
+        <strong>Atención real</strong>
+        <span>Respondemos por WhatsApp en 24h</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CAPSULES ── -->
+  <section class="section" id="capsulas">
+    <div class="container">
+      <div class="section-head fade-up">
+        <div>
+          <div class="section-label">Cápsulas editoriales</div>
+          <h2 class="section-title">Explorá por cápsula, no por scroll infinito</h2>
+          <p class="section-sub">Cada tarjeta abre una cápsula completa en modal, con toda la colección disponible en una vista vertical mucho más limpia.</p>
+        </div>
+        <span class="link-arrow" style="border-bottom:none;opacity:1">Abrí una cápsula y recorré sus prendas</span>
+      </div>
+      <div class="capsule-showcase-grid" id="capsuleGrid">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BEST SELLERS ── -->
+  <section class="catalog-section" id="mas-vendidos">
+    <div class="container">
+      <div class="section-head fade-up">
+        <div>
+          <div class="section-label">Más vendidos</div>
+          <h2 class="section-title">La parte de abajo queda solo para lo que más sale</h2>
+          <p class="section-sub">Un recorte corto, útil y real, armado con la salida efectiva de tus prendas.</p>
+        </div>
+      </div>
+      <p class="best-sellers-meta" id="bestSellersMeta">Cargando selección…</p>
+      <div class="products-grid" id="bestSellersGrid"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── CAPSULE MODAL ── -->
+<div class="modal-overlay" id="capsuleModal" role="dialog" aria-modal="true" aria-label="Ver cápsula">
+  <div class="modal capsule-modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="capsuleModalHeaderTitle">Cápsula</h2>
+      <button class="modal-close" onclick="closeCapsuleModal()" aria-label="Cerrar cápsula">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="capsule-modal-hero">
+        <div class="capsule-modal-gallery">
+          <div class="capsule-modal-main"><img id="capsuleModalMainImage" alt="Imagen principal de la cápsula" /></div>
+          <div class="capsule-modal-thumbs" id="capsuleModalThumbs"></div>
+        </div>
+        <div class="capsule-modal-copy">
+          <span class="capsule-modal-badge" id="capsuleModalBadge">✦ Cápsula</span>
+          <h3 class="capsule-modal-title" id="capsuleModalTitle">Cápsula</h3>
+          <p class="capsule-modal-text" id="capsuleModalText"></p>
+          <div class="capsule-modal-stats">
+            <span class="capsule-chip" id="capsuleModalProductsCount">0 prendas</span>
+            <span class="capsule-chip" id="capsuleModalDropState">Colección activa</span>
+          </div>
+        </div>
+      </div>
+      <div class="capsule-modal-grid-title">
+        <div>
+          <h3>Prendas de esta cápsula</h3>
+          <p>La grilla mantiene la lógica actual: 3 columnas en PC y 1 columna en celular.</p>
+        </div>
+      </div>
+      <div class="capsule-modal-products">
+        <div class="products-grid" id="capsuleProductsGrid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand-name">SIN RECREO</div>
+        <p>Remeras de concepto, cápsulas editoriales y diseño con intención. Hecho para gente que no quiere vestirse en automático.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Tienda</h5>
+        <a href="#capsulas">Cápsulas</a>
+        <a href="#capsulas">Cápsulas</a>
+        <a href="#mas-vendidos">Más vendidos</a>
+        <a href="#mas-vendidos">Más vendidos</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <a href="https://instagram.com/somos.sinrecreo" target="_blank" rel="noopener noreferrer">@somos.sinrecreo</a>
+        <a href="https://wa.me/5491138614767" target="_blank" rel="noopener noreferrer">WhatsApp 11 3861-4767</a>
+        <a href="mailto:hola@sinrecreo.com.ar">hola@sinrecreo.com.ar</a>
+        <a id="adminFooterLink" href="./admin.html">Acceso admin</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SIN RECREO · sinrecreo.com.ar</span>
+      <div class="pay-logos">
+        <span class="pay-logo">MercadoPago</span>
+        <span class="pay-logo">Visa</span>
+        <span class="pay-logo">Mastercard</span>
+        <span class="pay-logo">Transferencia</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ── FLOATING WA ── -->
+<a class="float-wa" href="https://wa.me/5491138614767?text=Hola%20SIN%20RECREO%2C%20quiero%20consultar%20por%20una%20remera." target="_blank" rel="noopener noreferrer" aria-label="Consultar por WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.76-.87-2.03-.97-.27-.1-.47-.14-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.52.14-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12 2a10 10 0 00-8.5 15.27L2 22l4.86-1.48A10 10 0 1012 2z"/></svg>
+</a>
+
+<!-- ── DRAWER BACKDROP ── -->
+<div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCartDrawer()"></div>
+
+<!-- ── CART DRAWER ── -->
+<div class="cart-drawer" id="cartDrawer" role="dialog" aria-label="Carrito de compras">
+  <div class="cart-header">
+    <span class="cart-title">Tu carrito</span>
+    <button class="modal-close" onclick="closeCartDrawer()" aria-label="Cerrar carrito">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🛍️</div>
+      <p>Tu carrito está vacío</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-subtotal">
+      <span class="cart-subtotal-label">Subtotal</span>
+      <span class="cart-subtotal-price" id="cartTotal">$0</span>
+    </div>
+    <button class="cart-browse-btn" onclick="goBackToCatalogFromCart()">Ver más prendas</button>
+    <button class="cart-checkout-btn" onclick="checkoutWhatsApp()">Enviar pedido por WhatsApp</button>
+    <button class="cart-mp-btn" onclick="checkoutMP()">
+      <svg width="20" height="20" viewBox="0 0 48 48" fill="white"><ellipse cx="24" cy="24" rx="22" ry="14" fill="#009ee3"/><text x="24" y="29" text-anchor="middle" font-size="14" font-weight="bold" fill="white" font-family="Arial">MP</text></svg>
+      Pagar con MercadoPago
+    </button>
+  </div>
+</div>
+
+<!-- ── BUY MODAL ── -->
+<div class="modal-overlay" id="buyModal" role="dialog" aria-modal="true" aria-label="Comprar producto">
+  <div class="modal" id="modalInner">
+    <div class="modal-header">
+      <h2 class="modal-title">Elegí tu talle y medio de pago</h2>
+      <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Product row -->
+      <div class="modal-product-row" id="modalProductRow"></div>
+
+      <!-- Size -->
+      <div class="modal-section-title">Modelo</div>
+      <div class="fit-selector" id="modalFits"></div>
+
+      <div class="modal-section-title">Talle</div>
+      <div class="size-selector" id="modalSizes"></div>
+
+      <div class="modal-section-title">Tus datos</div>
+      <div class="customer-grid">
+        <label class="customer-field">
+          <span class="customer-label">Nombre</span>
+          <input id="customerName" class="customer-input" type="text" placeholder="Cómo te llamás" />
+        </label>
+        <label class="customer-field">
+          <span class="customer-label">Teléfono</span>
+          <input id="customerPhone" class="customer-input" type="tel" placeholder="11 1234 5678" />
+        </label>
+        <label class="customer-field full">
+          <span class="customer-label">Email</span>
+          <input id="customerEmail" class="customer-input" type="email" placeholder="tuemail@dominio.com" />
+        </label>
+      </div>
+      <div id="modalCustomerPrompt" class="modal-customer-prompt hidden">Complete nombre y correo para continuar.</div>
+
+      <!-- Payment methods -->
+      <div class="modal-section-title">Medio de pago</div>
+      <div class="pay-methods">
+        <button class="pay-method-btn selected" onclick="selectPayMethod(this, 'mp')" type="button">
+          <div class="pay-method-icon mp">
+            <svg width="22" height="22" viewBox="0 0 48 48" fill="white"><ellipse cx="24" cy="24" rx="22" ry="14" fill="white"/><text x="24" y="29" text-anchor="middle" font-size="14" font-weight="bold" fill="#009ee3" font-family="Arial">MP</text></svg>
+          </div>
+          <div class="pay-method-info">
+            <div class="pay-method-name">MercadoPago</div>
+            <div class="pay-method-detail">Débito, crédito, saldo MP</div>
+          </div>
+          <span class="pay-method-badge badge-cuotas">3 cuotas s/i</span>
+        </button>
+        <button class="pay-method-btn" onclick="selectPayMethod(this, 'card')" type="button">
+          <div class="pay-method-icon card">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <div class="pay-method-info">
+            <div class="pay-method-name">Tarjeta de crédito/débito</div>
+            <div class="pay-method-detail">Visa, Mastercard, American Express</div>
+          </div>
+          <span class="pay-method-badge badge-cuotas">3 cuotas</span>
+        </button>
+        <button class="pay-method-btn" onclick="selectPayMethod(this, 'transfer')" type="button">
+          <div class="pay-method-icon transfer">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          </div>
+          <div class="pay-method-info">
+            <div class="pay-method-name">Transferencia bancaria</div>
+            <div class="pay-method-detail">CVU / Alias · Pago inmediato</div>
+          </div>
+          <span class="pay-method-badge badge-discount">10% OFF</span>
+        </button>
+      </div>
+
+      <div class="transfer-panel" id="transferPanel" hidden>
+        <div class="transfer-head">
+          <strong>Transferencia con contacto directo</strong>
+          <span id="transferDiscountBadge">10% OFF</span>
+        </div>
+        <div class="transfer-grid">
+          <div class="transfer-item">
+            <label>Alias</label>
+            <strong id="transferAliasValue">SINRECREO.TIENDA</strong>
+          </div>
+          <div class="transfer-item">
+            <label>Titular</label>
+            <span id="transferOwnerValue">SIN RECREO</span>
+          </div>
+          <div class="transfer-item">
+            <label>CVU</label>
+            <span id="transferCbuValue">0000003100000000000000</span>
+          </div>
+        </div>
+        <div class="transfer-actions">
+          <button class="transfer-btn" type="button" onclick="copyTransferField('alias')">Copiar alias</button>
+          <button class="transfer-btn" type="button" onclick="copyTransferField('cbu')">Copiar CVU</button>
+        </div>
+        <div class="modal-note">Vas a ver el alias y el CVU para transferir. Cuando confirmes la compra de esta prenda, te abrimos WhatsApp con el pedido ya armado para que nos envíes el comprobante.</div>
+      </div>
+
+      <!-- Total -->
+      <div class="modal-total">
+        <span class="modal-total-label">Total a pagar</span>
+        <span class="modal-total-price" id="modalTotal">$0</span>
+      </div>
+
+      <!-- CTA -->
+      <button class="modal-cta mp-style" id="modalCta" onclick="processPayment()">
+        Pagar esta prenda con Mercado Pago
+      </button>
+      <button class="modal-secondary-cta" id="modalAddCartCta" type="button" onclick="addConfiguredToCart(true)">
+        Agregar al carrito y seguir comprando
+      </button>
+      <div class="modal-secure">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Compra 100% segura · Tus datos están protegidos
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+
+  /* ─── CONFIGURACIÓN GENERAL ─── */
+  const STORE_CONFIG = {
+    whatsappNumber: '5491138614767',
+    instagramUrl: 'https://instagram.com/somos.sinrecreo',
+    transferAlias: 'lucas.faga.mp',
+    transferOwner: 'Lucas Matias Faga',
+    transferCBU: '0000003100065142182346',
+    transferDiscount: 10,
+    installmentsCount: 3,
+    freeShippingMinItems: 3,
+    mpMode: 'backend', // 'direct_links' o 'backend'
+    mpEnvironment: 'sandbox', // 'sandbox' mientras uses credenciales de prueba; luego 'production'
+    mpGenericLink: '',      // opcional: link general de Mercado Pago
+    mpPreferenceEndpoint: 'https://xedhdojvynmwaadmkcby.supabase.co/functions/v1/create-mp-preference',// endpoint seguro de backend para crear preferencias
+    transferOrderEndpoint: 'https://xedhdojvynmwaadmkcby.supabase.co/functions/v1/create-transfer-order',// endpoint seguro para pedidos por transferencia
+    useSupabase: true,
+    supabaseUrl: 'https://xedhdojvynmwaadmkcby.supabase.co',
+    supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlZGhkb2p2eW5td2FhZG1rY2J5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NjQ4MjYsImV4cCI6MjA5MTI0MDgyNn0.Keaskg8KUqFz4JyuUJJxGCjIDdD6iaDnEAUyvwPgZrA',
+    supabaseStorageBucket: 'product-images',
+    adminUrl: './admin.html'
+  };
+
+  /*
+    PARA CARGAR UN PRODUCTO NUEVO EN EL CATÁLOGO:
+    1) Duplicá uno de estos objetos.
+    2) Completá 3 imágenes en "images".
+    3) Poné stock por talle en "stockBySize".
+    4) Si usás links directos de Mercado Pago, cargalos en "mpLinks" por talle.
+    5) Si usás backend, dejá mpLinks vacío y configurá STORE_CONFIG.mpPreferenceEndpoint.
+
+    Ejemplo:
+    {
+      id:'nuevo-drop',
+      sku:'SR-XX-999',
+      capsule:'Nueva cápsula',
+      title:'Nombre de la prenda',
+      description:'Descripción corta.',
+      price:42900,
+      cut:'Unisex',
+      sortDate:'2026-04-08',
+      featured:false,
+      artType:'poster',
+      images:[
+        'https://tu-cdn.com/remera-1.jpg',
+        'https://tu-cdn.com/remera-2.jpg',
+        'https://tu-cdn.com/remera-3.jpg'
+      ],
+      stockBySize:{ S:2, M:4, L:1, XL:0 },
+      mpLinks:{ S:'https://mpago.la/xxxx', M:'https://mpago.la/yyyy' }
+    }
+  */
+
+  let products = [
+    {
+      id:'memoria-voto',
+      sku:'SR-MA-001',
+      capsule:'Memoria y archivo',
+      title:'Voto femenino',
+      description:'Una pieza de lectura inmediata, con tono editorial y gráfica central de impacto.',
+      price:38900,
+      cut:'Unisex',
+      sortDate:'2026-04-01',
+      featured:true,
+      artType:'poster',
+      images:['','',''],
+      stockBySize:{ S:1, M:2, L:2, XL:1 },
+      mpLinks:{ S:'', M:'', L:'', XL:'' }
+    },
+    {
+      id:'ensayo-voz',
+      sku:'SR-EV-002',
+      capsule:'Ensayo visual',
+      title:'La voz como archivo',
+      description:'Tipografía, mancha y composición vertical para una lectura más de autor.',
+      price:40500,
+      cut:'Unisex',
+      sortDate:'2026-03-29',
+      featured:true,
+      artType:'type',
+      images:['','',''],
+      stockBySize:{ M:1, L:2, XL:1 },
+      mpLinks:{ M:'', L:'', XL:'' }
+    },
+    {
+      id:'ruido-pop-01',
+      sku:'SR-RP-003',
+      capsule:'Ruido pop',
+      title:'Fricción cultural',
+      description:'Una estampa más vibrante para quienes quieren que la remera haga ruido.',
+      price:42900,
+      cut:'Corte dama',
+      sortDate:'2026-03-26',
+      featured:false,
+      artType:'pop',
+      images:['','',''],
+      stockBySize:{ S:1, M:1, L:1 },
+      mpLinks:{ S:'', M:'', L:'' }
+    },
+    {
+      id:'iconos-01',
+      sku:'SR-ID-004',
+      capsule:'Íconos desplazados',
+      title:'Retrato en tensión',
+      description:'El clásico retrato, intervenido con un lenguaje mucho más contemporáneo.',
+      price:44500,
+      cut:'Unisex',
+      sortDate:'2026-03-24',
+      featured:false,
+      artType:'portrait',
+      images:['','',''],
+      stockBySize:{ M:2, L:2, XL:2, XXL:1 },
+      mpLinks:{ M:'', L:'', XL:'', XXL:'' }
+    },
+    {
+      id:'memoria-02',
+      sku:'SR-MA-005',
+      capsule:'Memoria y archivo',
+      title:'Archivo de calle',
+      description:'Pensada para cápsulas con relato histórico, urbano o político.',
+      price:39500,
+      cut:'Corte dama',
+      sortDate:'2026-03-20',
+      featured:false,
+      artType:'grid',
+      images:['','',''],
+      stockBySize:{ S:2, M:2, L:2, XL:2 },
+      mpLinks:{ S:'', M:'', L:'', XL:'' }
+    },
+    {
+      id:'ensayo-02',
+      sku:'SR-EV-006',
+      capsule:'Ensayo visual',
+      title:'Texto y gesto',
+      description:'Para drops conceptuales, con peso tipográfico y clima sobrio.',
+      price:37900,
+      cut:'Unisex',
+      sortDate:'2026-03-18',
+      featured:false,
+      artType:'type',
+      images:['','',''],
+      stockBySize:{ S:2, M:3, L:2 },
+      mpLinks:{ S:'', M:'', L:'' }
+    },
+    {
+      id:'ruido-02',
+      sku:'SR-RP-007',
+      capsule:'Ruido pop',
+      title:'Escena saturada',
+      description:'Más color, más collage, más deseo de scroll detenido.',
+      price:43900,
+      cut:'Unisex',
+      sortDate:'2026-03-15',
+      featured:true,
+      artType:'pop',
+      images:['','',''],
+      stockBySize:{ L:1, XL:1 },
+      mpLinks:{ L:'', XL:'' }
+    },
+    {
+      id:'iconos-02',
+      sku:'SR-ID-008',
+      capsule:'Íconos desplazados',
+      title:'Símbolo descentrado',
+      description:'Una pieza simple y potente para dejar respirar la imagen.',
+      price:38900,
+      cut:'Unisex',
+      sortDate:'2026-03-12',
+      featured:false,
+      artType:'symbol',
+      images:['','',''],
+      stockBySize:{ S:1, M:2, L:1, XL:1 },
+      mpLinks:{ S:'', M:'', L:'', XL:'' }
+    }
+  ];
+
+  const capsuleInfoFallback = {
+    'Memoria y archivo': {
+      name:'Memoria y archivo',
+      tag:'Activa ahora',
+      desc:'Prendas que trabajan con imágenes, hitos y tensiones culturales.',
+      heroTitle:'Cápsula "Memoria y archivo" — activa ahora',
+      heroBody:'Prendas que trabajan con imágenes, hitos y tensiones culturales. Edición corta, diseño con intención.',
+      heroCtaText:'Ver cápsula',
+      featured:true,
+      isActive:true
+    },
+    'Íconos desplazados': {
+      name:'Íconos desplazados',
+      tag:'Edición corta',
+      desc:'Retratos, símbolos y relecturas con estética de afiche contemporáneo.',
+      heroTitle:'Cápsula "Íconos desplazados" — activa ahora',
+      heroBody:'Retratos, símbolos y relecturas con estética de afiche contemporáneo.',
+      heroCtaText:'Ver cápsula',
+      featured:false,
+      isActive:true
+    },
+    'Ruido pop': {
+      name:'Ruido pop',
+      tag:'Más buscada',
+      desc:'Gráfica de alto contraste para piezas que piden calle y conversación.',
+      heroTitle:'Cápsula "Ruido pop" — activa ahora',
+      heroBody:'Gráfica de alto contraste para piezas que piden calle y conversación.',
+      heroCtaText:'Ver cápsula',
+      featured:false,
+      isActive:true
+    },
+    'Ensayo visual': {
+      name:'Ensayo visual',
+      tag:'Muy SIN RECREO',
+      desc:'Cuando una remera funciona como toma de posición, no solo como look.',
+      heroTitle:'Cápsula "Ensayo visual" — activa ahora',
+      heroBody:'Cuando una remera funciona como toma de posición, no solo como look.',
+      heroCtaText:'Ver cápsula',
+      featured:false,
+      isActive:true
+    }
+  };
+
+  const state = { query:'', sort:'featured', capsules:new Set(), cuts:new Set(), sizes:new Set(), minPrice:'', maxPrice:'' };
+  const cart = [];
+
+  let capsulesData = [];
+  let featuredCapsule = null;
+  let storeMetrics = { activeDrops: 0, activeCapsules: 0, customersCount: null };
+  let bestSellerRanking = [];
+  let currentCapsuleModal = null;
+  let currentProduct = null;
+  let selectedSize = null;
+  let selectedFit = 'unisex';
+  let selectedPayMethod = 'mp';
+  let sbClient = null;
+  const CHECKOUT_CUSTOMER_STORAGE_KEY = 'sinrecreo_checkout_customer_v1';
+
+  const normalizeCustomer = (customer = {}) => ({
+    name: String(customer.name || '').trim(),
+    phone: String(customer.phone || '').trim(),
+    email: String(customer.email || '').trim().toLowerCase()
+  });
+
+  const getStoredCheckoutCustomer = () => {
+    try {
+      const raw = localStorage.getItem(CHECKOUT_CUSTOMER_STORAGE_KEY);
+      return raw ? normalizeCustomer(JSON.parse(raw)) : { name:'', phone:'', email:'' };
+    } catch (error) {
+      return { name:'', phone:'', email:'' };
+    }
+  };
+
+  const saveCheckoutCustomer = (customer = {}) => {
+    const normalized = normalizeCustomer(customer);
+    try {
+      localStorage.setItem(CHECKOUT_CUSTOMER_STORAGE_KEY, JSON.stringify(normalized));
+    } catch (error) {}
+    return normalized;
+  };
+
+  const fillCheckoutCustomerInputs = (customer = {}) => {
+    const normalized = normalizeCustomer(customer);
+    const nameInput = document.getElementById('customerName');
+    const phoneInput = document.getElementById('customerPhone');
+    const emailInput = document.getElementById('customerEmail');
+    if (nameInput && !nameInput.value.trim()) nameInput.value = normalized.name;
+    if (phoneInput && !phoneInput.value.trim()) phoneInput.value = normalized.phone;
+    if (emailInput && !emailInput.value.trim()) emailInput.value = normalized.email;
+  };
+
+  const getCheckoutCustomer = () => {
+    const stored = getStoredCheckoutCustomer();
+    return normalizeCustomer({
+      name: (document.getElementById('customerName')?.value || stored.name || '').trim(),
+      phone: (document.getElementById('customerPhone')?.value || stored.phone || '').trim(),
+      email: (document.getElementById('customerEmail')?.value || stored.email || '').trim().toLowerCase()
+    });
+  };
+
+  const wireCheckoutCustomerInputs = () => {
+    fillCheckoutCustomerInputs(getStoredCheckoutCustomer());
+    ['customerName','customerPhone','customerEmail'].forEach(id => {
+      const input = document.getElementById(id);
+      if (!input) return;
+      input.addEventListener('input', () => {
+        saveCheckoutCustomer(getCheckoutCustomer());
+        if ((document.getElementById('customerName')?.value || '').trim() && (document.getElementById('customerEmail')?.value || '').trim()) hideCustomerPrompt();
+      });
+      input.addEventListener('change', () => {
+        saveCheckoutCustomer(getCheckoutCustomer());
+        if ((document.getElementById('customerName')?.value || '').trim() && (document.getElementById('customerEmail')?.value || '').trim()) hideCustomerPrompt();
+      });
+    });
+  };
+
+  const hideCustomerPrompt = () => {
+    const prompt = document.getElementById('modalCustomerPrompt');
+    if (!prompt) return;
+    prompt.textContent = 'Complete nombre y correo para continuar.';
+    prompt.classList.add('hidden');
+  };
+
+  const showCustomerPrompt = (message = 'Complete nombre y correo para continuar.') => {
+    const prompt = document.getElementById('modalCustomerPrompt');
+    if (!prompt) return;
+    prompt.textContent = message;
+    prompt.classList.remove('hidden');
+    prompt.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
+  const validateCheckoutCustomer = () => {
+    const customer = getCheckoutCustomer();
+    if (!customer.name) {
+      alert('Necesitamos tu nombre para confirmar el pedido.');
+      document.getElementById('customerName')?.focus();
+      return null;
+    }
+    if (!customer.email) {
+      alert('Necesitamos tu correo para enviarte la confirmación del pedido.');
+      document.getElementById('customerEmail')?.focus();
+      return null;
+    }
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email);
+    if (!emailOk) {
+      alert('Revisá el correo electrónico antes de continuar.');
+      document.getElementById('customerEmail')?.focus();
+      return null;
+    }
+    return saveCheckoutCustomer(customer);
+  };
+
+  /* ─── HELPERS ─── */
+  const fmt = v => new Intl.NumberFormat('es-AR', { style:'currency', currency:'ARS', maximumFractionDigits:0 }).format(v);
+  const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[m]));
+  const getWhatsAppBase = () => `https://wa.me/${STORE_CONFIG.whatsappNumber}`;
+  const getTransferPrice = p => p.transferPrice ?? Math.round(p.price * (1 - ((p.transferDiscount ?? STORE_CONFIG.transferDiscount) / 100)));
+  const normalizeFit = fit => ({ femenino:'femenino', femenina:'femenino', masculino:'masculino', masculina:'masculino', unisex:'unisex' }[String(fit || '').toLowerCase()] || 'unisex');
+  const parseVariantSizeKey = raw => {
+    const value = String(raw || '');
+    if (value.includes('__')) {
+      const [fit, size] = value.split('__');
+      return { fit: normalizeFit(fit), size: size || '' };
+    }
+    return { fit: 'unisex', size: value };
+  };
+  const makeVariantSizeKey = (fit, size) => normalizeFit(fit) === 'unisex' ? String(size || '') : `${normalizeFit(fit).toUpperCase()}__${String(size || '')}`;
+  const getFitLabel = fit => ({ unisex:'Unisex', femenino:'Femenino', masculino:'Masculino' }[normalizeFit(fit)] || 'Unisex');
+  const getFitOrder = fit => ({ unisex:0, femenino:1, masculino:2 }[normalizeFit(fit)] ?? 9);
+  const getAvailableFits = p => Object.entries(p.fitStockBySize || {}).filter(([, sizes]) => Object.values(sizes || {}).some(qty => Number(qty || 0) > 0)).map(([fit]) => fit).sort((a,b) => getFitOrder(a) - getFitOrder(b));
+  const getSizesForFit = (p, fit = 'unisex') => Object.entries((p.fitStockBySize || {})[normalizeFit(fit)] || {}).filter(([, qty]) => Number(qty || 0) > 0).map(([size]) => size);
+  const getAvailableSizes = p => [...new Set(Object.values(p.fitStockBySize || {}).flatMap(sizes => Object.entries(sizes || {}).filter(([, qty]) => Number(qty || 0) > 0).map(([size]) => size)))];
+  const getDefaultFit = p => getAvailableFits(p)[0] || 'unisex';
+  const getTotalStock = p => Object.values(p.fitStockBySize || {}).reduce((acc, sizes) => acc + Object.values(sizes || {}).reduce((sum, qty) => sum + Number(qty || 0), 0), 0);
+  const getMpLink = (p, size, fit = 'unisex') => (p.mpLinksByKey && p.mpLinksByKey[`${normalizeFit(fit)}|${size}`]) || (p.mpLinks && size && p.mpLinks[size]) || p.mpLink || STORE_CONFIG.mpGenericLink || '';
+  const getVariantId = (p, size, fit = 'unisex') => (p.variantIdsByKey && p.variantIdsByKey[`${normalizeFit(fit)}|${size}`]) || (normalizeFit(fit) === 'unisex' ? (p.variantIdsBySize?.[size] || '') : '');
+  const describeFitAndSize = (fit, size) => `${getFitLabel(fit)} · Talle ${size}`;
+  const getProductUrl = p => `${location.origin}${location.pathname}#${p.id}`;
+
+  const wireAdminAccessLinks = () => {
+    const adminUrl = STORE_CONFIG.adminUrl || './admin.html';
+    const headerLink = document.getElementById('adminAccessLink');
+    const footerLink = document.getElementById('adminFooterLink');
+    [headerLink, footerLink].forEach(link => {
+      if (link) {
+        link.setAttribute('href', adminUrl);
       }
     });
-  </script>
+  };
+
+
+  const isSupabaseConfigured = () => {
+    return Boolean(
+      STORE_CONFIG.useSupabase &&
+      STORE_CONFIG.supabaseUrl &&
+      STORE_CONFIG.supabaseAnonKey &&
+      !STORE_CONFIG.supabaseUrl.includes('PEGA_ACA') &&
+      !STORE_CONFIG.supabaseAnonKey.includes('PEGA_ACA')
+    );
+  };
+
+  const initSupabaseClient = () => {
+    if (!isSupabaseConfigured() || !window.supabase?.createClient) return null;
+    if (!sbClient) {
+      sbClient = window.supabase.createClient(STORE_CONFIG.supabaseUrl, STORE_CONFIG.supabaseAnonKey);
+    }
+    return sbClient;
+  };
+
+  const loadProductsFromSupabase = async () => {
+    const client = initSupabaseClient();
+    if (!client) return products;
+
+    const [{ data: productRows, error: productsError }, { data: imageRows, error: imagesError }, { data: variantRows, error: variantsError }] = await Promise.all([
+      client
+        .from('products')
+        .select('id, slug, sku, capsule, title, description, price, cut, sort_date, featured, art_type, is_active')
+        .eq('is_active', true)
+        .order('featured', { ascending: false })
+        .order('sort_date', { ascending: false })
+        .order('created_at', { ascending: false }),
+      client
+        .from('product_images')
+        .select('product_id, image_url, position')
+        .order('position', { ascending: true }),
+      client
+        .from('product_variants')
+        .select('id, product_id, size, stock, mp_link, is_active')
+        .eq('is_active', true)
+    ]);
+
+    if (productsError) throw productsError;
+    if (imagesError) throw imagesError;
+    if (variantsError) throw variantsError;
+
+    const imagesByProduct = {};
+    (imageRows || []).forEach(row => {
+      if (!imagesByProduct[row.product_id]) imagesByProduct[row.product_id] = [];
+      imagesByProduct[row.product_id].push(row);
+    });
+
+    const variantsByProduct = {};
+    (variantRows || []).forEach(row => {
+      if (!variantsByProduct[row.product_id]) variantsByProduct[row.product_id] = [];
+      variantsByProduct[row.product_id].push(row);
+    });
+
+    return (productRows || []).map(row => {
+      const rowImages = (imagesByProduct[row.id] || []).sort((a,b) => (a.position || 999) - (b.position || 999));
+      const rowVariants = variantsByProduct[row.id] || [];
+      const fitStockBySize = { unisex: {}, femenino: {}, masculino: {} };
+      const variantIdsByKey = {};
+      const mpLinksByKey = {};
+      const variantIdsBySize = {};
+
+      rowVariants.forEach(variant => {
+        const parsed = parseVariantSizeKey(variant.size);
+        if (!fitStockBySize[parsed.fit]) fitStockBySize[parsed.fit] = {};
+        fitStockBySize[parsed.fit][parsed.size] = Number(variant.stock || 0);
+        variantIdsByKey[`${parsed.fit}|${parsed.size}`] = variant.id || '';
+        mpLinksByKey[`${parsed.fit}|${parsed.size}`] = variant.mp_link || '';
+        if (parsed.fit === 'unisex') variantIdsBySize[parsed.size] = variant.id || '';
+      });
+
+      return {
+        id: row.slug || row.id,
+        dbId: row.id,
+        sku: row.sku || '',
+        capsule: row.capsule || '',
+        title: row.title || '',
+        description: row.description || '',
+        price: Number(row.price || 0),
+        cut: row.cut || 'Unisex',
+        sortDate: row.sort_date || new Date().toISOString().slice(0, 10),
+        featured: Boolean(row.featured),
+        artType: row.art_type || 'poster',
+        images: rowImages.map(img => img.image_url).slice(0, 3),
+        fitStockBySize,
+        mpLinksByKey,
+        variantIdsByKey,
+        variantIdsBySize
+      };
+    });
+  };
+
+  const buildCapsuleImagesFromProducts = (capsuleName = '') => {
+    const images = products
+      .filter(product => String(product.capsule || '').trim() === String(capsuleName || '').trim())
+      .flatMap(product => getImageList(product))
+      .filter(Boolean);
+    return [...new Set(images)].slice(0, 5);
+  };
+
+  const getProductsByCapsule = (capsuleName = '') => {
+    return products.filter(product => String(product.capsule || '').trim() === String(capsuleName || '').trim() && getTotalStock(product) > 0);
+  };
+
+  const normalizeCapsuleRecord = (row = {}, count = 0) => ({
+    id: row.id || row.slug || row.name || '',
+    name: row.name || row.capsule || '',
+    slug: row.slug || '',
+    tag: row.badge_label || row.tag || 'Activa ahora',
+    desc: row.short_description || row.desc || '',
+    heroTitle: row.hero_title || `Cápsula "${row.name || row.capsule || ''}" — activa ahora`,
+    heroBody: row.hero_body || row.short_description || row.desc || '',
+    heroCtaText: row.hero_cta_text || 'Ver cápsula',
+    featured: Boolean(row.is_featured_drop || row.featured),
+    isActive: row.is_active !== false,
+    productCount: Number(count || 0),
+    images: Array.isArray(row.images) ? row.images.filter(Boolean).slice(0, 5) : []
+  });
+
+  const enrichCapsulesWithProducts = (list = []) => {
+    return (list || []).map(item => {
+      const productCount = getProductsByCapsule(item.name).length;
+      const fallbackImages = buildCapsuleImagesFromProducts(item.name);
+      return {
+        ...item,
+        productCount,
+        images: (item.images && item.images.length ? item.images : fallbackImages).slice(0, 5)
+      };
+    });
+  };
+
+  const getCapsuleFallbackData = () => {
+    const counts = products.reduce((acc, product) => {
+      acc[product.capsule] = (acc[product.capsule] || 0) + (getTotalStock(product) > 0 ? 1 : 0);
+      return acc;
+    }, {});
+    return Object.keys(counts).map(name => normalizeCapsuleRecord({ ...(capsuleInfoFallback[name] || { name }), images: buildCapsuleImagesFromProducts(name) }, counts[name]));
+  };
+
+  const loadCapsulesFromSupabase = async () => {
+    const client = initSupabaseClient();
+    if (!client) return getCapsuleFallbackData();
+
+    const [{ data: capsuleRows, error: capsulesError }, { data: imageRows, error: imagesError }] = await Promise.all([
+      client
+        .from('capsules')
+        .select('id, name, slug, badge_label, short_description, hero_title, hero_body, hero_cta_text, is_active, is_featured_drop')
+        .eq('is_active', true)
+        .order('is_featured_drop', { ascending: false })
+        .order('name', { ascending: true }),
+      client
+        .from('capsule_images')
+        .select('capsule_id, image_url, position')
+        .eq('is_active', true)
+        .order('position', { ascending: true })
+    ]);
+
+    if (capsulesError) throw capsulesError;
+    if (imagesError) throw imagesError;
+
+    const imagesByCapsule = {};
+    (imageRows || []).forEach(row => {
+      if (!imagesByCapsule[row.capsule_id]) imagesByCapsule[row.capsule_id] = [];
+      imagesByCapsule[row.capsule_id].push(row.image_url);
+    });
+
+    const normalized = (capsuleRows || []).map(row => normalizeCapsuleRecord({ ...row, images: imagesByCapsule[row.id] || [] }));
+    return normalized.length ? normalized : getCapsuleFallbackData();
+  };
+
+  const renderFeaturedCapsule = () => {
+    const list = capsulesData.length ? capsulesData : getCapsuleFallbackData();
+    featuredCapsule = list.find(item => item.featured) || list[0] || null;
+    if (!featuredCapsule) return;
+    const label = document.getElementById('featuredCapsuleLabel');
+    const title = document.getElementById('featuredCapsuleTitle');
+    const body = document.getElementById('featuredCapsuleBody');
+    const ctaText = document.getElementById('featuredCapsuleCtaText');
+    if (label) label.textContent = '✦ Drop Destacado';
+    if (title) title.textContent = `Cápsula "${featuredCapsule.name}"`;
+    if (body) body.textContent = featuredCapsule.heroBody || featuredCapsule.desc || '';
+    if (ctaText) ctaText.textContent = featuredCapsule.heroCtaText || 'Ver cápsula';
+    renderAnnounceFeaturedCapsule();
+  };
+
+  const handleFeaturedCapsuleCta = (event) => {
+    if (!featuredCapsule?.name) return;
+    event.preventDefault();
+    openCapsuleModalByName(featuredCapsule.name);
+  };
+
+  const renderAnnounceFeaturedCapsule = () => {
+    const capsuleName = featuredCapsule?.name ? featuredCapsule.name.toUpperCase() : '';
+    const textValue = capsuleName ? `CÁPSULA DESTACADA DEL MES · ${capsuleName}` : 'CÁPSULA DESTACADA DEL MES';
+    document.querySelectorAll('.announce-featured-capsule').forEach(node => {
+      node.textContent = textValue;
+    });
+  };
+
+  const computeLocalStoreMetrics = () => {
+    const activeProducts = products.filter(product => getTotalStock(product) > 0);
+    const activeCapsuleNames = new Set(activeProducts.map(product => product.capsule).filter(Boolean));
+    const activeCapsules = capsulesData.length
+      ? capsulesData.filter(capsule => capsule.isActive !== false && activeCapsuleNames.has(capsule.name)).length
+      : activeCapsuleNames.size;
+
+    return {
+      activeDrops: activeProducts.length,
+      activeCapsules,
+      customersCount: null
+    };
+  };
+
+  const loadPublicStoreMetrics = async () => {
+    const localMetrics = computeLocalStoreMetrics();
+    const client = initSupabaseClient();
+    if (!client) return localMetrics;
+
+    try {
+      const { data, error } = await client.rpc('get_store_public_metrics');
+      if (error) throw error;
+      const row = Array.isArray(data) ? data[0] : data;
+      return {
+        activeDrops: Number(row?.active_products ?? localMetrics.activeDrops ?? 0),
+        activeCapsules: Number(row?.active_capsules ?? localMetrics.activeCapsules ?? 0),
+        customersCount: row?.total_orders == null ? localMetrics.customersCount : Number(row.total_orders)
+      };
+    } catch (error) {
+      console.warn('No se pudieron cargar las métricas públicas de la tienda:', error);
+      return localMetrics;
+    }
+  };
+
+  const renderHeroStats = () => {
+    const activeDropsNode = document.getElementById('statActiveDrops');
+    const activeCapsulesNode = document.getElementById('statActiveCapsules');
+    const customersNode = document.getElementById('statCustomers');
+    const installmentsNode = document.getElementById('statInstallments');
+    const mpTextNode = document.getElementById('heroMpText');
+    const transferTextNode = document.getElementById('heroTransferText');
+
+    if (activeDropsNode) activeDropsNode.textContent = String(storeMetrics.activeDrops ?? 0);
+    if (activeCapsulesNode) activeCapsulesNode.textContent = String(storeMetrics.activeCapsules ?? 0);
+    if (customersNode) {
+      const customersCount = Number(storeMetrics.customersCount ?? 0);
+      customersNode.textContent = customersCount > 0 ? `+${customersCount}` : '0';
+    }
+    if (installmentsNode) installmentsNode.textContent = `${STORE_CONFIG.installmentsCount || 3}x`;
+    if (mpTextNode) mpTextNode.innerHTML = `<strong>MercadoPago:</strong> ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés`;
+    if (transferTextNode) transferTextNode.innerHTML = `<strong>Transferencia:</strong> ${STORE_CONFIG.transferDiscount}% de descuento`;
+  };
+
+
+  const refreshCatalogData = () => {
+    capsulesData = enrichCapsulesWithProducts(capsulesData.length ? capsulesData : getCapsuleFallbackData());
+    renderFeaturedCapsule();
+    renderHeroStats();
+    applyFilters();
+    updateCartUI();
+  };
+
+  const initStore = async () => {
+    try {
+      if (isSupabaseConfigured()) {
+        const [remoteProducts, remoteCapsules] = await Promise.all([
+          loadProductsFromSupabase(),
+          loadCapsulesFromSupabase().catch(error => {
+            console.error('Error cargando cápsulas desde Supabase:', error);
+            return getCapsuleFallbackData();
+          })
+        ]);
+        if (remoteProducts?.length) {
+          products = remoteProducts;
+        } else {
+          console.warn('Supabase no devolvió productos activos. Se mantienen los productos de ejemplo.');
+        }
+        capsulesData = enrichCapsulesWithProducts(remoteCapsules?.length ? remoteCapsules : getCapsuleFallbackData());
+      } else {
+        console.warn('Supabase no está configurado. Se muestran los productos de ejemplo.');
+        capsulesData = enrichCapsulesWithProducts(getCapsuleFallbackData());
+      }
+    } catch (error) {
+      console.error('Error cargando catálogo desde Supabase:', error);
+      capsulesData = enrichCapsulesWithProducts(getCapsuleFallbackData());
+    } finally {
+      storeMetrics = await loadPublicStoreMetrics();
+      bestSellerRanking = await loadBestSellerRanking();
+      wireAdminAccessLinks();
+      wireCheckoutCustomerInputs();
+      refreshCatalogData();
+      renderPaymentStatusBanner();
+      observeElements();
+    }
+  };
+
+
+  const PAYMENT_STATUS_META = {
+    success: {
+      cardClass: 'success',
+      icon: '✓',
+      eyebrow: 'Pago confirmado',
+      title: 'Tu pago salió bien',
+      body: 'Mercado Pago te devolvió a la tienda con estado aprobado. Si la confirmación ya impactó, tu pedido quedó registrado y el stock se actualizó automáticamente.'
+    },
+    pending: {
+      cardClass: 'pending',
+      icon: '⏳',
+      eyebrow: 'Pago pendiente',
+      title: 'Tu pago todavía está en proceso',
+      body: 'A veces Mercado Pago demora unos minutos en cerrar la operación. Si recién pagaste, esperá un poco y volvé a revisar. Si preferís, escribinos por WhatsApp y lo miramos con vos.'
+    },
+    failure: {
+      cardClass: 'failure',
+      icon: '!',
+      eyebrow: 'Pago no completado',
+      title: 'La compra no se cerró',
+      body: 'No se aprobó el pago o el checkout se cortó antes de tiempo. Podés intentar de nuevo con Mercado Pago o cerrar la compra por transferencia y comprobante.'
+    }
+  };
+
+  const getPaymentStatusFromUrl = () => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('mp_status') || '';
+  };
+
+  const clearPaymentStatusFromUrl = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('mp_status');
+    window.history.replaceState({}, '', url.toString());
+  };
+
+  const renderPaymentStatusBanner = () => {
+    const status = getPaymentStatusFromUrl();
+    const mount = document.getElementById('paymentStatusMount');
+    const inner = document.getElementById('paymentStatusInner');
+    if (!mount || !inner) return;
+
+    const meta = PAYMENT_STATUS_META[status];
+    if (!meta) {
+      mount.classList.add('hidden');
+      inner.innerHTML = '';
+      return;
+    }
+
+    inner.innerHTML = `
+      <div class="payment-status-card ${meta.cardClass}">
+        <div class="payment-status-icon" aria-hidden="true">${meta.icon}</div>
+        <div>
+          <div class="payment-status-eyebrow">${meta.eyebrow}</div>
+          <div class="payment-status-title">${meta.title}</div>
+          <div class="payment-status-body">${meta.body}</div>
+        </div>
+        <div class="payment-status-actions">
+          <a class="btn-primary" href="#capsulas">Seguir comprando</a>
+          <button class="btn-soft-dark" type="button" onclick="openPaymentHelp()">Necesito ayuda</button>
+        </div>
+      </div>
+    `;
+
+    mount.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      mount.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+  };
+
+  const openPaymentHelp = () => {
+    const status = getPaymentStatusFromUrl() || 'sin estado';
+    const msg = encodeURIComponent(`Hola SIN RECREO. Volví desde Mercado Pago con estado: ${status}. ¿Me ayudan a revisar si mi compra quedó bien?`);
+    window.open(`${getWhatsAppBase()}?text=${msg}`, '_blank');
+  };
+
+  const placeholderImage = (title, n, accent='#b35c44') => {
+    const safeTitle = escapeHtml(title);
+    const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="900" height="1100" viewBox="0 0 900 1100">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="#faf9f6"/>
+            <stop offset="100%" stop-color="#ebe4da"/>
+          </linearGradient>
+        </defs>
+        <rect width="900" height="1100" fill="url(#g)"/>
+        <rect x="70" y="70" width="760" height="960" rx="36" fill="#ffffff" stroke="#e3ddd4" stroke-width="4"/>
+        <text x="450" y="180" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#1a1a1b">SIN RECREO</text>
+        <text x="450" y="230" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#6b6560">CARGÁ TU FOTO ${n}</text>
+        <rect x="220" y="310" width="460" height="480" rx="28" fill="#f3ede6" stroke="#ddd4c8" stroke-dasharray="10 10" stroke-width="4"/>
+        <circle cx="450" cy="460" r="72" fill="${accent}" opacity="0.20"/>
+        <path d="M330 670c48-68 98-102 150-102s102 34 150 102" fill="none" stroke="${accent}" stroke-width="24" stroke-linecap="round"/>
+        <text x="450" y="860" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#1a1a1b">${safeTitle}</text>
+        <text x="450" y="904" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#6b6560">Reemplazá este placeholder por tu imagen real</text>
+      </svg>
+    `;
+    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+  };
+
+  const getImageList = (p) => {
+    const actual = Array.isArray(p.images) ? p.images.filter(Boolean).slice(0, 3) : [];
+    if (actual.length >= 3) return actual;
+    const need = 3 - actual.length;
+    const generated = Array.from({ length: need }, (_, idx) => placeholderImage(p.title, actual.length + idx + 1));
+    return [...actual, ...generated];
+  };
+
+  /* ─── SVG MOCKUP ─── */
+  const mockupSVG = (type) => {
+    const configs = {
+      poster:['#1a1a1b','#b35c44','#f5f1ea'],
+      pop:['#1a1a1b','#c66e56','#4e78a3'],
+      portrait:['#1a1a1b','#d6cabd','#b35c44'],
+      type:['#1a1a1b','#faf9f6','#b35c44'],
+      grid:['#1a1a1b','#7d776f','#b35c44'],
+      symbol:['#1a1a1b','#faf9f6','#cb866f']
+    };
+    const [base,light,accent] = configs[type]||configs.poster;
+    return `<svg viewBox="0 0 400 440" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="sg${type}" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#202022"/>
+          <stop offset="100%" stop-color="${base}"/>
+        </linearGradient>
+        <filter id="sf${type}"><feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="rgba(0,0,0,.28)"/></filter>
+      </defs>
+      <rect width="400" height="440" fill="transparent"/>
+      <g filter="url(#sf${type})">
+        <path d="M118 70l30-26h104l30 26 38 20-26 70-34-22v224c0 10-8 18-18 18H158c-10 0-18-8-18-18V138l-34 22-26-70 38-20z" fill="url(#sg${type})"/>
+        <path d="M164 44c6 18 18 26 36 26s30-8 36-26" fill="none" stroke="#2f2f33" stroke-width="6"/>
+        <circle cx="200" cy="66" r="18" fill="#121214" opacity=".65"/>
+        ${type==='poster'?`<rect x="148" y="124" width="104" height="144" rx="8" fill="${light}"/><rect x="168" y="150" width="64" height="54" rx="8" fill="${accent}" opacity=".95"/><rect x="164" y="220" width="72" height="6" rx="3" fill="#1a1a1b" opacity=".75"/><rect x="160" y="234" width="80" height="6" rx="3" fill="#1a1a1b" opacity=".45"/>`:''}
+        ${type==='pop'?`<rect x="136" y="120" width="128" height="150" rx="8" fill="#101012" stroke="${accent}" stroke-width="4"/><circle cx="178" cy="166" r="26" fill="${accent}"/><rect x="204" y="136" width="34" height="98" rx="12" fill="${light}"/><path d="M160 230c24-18 54-18 80 0" fill="none" stroke="${light}" stroke-width="10" stroke-linecap="round"/>`:''}
+        ${type==='portrait'?`<rect x="144" y="120" width="112" height="154" rx="8" fill="${light}"/><circle cx="200" cy="166" r="30" fill="${accent}"/><rect x="168" y="200" width="64" height="40" rx="18" fill="#262629"/><rect x="164" y="248" width="72" height="8" rx="4" fill="#262629" opacity=".35"/>`:''}
+        ${type==='type'?`<rect x="140" y="120" width="120" height="150" rx="8" fill="#121214" stroke="#303034"/><text x="200" y="164" text-anchor="middle" fill="${light}" font-size="22" font-family="Bebas Neue,Montserrat,Arial" font-weight="800">SIN</text><text x="200" y="194" text-anchor="middle" fill="${accent}" font-size="22" font-family="Bebas Neue,Montserrat,Arial" font-weight="800">RECREO</text><rect x="162" y="215" width="76" height="4" rx="2" fill="${light}" opacity=".8"/><rect x="156" y="228" width="88" height="4" rx="2" fill="${accent}" opacity=".6"/>`:''}
+        ${type==='grid'?`<rect x="142" y="118" width="116" height="156" rx="8" fill="${light}"/><rect x="160" y="136" width="30" height="30" fill="${accent}"/><rect x="196" y="136" width="42" height="30" fill="#1a1a1b"/><rect x="160" y="172" width="78" height="22" fill="#6d675f"/><rect x="160" y="202" width="52" height="52" fill="#1a1a1b"/><rect x="218" y="202" width="20" height="52" fill="${accent}"/>`:''}
+        ${type==='symbol'?`<rect x="148" y="120" width="104" height="150" rx="8" fill="#111" stroke="#2e2e31"/><path d="M200 142c24 0 44 18 44 42 0 28-28 34-44 54-10 12-14 22-14 30" fill="none" stroke="${accent}" stroke-width="12" stroke-linecap="round"/><circle cx="186" cy="250" r="8" fill="${light}"/>`:''}
+      </g>
+    </svg>`;
+  };
+
+  const renderCardMedia = (p) => {
+    const images = getImageList(p);
+    const thumbs = images.map((img, idx) => `
+      <button class="pcard-thumb ${idx === 0 ? 'active' : ''}" type="button" onclick="setCardImage(event,'${p.id}',${idx})" aria-label="Ver foto ${idx + 1}">
+        <img src="${img}" alt="${escapeHtml(p.title)} foto ${idx + 1}" />
+      </button>
+    `).join('');
+    return `
+      <div class="pcard-media">
+        <img class="pcard-photo" id="card-photo-${p.id}" src="${images[0]}" alt="${escapeHtml(p.title)}" />
+        <span class="pcard-media-count">${images.length} fotos</span>
+        <div class="pcard-thumbs">${thumbs}</div>
+      </div>
+    `;
+  };
+
+  const setCardImage = (event, productId, index) => {
+    event.stopPropagation();
+    const product = products.find(item => item.id === productId);
+    if (!product) return;
+    const images = getImageList(product);
+    const img = document.getElementById(`card-photo-${productId}`);
+    if (img && images[index]) img.src = images[index];
+    const wrap = event.currentTarget.parentElement;
+    if (wrap) wrap.querySelectorAll('.pcard-thumb').forEach((thumb, idx) => thumb.classList.toggle('active', idx === index));
+  };
+
+  const setModalImage = (btn, src) => {
+    const main = document.getElementById('modalMainImage');
+    if (main) main.src = src;
+    document.querySelectorAll('.modal-thumb').forEach(thumb => thumb.classList.remove('active'));
+    btn.classList.add('active');
+  };
+
+  /* ─── HOME CATALOG ─── */
+  const getCapsuleImageList = (capsule = {}) => {
+    const images = Array.isArray(capsule.images) ? capsule.images.filter(Boolean).slice(0, 5) : [];
+    if (images.length) return images;
+    const fallbackProducts = getProductsByCapsule(capsule.name);
+    if (fallbackProducts.length) {
+      return [...new Set(fallbackProducts.flatMap(product => getImageList(product)))].slice(0, 5);
+    }
+    return [placeholderImage(capsule.name || 'Cápsula', 1)];
+  };
+
+  const loadBestSellerRanking = async () => {
+    const client = initSupabaseClient();
+    if (!client) return [];
+    try {
+      const { data, error } = await client.rpc('get_public_best_sellers', { limit_count: 6 });
+      if (error) throw error;
+      return Array.isArray(data) ? data : [];
+    } catch (error) {
+      console.warn('No se pudieron cargar los más vendidos públicos:', error);
+      return [];
+    }
+  };
+
+  const getBestSellerProducts = () => {
+    const activeProducts = products.filter(product => getTotalStock(product) > 0);
+    if (!bestSellerRanking.length) {
+      return activeProducts
+        .sort((a,b) => Number(b.featured) - Number(a.featured) || new Date(b.sortDate) - new Date(a.sortDate))
+        .slice(0, 6);
+    }
+
+    const byDbId = new Map(activeProducts.map(product => [product.dbId, product]));
+    const fromRanking = bestSellerRanking
+      .map(row => byDbId.get(row.product_id))
+      .filter(Boolean);
+
+    if (!fromRanking.length) {
+      return activeProducts
+        .sort((a,b) => Number(b.featured) - Number(a.featured) || new Date(b.sortDate) - new Date(a.sortDate))
+        .slice(0, 6);
+    }
+    return fromRanking.slice(0, 6);
+  };
+
+  const renderBestSellers = () => {
+    const items = getBestSellerProducts();
+    const meta = document.getElementById('bestSellersMeta');
+    if (meta) {
+      meta.textContent = items.length
+        ? `Mostrando ${items.length} prendas con mejor salida real o, si todavía no hay historial suficiente, una selección fuerte de la tienda.`
+        : 'Todavía no hay prendas para mostrar en esta sección.';
+    }
+    renderProducts(items, 'bestSellersGrid', 'Todavía no hay más vendidos para mostrar.');
+  };
+
+  const renderCapsules = () => {
+    const grid = document.getElementById('capsuleGrid');
+    const activeCapsules = (capsulesData.length ? capsulesData : getCapsuleFallbackData())
+      .filter(item => item.isActive !== false)
+      .filter(item => getProductsByCapsule(item.name).length > 0)
+      .filter(item => {
+        if (!state.query) return true;
+        const haystack = `${item.name} ${item.tag || ''} ${item.desc || ''} ${item.heroBody || ''}`.toLowerCase();
+        return haystack.includes(state.query.toLowerCase());
+      });
+
+    if (!activeCapsules.length) {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">No encontramos cápsulas para ese criterio. Probá con otro nombre o bajá directo a más vendidos.</div>`;
+      return;
+    }
+
+    grid.innerHTML = activeCapsules.map(capsule => {
+      const count = getProductsByCapsule(capsule.name).length;
+      const images = getCapsuleImageList(capsule);
+      const cover = images[0];
+      const capsuleArg = encodeURIComponent(capsule.name || '');
+      return `<article class="capsule-card capsule-card-rich fade-up">
+        <div class="capsule-card-media">
+          <img src="${cover}" alt="${escapeHtml(capsule.name)}" />
+          <div class="capsule-card-overlay"></div>
+          <span class="capsule-card-count">${count} prendas</span>
+        </div>
+        <div class="capsule-card-body">
+          <div class="capsule-tag">✦ ${escapeHtml(capsule.tag || 'Activa ahora')}</div>
+          <h3 class="capsule-name">${escapeHtml(capsule.name)}</h3>
+          <p class="capsule-desc">${escapeHtml(capsule.desc || '')}</p>
+          <div class="capsule-card-meta">
+            <span>${capsule.featured ? 'Drop destacado activo' : 'Colección activa'}</span>
+            <span>${Math.min(images.length, 5)} foto${Math.min(images.length, 5) !== 1 ? 's' : ''}</span>
+          </div>
+          <div class="capsule-card-actions">
+            <button class="capsule-card-btn" type="button" onclick="openCapsuleModalByName(decodeURIComponent('${capsuleArg}'))">
+              Ver cápsula
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <span class="capsule-card-link" onclick="openCapsuleModalByName(decodeURIComponent('${capsuleArg}'))">Abrir colección completa →</span>
+          </div>
+        </div>
+      </article>`;
+    }).join('');
+    observeElements();
+  };
+
+  const setCapsuleModalMainImage = (btn, src) => {
+    const main = document.getElementById('capsuleModalMainImage');
+    if (main) main.src = src;
+    document.querySelectorAll('.capsule-modal-thumb').forEach(node => node.classList.remove('active'));
+    btn.classList.add('active');
+  };
+
+  const renderCapsuleModal = () => {
+    if (!currentCapsuleModal) return;
+    const title = document.getElementById('capsuleModalHeaderTitle');
+    const badge = document.getElementById('capsuleModalBadge');
+    const heroTitle = document.getElementById('capsuleModalTitle');
+    const text = document.getElementById('capsuleModalText');
+    const count = document.getElementById('capsuleModalProductsCount');
+    const dropState = document.getElementById('capsuleModalDropState');
+    const mainImage = document.getElementById('capsuleModalMainImage');
+    const thumbs = document.getElementById('capsuleModalThumbs');
+    const productsInCapsule = getProductsByCapsule(currentCapsuleModal.name);
+    const images = getCapsuleImageList(currentCapsuleModal);
+
+    if (title) title.textContent = `Cápsula "${currentCapsuleModal.name}"`;
+    if (badge) badge.textContent = `✦ ${currentCapsuleModal.tag || 'Cápsula activa'}`;
+    if (heroTitle) heroTitle.textContent = currentCapsuleModal.name;
+    if (text) text.textContent = currentCapsuleModal.heroBody || currentCapsuleModal.desc || 'Esta cápsula todavía no tiene presentación cargada.';
+    if (count) count.textContent = `${productsInCapsule.length} prenda${productsInCapsule.length !== 1 ? 's' : ''}`;
+    if (dropState) dropState.textContent = currentCapsuleModal.featured ? 'Drop destacado activo' : 'Colección activa';
+    if (mainImage) mainImage.src = images[0];
+    if (thumbs) {
+      thumbs.innerHTML = images.map((img, idx) => `
+        <button class="capsule-modal-thumb ${idx === 0 ? 'active' : ''}" type="button" onclick="setCapsuleModalMainImage(this, '${img}')" aria-label="Ver imagen ${idx + 1}">
+          <img src="${img}" alt="${escapeHtml(currentCapsuleModal.name)} imagen ${idx + 1}" />
+        </button>
+      `).join('');
+    }
+    renderProducts(productsInCapsule, 'capsuleProductsGrid', 'Esta cápsula todavía no tiene prendas activas con stock.');
+  };
+
+  const openCapsuleModalByName = (capsuleName = '') => {
+    currentCapsuleModal = (capsulesData || []).find(item => item.name === capsuleName) || null;
+    if (!currentCapsuleModal) return;
+    renderCapsuleModal();
+    document.getElementById('capsuleModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeCapsuleModal = () => {
+    document.getElementById('capsuleModal').classList.remove('open');
+    currentCapsuleModal = null;
+    if (!document.getElementById('buyModal').classList.contains('open') && !document.getElementById('cartDrawer').classList.contains('open')) {
+      document.body.style.overflow = '';
+    }
+  };
+
+  const filterByCapsule = (cap) => {
+    openCapsuleModalByName(cap);
+  };
+
+  const applyFilters = () => {
+    renderCapsules();
+    renderBestSellers();
+  };
+
+  const renderProducts = (items, targetId = 'bestSellersGrid', emptyMessage = 'Sin resultados') => {
+    const grid = document.getElementById(targetId);
+    if (!grid) return;
+    if (!items.length) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px 0;color:var(--muted)">
+        <div style="font-size:2rem;margin-bottom:12px">🛍️</div>
+        <strong>${emptyMessage}</strong>
+      </div>`;
+      return;
+    }
+
+    grid.innerHTML = items.map(p => {
+      const sizes = getAvailableSizes(p);
+      const stock = getTotalStock(p);
+      const transferPrice = getTransferPrice(p);
+      return `
+        <article class="pcard" data-id="${p.id}" id="${p.id}">
+          <div class="pcard-figure">
+            ${renderCardMedia(p)}
+            <span class="pcard-badge ${p.featured ? 'badge-featured' : 'badge-new'}">${p.featured ? 'Destacado' : 'Nuevo drop'}</span>
+            <span class="stock-badge ${stock <= 3 ? 'low' : ''}">${stock <= 3 ? '⚠ Solo ' + stock + ' restantes' : 'Stock: ' + stock}</span>
+            <div class="pcard-overlay">
+              <button class="overlay-btn primary" onclick="openBuyModal('${p.id}',event)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M3 4h2l2.2 10.2a1 1 0 001 .8h8.8a1 1 0 001-.8L21 7H7"/></svg>
+                Elegir opciones
+              </button>
+              <button class="overlay-btn ghost" onclick="addToCart('${p.id}',event)">+ Agregar al carrito</button>
+            </div>
+          </div>
+          <div class="pcard-body">
+            <div class="pcard-cap">${p.capsule}</div>
+            <h3 class="pcard-name">${p.title}</h3>
+            <p class="pcard-desc">${p.description}</p>
+            ${getAvailableFits(p).length > 1 ? `<div class="pcard-transfer" style="margin-top:-4px">Disponible en femenino, masculino o unisex según talle</div>` : ``}
+            <div class="pcard-price-block">
+              <div class="pcard-price">${fmt(p.price)}</div>
+              <div class="pcard-cuotas">3 x ${fmt(Math.round(p.price / 3))} sin interés</div>
+              <div class="pcard-transfer">💸 ${fmt(transferPrice)} por transferencia</div>
+            </div>
+            <div class="size-row">${sizes.map(sz => {
+              const low = (p.stockBySize?.[sz] || 0) <= 1;
+              return `<span class="size-chip ${low ? 'low' : ''}">${sz}</span>`;
+            }).join('')}</div>
+            <div class="pcard-actions">
+              <button class="action-buy" onclick="openBuyModal('${p.id}',event)">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M3 4h2l2.2 10.2a1 1 0 001 .8h8.8a1 1 0 001-.8L21 7H7"/></svg>
+                Elegir
+              </button>
+              <a class="action-wa" href="${getWhatsAppBase()}?text=${encodeURIComponent(`Hola SIN RECREO, quiero consultar por la remera "${p.title}" (${p.sku}).`)}" target="_blank" rel="noopener noreferrer" aria-label="Consultar por WhatsApp">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.76-.87-2.03-.97-.27-.1-.47-.14-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.52.14-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12 2a10 10 0 00-8.5 15.27L2 22l4.86-1.48A10 10 0 1012 2z"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join('');
+    observeElements();
+  };
+
+  /* ─── BUY MODAL ─── */
+  const renderModalFitOptions = (product) => {
+    const fits = getAvailableFits(product);
+    const fitWrap = document.getElementById('modalFits');
+    if (!fitWrap) return;
+    if (!fits.length) {
+      fitWrap.innerHTML = '<div class="mini">Sin stock disponible</div>';
+      return;
+    }
+    fitWrap.innerHTML = fits.map(fit => `
+      <button class="fit-btn ${selectedFit === fit ? 'selected' : ''}" type="button" onclick="selectFit(this,'${fit}')">${getFitLabel(fit)}</button>
+    `).join('');
+  };
+
+  const renderModalSizeOptions = (product) => {
+    const sizes = getSizesForFit(product, selectedFit);
+    if (!sizes.includes(selectedSize)) selectedSize = sizes[0] || null;
+    document.getElementById('modalSizes').innerHTML = sizes.map(sz => `
+      <button class="sz-btn ${selectedSize === sz ? 'selected' : ''}" onclick="selectSize(this,'${sz}')">${sz}</button>
+    `).join('');
+  };
+
+  const openBuyModal = (id, e) => {
+    if (e) e.stopPropagation();
+    currentProduct = products.find(p => p.id === id);
+    selectedPayMethod = 'mp';
+    if (!currentProduct) return;
+
+    selectedFit = getDefaultFit(currentProduct);
+    selectedSize = getSizesForFit(currentProduct, selectedFit)[0] || null;
+    const images = getImageList(currentProduct);
+
+    document.getElementById('modalProductRow').innerHTML = `
+      <div class="modal-gallery-block">
+        <div class="modal-product-main">
+          <img id="modalMainImage" src="${images[0]}" alt="${escapeHtml(currentProduct.title)}" />
+        </div>
+        <div class="modal-product-thumbs">
+          ${images.map((img, idx) => `
+            <button class="modal-thumb ${idx === 0 ? 'active' : ''}" type="button" onclick="setModalImage(this, '${img}')" aria-label="Ver foto ${idx + 1}">
+              <img src="${img}" alt="${escapeHtml(currentProduct.title)} foto ${idx + 1}" />
+            </button>
+          `).join('')}
+        </div>
+      </div>
+      <div class="modal-product-info">
+        <div class="modal-product-cap">${currentProduct.capsule}</div>
+        <div class="modal-product-name">${currentProduct.title}</div>
+        <div class="modal-product-price">${fmt(currentProduct.price)}</div>
+        <div class="modal-note" style="margin-top:8px">
+          Código ${currentProduct.sku} · ${currentProduct.cut} · ${getTotalStock(currentProduct)} unidades disponibles
+        </div>
+      </div>
+    `;
+
+    renderModalFitOptions(currentProduct);
+    renderModalSizeOptions(currentProduct);
+
+    document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('selected'));
+    const first = document.querySelector('.pay-method-btn');
+    if (first) first.classList.add('selected');
+
+    hideCustomerPrompt();
+    updateModalTotal();
+    document.getElementById('buyModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    document.getElementById('buyModal').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  const selectFit = (btn, fit) => {
+    document.querySelectorAll('#modalFits .fit-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedFit = normalizeFit(fit);
+    renderModalSizeOptions(currentProduct);
+    updateModalTotal();
+  };
+
+  const selectSize = (btn, sz) => {
+    document.querySelectorAll('#modalSizes .sz-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedSize = sz;
+    updateModalTotal();
+  };
+
+  const addConfiguredToCart = (closeAfter = false) => {
+    if (!currentProduct || !selectedSize) {
+      alert('Elegí modelo y talle antes de agregar al carrito.');
+      return;
+    }
+    const customer = validateCheckoutCustomer();
+    if (!customer) return;
+    const selectedVariantId = getVariantId(currentProduct, selectedSize, selectedFit);
+    if (!selectedVariantId) {
+      alert('No encontramos una variante válida para esa combinación.');
+      return;
+    }
+    const existing = cart.find(item => item.id === currentProduct.id && item.selectedSize === selectedSize && normalizeFit(item.selectedFit) === normalizeFit(selectedFit));
+    if (existing) existing.qty += 1;
+    else cart.push({ ...currentProduct, qty: 1, selectedSize, selectedFit, selectedVariantId });
+    updateCartUI();
+    openCartDrawer();
+    if (closeAfter) closeModal();
+  };
+
+  const selectPayMethod = (btn, method) => {
+    document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedPayMethod = method;
+    updateModalTotal();
+  };
+
+  const updateTransferPanel = () => {
+    const panel = document.getElementById('transferPanel');
+    if (!panel) return;
+    const show = selectedPayMethod === 'transfer';
+    panel.hidden = !show;
+    document.getElementById('transferAliasValue').textContent = STORE_CONFIG.transferAlias;
+    document.getElementById('transferOwnerValue').textContent = STORE_CONFIG.transferOwner;
+    document.getElementById('transferCbuValue').textContent = STORE_CONFIG.transferCBU;
+    document.getElementById('transferDiscountBadge').textContent = `${STORE_CONFIG.transferDiscount}% OFF`;
+  };
+
+  const updateModalTotal = () => {
+    if (!currentProduct) return;
+    const price = selectedPayMethod === 'transfer' ? getTransferPrice(currentProduct) : currentProduct.price;
+    document.getElementById('modalTotal').textContent = fmt(price);
+
+    const cta = document.getElementById('modalCta');
+    const secure = document.querySelector('.modal-secure');
+    if (selectedPayMethod === 'mp' || selectedPayMethod === 'card') {
+      cta.className = 'modal-cta mp-style';
+      cta.textContent = 'Pagar esta prenda con Mercado Pago';
+      if (secure) secure.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Pago en entorno seguro de Mercado Pago · No expongas datos sensibles por WhatsApp`;
+    } else {
+      cta.className = 'modal-cta';
+      cta.textContent = 'Confirmar transferencia';
+      if (secure) secure.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Reservá la prenda y cerrá el pago con contacto directo por WhatsApp`;
+    }
+    updateTransferPanel();
+  };
+
+  const copyTransferField = async (field) => {
+    const map = {
+      alias: STORE_CONFIG.transferAlias,
+      cbu: STORE_CONFIG.transferCBU
+    };
+    const value = map[field];
+    if (!value) return;
+    try {
+      await navigator.clipboard.writeText(value);
+      alert(`${field.toUpperCase()} copiado`);
+    } catch (error) {
+      alert(`No pude copiarlo automáticamente. Copiá este dato:
+${value}`);
+    }
+  };
+
+
+  const buildTransferLineBlock = (item = {}) => {
+    const quantity = Number(item.quantity || 1);
+    const unitPrice = Number(item.unitPrice ?? item.basePrice ?? item.lineTotal ?? 0);
+    const subTotal = Number(item.basePrice ?? (quantity ? unitPrice * quantity : unitPrice) ?? 0);
+    const discount = Number(item.discount ?? Math.max(0, subTotal - Number(item.lineTotal || 0)));
+    const total = Number(item.lineTotal || Math.max(0, subTotal - discount));
+
+    return `• Producto: ${item.title || 'Producto'}
+• Código: ${item.sku || 'Sin código'}
+• Cápsula: ${item.capsule || 'Sin cápsula'}
+• Variante: ${describeFitAndSize(item.fit || 'unisex', item.size || 'A confirmar')}${quantity > 1 ? ` · x${quantity}` : ''}
+• Sub Total: ${fmt(subTotal)}
+• Descuento: ${fmt(discount)}
+• Total: ${fmt(total)}`;
+  };
+
+  const buildTransferMessage = () => {
+    const customer = getCheckoutCustomer();
+    if (!currentProduct) return 'Hola SIN RECREO, quiero comprar por transferencia.';
+
+    return buildTransferOrderMessage({
+      customer,
+      items: [{
+        title: currentProduct.title,
+        sku: currentProduct.sku,
+        capsule: currentProduct.capsule,
+        size: selectedSize,
+        fit: selectedFit,
+        quantity: 1,
+        basePrice: Number(currentProduct.price || 0),
+        discount: Number(currentProduct.price || 0) - Number(getTransferPrice(currentProduct) || 0),
+        lineTotal: Number(getTransferPrice(currentProduct) || 0)
+      }]
+    });
+  };
+
+  const openTransferWhatsApp = (customMessage) => {
+
+    const msg = encodeURIComponent(customMessage || buildTransferMessage());
+    window.open(`${getWhatsAppBase()}?text=${msg}`, '_blank');
+  };
+
+  const createTransferOrder = async (items, customer = {}, context = 'single') => {
+    if (!STORE_CONFIG.transferOrderEndpoint) return null;
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        'apikey': STORE_CONFIG.supabaseAnonKey,
+        'Authorization': `Bearer ${STORE_CONFIG.supabaseAnonKey}`
+      };
+      const res = await fetch(STORE_CONFIG.transferOrderEndpoint, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          items,
+          customer_name: customer.name || '',
+          customer_email: customer.email || '',
+          customer_phone: customer.phone || '',
+          payment_method: 'transferencia',
+          transfer_discount: STORE_CONFIG.transferDiscount,
+          notes: context === 'cart'
+            ? 'Pedido iniciado por transferencia desde el carrito de la tienda'
+            : 'Pedido iniciado por transferencia desde la ficha de producto'
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || `HTTP ${res.status}`);
+      return data;
+    } catch (error) {
+      console.error('No se pudo crear la orden por transferencia', error);
+      return null;
+    }
+  };
+
+
+  const buildTransferOrderMessage = ({ customer = {}, items = [], total = 0, orderId = '', orderCode = '' } = {}) => {
+    const normalizedItems = items.length
+      ? items.map(item => {
+          const quantity = Number(item.quantity || 1);
+          const basePrice = Number(item.basePrice ?? item.unitPrice ?? item.lineTotal ?? 0);
+          const subTotal = Number(item.subTotal ?? (basePrice * quantity));
+          const lineTotal = Number(item.lineTotal ?? subTotal);
+          const discount = Number(item.discount ?? Math.max(0, subTotal - lineTotal));
+          return {
+            ...item,
+            quantity,
+            basePrice,
+            subTotal,
+            lineTotal,
+            discount
+          };
+        })
+      : [{
+          title: currentProduct?.title || 'Producto',
+          sku: currentProduct?.sku || 'Sin código',
+          capsule: currentProduct?.capsule || 'Sin cápsula',
+          size: selectedSize || 'A confirmar',
+          fit: selectedFit || 'unisex',
+          quantity: 1,
+          basePrice: Number(currentProduct?.price || 0),
+          subTotal: Number(currentProduct?.price || 0),
+          discount: Number(currentProduct?.price || 0) - Number(getTransferPrice(currentProduct || { price: 0 }) || 0),
+          lineTotal: Number(getTransferPrice(currentProduct || { price: 0 }) || 0)
+        }];
+
+    const computedTotal = Number(total || normalizedItems.reduce((acc, item) => acc + Number(item.lineTotal || 0), 0));
+    const computedSubTotal = normalizedItems.reduce((acc, item) => acc + Number(item.subTotal || 0), 0);
+    const computedDiscount = normalizedItems.reduce((acc, item) => acc + Number(item.discount || 0), 0);
+    const itemsText = normalizedItems.map(buildTransferLineBlock).join('\n\n');
+
+    return `Hola SIN RECREO 👋
+
+Quiero continuar este pedido por transferencia.
+
+━━━━━━━━━━
+PEDIDO
+━━━━━━━━━━
+• Nº de pedido: ${orderCode || (orderId ? '#' + String(orderId).slice(0, 8).toUpperCase() : 'Pendiente de generar')}
+
+${itemsText}
+
+━━━━━━━━━━
+RESUMEN
+━━━━━━━━━━
+• Sub Total: ${fmt(computedSubTotal)}
+• Descuento: ${fmt(computedDiscount)}
+• Total: ${fmt(computedTotal)}
+
+━━━━━━━━━━
+MIS DATOS
+━━━━━━━━━━
+• Nombre: ${customer.name || 'A confirmar'}
+• Email: ${customer.email || 'A confirmar'}
+• Teléfono: ${customer.phone || 'A confirmar'}
+
+En un momento les envío el comprobante por este medio. ¿Me confirman disponibilidad?`;
+  };
+
+  const collectCartCustomer = () => {
+
+    const customer = getStoredCheckoutCustomer();
+    if (!customer.name || !customer.email) {
+      alert('Primero cargá tus datos desde la ventana de una prenda. Después vas a poder cerrar el carrito sin volver a escribirlos.');
+      closeCartDrawer();
+      return null;
+    }
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email);
+    if (!emailOk) {
+      alert('Revisá el correo electrónico guardado antes de continuar.');
+      return null;
+    }
+    return customer;
+  };
+
+  const createMPPreference = async (items, customer = {}) => {
+    if (STORE_CONFIG.mpMode !== 'backend' || !STORE_CONFIG.mpPreferenceEndpoint) return null;
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        'apikey': STORE_CONFIG.supabaseAnonKey,
+        'Authorization': `Bearer ${STORE_CONFIG.supabaseAnonKey}`
+      };
+      const res = await fetch(STORE_CONFIG.mpPreferenceEndpoint, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          items,
+          customer_name: customer.name || '',
+          customer_email: customer.email || '',
+          customer_phone: customer.phone || ''
+        })
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      if (STORE_CONFIG.mpEnvironment === 'sandbox') {
+        return data.sandbox_init_point || data.init_point || data.checkoutUrl || null;
+      }
+      return data.init_point || data.sandbox_init_point || data.checkoutUrl || null;
+    } catch (error) {
+      console.error('No se pudo crear la preferencia de MP', error);
+      return null;
+    }
+  };
+
+  const processPayment = async () => {
+    if (!currentProduct) return;
+    if (!selectedSize) {
+      alert('Elegí un talle antes de continuar.');
+      return;
+    }
+
+    const customer = validateCheckoutCustomer();
+    if (!customer) return;
+
+    if (selectedPayMethod === 'transfer') {
+      const transferOrder = await createTransferOrder([{
+        variant_id: getVariantId(currentProduct, selectedSize, selectedFit) || '',
+        quantity: 1
+      }], customer, 'single');
+
+      const transferMessage = buildTransferOrderMessage({
+        customer,
+        items: [{
+          title: currentProduct.title,
+          sku: currentProduct.sku,
+          capsule: currentProduct.capsule,
+          size: selectedSize,
+          fit: selectedFit,
+          quantity: 1,
+          basePrice: Number(currentProduct.price || 0),
+          discount: Number(currentProduct.price || 0) - Number(getTransferPrice(currentProduct) || 0),
+          lineTotal: Number(getTransferPrice(currentProduct) || 0)
+        }],
+        total: getTransferPrice(currentProduct),
+        orderId: transferOrder?.order_id || '',
+        orderCode: transferOrder?.order_code || ''
+      });
+
+      openTransferWhatsApp(transferMessage);
+      closeModal();
+
+      if (!transferOrder?.ok) {
+        alert('Te abrimos WhatsApp, pero no pudimos registrar el pedido pendiente en Supabase. Después revisamos esa conexión.');
+      }
+      return;
+    }
+
+    const variantId = getVariantId(currentProduct, selectedSize, selectedFit) || '';
+    const directLink = STORE_CONFIG.mpMode === 'direct_links' ? getMpLink(currentProduct, selectedSize, selectedFit) : '';
+    if (directLink) {
+      window.open(directLink, '_blank');
+      closeModal();
+      return;
+    }
+
+    if (!variantId && STORE_CONFIG.mpMode === 'backend') {
+      alert(`No encontré la variante de talle ${selectedSize} para esta prenda. Revisá el stock cargado en el panel admin.`);
+      return;
+    }
+
+    const checkoutUrl = await createMPPreference([{
+      variant_id: variantId,
+      quantity: 1
+    }], customer);
+
+    if (checkoutUrl) {
+      window.open(checkoutUrl, '_blank');
+      closeModal();
+      return;
+    }
+
+    alert(`Falta conectar Mercado Pago para "${currentProduct.title}" (${selectedSize}).
+
+Tenés dos caminos seguros:
+1. Revisar que la Edge Function create-mp-preference esté desplegada.
+2. Revisar que ese talle tenga variante activa y stock en Supabase.
+
+Mientras tanto, la transferencia por WhatsApp ya queda operativa.`);
+  };
+
+  /* ─── CART ─── */
+  const addToCart = (id, e) => {
+    if (e) e.stopPropagation();
+    const storedCustomer = getStoredCheckoutCustomer();
+    if (!storedCustomer.name || !storedCustomer.email) {
+      openBuyModal(id);
+      showCustomerPrompt('Complete nombre y correo para continuar.');
+      const missingField = !storedCustomer.name ? document.getElementById('customerName') : document.getElementById('customerEmail');
+      missingField?.focus();
+      return;
+    }
+    const p = products.find(item => item.id === id);
+    if (!p) return;
+    const defaultFit = getDefaultFit(p);
+    const defaultSize = getSizesForFit(p, defaultFit)[0] || 'Único';
+    const selectedVariantId = getVariantId(p, defaultSize, defaultFit);
+    const existing = cart.find(item => item.id === id && item.selectedSize === defaultSize && normalizeFit(item.selectedFit) === normalizeFit(defaultFit));
+    if (existing) existing.qty += 1;
+    else cart.push({ ...p, qty: 1, selectedSize: defaultSize, selectedFit: defaultFit, selectedVariantId });
+    updateCartUI();
+    openCartDrawer();
+  };
+
+  const removeFromCart = (id, size) => {
+    const idx = cart.findIndex(c => c.id === id && c.selectedSize === size);
+    if (idx !== -1) cart.splice(idx, 1);
+    updateCartUI();
+  };
+
+  const updateCartUI = () => {
+    const count = cart.reduce((sum, item) => sum + item.qty, 0);
+    document.getElementById('cartCount').textContent = count;
+    const body = document.getElementById('cartBody');
+    const footer = document.getElementById('cartFooter');
+
+    if (!cart.length) {
+      body.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">🛍️</div><p>Tu carrito está vacío</p></div>`;
+      footer.style.display = 'none';
+      return;
+    }
+
+    footer.style.display = '';
+    body.innerHTML = cart.map(item => {
+      const img = getImageList(item)[0];
+      return `
+        <div class="cart-item">
+          <div class="cart-item-img"><img src="${img}" alt="${escapeHtml(item.title)}" style="width:100%;height:100%;object-fit:cover;display:block" /></div>
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.title}</div>
+            <div class="cart-item-meta">${item.capsule} · ${describeFitAndSize(item.selectedFit || 'unisex', item.selectedSize)} · x${item.qty}</div>
+            <div class="cart-item-price">${fmt(item.price * item.qty)}</div>
+          </div>
+          <button class="cart-item-remove" onclick="removeFromCart('${item.id}','${item.selectedSize}')" aria-label="Eliminar ${item.title}">✕</button>
+        </div>
+      `;
+    }).join('');
+
+    const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+    document.getElementById('cartTotal').textContent = fmt(total);
+  };
+
+  const openCartDrawer = () => {
+    document.getElementById('cartDrawer').classList.add('open');
+    document.getElementById('drawerBackdrop').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeCartDrawer = () => {
+    document.getElementById('cartDrawer').classList.remove('open');
+    document.getElementById('drawerBackdrop').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  const goBackToCatalogFromCart = () => {
+    closeCartDrawer();
+    const catalog = document.getElementById('capsulas');
+    if (catalog) {
+      catalog.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.location.hash = '#capsulas';
+    }
+  };
+
+  const checkoutWhatsApp = async () => {
+    if (!cart.length) return;
+
+    const customer = collectCartCustomer();
+    if (!customer) return;
+
+    const validItems = cart.map(item => ({
+      variant_id: item.selectedVariantId || getVariantId(item, item.selectedSize, item.selectedFit) || '',
+      quantity: item.qty
+    })).filter(item => item.variant_id);
+
+    if (!validItems.length) {
+      alert('No encontramos variantes válidas en el carrito para registrar el pedido.');
+      return;
+    }
+
+    const transferOrder = await createTransferOrder(validItems, customer, 'cart');
+
+    const total = cart.reduce((sum, item) => sum + (getTransferPrice(item) * item.qty), 0);
+    const transferMessage = buildTransferOrderMessage({
+      customer,
+      items: cart.map(item => ({
+        title: item.title,
+        sku: item.sku,
+        capsule: item.capsule,
+        size: item.selectedSize,
+        fit: item.selectedFit || 'unisex',
+        quantity: item.qty,
+        basePrice: Number(item.price || 0),
+        discount: (Number(item.price || 0) - Number(getTransferPrice(item) || 0)) * Number(item.qty || 1),
+        lineTotal: Number(getTransferPrice(item) || 0) * Number(item.qty || 1)
+      })),
+      total,
+      orderId: transferOrder?.order_id || '',
+      orderCode: transferOrder?.order_code || ''
+    });
+
+    openTransferWhatsApp(transferMessage);
+
+    if (!transferOrder?.ok) {
+      alert('Te abrimos WhatsApp, pero no pudimos registrar el pedido pendiente en Supabase.');
+    }
+  };
+
+  const checkoutMP = async () => {
+    if (!cart.length) return;
+
+    const customer = collectCartCustomer();
+    if (!customer) return;
+
+    if (cart.length === 1) {
+      const single = cart[0];
+      const directLink = getMpLink(single, single.selectedSize, single.selectedFit || 'unisex');
+      if (directLink) {
+        window.open(directLink, '_blank');
+        return;
+      }
+    }
+
+    const checkoutUrl = await createMPPreference(cart.map(item => ({
+      variant_id: item.selectedVariantId || getVariantId(item, item.selectedSize, item.selectedFit) || '',
+      quantity: item.qty
+    })).filter(item => item.variant_id), customer);
+
+    if (checkoutUrl) {
+      window.open(checkoutUrl, '_blank');
+      return;
+    }
+
+    alert('Para pagar el carrito completo con Mercado Pago necesitás un backend que cree la preferencia con todos los items. Si no, podés usar los links directos por producto o cerrar el pedido por WhatsApp.');
+  };
+
+  /* ─── SETUP ─── */
+  initStore();
+
+  /* ─── EVENT LISTENERS ─── */
+  document.getElementById('searchInput')?.addEventListener('input', e => {
+    state.query = e.target.value.trim();
+    applyFilters();
+  });
+
+  document.getElementById('buyModal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+
+  document.getElementById('capsuleModal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeCapsuleModal();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeModal();
+      closeCartDrawer();
+      closeCapsuleModal();
+    }
+  });
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  const observeElements = () => {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up:not(.visible)').forEach(el => io.observe(el));
+  };
+
+  observeElements();
+
+</script>
 </body>
 </html>
