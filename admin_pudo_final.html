@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIN RECREO | Admin catálogo + pedidos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🧵%3C/text%3E%3C/svg%3E">
+  <style>
+    :root{
+      --ink:#1a1a1b; --paper:#faf9f6; --accent:#b35c44; --muted:#6d6863; --line:#e8e1d7;
+      --card:#ffffff; --ok:#1c7f4f; --danger:#9c2f2f; --radius:20px; --shadow:0 16px 40px rgba(26,26,27,.08);
+      --display:'Bebas Neue', sans-serif; --serif:'DM Serif Display', Georgia, serif; --body:'DM Sans', system-ui, sans-serif;
+    }
+    *{box-sizing:border-box} html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:var(--body)}
+    a{text-decoration:none;color:inherit} button,input,textarea,select{font:inherit}
+    .wrap{max-width:1400px;margin:0 auto;padding:24px}
+    .hero{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:20px}
+    .brand{font-family:var(--display);font-size:3.2rem;letter-spacing:.04em;line-height:.9}
+    .sub{color:var(--muted);max-width:62ch;line-height:1.6}
+    .notice{background:#fff6f0;border:1px solid #f0d4c7;color:#6c3c2e;padding:14px 16px;border-radius:16px;margin:16px 0}
+    .grid{display:grid;grid-template-columns:340px 1fr;gap:20px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .p24{padding:24px}.p20{padding:20px}.p16{padding:16px}
+    .title{font-family:var(--display);font-size:1.6rem;letter-spacing:.04em;margin:0 0 14px}
+    .mini{font-size:.8rem;color:var(--muted)}
+    .stack{display:flex;flex-direction:column;gap:12px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .field{display:flex;flex-direction:column;gap:6px}
+    .label{font-size:.82rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+    input,textarea,select{width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px 14px;outline:none}
+    textarea{min-height:110px;resize:vertical}
+    .btn{border:0;border-radius:999px;padding:12px 18px;font-weight:700;cursor:pointer}
+    .btn-dark{background:var(--ink);color:#fff}
+    .btn-accent{background:var(--accent);color:#fff}
+    .btn-soft{background:#f4efe9;border:1px solid var(--line)}
+    .btn-danger{background:var(--danger);color:#fff}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    .list{display:flex;flex-direction:column;gap:10px;max-height:72vh;overflow:auto}
+    .item{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fff;cursor:pointer;transition:.15s}
+    .item:hover,.item.active{border-color:var(--ink);transform:translateY(-1px)}
+    .item h4{margin:0 0 4px;font-size:1rem}
+    .item p{margin:0;color:var(--muted);font-size:.85rem;line-height:1.45}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;font-size:.72rem;font-weight:700;background:#f4efe9;border:1px solid var(--line)}
+    .divider{height:1px;background:var(--line);margin:10px 0}
+    .img-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .img-box{border:1px dashed #d6cec4;border-radius:16px;padding:12px;background:#fcfbf9}
+    .preview{width:100%;aspect-ratio:1/1;border-radius:12px;background:#f0ebe5;display:block;object-fit:cover;border:1px solid var(--line);margin-top:8px}
+    .variant-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .variant-card{border:1px solid var(--line);border-radius:16px;padding:12px;background:#fcfbf9}
+    .variant-head{font-weight:700;margin-bottom:8px}
+    .status{padding:10px 12px;border-radius:12px;font-size:.88rem}
+    .ok{background:#ebfff4;color:var(--ok);border:1px solid #bfe8d0}
+    .err{background:#fff0f0;color:var(--danger);border:1px solid #efc2c2}
+    .hidden{display:none !important}
+
+    .app-shell{display:flex;flex-direction:column;gap:16px}
+    .view-switch{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .segmented{display:flex;gap:8px;flex-wrap:wrap}
+    .seg-btn{border:1px solid var(--line);background:#fff;padding:10px 14px;border-radius:999px;font-weight:700;cursor:pointer}
+    .seg-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+    .orders-grid{display:grid;grid-template-columns:360px 1fr;gap:20px}
+    .order-list{display:flex;flex-direction:column;gap:10px;max-height:72vh;overflow:auto}
+    .order-item{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fff;cursor:pointer;transition:.15s}
+    .order-item:hover,.order-item.active{border-color:var(--ink);transform:translateY(-1px)}
+    .order-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+    .order-code{font-weight:800;font-size:.96rem}
+    .order-pill{display:inline-flex;align-items:center;justify-content:center;padding:6px 10px;border-radius:999px;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;border:1px solid transparent}
+    .pill-approved{background:#ebfff4;color:#1c7f4f;border-color:#bfe8d0}
+    .pill-pending{background:#fff6ec;color:#9b5b22;border-color:#f0d5b9}
+    .pill-rejected,.pill-cancelled,.pill-failure,.pill-refunded{background:#fff0f0;color:#9c2f2f;border-color:#efc2c2}
+    .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+    .summary-card{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fcfbf9}
+    .summary-card strong{display:block;font-family:var(--display);font-size:1.7rem;line-height:1;letter-spacing:.03em;margin-bottom:4px}
+    .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .detail-card{border:1px solid var(--line);border-radius:18px;padding:16px;background:#fcfbf9}
+    .kv{display:grid;grid-template-columns:140px 1fr;gap:8px;font-size:.92rem;line-height:1.55}
+    .kv div:nth-child(odd){color:var(--muted);font-weight:700}
+    .order-items-table{width:100%;border-collapse:collapse;margin-top:6px}
+    .order-items-table th,.order-items-table td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;font-size:.9rem}
+    .order-items-table th{font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    .empty-state{border:1px dashed #d6cec4;border-radius:18px;padding:28px;text-align:center;background:#fcfbf9;color:var(--muted)}
+    @media (max-width:1000px){.grid{grid-template-columns:1fr}.orders-grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:repeat(2,1fr)}.detail-grid,.img-grid,.variant-grid,.row{grid-template-columns:1fr}}
+    @media (max-width:700px){.summary-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <div class="brand">SIN RECREO</div>
+        <p class="sub">Panel de gestión para catálogo, stock base y pedidos. Cargá productos sin stock propio, administrá remeras lisas por talle, corte y color, y mirá en claro lo que entra por Mercado Pago.</p>
+      </div>
+      <div class="mini">Hecho para GitHub Pages + Supabase</div>
+    </div>
+
+    <div class="notice">
+      Entrá con tu usuario administrador. Desde acá podés cargar catálogo, administrar stock general de remeras lisas y revisar pedidos. Las prendas estampadas descuentan del stock base compartido.
+    </div>
+
+    <div id="statusBox" class="hidden"></div>
+
+    <div id="loginCard" class="card p24">
+      <h2 class="title">Ingresar</h2>
+      <div class="row">
+        <label class="field">
+          <span class="label">Email</span>
+          <input id="loginEmail" type="email" placeholder="tuemail@dominio.com" />
+        </label>
+        <label class="field">
+          <span class="label">Contraseña</span>
+          <input id="loginPassword" type="password" placeholder="••••••••" />
+        </label>
+      </div>
+      <div class="toolbar" style="margin-top:14px">
+        <button class="btn btn-dark" id="loginBtn">Entrar al admin</button>
+      </div>
+    </div>
+
+    <div id="appShell" class="app-shell hidden" style="margin-top:20px">
+      <div class="card p16 view-switch">
+        <div>
+          <h2 class="title" style="margin:0 0 4px">Panel de gestión</h2>
+          <div class="mini">Elegí si querés trabajar catálogo o revisar pedidos.</div>
+        </div>
+        <div class="segmented">
+          <button class="seg-btn active" id="catalogViewBtn">Catálogo</button>
+          <button class="seg-btn" id="capsulesViewBtn">Cápsulas</button>
+          <button class="seg-btn" id="stockViewBtn">Stock base</button>
+          <button class="seg-btn" id="ordersViewBtn">Pedidos</button>
+          <button class="btn btn-soft" id="logoutBtn">Salir</button>
+        </div>
+      </div>
+
+      <div id="catalogView" class="grid">
+        <aside class="card p20">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px">
+            <h2 class="title" style="margin:0">Productos</h2>
+          </div>
+          <div class="toolbar" style="margin-bottom:12px">
+            <button class="btn btn-accent" id="newProductBtn">Nuevo producto</button>
+            <button class="btn btn-soft" id="reloadBtn">Recargar</button>
+          </div>
+          <div id="productList" class="list"></div>
+        </aside>
+
+        <section class="card p24">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <h2 class="title" style="margin:0">Editor de catálogo</h2>
+            <div class="toolbar">
+              <button class="btn btn-dark" id="saveBtn">Guardar</button>
+              <button class="btn btn-danger" id="deactivateBtn">Desactivar</button>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <input id="productId" type="hidden" />
+
+          <div class="row">
+            <label class="field"><span class="label">Slug</span><input id="slug" placeholder="voto-femenino" /></label>
+            <label class="field"><span class="label">SKU</span><input id="sku" placeholder="SR-MA-001" /></label>
+          </div>
+
+          <div class="row">
+            <label class="field"><span class="label">Cápsula</span>
+              <select id="capsule"></select>
+              <span class="mini">Las cápsulas se administran en la pestaña “Cápsulas”.</span>
+            </label>
+            <label class="field"><span class="label">Título</span><input id="title" placeholder="Voto femenino" /></label>
+          </div>
+
+          <div class="row">
+            <label class="field"><span class="label">Precio</span><input id="price" type="number" min="0" step="100" /></label>
+            <label class="field"><span class="label">Corte</span>
+              <select id="cut">
+                <option>Unisex</option>
+                <option>Corte dama</option>
+                <option>Oversize</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="field"><span class="label">Fecha de orden</span><input id="sortDate" type="date" /></label>
+            <label class="field"><span class="label">Estilo visual</span>
+              <select id="artType">
+                <option value="poster">Poster</option>
+                <option value="type">Type</option>
+                <option value="pop">Pop</option>
+                <option value="portrait">Portrait</option>
+                <option value="grid">Grid</option>
+                <option value="symbol">Symbol</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="field"><span class="label">Destacado</span>
+              <select id="featured">
+                <option value="false">No</option>
+                <option value="true">Sí</option>
+              </select>
+            </label>
+            <label class="field"><span class="label">Activo</span>
+              <select id="isActive">
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="field" style="margin-top:12px">
+            <span class="label">Descripción</span>
+            <textarea id="description" placeholder="Descripción breve de la prenda"></textarea>
+          </label>
+
+          <div class="divider"></div>
+          <h3 class="title" style="font-size:1.35rem">Imágenes</h3>
+          <p class="mini">Podés pegar URLs o subir archivos al bucket <strong>product-images</strong>. Cargá hasta 3 imágenes por prenda.</p>
+
+          <div class="img-grid" id="imagesGrid"></div>
+
+          <div class="divider"></div>
+          <div class="notice" style="margin-top:16px">
+            Este producto no tiene stock propio. La disponibilidad se toma del <strong>Stock base</strong>: remeras lisas por corte, color y talle. Cuando se vende una prenda estampada, se descuenta una remera lisa de ese stock general.
+          </div>
+
+          <div class="divider"></div>
+          <div style="display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap">
+            <button class="btn btn-soft" type="button" id="saveBtnBottom">Guardar desde acá</button>
+          </div>
+        </section>
+      </div>
+
+      <div id="capsulesView" class="grid hidden">
+        <aside class="card p20">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px">
+            <h2 class="title" style="margin:0">Cápsulas</h2>
+          </div>
+          <div class="toolbar" style="margin-bottom:12px">
+            <button class="btn btn-accent" id="newCapsuleBtn">Nueva cápsula</button>
+            <button class="btn btn-soft" id="reloadCapsulesBtn">Recargar</button>
+          </div>
+          <div id="capsuleList" class="list"></div>
+        </aside>
+
+        <section class="card p24">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <h2 class="title" style="margin:0">Editor de cápsulas</h2>
+            <div class="toolbar">
+              <button class="btn btn-dark" id="saveCapsuleBtn">Guardar cápsula</button>
+              <button class="btn btn-danger" id="deactivateCapsuleBtn">Desactivar cápsula</button>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <input id="capsuleId" type="hidden" />
+
+          <div class="row">
+            <label class="field"><span class="label">Nombre de la cápsula</span><input id="capsuleName" placeholder="Memoria y archivo" /></label>
+            <label class="field"><span class="label">Slug</span><input id="capsuleSlug" placeholder="memoria-y-archivo" /></label>
+          </div>
+
+          <div class="row">
+            <label class="field"><span class="label">Etiqueta breve</span><input id="capsuleBadgeLabel" placeholder="Activa ahora" /></label>
+            <label class="field"><span class="label">CTA del drop destacado</span><input id="capsuleHeroCtaText" placeholder="Ver cápsula" /></label>
+          </div>
+
+          <div class="row">
+            <label class="field"><span class="label">Activo</span>
+              <select id="capsuleIsActive">
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+              </select>
+            </label>
+            <label class="field"><span class="label">Drop destacado</span>
+              <select id="capsuleIsFeaturedDrop">
+                <option value="false">No</option>
+                <option value="true">Sí</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="field" style="margin-top:12px">
+            <span class="label">Descripción para la grilla de cápsulas</span>
+            <textarea id="capsuleShortDescription" placeholder="Texto breve que aparece en la sección de cápsulas de la home"></textarea>
+          </label>
+
+          <div class="row" style="margin-top:12px">
+            <label class="field"><span class="label">Título del drop destacado</span><input id="capsuleHeroTitle" placeholder='Cápsula &quot;Memoria y archivo&quot; — activa ahora' /></label>
+            <div class="field">
+              <span class="label">Vista rápida</span>
+              <div class="summary-card" style="height:100%;display:flex;flex-direction:column;justify-content:center">
+                <strong id="capsuleProductsCount">0</strong>
+                <span class="mini">productos activos vinculados a esta cápsula</span>
+              </div>
+            </div>
+          </div>
+
+          <label class="field" style="margin-top:12px">
+            <span class="label">Presentación del drop destacado</span>
+            <textarea id="capsuleHeroBody" placeholder="Texto que aparece en la tarjeta hermosa de DROP DESTACADO"></textarea>
+          </label>
+
+          <div class="notice" style="margin-top:16px">
+            Si cambiás el nombre de una cápsula desde acá, el admin actualiza automáticamente los productos que hoy usan ese nombre para que no se corte la vinculación.
+          </div>
+
+          <div class="divider"></div>
+          <h3 class="title" style="font-size:1.35rem">Productos de esta cápsula</h3>
+          <p class="mini">Acá ves el catálogo asociado y podés saltar directo al editor del producto.</p>
+          <div id="capsuleProductsAdmin" class="list"></div>
+
+          <div class="divider"></div>
+          <div style="display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap">
+            <button class="btn btn-soft" type="button" id="saveCapsuleBtnBottom">Guardar cápsula desde acá</button>
+          </div>
+        </section>
+      </div>
+
+
+      <div id="stockView" class="grid hidden">
+        <aside class="card p20">
+          <h2 class="title" style="margin:0 0 12px">Stock base</h2>
+          <p class="mini" style="line-height:1.6;margin-bottom:14px">Cargá acá las remeras lisas disponibles. Este stock sirve para todas las estampas del catálogo.</p>
+          <div class="toolbar" style="margin-bottom:12px">
+            <button class="btn btn-soft" id="reloadStockBtn">Recargar</button>
+          </div>
+          <div id="stockSummary" class="summary-grid" style="grid-template-columns:1fr"></div>
+        </aside>
+
+        <section class="card p24">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div>
+              <h2 class="title" style="margin:0">Remeras lisas</h2>
+              <div class="mini">Alta y actualización por corte, color y talle. Ejemplo: Oversize · Hueso · M · 12 unidades.</div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="row">
+            <label class="field"><span class="label">Corte</span>
+              <select id="stockCut">
+                <option value="unisex">Unisex</option>
+                <option value="oversize">Oversize</option>
+                <option value="femenina">Femenina</option>
+              </select>
+            </label>
+            <label class="field"><span class="label">Color</span><input id="stockColor" placeholder="Hueso" /></label>
+          </div>
+          <div class="row" style="margin-top:12px">
+            <label class="field"><span class="label">Talle</span>
+              <select id="stockSize">
+                <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+              </select>
+            </label>
+            <label class="field"><span class="label">Stock disponible</span><input id="stockQty" type="number" min="0" step="1" value="0" /></label>
+          </div>
+          <div class="toolbar" style="margin-top:14px">
+            <button class="btn btn-dark" id="saveStockBtn" type="button">Guardar stock</button>
+            <button class="btn btn-soft" id="clearStockFormBtn" type="button">Limpiar</button>
+          </div>
+
+          <div class="divider"></div>
+          <h3 class="title" style="font-size:1.35rem">Stock cargado</h3>
+          <p class="mini">Las filas con stock 0 quedan inactivas para la tienda, pero se conservan para poder reactivarlas.</p>
+          <div style="overflow:auto">
+            <table class="order-items-table">
+              <thead>
+                <tr>
+                  <th>Corte</th>
+                  <th>Color</th>
+                  <th>Talle</th>
+                  <th>Stock</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="stockRows"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div id="ordersView" class="orders-grid hidden">
+        <aside class="card p20">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px">
+            <h2 class="title" style="margin:0">Pedidos</h2>
+            <button class="btn btn-soft" id="reloadOrdersBtn">Recargar</button>
+          </div>
+          <div class="toolbar" style="margin-bottom:12px">
+            <select id="orderStatusFilter">
+              <option value="all">Todos</option>
+              <option value="approved">Approved</option>
+              <option value="pending">Pending</option>
+              <option value="rejected">Rejected</option>
+              <option value="refunded">Refunded</option>
+            </select>
+          </div>
+          <div id="orderList" class="order-list"></div>
+        </aside>
+
+        <section class="card p24">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div>
+              <h2 class="title" style="margin:0">Lectura de pedidos</h2>
+              <div class="mini">Un vistazo claro de lo que entró, cómo se pagó y qué compró cada persona.</div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div id="ordersSummary" class="summary-grid"></div>
+          <div id="orderDetail"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const CONFIG = {
+      SUPABASE_URL: 'https://xedhdojvynmwaadmkcby.supabase.co',
+      SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlZGhkb2p2eW5td2FhZG1rY2J5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NjQ4MjYsImV4cCI6MjA5MTI0MDgyNn0.Keaskg8KUqFz4JyuUJJxGCjIDdD6iaDnEAUyvwPgZrA',
+      STORAGE_BUCKET: 'product-images',
+      PUDO_CREATE_ORDER_ENDPOINT: 'https://xedhdojvynmwaadmkcby.supabase.co/functions/v1/pudo-create-order'
+    };
+
+    const SIZE_ORDER = ['XS','S','M','L','XL','XXL'];
+    const CUT_ORDER = ['unisex','oversize','femenina'];
+    const CUT_LABELS = { unisex:'Unisex', oversize:'Oversize', femenina:'Femenina' };
+    const IMAGE_SLOTS = [1,2,3];
+    let sb = null;
+    let currentUser = null;
+    let currentProduct = null;
+    let currentImages = {};
+    let products = [];
+    let capsules = [];
+    let currentCapsule = null;
+    let currentCapsuleOriginalName = '';
+    let currentView = 'catalog';
+    let orders = [];
+    let currentOrderId = null;
+    let blankStock = [];
+    let isSavingProduct = false;
+    let isSavingCapsule = false;
+    let isSavingStock = false;
+    const MANAGEABLE_ORDER_STATUSES = ['pending','approved','rejected','cancelled','refunded'];
+    const MANAGEABLE_PAYMENT_METHODS = ['mercadopago','transferencia','manual','whatsapp'];
+
+    const el = id => document.getElementById(id);
+    const showStatus = (msg, type='ok') => {
+      const box = el('statusBox');
+      box.className = `status ${type === 'ok' ? 'ok' : 'err'}`;
+      box.textContent = msg;
+      box.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    const clearStatus = () => el('statusBox').classList.add('hidden');
+
+    const setSaveButtonsState = (saving) => {
+      isSavingProduct = saving;
+      ['saveBtn','saveBtnBottom'].forEach(id => {
+        const btn = el(id);
+        if (!btn) return;
+        btn.disabled = saving;
+        btn.style.opacity = saving ? '.7' : '1';
+        btn.style.cursor = saving ? 'wait' : 'pointer';
+        btn.textContent = saving ? 'Guardando…' : (id === 'saveBtnBottom' ? 'Guardar desde acá' : 'Guardar');
+      });
+    };
+
+    const setCapsuleSaveButtonsState = (saving) => {
+      isSavingCapsule = saving;
+      ['saveCapsuleBtn','saveCapsuleBtnBottom'].forEach(id => {
+        const btn = el(id);
+        if (!btn) return;
+        btn.disabled = saving;
+        btn.style.opacity = saving ? '.7' : '1';
+        btn.style.cursor = saving ? 'wait' : 'pointer';
+        btn.textContent = saving ? 'Guardando cápsula…' : (id === 'saveCapsuleBtnBottom' ? 'Guardar cápsula desde acá' : 'Guardar cápsula');
+      });
+    };
+
+    const isConfigured = () => CONFIG.SUPABASE_URL && CONFIG.SUPABASE_ANON_KEY && !CONFIG.SUPABASE_URL.includes('PEGA_ACA') && !CONFIG.SUPABASE_ANON_KEY.includes('PEGA_ACA');
+
+    const init = () => {
+      if (!isConfigured()) {
+        showStatus('Pegá tu SUPABASE_URL y SUPABASE_ANON_KEY en el archivo admin_catalogo_supabase.html antes de usarlo.', 'err');
+        return;
+      }
+      sb = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+      renderImageInputs();
+      wireEvents();
+      restoreSession();
+    };
+
+    const wireEvents = () => {
+      el('loginBtn').addEventListener('click', login);
+      el('logoutBtn').addEventListener('click', logout);
+      el('catalogViewBtn').addEventListener('click', () => switchView('catalog'));
+      el('capsulesViewBtn').addEventListener('click', () => switchView('capsules'));
+      el('stockViewBtn').addEventListener('click', () => switchView('stock'));
+      el('ordersViewBtn').addEventListener('click', () => switchView('orders'));
+      el('newProductBtn').addEventListener('click', newProduct);
+      el('reloadBtn').addEventListener('click', loadProducts);
+      el('newCapsuleBtn').addEventListener('click', newCapsule);
+      el('reloadCapsulesBtn').addEventListener('click', loadCapsules);
+      el('reloadOrdersBtn').addEventListener('click', loadOrders);
+      el('reloadStockBtn').addEventListener('click', loadBlankStock);
+      el('saveStockBtn').addEventListener('click', saveBlankStockRow);
+      el('clearStockFormBtn').addEventListener('click', clearStockForm);
+      el('orderStatusFilter').addEventListener('change', renderOrderList);
+      el('saveBtn').addEventListener('click', saveProduct);
+      el('saveBtnBottom').addEventListener('click', saveProduct);
+      el('deactivateBtn').addEventListener('click', deactivateProduct);
+      el('saveCapsuleBtn').addEventListener('click', saveCapsule);
+      el('saveCapsuleBtnBottom').addEventListener('click', saveCapsule);
+      el('deactivateCapsuleBtn').addEventListener('click', deactivateCapsule);
+    };
+
+    const renderImageInputs = () => {
+      el('imagesGrid').innerHTML = IMAGE_SLOTS.map(pos => `
+        <div class="img-box">
+          <div class="label">Imagen ${pos}</div>
+          <input id="imageUrl${pos}" placeholder="https://..." />
+          <input id="imageFile${pos}" type="file" accept="image/*" style="margin-top:8px" />
+          <img id="imagePreview${pos}" class="preview" alt="Preview ${pos}" />
+        </div>
+      `).join('');
+      IMAGE_SLOTS.forEach(pos => {
+        el(`imageUrl${pos}`).addEventListener('input', e => {
+          el(`imagePreview${pos}`).src = e.target.value || '';
+        });
+        el(`imageFile${pos}`).addEventListener('change', e => {
+          const file = e.target.files?.[0];
+          if (file) el(`imagePreview${pos}`).src = URL.createObjectURL(file);
+        });
+      });
+    };
+
+    const normalizeCut = value => {
+      const key = String(value || '').trim().toLowerCase();
+      if (['femenino','femenina','corte dama','dama'].includes(key)) return 'femenina';
+      if (['oversize','over'].includes(key)) return 'oversize';
+      return 'unisex';
+    };
+    const getCutLabel = value => CUT_LABELS[normalizeCut(value)] || 'Unisex';
+    const normalizeColor = value => String(value || '').trim().replace(/\s+/g, ' ') || 'Hueso';
+    const stockSort = (a, b) => {
+      const ci = CUT_ORDER.indexOf(normalizeCut(a.cut));
+      const cj = CUT_ORDER.indexOf(normalizeCut(b.cut));
+      if (ci !== cj) return ci - cj;
+      const colorCompare = normalizeColor(a.color).localeCompare(normalizeColor(b.color), 'es');
+      if (colorCompare) return colorCompare;
+      const si = SIZE_ORDER.indexOf(a.size);
+      const sj = SIZE_ORDER.indexOf(b.size);
+      return (si === -1 ? 999 : si) - (sj === -1 ? 999 : sj);
+    };
+    const describeStockVariant = (fit, size, color) => `${getCutLabel(fit)} · ${normalizeColor(color)} · Talle ${size || '—'}`;
+
+    const capsuleBlankForm = () => ({
+      id:'',
+      name:'',
+      slug:'',
+      badge_label:'Activa ahora',
+      short_description:'',
+      hero_title:'',
+      hero_body:'',
+      hero_cta_text:'Ver cápsula',
+      is_active:true,
+      is_featured_drop:false
+    });
+
+    const renderCapsuleOptionsInProductForm = () => {
+      const select = el('capsule');
+      if (!select) return;
+      const currentValue = currentProduct?.capsule || select.value || '';
+      const activeCapsules = capsules.filter(c => c.is_active);
+      const extraOption = currentValue && !activeCapsules.some(c => c.name === currentValue)
+        ? `<option value="${currentValue}">${currentValue} (sin ficha activa)</option>` : '';
+      select.innerHTML = `
+        <option value="">Elegí una cápsula</option>
+        ${activeCapsules.map(c => `<option value="${c.name}">${c.name}</option>`).join('')}
+        ${extraOption}
+      `;
+      select.value = currentValue;
+    };
+
+    const fillCapsuleForm = (capsule) => {
+      el('capsuleId').value = capsule.id || '';
+      el('capsuleName').value = capsule.name || '';
+      el('capsuleSlug').value = capsule.slug || '';
+      el('capsuleBadgeLabel').value = capsule.badge_label || '';
+      el('capsuleShortDescription').value = capsule.short_description || '';
+      el('capsuleHeroTitle').value = capsule.hero_title || '';
+      el('capsuleHeroBody').value = capsule.hero_body || '';
+      el('capsuleHeroCtaText').value = capsule.hero_cta_text || 'Ver cápsula';
+      el('capsuleIsActive').value = String(Boolean(capsule.is_active));
+      el('capsuleIsFeaturedDrop').value = String(Boolean(capsule.is_featured_drop));
+      currentCapsuleOriginalName = capsule.name || '';
+      renderCapsuleProductsAdmin();
+    };
+
+    const collectCapsuleForm = () => {
+      const name = el('capsuleName').value.trim();
+      const slug = slugify(el('capsuleSlug').value.trim() || name);
+      return {
+        id: el('capsuleId').value || null,
+        name,
+        slug,
+        badge_label: el('capsuleBadgeLabel').value.trim() || 'Activa ahora',
+        short_description: el('capsuleShortDescription').value.trim(),
+        hero_title: el('capsuleHeroTitle').value.trim() || `Cápsula "${name}" — activa ahora`,
+        hero_body: el('capsuleHeroBody').value.trim(),
+        hero_cta_text: el('capsuleHeroCtaText').value.trim() || 'Ver cápsula',
+        is_active: el('capsuleIsActive').value === 'true',
+        is_featured_drop: el('capsuleIsFeaturedDrop').value === 'true'
+      };
+    };
+
+    const renderCapsuleProductsAdmin = () => {
+      const wrap = el('capsuleProductsAdmin');
+      const count = el('capsuleProductsCount');
+      if (!wrap || !count) return;
+      const capsuleName = el('capsuleName').value.trim() || currentCapsule?.name || '';
+      const linked = products.filter(product => String(product.capsule || '').trim() === capsuleName);
+      count.textContent = linked.length;
+      if (!capsuleName) {
+        wrap.innerHTML = '<div class="empty-state">Guardá o elegí una cápsula para ver sus productos vinculados.</div>';
+        return;
+      }
+      if (!linked.length) {
+        wrap.innerHTML = '<div class="empty-state">Esta cápsula todavía no tiene productos activos vinculados.</div>';
+        return;
+      }
+      wrap.innerHTML = linked.map(product => `
+        <div class="item">
+          <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+            <div>
+              <h4 style="margin:0 0 4px">${product.title}</h4>
+              <p>${product.sku || 'sin SKU'} · ${product.cut || 'Sin corte'} · $${Number(product.price || 0).toLocaleString('es-AR')}</p>
+            </div>
+            <button class="btn btn-soft" type="button" data-open-product="${product.id}">Editar producto</button>
+          </div>
+        </div>
+      `).join('');
+      wrap.querySelectorAll('[data-open-product]').forEach(btn => {
+        btn.addEventListener('click', () => openProductFromCapsule(btn.dataset.openProduct));
+      });
+    };
+
+
+    const renderStockSummary = () => {
+      const wrap = el('stockSummary');
+      if (!wrap) return;
+      const total = blankStock.reduce((acc, row) => acc + Number(row.stock || 0), 0);
+      const activeRows = blankStock.filter(row => row.is_active !== false && Number(row.stock || 0) > 0).length;
+      wrap.innerHTML = `
+        <div class="summary-card"><strong>${total}</strong><span class="mini">remeras lisas disponibles</span></div>
+        <div class="summary-card"><strong>${activeRows}</strong><span class="mini">combinaciones activas</span></div>
+      `;
+    };
+
+    const renderStockRows = () => {
+      const tbody = el('stockRows');
+      if (!tbody) return;
+      if (!blankStock.length) {
+        tbody.innerHTML = '<tr><td colspan="6">Todavía no cargaste stock base.</td></tr>';
+        renderStockSummary();
+        return;
+      }
+      tbody.innerHTML = [...blankStock].sort(stockSort).map(row => `
+        <tr>
+          <td>${getCutLabel(row.cut)}</td>
+          <td>${normalizeColor(row.color)}</td>
+          <td>${row.size || '—'}</td>
+          <td><strong>${Number(row.stock || 0)}</strong></td>
+          <td>${row.is_active !== false && Number(row.stock || 0) > 0 ? '<span class="order-pill pill-approved">Activo</span>' : '<span class="order-pill pill-rejected">Sin stock</span>'}</td>
+          <td>
+            <button class="btn btn-soft" type="button" data-edit-stock="${row.id}">Editar</button>
+            <button class="btn btn-danger" type="button" data-zero-stock="${row.id}">Dejar en 0</button>
+          </td>
+        </tr>
+      `).join('');
+      tbody.querySelectorAll('[data-edit-stock]').forEach(btn => {
+        btn.addEventListener('click', () => fillStockForm(blankStock.find(row => row.id === btn.dataset.editStock)));
+      });
+      tbody.querySelectorAll('[data-zero-stock]').forEach(btn => {
+        btn.addEventListener('click', () => zeroBlankStockRow(btn.dataset.zeroStock));
+      });
+      renderStockSummary();
+    };
+
+    const clearStockForm = () => {
+      el('stockCut').value = 'unisex';
+      el('stockColor').value = 'Hueso';
+      el('stockSize').value = 'M';
+      el('stockQty').value = 0;
+    };
+
+    const fillStockForm = row => {
+      if (!row) return;
+      el('stockCut').value = normalizeCut(row.cut);
+      el('stockColor').value = normalizeColor(row.color);
+      el('stockSize').value = row.size || 'M';
+      el('stockQty').value = Number(row.stock || 0);
+      switchView('stock');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const loadBlankStock = async () => {
+      clearStatus();
+      try {
+        const { data, error } = await sb
+          .from('blank_stock')
+          .select('id, cut, color, size, stock, is_active, updated_at, created_at')
+          .order('cut', { ascending: true })
+          .order('color', { ascending: true })
+          .order('size', { ascending: true });
+        if (error) throw error;
+        blankStock = data || [];
+        renderStockRows();
+      } catch (err) {
+        showStatus(err.message || 'No se pudo cargar el stock base. Revisá que hayas creado la tabla blank_stock en Supabase.', 'err');
+      }
+    };
+
+    const saveBlankStockRow = async () => {
+      if (isSavingStock) return;
+      clearStatus();
+      isSavingStock = true;
+      const btn = el('saveStockBtn');
+      if (btn) { btn.disabled = true; btn.textContent = 'Guardando…'; }
+      try {
+        const payload = {
+          cut: normalizeCut(el('stockCut').value),
+          color: normalizeColor(el('stockColor').value),
+          size: el('stockSize').value,
+          stock: Math.max(0, parseInt(el('stockQty').value, 10) || 0),
+          is_active: Math.max(0, parseInt(el('stockQty').value, 10) || 0) > 0
+        };
+        if (!payload.color || !payload.size) throw new Error('Completá color y talle.');
+        const { error } = await sb
+          .from('blank_stock')
+          .upsert(payload, { onConflict: 'cut,color,size' });
+        if (error) throw error;
+        showStatus('Stock base guardado correctamente.');
+        await loadBlankStock();
+      } catch (err) {
+        showStatus(err.message || 'No se pudo guardar el stock base.', 'err');
+      } finally {
+        isSavingStock = false;
+        if (btn) { btn.disabled = false; btn.textContent = 'Guardar stock'; }
+      }
+    };
+
+    const zeroBlankStockRow = async (id) => {
+      clearStatus();
+      try {
+        const { error } = await sb
+          .from('blank_stock')
+          .update({ stock: 0, is_active: false })
+          .eq('id', id);
+        if (error) throw error;
+        showStatus('Stock base actualizado en 0.');
+        await loadBlankStock();
+      } catch (err) {
+        showStatus(err.message || 'No se pudo actualizar esa fila de stock.', 'err');
+      }
+    };
+
+    const openProductFromCapsule = async (productId) => {
+      switchView('catalog');
+      await editProduct(productId);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+
+    const restoreSession = async () => {
+      const { data } = await sb.auth.getSession();
+      if (data?.session) {
+        currentUser = data.session.user;
+        await enterApp();
+      }
+    };
+
+    const ensureAdmin = async () => {
+      const { data, error } = await sb
+        .from('profiles')
+        .select('is_admin, email')
+        .eq('id', currentUser.id)
+        .single();
+      if (error) throw error;
+      if (!data?.is_admin) throw new Error('Tu usuario existe, pero no tiene permisos de administrador.');
+      return data;
+    };
+
+    const login = async () => {
+      clearStatus();
+      try {
+        const email = el('loginEmail').value.trim();
+        const password = el('loginPassword').value;
+        const { data, error } = await sb.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        currentUser = data.user;
+        await enterApp();
+        showStatus('Sesión iniciada correctamente.');
+      } catch (err) {
+        showStatus(err.message || 'No se pudo iniciar sesión.', 'err');
+      }
+    };
+
+    const logout = async () => {
+      await sb.auth.signOut();
+      location.reload();
+    };
+
+    const enterApp = async () => {
+      await ensureAdmin();
+      el('loginCard').classList.add('hidden');
+      el('appShell').classList.remove('hidden');
+      switchView(currentView);
+      await Promise.all([loadProducts(), loadCapsules(), loadBlankStock(), loadOrders()]);
+      newProduct();
+      newCapsule();
+      clearStockForm();
+    };
+
+    const switchView = (view) => {
+      currentView = view;
+      el('catalogView').classList.toggle('hidden', view !== 'catalog');
+      el('capsulesView').classList.toggle('hidden', view !== 'capsules');
+      el('stockView').classList.toggle('hidden', view !== 'stock');
+      el('ordersView').classList.toggle('hidden', view !== 'orders');
+      el('catalogViewBtn').classList.toggle('active', view === 'catalog');
+      el('capsulesViewBtn').classList.toggle('active', view === 'capsules');
+      el('stockViewBtn').classList.toggle('active', view === 'stock');
+      el('ordersViewBtn').classList.toggle('active', view === 'orders');
+    };
+
+    const fmtMoney = value => new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(Number(value || 0));
+    const fmtDate = value => {
+      if (!value) return '—';
+      const d = new Date(value);
+      return new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', timeStyle: 'short' }).format(d);
+    };
+    const getOrderPillClass = status => {
+      const s = String(status || '').toLowerCase();
+      if (s === 'approved') return 'pill-approved';
+      if (s === 'pending') return 'pill-pending';
+      return 'pill-rejected';
+    };
+
+    const loadCapsules = async () => {
+      clearStatus();
+      try {
+        const { data, error } = await sb
+          .from('capsules')
+          .select('id, name, slug, badge_label, short_description, hero_title, hero_body, hero_cta_text, is_active, is_featured_drop, created_at')
+          .order('is_featured_drop', { ascending: false })
+          .order('name', { ascending: true });
+        if (error) throw error;
+        capsules = data || [];
+        renderCapsuleList();
+        renderCapsuleOptionsInProductForm();
+        renderCapsuleProductsAdmin();
+      } catch (err) {
+        showStatus(err.message || 'No se pudieron cargar las cápsulas.', 'err');
+      }
+    };
+
+    const loadOrders = async () => {
+      clearStatus();
+      try {
+        const { data: orderRows, error: orderError } = await sb
+          .from('orders')
+          .select('id, public_order_number, created_at, status, customer_name, customer_email, customer_phone, payment_method, mp_preference_id, mp_payment_id, mp_external_reference, subtotal, discount, total, notes, shipping_provider, shipping_price, shipping_data, pudo_order_created, pudo_order_created_at, pudo_order_error, pudo_order_response')
+          .order('created_at', { ascending: false })
+          .limit(100);
+        if (orderError) throw orderError;
+
+        const orderIds = (orderRows || []).map(o => o.id);
+        let items = [];
+        if (orderIds.length) {
+          const { data: itemRows, error: itemError } = await sb
+            .from('order_items')
+            .select('id, order_id, product_title, size, fit, color, quantity, unit_price, line_total, blank_stock_id')
+            .in('order_id', orderIds)
+          if (itemError) throw itemError;
+          items = itemRows || [];
+        }
+
+        const byOrder = {};
+        items.forEach(item => {
+          if (!byOrder[item.order_id]) byOrder[item.order_id] = [];
+          byOrder[item.order_id].push(item);
+        });
+
+        orders = (orderRows || []).map(order => ({ ...order, items: byOrder[order.id] || [] }));
+        if (!currentOrderId && orders[0]) currentOrderId = orders[0].id;
+        if (currentOrderId && !orders.some(o => o.id === currentOrderId)) currentOrderId = orders[0]?.id || null;
+        renderOrdersSummary();
+        renderOrderList();
+        renderOrderDetail();
+      } catch (err) {
+        showStatus(err.message || 'No se pudieron cargar los pedidos.', 'err');
+      }
+    };
+
+    const getFilteredOrders = () => {
+      const filter = el('orderStatusFilter')?.value || 'all';
+      if (filter === 'all') return orders;
+      return orders.filter(order => String(order.status || '').toLowerCase() === filter);
+    };
+
+    const renderOrdersSummary = () => {
+      const wrap = el('ordersSummary');
+      const approved = orders.filter(o => o.status === 'approved');
+      const pending = orders.filter(o => o.status === 'pending');
+      const billed = orders.reduce((acc, o) => acc + Number(o.total || 0), 0);
+      wrap.innerHTML = `
+        <div class="summary-card"><strong>${orders.length}</strong><span class="mini">pedidos cargados</span></div>
+        <div class="summary-card"><strong>${approved.length}</strong><span class="mini">aprobados</span></div>
+        <div class="summary-card"><strong>${pending.length}</strong><span class="mini">pendientes</span></div>
+        <div class="summary-card"><strong>${fmtMoney(billed)}</strong><span class="mini">monto total registrado</span></div>
+      `;
+    };
+
+    const renderOrderList = () => {
+      const list = el('orderList');
+      const filtered = getFilteredOrders();
+      if (!filtered.length) {
+        list.innerHTML = '<div class="empty-state">Todavía no hay pedidos para este filtro.</div>';
+        if (!orders.length) currentOrderId = null;
+        renderOrderDetail();
+        return;
+      }
+      if (!filtered.some(o => o.id === currentOrderId)) currentOrderId = filtered[0].id;
+      list.innerHTML = filtered.map(order => {
+        const customer = order.customer_name || order.customer_email || 'Sin nombre';
+        const itemsCount = order.items.reduce((acc, item) => acc + Number(item.quantity || 0), 0);
+        return `
+          <div class="order-item ${currentOrderId === order.id ? 'active' : ''}" data-id="${order.id}">
+            <div class="order-top">
+              <div class="order-code">#${order.public_order_number || order.id.slice(0, 8)}</div>
+              <span class="order-pill ${getOrderPillClass(order.status)}">${order.status || 'pending'}</span>
+            </div>
+            <p style="margin:0 0 6px"><strong>${customer}</strong></p>
+            <p style="margin:0 0 6px">${fmtDate(order.created_at)}</p>
+            <p style="margin:0">${itemsCount} item(s) · ${fmtMoney(order.total)}</p>
+          </div>
+        `;
+      }).join('');
+      list.querySelectorAll('.order-item[data-id]').forEach(node => {
+        node.addEventListener('click', () => {
+          currentOrderId = node.dataset.id;
+          renderOrderList();
+          renderOrderDetail();
+        });
+      });
+      renderOrderDetail();
+    };
+
+    const renderOrderDetail = () => {
+      const detail = el('orderDetail');
+      const order = orders.find(o => o.id === currentOrderId);
+      if (!order) {
+        detail.innerHTML = '<div class="empty-state">Elegí un pedido para ver el detalle completo.</div>';
+        return;
+      }
+      const itemsRows = order.items.length ? order.items.map(item => `
+        <tr>
+          <td>${item.product_title}</td>
+          <td>${describeStockVariant(item.fit, item.size, item.color)}</td>
+          <td>${item.quantity}</td>
+          <td>${fmtMoney(item.unit_price)}</td>
+          <td>${fmtMoney(item.line_total)}</td>
+        </tr>
+      `).join('') : '<tr><td colspan="5">Sin items cargados</td></tr>';
+
+      detail.innerHTML = `
+        <div class="detail-grid">
+          <div class="detail-card">
+            <div class="label" style="margin-bottom:10px">Compra</div>
+            <div class="kv">
+              <div>Pedido</div><div>#${order.public_order_number || order.id}</div>
+              <div>Estado</div><div><span class="order-pill ${getOrderPillClass(order.status)}">${order.status || 'pending'}</span></div>
+              <div>Creado</div><div>${fmtDate(order.created_at)}</div>
+              <div>Método</div><div>${order.payment_method || '—'}</div>
+              <div>Total</div><div><strong>${fmtMoney(order.total)}</strong></div>
+              <div>Referencia MP</div><div>${order.mp_external_reference || '—'}</div>
+            </div>
+          </div>
+          <div class="detail-card">
+            <div class="label" style="margin-bottom:10px">Cliente</div>
+            <div class="kv">
+              <div>Nombre</div><div>${order.customer_name || '—'}</div>
+              <div>Email</div><div>${order.customer_email || '—'}</div>
+              <div>Teléfono</div><div>${order.customer_phone || '—'}</div>
+              <div>Payment ID</div><div>${order.mp_payment_id || '—'}</div>
+              <div>Preference ID</div><div>${order.mp_preference_id || '—'}</div>
+              <div>Notas</div><div>${order.notes || '—'}</div>
+            </div>
+          </div>
+        </div>
+        <div class="detail-card" style="margin-top:14px">
+          <div class="label" style="margin-bottom:10px">Entrega</div>
+          <div class="kv">
+            <div>Método</div><div>${getShippingAdminLabel(order)}</div>
+            <div>Costo cobrado</div><div>${fmtMoney(order.shipping_price || 0)}</div>
+            <div>Proveedor</div><div>${order.shipping_provider || '—'}</div>
+            <div>Orden PUDO</div><div>${order.pudo_order_created ? 'Creada · ' + fmtDate(order.pudo_order_created_at) : (order.pudo_order_error ? 'Error: ' + order.pudo_order_error : 'Pendiente / no aplica')}</div>
+          </div>
+        </div>
+        <div class="detail-card" style="margin-top:14px">
+          <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px">
+            <div class="label">Gestión manual</div>
+            <div class="mini">Podés editar estado, método de pago y notas. Si pasás de pendiente a approved, el stock se descuenta ahora.</div>
+          </div>
+          <div class="row">
+            <label class="field">
+              <span class="label">Estado</span>
+              <select id="manageOrderStatus">
+                ${MANAGEABLE_ORDER_STATUSES.map(status => `<option value="${status}" ${String(order.status||'').toLowerCase() === status ? 'selected' : ''}>${status}</option>`).join('')}
+              </select>
+            </label>
+            <label class="field">
+              <span class="label">Método de pago</span>
+              <select id="manageOrderPaymentMethod">
+                ${MANAGEABLE_PAYMENT_METHODS.map(method => `<option value="${method}" ${String(order.payment_method||'').toLowerCase() === method ? 'selected' : ''}>${method}</option>`).join('')}
+              </select>
+            </label>
+          </div>
+          <label class="field" style="margin-top:12px">
+            <span class="label">Notas</span>
+            <textarea id="manageOrderNotes" style="min-height:90px">${order.notes || ''}</textarea>
+          </label>
+          <div class="toolbar" style="margin-top:14px">
+            <button class="btn btn-dark" id="saveOrderBtn" type="button">Guardar cambios</button>
+            <button class="btn btn-danger" id="deleteOrderBtn" type="button">Borrar pedido</button>
+          </div>
+        </div>
+        <div class="detail-card" style="margin-top:14px">
+          <div class="label" style="margin-bottom:10px">Items del pedido</div>
+          <table class="order-items-table">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Variante</th>
+                <th>Cant.</th>
+                <th>Unitario</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>${itemsRows}</tbody>
+          </table>
+        </div>
+      `;
+
+      document.getElementById('saveOrderBtn')?.addEventListener('click', saveOrderChanges);
+      document.getElementById('deleteOrderBtn')?.addEventListener('click', deleteCurrentOrder);
+    };
+
+    const adjustStockForApprovedOrder = async (order) => {
+      const stockItems = (order.items || []).filter(item => item.blank_stock_id || (item.size && item.fit && item.color));
+      for (const item of stockItems) {
+        let query = sb.from('blank_stock').select('id, stock');
+        if (item.blank_stock_id) {
+          query = query.eq('id', item.blank_stock_id);
+        } else {
+          query = query
+            .eq('cut', normalizeCut(item.fit))
+            .eq('color', normalizeColor(item.color))
+            .eq('size', item.size);
+        }
+        const { data: stockRow, error: stockError } = await query.single();
+        if (stockError) throw stockError;
+
+        const nextStock = Math.max(0, Number(stockRow.stock || 0) - Number(item.quantity || 0));
+        const { error: updateStockError } = await sb
+          .from('blank_stock')
+          .update({ stock: nextStock, is_active: nextStock > 0 })
+          .eq('id', stockRow.id);
+        if (updateStockError) throw updateStockError;
+      }
+      await loadBlankStock();
+    };
+
+
+    const triggerOrderEmails = async (orderId) => {
+      const response = await fetch(`${CONFIG.SUPABASE_URL}/functions/v1/send-order-emails`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': CONFIG.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify({ order_id: orderId })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data?.ok === false) {
+        throw new Error(data?.error || 'El pedido se actualizó, pero falló el envío del mail.');
+      }
+      return data;
+    };
+
+    const triggerPudoOrder = async (orderId) => {
+      const response = await fetch(CONFIG.PUDO_CREATE_ORDER_ENDPOINT || `${CONFIG.SUPABASE_URL}/functions/v1/pudo-create-order`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': CONFIG.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify({ order_id: orderId })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data?.ok === false) {
+        throw new Error(data?.error || 'El pedido se aprobó, pero falló la creación de la orden PUDO.');
+      }
+      return data;
+    };
+
+    const getShippingAdminLabel = (order = {}) => {
+      const provider = String(order.shipping_provider || '').toLowerCase();
+      const data = order.shipping_data || {};
+      if (!provider) return '—';
+      if (provider === 'retiro' || provider === 'retiro domicilio' || data.provider === 'RETIRO') return 'Retiro Corimayo · Burzaco';
+      const method = data.shipping_method_name || data.shippingMethodName || data.selectedRate?.shippingMethodName || 'PUDO';
+      const locker = data.locker_name || data.selectedOption?.lockerName || '';
+      return `${method}${locker ? ' · ' + locker : ''}`;
+    };
+
+    const saveOrderChanges = async () => {
+      clearStatus();
+      try {
+        const order = orders.find(o => o.id === currentOrderId);
+        if (!order) throw new Error('No encontramos el pedido activo.');
+
+        const nextStatus = (el('manageOrderStatus')?.value || 'pending').toLowerCase();
+        const nextPaymentMethod = (el('manageOrderPaymentMethod')?.value || '').toLowerCase();
+        const nextNotes = (el('manageOrderNotes')?.value || '').trim();
+
+        if (order.status !== 'approved' && nextStatus === 'approved') {
+          await adjustStockForApprovedOrder(order);
+        }
+
+        const justApproved = order.status !== 'approved' && nextStatus === 'approved';
+
+        const { error } = await sb
+          .from('orders')
+          .update({
+            status: nextStatus,
+            payment_method: nextPaymentMethod || null,
+            notes: nextNotes || null
+          })
+          .eq('id', order.id);
+        if (error) throw error;
+
+        if (justApproved) {
+          await triggerOrderEmails(order.id);
+          const pudoResult = await triggerPudoOrder(order.id);
+          const pudoMsg = pudoResult?.skipped ? ' Logística PUDO: no aplica o ya estaba creada.' : ' Orden PUDO creada/revisada correctamente.';
+          showStatus('Pedido actualizado, mail enviado correctamente.' + pudoMsg);
+        } else {
+          showStatus('Pedido actualizado correctamente.');
+        }
+        await loadOrders();
+      } catch (err) {
+        showStatus(err.message || 'No se pudo actualizar el pedido.', 'err');
+      }
+    };
+
+    const deleteCurrentOrder = async () => {
+      clearStatus();
+      try {
+        const order = orders.find(o => o.id === currentOrderId);
+        if (!order) throw new Error('No encontramos el pedido activo.');
+
+        const warning = order.status === 'approved'
+          ? 'Este pedido ya estaba aprobado. Borrarlo no repone stock automáticamente. ¿Querés borrarlo igual?'
+          : '¿Querés borrar este pedido?';
+        if (!window.confirm(warning)) return;
+
+        const { error } = await sb
+          .from('orders')
+          .delete()
+          .eq('id', order.id);
+        if (error) throw error;
+
+        showStatus('Pedido borrado.');
+        currentOrderId = null;
+        await loadOrders();
+      } catch (err) {
+        showStatus(err.message || 'No se pudo borrar el pedido.', 'err');
+      }
+    };
+
+    const loadProducts = async () => {
+      clearStatus();
+      try {
+        const { data, error } = await sb
+          .from('products')
+          .select('id, slug, sku, capsule, title, description, price, cut, sort_date, featured, art_type, is_active, created_at')
+          .order('sort_date', { ascending: false })
+          .order('created_at', { ascending: false });
+        if (error) throw error;
+        products = data || [];
+        renderProductList();
+        renderCapsuleList();
+        renderCapsuleProductsAdmin();
+      } catch (err) {
+        showStatus(err.message || 'No se pudo cargar el catálogo.', 'err');
+      }
+    };
+
+    const renderCapsuleList = () => {
+      const list = el('capsuleList');
+      if (!list) return;
+      if (!capsules.length) {
+        list.innerHTML = '<div class="item"><h4>Sin cápsulas</h4><p>Creá la primera desde “Nueva cápsula”.</p></div>';
+        return;
+      }
+      list.innerHTML = capsules.map(capsule => {
+        const linkedCount = products.filter(product => String(product.capsule || '').trim() === String(capsule.name || '').trim()).length;
+        return `
+          <div class="item ${currentCapsule?.id === capsule.id ? 'active' : ''}" data-capsule-id="${capsule.id}">
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+              <h4>${capsule.name}</h4>
+              <span class="badge">${capsule.is_featured_drop ? 'Drop destacado' : (capsule.is_active ? 'Activa' : 'Inactiva')}</span>
+            </div>
+            <p>${linkedCount} producto(s) · ${capsule.badge_label || 'Sin etiqueta'}</p>
+          </div>
+        `;
+      }).join('');
+      list.querySelectorAll('[data-capsule-id]').forEach(node => {
+        node.addEventListener('click', () => editCapsule(node.dataset.capsuleId));
+      });
+    };
+
+    const newCapsule = () => {
+      currentCapsule = capsuleBlankForm();
+      currentCapsuleOriginalName = '';
+      fillCapsuleForm(currentCapsule);
+      renderCapsuleList();
+    };
+
+    const editCapsule = async (id) => {
+      clearStatus();
+      const capsule = capsules.find(item => item.id === id);
+      if (!capsule) return;
+      currentCapsule = capsule;
+      fillCapsuleForm(capsule);
+      renderCapsuleList();
+    };
+
+    const renderProductList = () => {
+      const list = el('productList');
+      if (!products.length) {
+        list.innerHTML = '<div class="item"><h4>Sin productos</h4><p>Creá el primero desde “Nuevo producto”.</p></div>';
+        return;
+      }
+      list.innerHTML = products.map(p => `
+        <div class="item ${currentProduct?.id === p.id ? 'active' : ''}" data-id="${p.id}">
+          <div style="display:flex;justify-content:space-between;gap:12px;align-items:center">
+            <h4>${p.title}</h4>
+            <span class="badge">${p.is_active ? 'Activo' : 'Inactivo'}</span>
+          </div>
+          <p>${p.capsule} · ${p.sku || 'sin SKU'} · $${Number(p.price || 0).toLocaleString('es-AR')}</p>
+        </div>
+      `).join('');
+      list.querySelectorAll('.item[data-id]').forEach(node => {
+        node.addEventListener('click', () => editProduct(node.dataset.id));
+      });
+    };
+
+    const blankForm = () => ({
+      id:'',
+      slug:'',
+      sku:'',
+      capsule:'',
+      title:'',
+      description:'',
+      price:'',
+      cut:'Unisex',
+      sort_date:new Date().toISOString().slice(0,10),
+      featured:false,
+      art_type:'poster',
+      is_active:true
+    });
+
+    const fillForm = product => {
+      el('productId').value = product.id || '';
+      el('slug').value = product.slug || '';
+      el('sku').value = product.sku || '';
+      el('title').value = product.title || '';
+      el('description').value = product.description || '';
+      el('price').value = product.price || '';
+      el('cut').value = product.cut || 'Unisex';
+      el('sortDate').value = product.sort_date || new Date().toISOString().slice(0,10);
+      el('featured').value = String(Boolean(product.featured));
+      el('artType').value = product.art_type || 'poster';
+      el('isActive').value = String(Boolean(product.is_active));
+      currentProduct = product;
+      renderCapsuleOptionsInProductForm();
+      el('capsule').value = product.capsule || '';
+    };
+
+    const clearImages = () => {
+      currentImages = {};
+      IMAGE_SLOTS.forEach(pos => {
+        el(`imageUrl${pos}`).value = '';
+        el(`imageFile${pos}`).value = '';
+        el(`imagePreview${pos}`).src = '';
+      });
+    };
+
+    const newProduct = () => {
+      currentProduct = blankForm();
+      fillForm(currentProduct);
+      clearImages();
+      renderProductList();
+    };
+
+    const editProduct = async (id) => {
+      clearStatus();
+      try {
+        const product = products.find(p => p.id === id);
+        if (!product) return;
+        currentProduct = product;
+        fillForm(product);
+
+        const { data: images, error: imgError } = await sb
+          .from('product_images')
+          .select('id, image_url, position')
+          .eq('product_id', id)
+          .order('position');
+
+        if (imgError) throw imgError;
+
+        clearImages();
+        (images || []).forEach(img => {
+          currentImages[img.position] = img.image_url;
+          el(`imageUrl${img.position}`).value = img.image_url || '';
+          el(`imagePreview${img.position}`).src = img.image_url || '';
+        });
+
+        renderProductList();
+      } catch (err) {
+        showStatus(err.message || 'No se pudo abrir el producto.', 'err');
+      }
+    };
+
+    const slugify = value => String(value || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
+    const collectForm = () => {
+      const title = el('title').value.trim();
+      const slug = slugify(el('slug').value.trim() || title);
+      return {
+        id: el('productId').value || null,
+        slug,
+        sku: el('sku').value.trim() || null,
+        capsule: el('capsule').value.trim(),
+        title,
+        description: el('description').value.trim(),
+        price: Number(el('price').value || 0),
+        cut: el('cut').value,
+        sort_date: el('sortDate').value,
+        featured: el('featured').value === 'true',
+        art_type: el('artType').value,
+        is_active: el('isActive').value === 'true'
+      };
+    };
+
+    const uploadImageIfNeeded = async (productSlug, position) => {
+      const fileInput = el(`imageFile${position}`);
+      const urlInput = el(`imageUrl${position}`);
+      const file = fileInput.files?.[0];
+
+      if (!file) {
+        return urlInput.value.trim() || '';
+      }
+
+      const ext = file.name.split('.').pop() || 'jpg';
+      const safeName = `${productSlug}/${Date.now()}-${position}.${ext}`;
+      const { error } = await sb.storage.from(CONFIG.STORAGE_BUCKET).upload(safeName, file, { upsert: true });
+      if (error) throw error;
+
+      const { data } = sb.storage.from(CONFIG.STORAGE_BUCKET).getPublicUrl(safeName);
+      return data.publicUrl;
+    };
+
+    const saveProduct = async () => {
+      if (isSavingProduct) return;
+      clearStatus();
+      setSaveButtonsState(true);
+      try {
+        const payload = collectForm();
+        if (!payload.title || !payload.capsule || !payload.slug) {
+          throw new Error('Completá al menos slug, cápsula y título.');
+        }
+
+        let savedProductId = payload.id;
+
+        if (savedProductId) {
+          const { error } = await sb.from('products').update(payload).eq('id', savedProductId);
+          if (error) throw error;
+        } else {
+          const insertPayload = { ...payload };
+          delete insertPayload.id;
+          const { data, error } = await sb.from('products').insert(insertPayload).select('id').single();
+          if (error) throw error;
+          savedProductId = data.id;
+          el('productId').value = savedProductId;
+        }
+
+        const imageRows = [];
+        for (const position of IMAGE_SLOTS) {
+          const imageUrl = await uploadImageIfNeeded(payload.slug, position);
+          if (imageUrl) {
+            imageRows.push({ product_id: savedProductId, position, image_url: imageUrl });
+          }
+        }
+
+        const { error: deleteImagesError } = await sb.from('product_images').delete().eq('product_id', savedProductId);
+        if (deleteImagesError) throw deleteImagesError;
+        if (imageRows.length) {
+          const { error: insertImagesError } = await sb.from('product_images').insert(imageRows);
+          if (insertImagesError) throw insertImagesError;
+        }
+
+        await loadProducts();
+        await editProduct(savedProductId);
+        showStatus('Producto guardado correctamente.');
+      } catch (err) {
+        showStatus(err.message || 'No se pudo guardar el producto.', 'err');
+      } finally {
+        setSaveButtonsState(false);
+      }
+    };
+
+    const saveCapsule = async () => {
+      if (isSavingCapsule) return;
+      clearStatus();
+      setCapsuleSaveButtonsState(true);
+      try {
+        const payload = collectCapsuleForm();
+        if (!payload.name || !payload.slug) {
+          throw new Error('Completá al menos nombre y slug de la cápsula.');
+        }
+
+        if (payload.is_featured_drop) {
+          const { error: clearFeaturedError } = await sb
+            .from('capsules')
+            .update({ is_featured_drop: false })
+            .neq('id', payload.id || '00000000-0000-0000-0000-000000000000');
+          if (clearFeaturedError) throw clearFeaturedError;
+        }
+
+        let savedCapsuleId = payload.id;
+        if (savedCapsuleId) {
+          const { error } = await sb.from('capsules').update(payload).eq('id', savedCapsuleId);
+          if (error) throw error;
+        } else {
+          const insertPayload = { ...payload };
+          delete insertPayload.id;
+          const { data, error } = await sb.from('capsules').insert(insertPayload).select('id').single();
+          if (error) throw error;
+          savedCapsuleId = data.id;
+          el('capsuleId').value = savedCapsuleId;
+        }
+
+        if (currentCapsuleOriginalName && currentCapsuleOriginalName !== payload.name) {
+          const { error: renameProductsError } = await sb
+            .from('products')
+            .update({ capsule: payload.name })
+            .eq('capsule', currentCapsuleOriginalName);
+          if (renameProductsError) throw renameProductsError;
+        }
+
+        await Promise.all([loadCapsules(), loadProducts()]);
+        await editCapsule(savedCapsuleId);
+        showStatus('Cápsula guardada correctamente.');
+      } catch (err) {
+        showStatus(err.message || 'No se pudo guardar la cápsula.', 'err');
+      } finally {
+        setCapsuleSaveButtonsState(false);
+      }
+    };
+
+    const deactivateCapsule = async () => {
+      clearStatus();
+      try {
+        const id = el('capsuleId').value;
+        if (!id) throw new Error('Primero elegí una cápsula guardada.');
+        const { error } = await sb.from('capsules').update({ is_active: false, is_featured_drop: false }).eq('id', id);
+        if (error) throw error;
+        showStatus('Cápsula desactivada.');
+        await loadCapsules();
+        newCapsule();
+      } catch (err) {
+        showStatus(err.message || 'No se pudo desactivar la cápsula.', 'err');
+      }
+    };
+
+    const deactivateProduct = async () => {
+      clearStatus();
+      try {
+        const id = el('productId').value;
+        if (!id) throw new Error('Primero elegí un producto guardado.');
+        const { error } = await sb.from('products').update({ is_active: false }).eq('id', id);
+        if (error) throw error;
+        showStatus('Producto desactivado.');
+        await loadProducts();
+        newProduct();
+      } catch (err) {
+        showStatus(err.message || 'No se pudo desactivar.', 'err');
+      }
+    };
+
+    init();
+  </script>
+</body>
+</html>
