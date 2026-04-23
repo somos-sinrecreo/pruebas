@@ -2891,10 +2891,10 @@
   let currentProduct = null;
   let selectedSize = null;
   let selectedFit = 'unisex';
+  let selectedColor = 'Hueso';
   let selectedPayMethod = 'mp';
   let sbClient = null;
   let blankStockRows = [];
-  let blankStockByKey = {};
   const CHECKOUT_CUSTOMER_STORAGE_KEY = 'sinrecreo_checkout_customer_v1';
   const CHECKOUT_DELIVERY_STORAGE_KEY = 'sinrecreo_checkout_delivery_v1';
   let singleShippingQuotes = [];
@@ -3345,7 +3345,13 @@
     .replace(/[̀-ͯ]/g, '');
   const getWhatsAppBase = () => `https://wa.me/${STORE_CONFIG.whatsappNumber}`;
   const getTransferPrice = p => p.transferPrice ?? Math.round(p.price * (1 - ((p.transferDiscount ?? STORE_CONFIG.transferDiscount) / 100)));
-  const normalizeFit = fit => ({ femenino:'femenino', femenina:'femenino', masculino:'masculino', masculina:'masculino', unisex:'unisex' }[String(fit || '').toLowerCase()] || 'unisex');
+  const normalizeFit = fit => {
+    const key = String(fit || '').trim().toLowerCase();
+    if (['femenino','femenina','corte dama','dama'].includes(key)) return 'femenina';
+    if (['oversize','over'].includes(key)) return 'oversize';
+    return 'unisex';
+  };
+  const normalizeColor = color => String(color || '').trim().replace(/\s+/g, ' ') || 'Hueso';
   const parseVariantSizeKey = raw => {
     const value = String(raw || '');
     if (value.includes('__')) {
@@ -3355,43 +3361,62 @@
     return { fit: 'unisex', size: value };
   };
   const makeVariantSizeKey = (fit, size) => normalizeFit(fit) === 'unisex' ? String(size || '') : `${normalizeFit(fit).toUpperCase()}__${String(size || '')}`;
-  const getFitLabel = fit => ({ unisex:'Unisex', femenino:'Femenino', masculino:'Masculino' }[normalizeFit(fit)] || 'Unisex');
-  const getFitOrder = fit => ({ unisex:0, femenino:1, masculino:2 }[normalizeFit(fit)] ?? 9);
-  const getAvailableFits = p => Object.entries(p.fitStockBySize || {}).filter(([, sizes]) => Object.values(sizes || {}).some(qty => Number(qty || 0) > 0)).map(([fit]) => fit).sort((a,b) => getFitOrder(a) - getFitOrder(b));
-  const getSizesForFit = (p, fit = 'unisex') => Object.entries((p.fitStockBySize || {})[normalizeFit(fit)] || {}).filter(([, qty]) => Number(qty || 0) > 0).map(([size]) => size);
-  const getAvailableSizes = p => [...new Set(Object.values(p.fitStockBySize || {}).flatMap(sizes => Object.entries(sizes || {}).filter(([, qty]) => Number(qty || 0) > 0).map(([size]) => size)))];
+  const SIZE_ORDER = ['XS','S','M','L','XL','XXL'];
+  const getFitLabel = fit => ({ unisex:'Unisex', oversize:'Oversize', femenina:'Femenina' }[normalizeFit(fit)] || 'Unisex');
+  const getFitOrder = fit => ({ unisex:0, oversize:1, femenina:2 }[normalizeFit(fit)] ?? 9);
+  const buildBlankStockSnapshot = (rows = []) => {
+    const byFitColorSize = {};
+    const fitStockBySize = {};
+    const blankStockIdsByKey = {};
+    const variantIdsByKey = {};
+    const variantIdsBySize = {};
+    rows.forEach(row => {
+      if (row.is_active === false || Number(row.stock || 0) <= 0) return;
+      const fit = normalizeFit(row.cut || row.fit);
+      const color = normalizeColor(row.color);
+      const size = String(row.size || '').trim();
+      if (!size) return;
+      if (!byFitColorSize[fit]) byFitColorSize[fit] = {};
+      if (!byFitColorSize[fit][color]) byFitColorSize[fit][color] = {};
+      byFitColorSize[fit][color][size] = Number(row.stock || 0);
+      if (!fitStockBySize[fit]) fitStockBySize[fit] = {};
+      fitStockBySize[fit][size] = Number(fitStockBySize[fit][size] || 0) + Number(row.stock || 0);
+      const key = `${fit}|${color}|${size}`;
+      blankStockIdsByKey[key] = row.id || '';
+      variantIdsByKey[`${fit}|${size}`] = row.id || '';
+      if (fit === 'unisex') variantIdsBySize[size] = row.id || '';
+    });
+    return { byFitColorSize, fitStockBySize, blankStockIdsByKey, variantIdsByKey, variantIdsBySize };
+  };
+  const getAvailableFits = p => Object.entries(p.blankStockByFitColorSize || {})
+    .filter(([, colors]) => Object.values(colors || {}).some(sizes => Object.values(sizes || {}).some(qty => Number(qty || 0) > 0)))
+    .map(([fit]) => fit)
+    .sort((a,b) => getFitOrder(a) - getFitOrder(b));
+  const getAvailableColorsForFit = (p, fit = 'unisex') => Object.entries((p.blankStockByFitColorSize || {})[normalizeFit(fit)] || {})
+    .filter(([, sizes]) => Object.values(sizes || {}).some(qty => Number(qty || 0) > 0))
+    .map(([color]) => color)
+    .sort((a,b) => a.localeCompare(b, 'es'));
+  const getSizesForFitColor = (p, fit = 'unisex', color = 'Hueso') => Object.entries(((p.blankStockByFitColorSize || {})[normalizeFit(fit)] || {})[normalizeColor(color)] || {})
+    .filter(([, qty]) => Number(qty || 0) > 0)
+    .map(([size]) => size)
+    .sort((a,b) => {
+      const ai = SIZE_ORDER.indexOf(a); const bi = SIZE_ORDER.indexOf(b);
+      if (ai === -1 && bi === -1) return a.localeCompare(b, 'es');
+      if (ai === -1) return 1;
+      if (bi === -1) return -1;
+      return ai - bi;
+    });
+  const getSizesForFit = (p, fit = 'unisex') => [...new Set(getAvailableColorsForFit(p, fit).flatMap(color => getSizesForFitColor(p, fit, color)))];
+  const getAvailableSizes = p => [...new Set(getAvailableFits(p).flatMap(fit => getSizesForFit(p, fit)))];
   const getDefaultFit = p => getAvailableFits(p)[0] || 'unisex';
-  const getTotalStock = p => Object.values(p.fitStockBySize || {}).reduce((acc, sizes) => acc + Object.values(sizes || {}).reduce((sum, qty) => sum + Number(qty || 0), 0), 0);
+  const getDefaultColor = (p, fit = 'unisex') => getAvailableColorsForFit(p, fit)[0] || 'Hueso';
+  const getTotalStock = p => Object.values(p.blankStockByFitColorSize || {}).reduce((acc, colors) => acc + Object.values(colors || {}).reduce((colorSum, sizes) => colorSum + Object.values(sizes || {}).reduce((sum, qty) => sum + Number(qty || 0), 0), 0), 0);
+  const getStockForSelection = (p, size, fit = 'unisex', color = 'Hueso') => Number((((p.blankStockByFitColorSize || {})[normalizeFit(fit)] || {})[normalizeColor(color)] || {})[size] || 0);
+  const getStockForSize = (p, size) => getAvailableFits(p).reduce((acc, fit) => acc + getAvailableColorsForFit(p, fit).reduce((sum, color) => sum + getStockForSelection(p, size, fit, color), 0), 0);
   const getMpLink = (p, size, fit = 'unisex') => (p.mpLinksByKey && p.mpLinksByKey[`${normalizeFit(fit)}|${size}`]) || (p.mpLinks && size && p.mpLinks[size]) || p.mpLink || STORE_CONFIG.mpGenericLink || '';
-  const getVariantId = (p, size, fit = 'unisex') => (p.variantIdsByKey && p.variantIdsByKey[`${normalizeFit(fit)}|${size}`]) || (normalizeFit(fit) === 'unisex' ? (p.variantIdsBySize?.[size] || '') : '');
-
-  const normalizeBlankStockCut = value => {
-    const key = String(value || '').trim().toLowerCase();
-    if (['femenino', 'femenina', 'corte dama', 'dama'].includes(key)) return 'femenina';
-    if (['oversize', 'over'].includes(key)) return 'oversize';
-    return 'unisex';
-  };
-
-  const makeBlankStockKey = (size = '', fit = 'unisex', color = 'Hueso') =>
-    `${normalizeBlankStockCut(fit)}|${normalizeColor(color || 'Hueso')}|${String(size || '').trim().toUpperCase()}`;
-
-  const getBlankStockId = (product, size = '', fit = 'unisex', color = 'Hueso') => {
-    const directKey = makeBlankStockKey(size, fit, color);
-    if (blankStockByKey[directKey]) return blankStockByKey[directKey];
-
-    const productCutKey = makeBlankStockKey(size, product?.cut || fit, color);
-    if (blankStockByKey[productCutKey]) return blankStockByKey[productCutKey];
-
-    const fallbackHueso = makeBlankStockKey(size, fit, 'Hueso');
-    if (blankStockByKey[fallbackHueso]) return blankStockByKey[fallbackHueso];
-
-    const productFallbackHueso = makeBlankStockKey(size, product?.cut || fit, 'Hueso');
-    if (blankStockByKey[productFallbackHueso]) return blankStockByKey[productFallbackHueso];
-
-    return '';
-  };
-
-  const describeFitAndSize = (fit, size) => `${getFitLabel(fit)} · Talle ${size}`;
+  const getBlankStockId = (p, size, fit = 'unisex', color = 'Hueso') => (p.blankStockIdsByKey && p.blankStockIdsByKey[`${normalizeFit(fit)}|${normalizeColor(color)}|${size}`]) || '';
+  const getVariantId = (p, size, fit = 'unisex') => getBlankStockId(p, size, fit, getDefaultColor(p, fit));
+  const describeFitAndSize = (fit, size, color = '') => `${getFitLabel(fit)}${color ? ' · ' + normalizeColor(color) : ''} · Talle ${size}`;
   const getProductUrl = p => `${location.origin}${location.pathname}#${p.id}`;
   const truncateWords = (text, maxWords = 10) => {
     const normalized = String(text || '').trim().replace(/\s+/g, ' ');
@@ -3441,36 +3466,11 @@
     return sbClient;
   };
 
-  const loadBlankStockFromSupabase = async () => {
-    const client = initSupabaseClient();
-    if (!client) {
-      blankStockRows = [];
-      blankStockByKey = {};
-      return [];
-    }
-
-    const { data, error } = await client
-      .from('blank_stock')
-      .select('id, cut, color, size, stock, is_active')
-      .eq('is_active', true);
-
-    if (error) throw error;
-
-    blankStockRows = (data || []).filter(row => Number(row.stock || 0) > 0);
-    blankStockByKey = {};
-    blankStockRows.forEach(row => {
-      const key = makeBlankStockKey(row.size, row.cut, row.color);
-      blankStockByKey[key] = row.id;
-    });
-
-    return blankStockRows;
-  };
-
   const loadProductsFromSupabase = async () => {
     const client = initSupabaseClient();
     if (!client) return products;
 
-    const [{ data: productRows, error: productsError }, { data: imageRows, error: imagesError }, { data: variantRows, error: variantsError }] = await Promise.all([
+    const [{ data: productRows, error: productsError }, { data: imageRows, error: imagesError }, { data: stockRows, error: stockError }] = await Promise.all([
       client
         .from('products')
         .select('id, slug, sku, capsule, title, description, price, cut, sort_date, featured, art_type, is_active')
@@ -3483,14 +3483,18 @@
         .select('product_id, image_url, position')
         .order('position', { ascending: true }),
       client
-        .from('product_variants')
-        .select('id, product_id, size, stock, mp_link, is_active')
+        .from('blank_stock')
+        .select('id, cut, color, size, stock, is_active')
         .eq('is_active', true)
+        .gt('stock', 0)
     ]);
 
     if (productsError) throw productsError;
     if (imagesError) throw imagesError;
-    if (variantsError) throw variantsError;
+    if (stockError) throw stockError;
+
+    blankStockRows = stockRows || [];
+    const stockSnapshot = buildBlankStockSnapshot(blankStockRows);
 
     const imagesByProduct = {};
     (imageRows || []).forEach(row => {
@@ -3498,29 +3502,8 @@
       imagesByProduct[row.product_id].push(row);
     });
 
-    const variantsByProduct = {};
-    (variantRows || []).forEach(row => {
-      if (!variantsByProduct[row.product_id]) variantsByProduct[row.product_id] = [];
-      variantsByProduct[row.product_id].push(row);
-    });
-
     return (productRows || []).map(row => {
       const rowImages = (imagesByProduct[row.id] || []).sort((a,b) => (a.position || 999) - (b.position || 999));
-      const rowVariants = variantsByProduct[row.id] || [];
-      const fitStockBySize = { unisex: {}, femenino: {}, masculino: {} };
-      const variantIdsByKey = {};
-      const mpLinksByKey = {};
-      const variantIdsBySize = {};
-
-      rowVariants.forEach(variant => {
-        const parsed = parseVariantSizeKey(variant.size);
-        if (!fitStockBySize[parsed.fit]) fitStockBySize[parsed.fit] = {};
-        fitStockBySize[parsed.fit][parsed.size] = Number(variant.stock || 0);
-        variantIdsByKey[`${parsed.fit}|${parsed.size}`] = variant.id || '';
-        mpLinksByKey[`${parsed.fit}|${parsed.size}`] = variant.mp_link || '';
-        if (parsed.fit === 'unisex') variantIdsBySize[parsed.size] = variant.id || '';
-      });
-
       return {
         id: row.slug || row.id,
         dbId: row.id,
@@ -3534,10 +3517,12 @@
         featured: Boolean(row.featured),
         artType: row.art_type || 'poster',
         images: rowImages.map(img => img.image_url).slice(0, 3),
-        fitStockBySize,
-        mpLinksByKey,
-        variantIdsByKey,
-        variantIdsBySize
+        blankStockByFitColorSize: stockSnapshot.byFitColorSize,
+        fitStockBySize: stockSnapshot.fitStockBySize,
+        blankStockIdsByKey: stockSnapshot.blankStockIdsByKey,
+        variantIdsByKey: stockSnapshot.variantIdsByKey,
+        variantIdsBySize: stockSnapshot.variantIdsBySize,
+        mpLinksByKey: {}
       };
     });
   };
@@ -3926,12 +3911,6 @@
           loadCapsulesFromSupabase().catch(error => {
             console.error('Error cargando cápsulas desde Supabase:', error);
             return getCapsuleFallbackData();
-          }),
-          loadBlankStockFromSupabase().catch(error => {
-            console.error('Error cargando blank_stock desde Supabase:', error);
-            blankStockRows = [];
-            blankStockByKey = {};
-            return [];
           })
         ]);
         if (remoteProducts?.length) {
@@ -4313,7 +4292,7 @@
   };
 
   const renderModalSizeOptions = (product) => {
-    const sizes = getSizesForFit(product, selectedFit);
+    const sizes = getSizesForFitColor(product, selectedFit, selectedColor);
     if (!sizes.includes(selectedSize)) selectedSize = sizes[0] || null;
     document.getElementById('modalSizes').innerHTML = sizes.map(sz => `
       <button class="sz-btn ${selectedSize === sz ? 'selected' : ''}" onclick="selectSize(this,'${sz}')">${sz}</button>
@@ -4339,7 +4318,8 @@
     if (!currentProduct) return;
 
     selectedFit = getDefaultFit(currentProduct);
-    selectedSize = getSizesForFit(currentProduct, selectedFit)[0] || null;
+    selectedColor = getDefaultColor(currentProduct, selectedFit);
+    selectedSize = getSizesForFitColor(currentProduct, selectedFit, selectedColor)[0] || null;
     selectedShippingOption = null;
     singleShippingQuotes = [];
     renderShippingOptions('single', []);
@@ -4404,6 +4384,7 @@
     document.querySelectorAll('#modalFits .fit-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedFit = normalizeFit(fit);
+    selectedColor = getDefaultColor(currentProduct, selectedFit);
     renderModalSizeOptions(currentProduct);
     updateModalTotal();
   };
@@ -4417,10 +4398,10 @@
 
   const addConfiguredToCart = (closeAfter = false) => {
     if (!currentProduct || !selectedSize) { alert('Elegí modelo y talle antes de agregar al carrito.'); return; }
-    const selectedVariantId = getVariantId(currentProduct, selectedSize, selectedFit);
-    if (!selectedVariantId) { alert('No encontramos una variante válida para esa combinación.'); return; }
-    const existing = cart.find(item => item.id === currentProduct.id && item.selectedSize === selectedSize && normalizeFit(item.selectedFit) === normalizeFit(selectedFit));
-    if (existing) existing.qty += 1; else cart.push({ ...currentProduct, qty: 1, selectedSize, selectedFit, selectedVariantId });
+    const selectedBlankStockId = getBlankStockId(currentProduct, selectedSize, selectedFit, selectedColor);
+    if (!selectedBlankStockId) { alert('No encontramos stock base válido para esa combinación.'); return; }
+    const existing = cart.find(item => item.id === currentProduct.id && item.selectedSize === selectedSize && normalizeFit(item.selectedFit) === normalizeFit(selectedFit) && normalizeColor(item.selectedColor) === normalizeColor(selectedColor));
+    if (existing) existing.qty += 1; else cart.push({ ...currentProduct, qty: 1, selectedSize, selectedFit, selectedColor, selectedBlankStockId, selectedVariantId: selectedBlankStockId });
     selectedCartShippingOption = null; cartShippingQuotes = []; renderShippingOptions('cart', []); renderShippingSummary('cart'); updateCartUI();
     closeModal({ restoreCapsule: false }); openCartDrawer();
   };
@@ -4649,7 +4630,7 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
   const buildCheckoutItem = (product, quantity = 1, fit = 'unisex', size = '', color = 'Hueso', paymentMethod = 'mp') => {
     const normalizedFit = normalizeFit(fit);
     const normalizedColor = normalizeColor(color || product.selectedColor || 'Hueso');
-    const blankStockId = getBlankStockId(product, size, normalizedFit, normalizedColor) || product.selectedVariantId || '';
+    const blankStockId = getBlankStockId(product, size, normalizedFit, normalizedColor) || product.selectedBlankStockId || product.selectedVariantId || '';
     const unitPrice = paymentMethod === 'transfer' ? Number(getTransferPrice(product) || 0) : Number(product.price || 0);
     const basePrice = Number(product.price || 0);
     const qty = Number(quantity || 1);
@@ -4676,14 +4657,14 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
   /* ─── CART ─── */
   const addToCart = (id, e) => {
     if (e) e.stopPropagation(); const p = products.find(item => item.id === id); if (!p) return;
-    const defaultFit = getDefaultFit(p); const defaultSize = getSizesForFit(p, defaultFit)[0] || 'Único'; const selectedVariantId = getVariantId(p, defaultSize, defaultFit);
-    const existing = cart.find(item => item.id === id && item.selectedSize === defaultSize && normalizeFit(item.selectedFit) === normalizeFit(defaultFit));
-    if (existing) existing.qty += 1; else cart.push({ ...p, qty: 1, selectedSize: defaultSize, selectedFit: defaultFit, selectedVariantId });
+    const defaultFit = getDefaultFit(p); const defaultColor = getDefaultColor(p, defaultFit); const defaultSize = getSizesForFitColor(p, defaultFit, defaultColor)[0] || 'Único'; const selectedBlankStockId = getBlankStockId(p, defaultSize, defaultFit, defaultColor);
+    const existing = cart.find(item => item.id === id && item.selectedSize === defaultSize && normalizeFit(item.selectedFit) === normalizeFit(defaultFit) && normalizeColor(item.selectedColor) === normalizeColor(defaultColor));
+    if (existing) existing.qty += 1; else cart.push({ ...p, qty: 1, selectedSize: defaultSize, selectedFit: defaultFit, selectedColor: defaultColor, selectedBlankStockId, selectedVariantId: selectedBlankStockId });
     selectedCartShippingOption = null; cartShippingQuotes = []; renderShippingOptions('cart', []); renderShippingSummary('cart'); updateCartUI(); openCartDrawer();
   };
 
-  const removeFromCart = (id, size) => {
-    const idx = cart.findIndex(c => c.id === id && c.selectedSize === size);
+  const removeFromCart = (id, size, fit = 'unisex', color = 'Hueso') => {
+    const idx = cart.findIndex(c => c.id === id && c.selectedSize === size && normalizeFit(c.selectedFit) === normalizeFit(fit) && normalizeColor(c.selectedColor || 'Hueso') === normalizeColor(color));
     if (idx !== -1) cart.splice(idx, 1);
     selectedCartShippingOption = null;
     cartShippingQuotes = [];
@@ -4697,7 +4678,7 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
     const body = document.getElementById('cartBody'); const footer = document.getElementById('cartFooter');
     if (!cart.length) { body.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛍️</div><p>Tu carrito está vacío</p></div>'; footer.style.display = 'none'; selectedCartShippingOption = null; cartShippingQuotes = []; cartCheckoutOpen = false; return; }
     footer.style.display = ''; fillDeliveryInputs('cart');
-    body.innerHTML = cart.map(item => { const img = getImageList(item)[0]; return '<div class="cart-item"><div class="cart-item-img"><img src="' + img + '" alt="' + escapeHtml(item.title) + '" style="width:100%;height:100%;object-fit:cover;display:block" /></div><div class="cart-item-info"><div class="cart-item-name">' + escapeHtml(item.title) + '</div><div class="cart-item-meta">' + escapeHtml(item.capsule) + ' · ' + describeFitAndSize(item.selectedFit || 'unisex', item.selectedSize) + ' · x' + item.qty + '</div><div class="cart-item-price">' + fmt(item.price * item.qty) + '</div></div><button class="cart-item-remove" onclick="removeFromCart(\'' + item.id + '\',\'' + item.selectedSize + '\')" aria-label="Eliminar ' + escapeHtml(item.title) + '">✕</button></div>'; }).join('');
+    body.innerHTML = cart.map(item => { const img = getImageList(item)[0]; return '<div class="cart-item"><div class="cart-item-img"><img src="' + img + '" alt="' + escapeHtml(item.title) + '" style="width:100%;height:100%;object-fit:cover;display:block" /></div><div class="cart-item-info"><div class="cart-item-name">' + escapeHtml(item.title) + '</div><div class="cart-item-meta">' + escapeHtml(item.capsule) + ' · ' + describeFitAndSize(item.selectedFit || 'unisex', item.selectedSize, item.selectedColor || 'Hueso') + ' · x' + item.qty + '</div><div class="cart-item-price">' + fmt(item.price * item.qty) + '</div></div><button class="cart-item-remove" onclick="removeFromCart(\'' + item.id + '\',\'' + item.selectedSize + '\')" aria-label="Eliminar ' + escapeHtml(item.title) + '">✕</button></div>'; }).join('');
     const useTransfer = selectedPayMethod === 'transfer'; const subtotal = cart.reduce((sum, item) => sum + Number(useTransfer ? getTransferPrice(item) : item.price || 0) * Number(item.qty || 1), 0);
     const shipping = cartDeliveryMethod === 'pickup' ? getPickupShippingOption() : selectedCartShippingOption; const shippingCharge = Number(shipping?.charge || 0);
     document.getElementById('cartTotal').textContent = fmt(subtotal); const grand = document.getElementById('cartGrandTotal'); if (grand) grand.textContent = fmt(subtotal + shippingCharge);
@@ -4784,11 +4765,6 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
       'transfer'
     )).filter(item => item.product_id && item.blank_stock_id);
 
-    if (cart.length && !blankStockRows.length) {
-      alert('No pudimos cargar el stock base desde Supabase. Revisá la tabla blank_stock o la conexión pública.');
-      return;
-    }
-
     if (!validItems.length) {
       alert('No encontramos productos válidos con stock base para registrar el pedido.');
       return;
@@ -4865,11 +4841,6 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
       item.selectedColor || 'Hueso',
       'mp'
     )).filter(item => item.product_id && item.blank_stock_id);
-
-    if (cart.length && !blankStockRows.length) {
-      alert('No pudimos cargar el stock base desde Supabase. Revisá la tabla blank_stock o la conexión pública.');
-      return;
-    }
 
     if (!mpItems.length) {
       alert('No encontramos productos válidos con stock base para pagar con Mercado Pago.');
