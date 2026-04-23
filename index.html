@@ -2893,6 +2893,8 @@
   let selectedFit = 'unisex';
   let selectedPayMethod = 'mp';
   let sbClient = null;
+  let blankStockRows = [];
+  let blankStockByKey = {};
   const CHECKOUT_CUSTOMER_STORAGE_KEY = 'sinrecreo_checkout_customer_v1';
   const CHECKOUT_DELIVERY_STORAGE_KEY = 'sinrecreo_checkout_delivery_v1';
   let singleShippingQuotes = [];
@@ -3362,6 +3364,33 @@
   const getTotalStock = p => Object.values(p.fitStockBySize || {}).reduce((acc, sizes) => acc + Object.values(sizes || {}).reduce((sum, qty) => sum + Number(qty || 0), 0), 0);
   const getMpLink = (p, size, fit = 'unisex') => (p.mpLinksByKey && p.mpLinksByKey[`${normalizeFit(fit)}|${size}`]) || (p.mpLinks && size && p.mpLinks[size]) || p.mpLink || STORE_CONFIG.mpGenericLink || '';
   const getVariantId = (p, size, fit = 'unisex') => (p.variantIdsByKey && p.variantIdsByKey[`${normalizeFit(fit)}|${size}`]) || (normalizeFit(fit) === 'unisex' ? (p.variantIdsBySize?.[size] || '') : '');
+
+  const normalizeBlankStockCut = value => {
+    const key = String(value || '').trim().toLowerCase();
+    if (['femenino', 'femenina', 'corte dama', 'dama'].includes(key)) return 'femenina';
+    if (['oversize', 'over'].includes(key)) return 'oversize';
+    return 'unisex';
+  };
+
+  const makeBlankStockKey = (size = '', fit = 'unisex', color = 'Hueso') =>
+    `${normalizeBlankStockCut(fit)}|${normalizeColor(color || 'Hueso')}|${String(size || '').trim().toUpperCase()}`;
+
+  const getBlankStockId = (product, size = '', fit = 'unisex', color = 'Hueso') => {
+    const directKey = makeBlankStockKey(size, fit, color);
+    if (blankStockByKey[directKey]) return blankStockByKey[directKey];
+
+    const productCutKey = makeBlankStockKey(size, product?.cut || fit, color);
+    if (blankStockByKey[productCutKey]) return blankStockByKey[productCutKey];
+
+    const fallbackHueso = makeBlankStockKey(size, fit, 'Hueso');
+    if (blankStockByKey[fallbackHueso]) return blankStockByKey[fallbackHueso];
+
+    const productFallbackHueso = makeBlankStockKey(size, product?.cut || fit, 'Hueso');
+    if (blankStockByKey[productFallbackHueso]) return blankStockByKey[productFallbackHueso];
+
+    return '';
+  };
+
   const describeFitAndSize = (fit, size) => `${getFitLabel(fit)} · Talle ${size}`;
   const getProductUrl = p => `${location.origin}${location.pathname}#${p.id}`;
   const truncateWords = (text, maxWords = 10) => {
@@ -3410,6 +3439,31 @@
       sbClient = window.supabase.createClient(STORE_CONFIG.supabaseUrl, STORE_CONFIG.supabaseAnonKey);
     }
     return sbClient;
+  };
+
+  const loadBlankStockFromSupabase = async () => {
+    const client = initSupabaseClient();
+    if (!client) {
+      blankStockRows = [];
+      blankStockByKey = {};
+      return [];
+    }
+
+    const { data, error } = await client
+      .from('blank_stock')
+      .select('id, cut, color, size, stock, is_active')
+      .eq('is_active', true);
+
+    if (error) throw error;
+
+    blankStockRows = (data || []).filter(row => Number(row.stock || 0) > 0);
+    blankStockByKey = {};
+    blankStockRows.forEach(row => {
+      const key = makeBlankStockKey(row.size, row.cut, row.color);
+      blankStockByKey[key] = row.id;
+    });
+
+    return blankStockRows;
   };
 
   const loadProductsFromSupabase = async () => {
@@ -3872,6 +3926,12 @@
           loadCapsulesFromSupabase().catch(error => {
             console.error('Error cargando cápsulas desde Supabase:', error);
             return getCapsuleFallbackData();
+          }),
+          loadBlankStockFromSupabase().catch(error => {
+            console.error('Error cargando blank_stock desde Supabase:', error);
+            blankStockRows = [];
+            blankStockByKey = {};
+            return [];
           })
         ]);
         if (remoteProducts?.length) {
@@ -4724,6 +4784,11 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
       'transfer'
     )).filter(item => item.product_id && item.blank_stock_id);
 
+    if (cart.length && !blankStockRows.length) {
+      alert('No pudimos cargar el stock base desde Supabase. Revisá la tabla blank_stock o la conexión pública.');
+      return;
+    }
+
     if (!validItems.length) {
       alert('No encontramos productos válidos con stock base para registrar el pedido.');
       return;
@@ -4800,6 +4865,11 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
       item.selectedColor || 'Hueso',
       'mp'
     )).filter(item => item.product_id && item.blank_stock_id);
+
+    if (cart.length && !blankStockRows.length) {
+      alert('No pudimos cargar el stock base desde Supabase. Revisá la tabla blank_stock o la conexión pública.');
+      return;
+    }
 
     if (!mpItems.length) {
       alert('No encontramos productos válidos con stock base para pagar con Mercado Pago.');
