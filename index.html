@@ -4672,7 +4672,40 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
   const selectCartDeliveryMethod = (method = 'pudo') => { cartDeliveryMethod = method === 'pickup' ? 'pickup' : 'pudo'; if (cartDeliveryMethod === 'pickup') selectedCartShippingOption = getPickupShippingOption(); else if (selectedCartShippingOption?.provider === 'RETIRO') selectedCartShippingOption = null; updateCartUI(); };
   const openCartCheckout = () => { if (!cart.length) return; cartCheckoutOpen = true; updateCartUI(); document.getElementById('cartCheckoutPanel')?.scrollIntoView({ behavior:'smooth', block:'start' }); };
   const updateCartCheckoutCta = () => { const cta = document.getElementById('cartFinalCheckoutButton'); const secure = document.getElementById('cartSecureNote'); if (!cta) return; if (selectedPayMethod === 'transfer') { cta.className = 'modal-cta'; cta.textContent = 'Confirmar transferencia'; if (secure) secure.textContent = 'Reservá el pedido y cerrá el pago con contacto directo por WhatsApp'; } else { cta.className = 'modal-cta mp-style'; cta.textContent = 'Pagar con Mercado Pago'; if (secure) secure.textContent = 'Pago en entorno seguro de Mercado Pago · Producto y entrega incluidos'; } };
-  const finishCartCheckout = () => { if (selectedPayMethod === 'transfer') return checkoutWhatsApp(); return checkoutMP(); };
+
+  const setCartCheckoutBusy = (busy = false, label = '') => {
+    const cta = document.getElementById('cartFinalCheckoutButton');
+    if (!cta) return;
+    cta.disabled = Boolean(busy);
+    cta.style.opacity = busy ? '.72' : '1';
+    cta.style.cursor = busy ? 'wait' : 'pointer';
+    if (busy && label) cta.textContent = label;
+    if (!busy) updateCartCheckoutCta();
+  };
+
+  const openSafePopup = (label = 'Preparando operación…') => {
+    const popup = window.open('', '_blank');
+    if (!popup) return null;
+    try {
+      popup.document.write('<!doctype html><html><head><title>SIN RECREO</title><meta name="viewport" content="width=device-width, initial-scale=1"><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#faf9f6;color:#1a1a1b;display:grid;place-items:center;min-height:100vh;margin:0;padding:24px;text-align:center}strong{font-size:20px}p{color:#6d6863;line-height:1.6}</style></head><body><main><strong>' + label + '</strong><p>No cierres esta pestaña. Te redirigimos en unos segundos.</p></main></body></html>');
+      popup.document.close();
+    } catch (error) {}
+    return popup;
+  };
+
+  const navigateCheckoutTarget = (popup, url) => {
+    if (!url) return;
+    if (popup && !popup.closed) {
+      popup.location.href = url;
+      return;
+    }
+    window.location.href = url;
+  };
+
+  const finishCartCheckout = async () => {
+    if (selectedPayMethod === 'transfer') return checkoutWhatsApp();
+    return checkoutMP();
+  };
 
   const checkoutWhatsApp = async () => {
     if (!cart.length) return;
@@ -4696,32 +4729,45 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
       return;
     }
 
-    const transferOrder = await createTransferOrder(validItems, customer, 'cart', shipping);
+    const popup = openSafePopup('Preparando WhatsApp…');
+    setCartCheckoutBusy(true, 'Generando pedido…');
 
-    const total = cart.reduce((sum, item) => sum + (getTransferPrice(item) * item.qty), 0) + Number(shipping.charge || 0);
-    const transferMessage = buildTransferOrderMessage({
-      customer,
-      items: cart.map(item => ({
-        title: item.title,
-        sku: item.sku,
-        capsule: item.capsule,
-        size: item.selectedSize,
-        fit: item.selectedFit || 'unisex',
-        quantity: item.qty,
-        basePrice: Number(item.price || 0),
-        discount: (Number(item.price || 0) - Number(getTransferPrice(item) || 0)) * Number(item.qty || 1),
-        lineTotal: Number(getTransferPrice(item) || 0) * Number(item.qty || 1)
-      })),
-      total,
-      shipping,
-      orderId: transferOrder?.order_id || '',
-      orderCode: transferOrder?.order_code || ''
-    });
+    try {
+      const transferOrder = await createTransferOrder(validItems, customer, 'cart', shipping);
 
-    openTransferWhatsApp(transferMessage);
+      const total = cart.reduce((sum, item) => sum + (getTransferPrice(item) * item.qty), 0) + Number(shipping.charge || 0);
+      const transferMessage = buildTransferOrderMessage({
+        customer,
+        items: cart.map(item => ({
+          title: item.title,
+          sku: item.sku,
+          capsule: item.capsule,
+          size: item.selectedSize,
+          fit: item.selectedFit || 'unisex',
+          color: item.selectedColor || 'Hueso',
+          quantity: item.qty,
+          basePrice: Number(item.price || 0),
+          discount: (Number(item.price || 0) - Number(getTransferPrice(item) || 0)) * Number(item.qty || 1),
+          lineTotal: Number(getTransferPrice(item) || 0) * Number(item.qty || 1)
+        })),
+        total,
+        shipping,
+        orderId: transferOrder?.order_id || '',
+        orderCode: transferOrder?.order_code || ''
+      });
 
-    if (!transferOrder?.ok) {
-      alert('Te abrimos WhatsApp, pero no pudimos registrar el pedido pendiente en Supabase.');
+      const whatsappUrl = getWhatsAppBase() + '?text=' + encodeURIComponent(transferMessage);
+      navigateCheckoutTarget(popup, whatsappUrl);
+
+      if (!transferOrder?.ok) {
+        alert('Te abrimos WhatsApp, pero no pudimos registrar el pedido pendiente en Supabase.');
+      }
+    } catch (error) {
+      if (popup && !popup.closed) popup.close();
+      console.error('Error cerrando transferencia:', error);
+      alert('No pudimos iniciar la transferencia. Revisá la consola o la Edge Function create-transfer-order.');
+    } finally {
+      setCartCheckoutBusy(false);
     }
   };
 
@@ -4760,14 +4806,26 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
       return;
     }
 
-    const checkoutUrl = await createMPPreference(mpItems, customer, shipping);
+    const popup = openSafePopup('Preparando Mercado Pago…');
+    setCartCheckoutBusy(true, 'Creando link de pago…');
 
-    if (checkoutUrl) {
-      window.open(checkoutUrl, '_blank');
-      return;
+    try {
+      const checkoutUrl = await createMPPreference(mpItems, customer, shipping);
+
+      if (checkoutUrl) {
+        navigateCheckoutTarget(popup, checkoutUrl);
+        return;
+      }
+
+      if (popup && !popup.closed) popup.close();
+      alert('No se pudo crear el link de Mercado Pago. Revisá la Edge Function create-mp-preference y el token de Mercado Pago.');
+    } catch (error) {
+      if (popup && !popup.closed) popup.close();
+      console.error('Error cerrando Mercado Pago:', error);
+      alert('No pudimos iniciar Mercado Pago. Revisá la consola o la Edge Function create-mp-preference.');
+    } finally {
+      setCartCheckoutBusy(false);
     }
-
-    alert('Para pagar el carrito completo con Mercado Pago necesitás un backend que cree la preferencia con todos los items. Si no, podés usar los links directos por producto o cerrar el pedido por WhatsApp.');
   };
 
   /* ─── SETUP ─── */
