@@ -1286,7 +1286,15 @@
     .sz-btn:hover:not(:disabled), .sz-btn.selected {
       border-color: var(--ink);
       background: var(--ink);
-      color: #fff;
+      color: var(--paper);
+      box-shadow: 0 10px 24px rgba(14,14,16,.16);
+    }
+    .fit-btn.selected,
+    .sz-btn.selected {
+      border-color: var(--ink) !important;
+      background: var(--ink) !important;
+      color: var(--paper) !important;
+      box-shadow: 0 10px 24px rgba(14,14,16,.16);
     }
     .sz-btn.selected small, .fit-btn.selected small { color: inherit; opacity: .9; }
     .sz-btn:disabled, .fit-btn:disabled {
@@ -1318,7 +1326,7 @@
       justify-content: center;
       gap: 3px;
     }
-    .fit-btn:hover:not(:disabled), .fit-btn.selected {
+    .fit-btn:hover:not(:disabled) {
       border-color: var(--accent);
       background: rgba(192,90,58,.08);
       color: var(--ink);
@@ -2592,7 +2600,7 @@
           <label class="shipping-field full"><span class="shipping-label">Calle</span><input id="cartShippingAddress" class="shipping-input" type="text" placeholder="Av. Belgrano" /></label>
           <label class="shipping-field"><span class="shipping-label">Número</span><input id="cartShippingNumber" class="shipping-input" type="text" placeholder="123" /></label>
           <label class="shipping-field"><span class="shipping-label">Piso / depto</span><input id="cartShippingFloor" class="shipping-input" type="text" placeholder="Opcional" /></label>
-          <label class="shipping-field"><span class="shipping-label">Localidad</span><input id="cartShippingLocality" class="shipping-input" type="text" placeholder="Adrogué" /></label>
+          <label class="shipping-field"><span class="shipping-label">Distrito</span><input id="cartShippingLocality" class="shipping-input" type="text" placeholder="Adrogué" /></label>
           <label class="shipping-field"><span class="shipping-label">Ciudad</span><input id="cartShippingCity" class="shipping-input" type="text" placeholder="Adrogué" /></label>
           <label class="shipping-field"><span class="shipping-label">Provincia</span><input id="cartShippingProvince" class="shipping-input" type="text" placeholder="Buenos Aires" /></label>
           <label class="shipping-field"><span class="shipping-label">Código postal</span><input id="cartShippingPostalCode" class="shipping-input" type="text" inputmode="numeric" placeholder="1846" /></label>
