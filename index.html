@@ -1259,7 +1259,7 @@
     }
     .size-selector { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
     .sz-btn {
-      min-width: 48px;
+      min-width: 66px;
       padding: 10px 14px;
       border-radius: var(--r-sm);
       border: 1.5px solid var(--line);
@@ -1269,16 +1269,40 @@
       cursor: pointer;
       transition: all .15s;
       text-align: center;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
     }
-    .sz-btn:hover, .sz-btn.selected {
+    .sz-btn small, .fit-btn small {
+      display: block;
+      font-size: .67rem;
+      line-height: 1.2;
+      font-weight: 800;
+      opacity: .78;
+      letter-spacing: .02em;
+    }
+    .sz-btn:hover:not(:disabled), .sz-btn.selected {
       border-color: var(--ink);
       background: var(--ink);
       color: #fff;
     }
+    .sz-btn.selected small, .fit-btn.selected small { color: inherit; opacity: .9; }
+    .sz-btn:disabled, .fit-btn:disabled {
+      cursor: not-allowed;
+      opacity: .48;
+      background: #f3efe8;
+      color: #9d968e;
+      border-color: #e2dcd3;
+    }
+    .sz-btn.stock-low, .fit-btn.stock-low { border-color: rgba(192,90,58,.34); background: rgba(192,90,58,.08); }
+    .sz-btn.stock-mid, .fit-btn.stock-mid { border-color: rgba(190,127,79,.34); background: rgba(190,127,79,.10); }
+    .sz-btn.stock-high, .fit-btn.stock-high { border-color: rgba(28,127,79,.28); background: rgba(28,127,79,.08); }
 
     .fit-selector { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
     .fit-btn {
-      min-width: 92px;
+      min-width: 108px;
       padding: 10px 14px;
       border-radius: var(--r-sm);
       border: 1.5px solid var(--line);
@@ -1288,12 +1312,28 @@
       cursor: pointer;
       transition: all .15s;
       text-align: center;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
     }
-    .fit-btn:hover, .fit-btn.selected {
+    .fit-btn:hover:not(:disabled), .fit-btn.selected {
       border-color: var(--accent);
       background: rgba(192,90,58,.08);
       color: var(--ink);
     }
+    .modal-stock-note {
+      margin: -8px 0 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(14,14,16,.04);
+      border: 1px solid rgba(14,14,16,.06);
+      color: var(--muted);
+      font-size: .8rem;
+      line-height: 1.55;
+    }
+    .modal-stock-note strong { color: var(--ink); }
     .modal-secondary-cta {
       width: 100%;
       display: flex;
@@ -2591,8 +2631,10 @@
     <div class="modal-body">
       <div class="modal-product-row" id="modalProductRow"></div>
       <div class="modal-section-title">Modelo</div><div class="fit-selector" id="modalFits"></div>
+      <div class="modal-section-title">Color</div><div class="fit-selector" id="modalColors"></div>
       <div class="modal-section-title">Talle</div><div class="size-selector" id="modalSizes"></div>
-      <div id="modalSizePrompt" class="modal-customer-prompt hidden">Elegí modelo y talle para continuar.</div><span id="modalTotal" class="hidden">$0</span>
+      <div class="modal-stock-note" id="modalStockNote"></div>
+      <div id="modalSizePrompt" class="modal-customer-prompt hidden">Elegí modelo, color y talle para continuar.</div><span id="modalTotal" class="hidden">$0</span>
       <button class="modal-secondary-cta" id="modalAddCartCta" type="button" onclick="addConfiguredToCart(true)">Agregar al carrito</button>
       <div class="modal-secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Los datos, la entrega y el pago se completan después desde el carrito</div>
     </div>
@@ -3371,16 +3413,16 @@
     const variantIdsByKey = {};
     const variantIdsBySize = {};
     rows.forEach(row => {
-      if (row.is_active === false || Number(row.stock || 0) <= 0) return;
       const fit = normalizeFit(row.cut || row.fit);
       const color = normalizeColor(row.color);
       const size = String(row.size || '').trim();
       if (!size) return;
+      const qty = Number(row.stock || 0);
       if (!byFitColorSize[fit]) byFitColorSize[fit] = {};
       if (!byFitColorSize[fit][color]) byFitColorSize[fit][color] = {};
-      byFitColorSize[fit][color][size] = Number(row.stock || 0);
+      byFitColorSize[fit][color][size] = qty;
       if (!fitStockBySize[fit]) fitStockBySize[fit] = {};
-      fitStockBySize[fit][size] = Number(fitStockBySize[fit][size] || 0) + Number(row.stock || 0);
+      fitStockBySize[fit][size] = Number(fitStockBySize[fit][size] || 0) + qty;
       const key = `${fit}|${color}|${size}`;
       blankStockIdsByKey[key] = row.id || '';
       variantIdsByKey[`${fit}|${size}`] = row.id || '';
@@ -3388,31 +3430,39 @@
     });
     return { byFitColorSize, fitStockBySize, blankStockIdsByKey, variantIdsByKey, variantIdsBySize };
   };
+  const getAllFits = p => Object.keys(p.blankStockByFitColorSize || {}).sort((a,b) => getFitOrder(a) - getFitOrder(b));
   const getAvailableFits = p => Object.entries(p.blankStockByFitColorSize || {})
     .filter(([, colors]) => Object.values(colors || {}).some(sizes => Object.values(sizes || {}).some(qty => Number(qty || 0) > 0)))
     .map(([fit]) => fit)
     .sort((a,b) => getFitOrder(a) - getFitOrder(b));
+  const getAllColorsForFit = (p, fit = 'unisex') => Object.keys((p.blankStockByFitColorSize || {})[normalizeFit(fit)] || {})
+    .sort((a,b) => a.localeCompare(b, 'es'));
   const getAvailableColorsForFit = (p, fit = 'unisex') => Object.entries((p.blankStockByFitColorSize || {})[normalizeFit(fit)] || {})
     .filter(([, sizes]) => Object.values(sizes || {}).some(qty => Number(qty || 0) > 0))
     .map(([color]) => color)
     .sort((a,b) => a.localeCompare(b, 'es'));
-  const getSizesForFitColor = (p, fit = 'unisex', color = 'Hueso') => Object.entries(((p.blankStockByFitColorSize || {})[normalizeFit(fit)] || {})[normalizeColor(color)] || {})
-    .filter(([, qty]) => Number(qty || 0) > 0)
-    .map(([size]) => size)
-    .sort((a,b) => {
+  const sortSizes = sizes => [...sizes].sort((a,b) => {
       const ai = SIZE_ORDER.indexOf(a); const bi = SIZE_ORDER.indexOf(b);
       if (ai === -1 && bi === -1) return a.localeCompare(b, 'es');
       if (ai === -1) return 1;
       if (bi === -1) return -1;
       return ai - bi;
     });
+  const getAllSizesForFitColor = (p, fit = 'unisex', color = 'Hueso') => sortSizes(Object.keys((((p.blankStockByFitColorSize || {})[normalizeFit(fit)] || {})[normalizeColor(color)] || {})));
+  const getSizesForFitColor = (p, fit = 'unisex', color = 'Hueso') => sortSizes(Object.entries(((p.blankStockByFitColorSize || {})[normalizeFit(fit)] || {})[normalizeColor(color)] || {})
+    .filter(([, qty]) => Number(qty || 0) > 0)
+    .map(([size]) => size));
   const getSizesForFit = (p, fit = 'unisex') => [...new Set(getAvailableColorsForFit(p, fit).flatMap(color => getSizesForFitColor(p, fit, color)))];
   const getAvailableSizes = p => [...new Set(getAvailableFits(p).flatMap(fit => getSizesForFit(p, fit)))];
-  const getDefaultFit = p => getAvailableFits(p)[0] || 'unisex';
-  const getDefaultColor = (p, fit = 'unisex') => getAvailableColorsForFit(p, fit)[0] || 'Hueso';
+  const getDefaultFit = p => getAvailableFits(p)[0] || getAllFits(p)[0] || 'unisex';
+  const getDefaultColor = (p, fit = 'unisex') => getAvailableColorsForFit(p, fit)[0] || getAllColorsForFit(p, fit)[0] || 'Hueso';
   const getTotalStock = p => Object.values(p.blankStockByFitColorSize || {}).reduce((acc, colors) => acc + Object.values(colors || {}).reduce((colorSum, sizes) => colorSum + Object.values(sizes || {}).reduce((sum, qty) => sum + Number(qty || 0), 0), 0), 0);
   const getStockForSelection = (p, size, fit = 'unisex', color = 'Hueso') => Number((((p.blankStockByFitColorSize || {})[normalizeFit(fit)] || {})[normalizeColor(color)] || {})[size] || 0);
-  const getStockForSize = (p, size) => getAvailableFits(p).reduce((acc, fit) => acc + getAvailableColorsForFit(p, fit).reduce((sum, color) => sum + getStockForSelection(p, size, fit, color), 0), 0);
+  const getStockForSize = (p, size) => getAllFits(p).reduce((acc, fit) => acc + getAllColorsForFit(p, fit).reduce((sum, color) => sum + getStockForSelection(p, size, fit, color), 0), 0);
+  const getFitStockTotal = (p, fit = 'unisex') => getAllColorsForFit(p, fit).reduce((sum, color) => sum + getColorStockTotal(p, fit, color), 0);
+  const getColorStockTotal = (p, fit = 'unisex', color = 'Hueso') => getAllSizesForFitColor(p, fit, color).reduce((sum, size) => sum + getStockForSelection(p, size, fit, color), 0);
+  const getStockTone = stock => Number(stock || 0) <= 0 ? 'out' : Number(stock || 0) <= 2 ? 'stock-low' : Number(stock || 0) <= 5 ? 'stock-mid' : 'stock-high';
+  const getStockLabel = stock => Number(stock || 0) <= 0 ? 'Sin stock' : Number(stock || 0) === 1 ? '1 disponible' : `${Number(stock || 0)} disponibles`;
   const getMpLink = (p, size, fit = 'unisex') => (p.mpLinksByKey && p.mpLinksByKey[`${normalizeFit(fit)}|${size}`]) || (p.mpLinks && size && p.mpLinks[size]) || p.mpLink || STORE_CONFIG.mpGenericLink || '';
   const getBlankStockId = (p, size, fit = 'unisex', color = 'Hueso') => (p.blankStockIdsByKey && p.blankStockIdsByKey[`${normalizeFit(fit)}|${normalizeColor(color)}|${size}`]) || '';
   const getVariantId = (p, size, fit = 'unisex') => getBlankStockId(p, size, fit, getDefaultColor(p, fit));
@@ -3485,8 +3535,6 @@
       client
         .from('blank_stock')
         .select('id, cut, color, size, stock, is_active')
-        .eq('is_active', true)
-        .gt('stock', 0)
     ]);
 
     if (productsError) throw productsError;
@@ -4279,24 +4327,76 @@
 
   /* ─── BUY MODAL ─── */
   const renderModalFitOptions = (product) => {
-    const fits = getAvailableFits(product);
     const fitWrap = document.getElementById('modalFits');
     if (!fitWrap) return;
+    const fits = getAllFits(product);
     if (!fits.length) {
       fitWrap.innerHTML = '<div class="mini">Sin stock disponible</div>';
       return;
     }
-    fitWrap.innerHTML = fits.map(fit => `
-      <button class="fit-btn ${selectedFit === fit ? 'selected' : ''}" type="button" onclick="selectFit(this,'${fit}')">${getFitLabel(fit)}</button>
-    `).join('');
+    fitWrap.innerHTML = fits.map(fit => {
+      const stock = getFitStockTotal(product, fit);
+      const tone = getStockTone(stock);
+      return `
+      <button class="fit-btn ${tone} ${selectedFit === fit ? 'selected' : ''}" type="button" onclick="selectFit(this,'${fit}')" ${stock <= 0 ? 'disabled' : ''}>
+        <span>${getFitLabel(fit)}</span>
+        <small>${getStockLabel(stock)}</small>
+      </button>`;
+    }).join('');
+  };
+
+  const renderModalColorOptions = (product) => {
+    const colorWrap = document.getElementById('modalColors');
+    if (!colorWrap) return;
+    const colors = getAllColorsForFit(product, selectedFit);
+    if (!colors.length) {
+      colorWrap.innerHTML = '<div class="mini">Sin colores cargados para este modelo</div>';
+      return;
+    }
+    const preferredColor = colors.find(color => getColorStockTotal(product, selectedFit, color) > 0) || colors[0] || '';
+    if (!colors.includes(selectedColor)) selectedColor = preferredColor;
+    colorWrap.innerHTML = colors.map(color => {
+      const stock = getColorStockTotal(product, selectedFit, color);
+      const tone = getStockTone(stock);
+      const colorArg = JSON.stringify(color);
+      return `
+      <button class="fit-btn ${tone} ${normalizeColor(selectedColor) === normalizeColor(color) ? 'selected' : ''}" type="button" onclick='selectColor(this,${colorArg})' ${stock <= 0 ? 'disabled' : ''}>
+        <span>${escapeHtml(color)}</span>
+        <small>${getStockLabel(stock)}</small>
+      </button>`;
+    }).join('');
   };
 
   const renderModalSizeOptions = (product) => {
-    const sizes = getSizesForFitColor(product, selectedFit, selectedColor);
-    if (!sizes.includes(selectedSize)) selectedSize = sizes[0] || null;
-    document.getElementById('modalSizes').innerHTML = sizes.map(sz => `
-      <button class="sz-btn ${selectedSize === sz ? 'selected' : ''}" onclick="selectSize(this,'${sz}')">${sz}</button>
-    `).join('');
+    const sizeWrap = document.getElementById('modalSizes');
+    if (!sizeWrap) return;
+    const sizes = getAllSizesForFitColor(product, selectedFit, selectedColor);
+    if (!sizes.length) {
+      selectedSize = null;
+      sizeWrap.innerHTML = '<div class="mini">Sin talles cargados para este color</div>';
+      return;
+    }
+    const firstAvailable = sizes.find(size => getStockForSelection(product, size, selectedFit, selectedColor) > 0) || null;
+    if (!sizes.includes(selectedSize) || getStockForSelection(product, selectedSize, selectedFit, selectedColor) <= 0) selectedSize = firstAvailable;
+    sizeWrap.innerHTML = sizes.map(sz => {
+      const stock = getStockForSelection(product, sz, selectedFit, selectedColor);
+      const tone = getStockTone(stock);
+      return `
+      <button class="sz-btn ${tone} ${selectedSize === sz ? 'selected' : ''}" type="button" onclick="selectSize(this,'${sz}')" ${stock <= 0 ? 'disabled' : ''}>
+        <span>${sz}</span>
+        <small>${getStockLabel(stock)}</small>
+      </button>`;
+    }).join('');
+    updateModalStockNote();
+  };
+
+  const updateModalStockNote = () => {
+    const note = document.getElementById('modalStockNote');
+    if (!note || !currentProduct) return;
+    const colorText = selectedColor ? ` · ${normalizeColor(selectedColor)}` : '';
+    const sizeText = selectedSize ? ` · Talle ${selectedSize}` : '';
+    const stock = selectedSize ? getStockForSelection(currentProduct, selectedSize, selectedFit, selectedColor) : 0;
+    note.innerHTML = `<strong>Stock real disponible:</strong> ${getFitLabel(selectedFit)}${colorText}${sizeText}${selectedSize ? ` · ${getStockLabel(stock)}` : ' · Elegí un talle para ver la disponibilidad exacta'}.`;
   };
 
   const openBuyModal = (id, e) => {
@@ -4352,6 +4452,7 @@
     `;
 
     renderModalFitOptions(currentProduct);
+    renderModalColorOptions(currentProduct);
     renderModalSizeOptions(currentProduct);
 
     document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('selected'));
@@ -4381,18 +4482,31 @@
   };
 
   const selectFit = (btn, fit) => {
+    if (btn.disabled) return;
     document.querySelectorAll('#modalFits .fit-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedFit = normalizeFit(fit);
     selectedColor = getDefaultColor(currentProduct, selectedFit);
+    renderModalColorOptions(currentProduct);
+    renderModalSizeOptions(currentProduct);
+    updateModalTotal();
+  };
+
+  const selectColor = (btn, color) => {
+    if (btn.disabled) return;
+    document.querySelectorAll('#modalColors .fit-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedColor = normalizeColor(color);
     renderModalSizeOptions(currentProduct);
     updateModalTotal();
   };
 
   const selectSize = (btn, sz) => {
+    if (btn.disabled) return;
     document.querySelectorAll('#modalSizes .sz-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedSize = sz;
+    updateModalStockNote();
     updateModalTotal();
   };
 
