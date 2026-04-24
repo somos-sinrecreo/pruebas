@@ -220,7 +220,7 @@
 
           <div class="divider"></div>
           <h3 class="title" style="font-size:1.35rem">Imágenes</h3>
-          <p class="mini">Podés pegar URLs o subir archivos al bucket <strong>product-images</strong>. Cargá hasta 3 imágenes por prenda.</p>
+          <p class="mini">Podés pegar URLs públicas o subir archivos a <strong>Cloudflare R2</strong>. Cargá hasta 3 imágenes por prenda.</p>
 
           <div class="img-grid" id="imagesGrid"></div>
 
@@ -425,10 +425,12 @@
 
   <script>
     const CONFIG = {
-      SUPABASE_URL: 'https://xedhdojvynmwaadmkcby.supabase.co',
-      SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhlZGhkb2p2eW5td2FhZG1rY2J5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NjQ4MjYsImV4cCI6MjA5MTI0MDgyNn0.Keaskg8KUqFz4JyuUJJxGCjIDdD6iaDnEAUyvwPgZrA',
-      STORAGE_BUCKET: 'product-images',
-      PUDO_CREATE_ORDER_ENDPOINT: 'https://xedhdojvynmwaadmkcby.supabase.co/functions/v1/pudo-create-order'
+      SUPABASE_URL: 'https://bhzwcevmeqzofuwnwpnm.supabase.co',
+      SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoendjZXZtZXF6b2Z1d253cG5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5OTExNzksImV4cCI6MjA5MjU2NzE3OX0.LGDbzUNprkAfbiOC7oFuew0EpCOPll9ckdGL-LidhGA',
+      STORAGE_BUCKET: 'product-images', // legado: ya no se usa para subir nuevas imágenes
+      R2_PUBLIC_BASE_URL: 'https://cdn.sinrecreo.com.ar',
+      R2_UPLOAD_ENDPOINT: 'https://bhzwcevmeqzofuwnwpnm.supabase.co/functions/v1/upload-product-image',
+      PUDO_CREATE_ORDER_ENDPOINT: 'https://bhzwcevmeqzofuwnwpnm.supabase.co/functions/v1/pudo-create-order'
     };
 
     const SIZE_ORDER = ['XS','S','M','L','XL','XXL'];
@@ -1391,13 +1393,32 @@
         return urlInput.value.trim() || '';
       }
 
-      const ext = file.name.split('.').pop() || 'jpg';
-      const safeName = `${productSlug}/${Date.now()}-${position}.${ext}`;
-      const { error } = await sb.storage.from(CONFIG.STORAGE_BUCKET).upload(safeName, file, { upsert: true });
-      if (error) throw error;
+      const { data: sessionData, error: sessionError } = await sb.auth.getSession();
+      const accessToken = sessionData?.session?.access_token;
+      if (sessionError || !accessToken) {
+        throw new Error('Tu sesión de admin venció. Cerrá sesión y volvé a entrar.');
+      }
 
-      const { data } = sb.storage.from(CONFIG.STORAGE_BUCKET).getPublicUrl(safeName);
-      return data.publicUrl;
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('productSlug', productSlug);
+      formData.append('position', String(position));
+
+      const response = await fetch(CONFIG.R2_UPLOAD_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'apikey': CONFIG.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${accessToken}`
+        },
+        body: formData
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result?.ok === false) {
+        throw new Error(result?.error || result?.detail || 'No se pudo subir la imagen a Cloudflare R2.');
+      }
+
+      return result.publicUrl || result.image_url || '';
     };
 
     const saveProduct = async () => {
@@ -1428,7 +1449,7 @@
         for (const position of IMAGE_SLOTS) {
           const imageUrl = await uploadImageIfNeeded(payload.slug, position);
           if (imageUrl) {
-            imageRows.push({ product_id: savedProductId, position, image_url: imageUrl });
+            imageRows.push({ product_id: savedProductId, position, image_url: imageUrl, storage_path: imageUrl.startsWith(CONFIG.R2_PUBLIC_BASE_URL) ? imageUrl.replace((CONFIG.R2_PUBLIC_BASE_URL || '').replace(/\/+$/, '') + '/', '') : null });
           }
         }
 
