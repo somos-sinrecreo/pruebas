@@ -2055,6 +2055,202 @@
     }
 
 
+
+    /* ── CLUB SIN RECREO ── */
+    .club-section {
+      padding: 58px 0 10px;
+    }
+    .club-card {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 32px;
+      align-items: stretch;
+      background: var(--ink);
+      color: #fff;
+      border-radius: var(--r-xl);
+      padding: 42px;
+      box-shadow: var(--sh-lg);
+    }
+    .club-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 85% 8%, rgba(232,120,90,.38), transparent 48%),
+        radial-gradient(ellipse at 8% 86%, rgba(255,255,255,.08), transparent 42%);
+      pointer-events: none;
+    }
+    .club-copy,
+    .club-panel {
+      position: relative;
+      z-index: 1;
+    }
+    .club-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(232,120,90,.16);
+      color: var(--accent-light);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .club-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.1rem, 6.2vw, 5.7rem);
+      letter-spacing: .035em;
+      line-height: .9;
+      margin: 0 0 18px;
+    }
+    .club-title em {
+      font-family: var(--font-serif);
+      font-size: .72em;
+      font-style: italic;
+      color: var(--accent-light);
+    }
+    .club-lead {
+      max-width: 58ch;
+      color: rgba(255,255,255,.72);
+      font-size: 1rem;
+      line-height: 1.78;
+      margin-bottom: 24px;
+    }
+    .club-benefits {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 24px 0 0;
+    }
+    .club-benefit {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 12px 13px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.82);
+      font-size: .85rem;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+    .club-benefit span:first-child {
+      color: var(--accent-light);
+      flex: none;
+    }
+    .club-panel {
+      background: rgba(255,255,255,.96);
+      color: var(--ink);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 28px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.22);
+    }
+    .club-plan-label {
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .club-plan-title {
+      font-family: var(--font-display);
+      font-size: 2.3rem;
+      letter-spacing: .035em;
+      line-height: .98;
+      margin-bottom: 10px;
+    }
+    .club-plan-body {
+      color: var(--muted);
+      line-height: 1.68;
+      font-size: .92rem;
+    }
+    .club-plan-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin: 18px 0 0;
+    }
+    .club-plan-list li {
+      list-style: none;
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: .9rem;
+      line-height: 1.45;
+    }
+    .club-plan-list li::before {
+      content: "✦";
+      color: var(--accent);
+      flex: none;
+    }
+    .club-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .club-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 999px;
+      font-weight: 900;
+      border: 1px solid var(--ink);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .club-cta.primary {
+      background: var(--ink);
+      color: #fff;
+    }
+    .club-cta.primary:hover {
+      background: #2a2a2c;
+      transform: translateY(-1px);
+      box-shadow: 0 14px 32px rgba(14,14,16,.2);
+    }
+    .club-cta.secondary {
+      background: var(--cream);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+    .club-cta.secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .club-smallprint {
+      color: var(--muted);
+      font-size: .76rem;
+      line-height: 1.58;
+      margin-top: 10px;
+    }
+    @media (max-width: 900px) {
+      .club-card { grid-template-columns: 1fr; padding: 30px 22px; }
+      .club-benefits { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px) {
+      .club-section { padding-top: 34px; }
+      .club-title { font-size: 3.15rem; }
+      .club-panel { padding: 22px; }
+      .club-plan-title { font-size: 1.85rem; }
+    }
+
+
     /* ── CÓMO COMPRAR ── */
     .how-steps {
       display: flex;
@@ -2409,19 +2605,19 @@
 <!-- Announce bar -->
 <div class="announce" aria-label="Novedades">
   <div class="announce-track">
-    <span>PRÓXIMAMENTE COMPRA ONLINE</span>
+    <span>TIENDA EN MODO PRUEBA</span>
     <span class="dot">✦</span>
-    <span>YA PODÉS CHUSMEAR EL CATÁLOGO</span>
+    <span>YA PODÉS PROBAR EL CARRITO</span>
     <span class="dot">✦</span>
-    <span>LANZAMIENTO OFICIAL MUY PRONTO</span>
+    <span>CHECKOUT HABILITADO PARA TEST</span>
     <span class="dot">✦</span>
     <span class="announce-featured-capsule">CÁPSULA DESTACADA DEL MES</span>
     <span class="dot">✦</span>
-    <span>PRÓXIMAMENTE COMPRA ONLINE</span>
+    <span>TIENDA EN MODO PRUEBA</span>
     <span class="dot">✦</span>
-    <span>YA PODÉS CHUSMEAR EL CATÁLOGO</span>
+    <span>YA PODÉS PROBAR EL CARRITO</span>
     <span class="dot">✦</span>
-    <span>LANZAMIENTO OFICIAL MUY PRONTO</span>
+    <span>CHECKOUT HABILITADO PARA TEST</span>
     <span class="dot">✦</span>
     <span class="announce-featured-capsule">CÁPSULA DESTACADA DEL MES</span>
     <span class="dot">✦</span>
@@ -2469,6 +2665,7 @@
     <div class="container nav-scroll">
       <a class="nav-link" href="#capsulas-coleccion">Cápsulas de Colección</a>
       <a class="nav-link" href="#linea-permanente">Línea Permanente</a>
+      <a class="nav-link nav-link-club" href="#club-sin-recreo">Club SIN RECREO</a>
       <a class="nav-link" href="#productos" onclick="openProductsModal(event)">Productos</a>
       <a class="nav-link" href="#como-comprar">Cómo comprar</a>
       <a class="nav-link" href="#quienes-somos">Quiénes somos</a>
@@ -2481,10 +2678,10 @@
   <div class="container" id="paymentStatusInner"></div>
 </div>
 
-<div id="preLaunchBanner" class="prelaunch-banner">
+<div id="preLaunchBanner" class="prelaunch-banner hidden">
   <div class="container">
-    <div><strong>Vista previa de SIN RECREO.</strong> Ya podés chusmear cápsulas, diseños, talles y universo de la marca. La compra online se habilitará muy pronto.</div>
-    <span class="prelaunch-pill">Próximamente tienda abierta</span>
+    <div><strong>Modo prueba de tienda activa.</strong> Carrito, entrega y pagos habilitados para testear el flujo completo.</div>
+    <span class="prelaunch-pill">Modo prueba activo</span>
   </div>
 </div>
 
@@ -2505,7 +2702,7 @@
               Explorar catálogo
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
-            <a class="btn-outline" href="https://instagram.com/somos.sinrecreo" target="_blank" rel="noopener noreferrer">Ver universo</a>
+            <a class="btn-outline" href="#club-sin-recreo">Club SIN RECREO</a>
           </div>
         </div>
       </article>
@@ -2575,14 +2772,55 @@
     </div>
   </div>
 
+
+  <!-- ── CLUB SIN RECREO ── -->
+  <section class="club-section" id="club-sin-recreo">
+    <div class="container">
+      <article class="club-card fade-up">
+        <div class="club-copy">
+          <div class="club-kicker">Nuevo · Membresía mensual</div>
+          <h2 class="club-title">CLUB<br><em>SIN RECREO</em></h2>
+          <p class="club-lead">No compres una remera suelta: construí una colección. Durante 6 meses recibís una prenda por mes, incluida en tu membresía, elegida por vos entre las prendas activas del catálogo.</p>
+          <div class="club-benefits">
+            <div class="club-benefit"><span>01</span><span>Una prenda incluida por mes durante 6 meses.</span></div>
+            <div class="club-benefit"><span>02</span><span>Elegís diseño, talle, corte y color según stock disponible.</span></div>
+            <div class="club-benefit"><span>03</span><span>Pagás menos que el valor habitual de una prenda.</span></div>
+            <div class="club-benefit"><span>04</span><span>Acceso prioritario a cápsulas nuevas y atención directa.</span></div>
+          </div>
+        </div>
+        <div class="club-panel">
+          <div>
+            <div class="club-plan-label">Plan único</div>
+            <h3 class="club-plan-title">6 meses · 6 prendas · 6 ideas</h3>
+            <p class="club-plan-body">La suscripción se abona mensualmente por Mercado Pago. Cada mes coordinamos la elección de tu prenda para que armes tu propio archivo SIN RECREO.</p>
+            <ul class="club-plan-list">
+              <li>Duración mínima: 6 meses.</li>
+              <li>1 prenda por mes incluida.</li>
+              <li>Selección entre catálogo activo.</li>
+              <li>La entrega/envío se coordina cada mes.</li>
+            </ul>
+          </div>
+          <div class="club-actions">
+            <a class="club-cta primary" href="https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=9c3120af0473487482e9fc6ca4e1a46b" target="_blank" rel="noopener noreferrer">
+              Suscribirme en Mercado Pago
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a class="club-cta secondary" href="https://wa.me/5491138614767?text=Hola%20SIN%20RECREO%2C%20quiero%20sumarme%20al%20Club%20SIN%20RECREO.%20Me%20pasas%20info%20sobre%20la%20suscripcion%20mensual%20de%206%20meses%3F" target="_blank" rel="noopener noreferrer">Consultar antes por WhatsApp</a>
+            <p class="club-smallprint">La elección mensual está sujeta al stock disponible al momento de solicitar la prenda. Si una cápsula se agota, podés elegir otra prenda activa del catálogo.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
   <!-- ── CÓMO COMPRAR ── -->
   <section class="section" id="como-comprar" style="padding-bottom: 0;">
     <div class="container">
       <div class="section-head fade-up">
         <div>
-          <div class="section-label">Muy pronto vas a poder comprar</div>
-          <h2 class="section-title">Así va a funcionar</h2>
-          <p class="section-sub">Por ahora podés recorrer la tienda completa. La compra online se habilita próximamente.</p>
+          <div class="section-label">Compra online en prueba</div>
+          <h2 class="section-title">Así funciona</h2>
+          <p class="section-sub">Modo prueba activo: podés recorrer la tienda, agregar al carrito y probar el circuito de pago.</p>
         </div>
       </div>
       <div class="how-steps fade-up">
@@ -2598,7 +2836,7 @@
           <div class="how-step-num">2</div>
           <div class="how-step-body">
             <strong>Elegí talle y forma de pago</strong>
-            <span>Cuando abramos la tienda, vas a poder pagar con MercadoPago o transferencia.</span>
+            <span>Podés probar MercadoPago o transferencia desde el carrito.</span>
           </div>
         </div>
         <div class="how-step-arrow">→</div>
@@ -2606,7 +2844,7 @@
           <div class="how-step-num">3</div>
           <div class="how-step-body">
             <strong>Confirmás la compra</strong>
-            <span>Al lanzarla oficialmente, el pedido se va a registrar desde la tienda y te acompañamos por WhatsApp.</span>
+            <span>El pedido se registra desde la tienda y el seguimiento continúa por WhatsApp.</span>
           </div>
         </div>
       </div>
@@ -2790,12 +3028,13 @@
   <nav class="mobile-nav-links" aria-label="Navegación móvil">
     <a href="#capsulas-coleccion" onclick="closeMobileMenu()">Cápsulas de Colección</a>
     <a href="#linea-permanente" onclick="closeMobileMenu()">Línea Permanente</a>
+    <a href="#club-sin-recreo" onclick="closeMobileMenu()">Club SIN RECREO</a>
     <a href="#productos" onclick="openProductsModal(event); closeMobileMenu();">Productos</a>
     <a href="#como-comprar" onclick="closeMobileMenu()">Cómo comprar</a>
     <a href="#quienes-somos" onclick="closeMobileMenu()">Quiénes somos</a>
     <a href="https://instagram.com/somos.sinrecreo" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()">Instagram ↗</a>
   </nav>
-  <div class="mobile-nav-note">La tienda está en modo vista previa: podés recorrer todo el universo SIN RECREO antes del lanzamiento.</div>
+  <div class="mobile-nav-note">También podés sumarte al Club: una prenda incluida por mes durante 6 meses, elegida por vos.</div>
 </aside>
 
 <!-- ── DRAWER BACKDROP ── -->
@@ -2825,7 +3064,7 @@
     </div>
 
     <button class="cart-browse-btn" onclick="goBackToCatalogFromCart()">Ver más prendas</button>
-    <button class="cart-checkout-btn prelaunch-disabled" id="cartOpenCheckoutButton" type="button" onclick="showPreLaunchNotice()" disabled aria-disabled="true">Próximamente podrás comprar</button>
+    <button class="cart-checkout-btn" id="cartOpenCheckoutButton" type="button" onclick="openCartCheckout()">Finalizar compra</button>
 
     <div class="cart-checkout-panel hidden" id="cartCheckoutPanel">
       <div class="modal-section-title">Tus datos</div>
@@ -2874,7 +3113,7 @@
         <div class="modal-note">Al confirmar la transferencia, te abrimos WhatsApp con el pedido armado para que envíes el comprobante.</div>
       </div>
 
-      <button class="modal-cta mp-style prelaunch-disabled" id="cartFinalCheckoutButton" type="button" onclick="showPreLaunchNotice()" disabled aria-disabled="true">Próximamente podrás comprar</button>
+      <button class="modal-cta mp-style" id="cartFinalCheckoutButton" type="button" onclick="finishCartCheckout()">Pagar con Mercado Pago</button>
       <div class="modal-secure" id="cartSecureNote"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Compra segura · Producto, entrega y pago se definen desde el carrito</div>
     </div>
   </div>
@@ -2891,8 +3130,8 @@
       <div class="modal-section-title">Talle</div><div class="size-selector" id="modalSizes"></div>
       <div class="modal-stock-note" id="modalStockNote"></div>
       <div id="modalSizePrompt" class="modal-customer-prompt hidden">Elegí modelo, color y talle para continuar.</div><span id="modalTotal" class="hidden">$0</span>
-      <button class="modal-secondary-cta prelaunch-disabled" id="modalAddCartCta" type="button" onclick="showPreLaunchNotice()" disabled aria-disabled="true">Próximamente podrás comprar</button>
-      <div class="modal-secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> La compra online se habilitará próximamente. Por ahora podés chusmear diseños, talles y cápsulas.</div>
+      <button class="modal-secondary-cta" id="modalAddCartCta" type="button" onclick="addConfiguredToCart(true)">Agregar al carrito</button>
+      <div class="modal-secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Elegí modelo, color y talle. Después continuás desde el carrito con entrega y forma de pago.</div>
     </div>
   </div>
 </div>
@@ -2952,13 +3191,14 @@
   const STORE_CONFIG = {
     whatsappNumber: '5491138614767',
     instagramUrl: 'https://instagram.com/somos.sinrecreo',
+    clubSubscriptionUrl: 'https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=9c3120af0473487482e9fc6ca4e1a46b',
     transferAlias: 'lucas.faga.mp',
     transferOwner: 'Lucas Matias Faga',
     transferCBU: '0000003100065142182346',
     transferDiscount: 10,
     installmentsCount: 3,
     freeShippingMinAmount: 100000,
-    preLaunchMode: true,
+    preLaunchMode: false,
     preLaunchMessage: 'Próximamente podrás comprar nuestras remeras en la tienda. Por ahora podés chusmear el catálogo completo y escribirnos por WhatsApp si querés consultar algo.',
     mpMode: 'backend', // 'direct_links' o 'backend'
     mpEnvironment: 'sandbox', // 'sandbox' mientras uses credenciales de prueba; luego 'production'
@@ -5141,7 +5381,7 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
     const useTransfer = selectedPayMethod === 'transfer'; const subtotal = cart.reduce((sum, item) => sum + Number(useTransfer ? getTransferPrice(item) : item.price || 0) * Number(item.qty || 1), 0);
     const shipping = cartDeliveryMethod === 'pickup' ? getPickupShippingOption() : selectedCartShippingOption; const shippingCharge = Number(shipping?.charge || 0);
     document.getElementById('cartTotal').textContent = fmt(subtotal); const grand = document.getElementById('cartGrandTotal'); if (grand) grand.textContent = fmt(subtotal + shippingCharge);
-    const checkoutPanel = document.getElementById('cartCheckoutPanel'); if (checkoutPanel) checkoutPanel.classList.toggle('hidden', !cartCheckoutOpen); const openBtn = document.getElementById('cartOpenCheckoutButton'); if (openBtn) openBtn.classList.toggle('hidden', cartCheckoutOpen);
+    const checkoutPanel = document.getElementById('cartCheckoutPanel'); if (checkoutPanel) checkoutPanel.classList.toggle('hidden', !cartCheckoutOpen); const openBtn = document.getElementById('cartOpenCheckoutButton'); if (openBtn) { openBtn.classList.toggle('hidden', cartCheckoutOpen); openBtn.disabled = false; openBtn.removeAttribute('aria-disabled'); openBtn.classList.remove('prelaunch-disabled'); openBtn.textContent = 'Finalizar compra'; }
     updateCartDeliveryUI(); updateTransferPanel(); updateCartCheckoutCta(); renderShippingSummary('cart');
   };
 
@@ -5183,7 +5423,7 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
   const updateCartDeliveryUI = () => { document.getElementById('deliveryChoicePudo')?.classList.toggle('selected', cartDeliveryMethod === 'pudo'); document.getElementById('deliveryChoicePickup')?.classList.toggle('selected', cartDeliveryMethod === 'pickup'); document.getElementById('cartShippingPanel')?.classList.toggle('hidden', cartDeliveryMethod !== 'pudo'); document.getElementById('cartPickupSummary')?.classList.toggle('hidden', cartDeliveryMethod !== 'pickup'); if (cartDeliveryMethod === 'pickup') hideShippingStatus('cart'); };
   const selectCartDeliveryMethod = (method = 'pudo') => { cartDeliveryMethod = method === 'pickup' ? 'pickup' : 'pudo'; if (cartDeliveryMethod === 'pickup') selectedCartShippingOption = getPickupShippingOption(); else if (selectedCartShippingOption?.provider === 'RETIRO') selectedCartShippingOption = null; updateCartUI(); };
   const openCartCheckout = () => { if (isPreLaunchMode()) { showPreLaunchNotice(); return; } if (!cart.length) return; cartCheckoutOpen = true; updateCartUI(); document.getElementById('cartCheckoutPanel')?.scrollIntoView({ behavior:'smooth', block:'start' }); };
-  const updateCartCheckoutCta = () => { const cta = document.getElementById('cartFinalCheckoutButton'); const secure = document.getElementById('cartSecureNote'); if (!cta) return; if (isPreLaunchMode()) { cta.className = 'modal-cta prelaunch-disabled'; cta.textContent = 'Próximamente podrás comprar'; cta.disabled = true; cta.setAttribute('aria-disabled','true'); if (secure) secure.textContent = 'La compra online todavía no está habilitada. Esta es una vista previa de la tienda.'; return; } if (selectedPayMethod === 'transfer') { cta.className = 'modal-cta'; cta.textContent = 'Confirmar transferencia'; if (secure) secure.textContent = 'Reservá el pedido y cerrá el pago con contacto directo por WhatsApp'; } else { cta.className = 'modal-cta mp-style'; cta.textContent = 'Pagar con Mercado Pago'; if (secure) secure.textContent = 'Pago en entorno seguro de Mercado Pago · Producto y entrega incluidos'; } };
+  const updateCartCheckoutCta = () => { const cta = document.getElementById('cartFinalCheckoutButton'); const secure = document.getElementById('cartSecureNote'); if (!cta) return; if (isPreLaunchMode()) { cta.className = 'modal-cta prelaunch-disabled'; cta.textContent = 'Próximamente podrás comprar'; cta.disabled = true; cta.setAttribute('aria-disabled','true'); if (secure) secure.textContent = 'La compra online todavía no está habilitada. Esta es una vista previa de la tienda.'; return; } cta.disabled = false; cta.removeAttribute('aria-disabled'); cta.style.opacity = '1'; cta.style.cursor = 'pointer'; if (selectedPayMethod === 'transfer') { cta.className = 'modal-cta'; cta.textContent = 'Confirmar transferencia'; if (secure) secure.textContent = 'Reservá el pedido y cerrá el pago con contacto directo por WhatsApp'; } else { cta.className = 'modal-cta mp-style'; cta.textContent = 'Pagar con Mercado Pago'; if (secure) secure.textContent = 'Pago en entorno seguro de Mercado Pago · Producto y entrega incluidos'; } };
 
   const setCartCheckoutBusy = (busy = false, label = '') => {
     const cta = document.getElementById('cartFinalCheckoutButton');
