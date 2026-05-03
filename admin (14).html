@@ -124,7 +124,7 @@
       <div class="card p16 view-switch">
         <div>
           <h2 class="title" style="margin:0 0 4px">Panel de gestión</h2>
-          <div class="mini">Elegí si querés trabajar catálogo o revisar pedidos.</div>
+          <div class="mini">Elegí si querés trabajar catálogo, cápsulas, stock base o revisar pedidos.</div>
         </div>
         <div class="segmented">
           <button class="seg-btn active" id="catalogViewBtn">Catálogo</button>
@@ -168,7 +168,7 @@
           <div class="row">
             <label class="field"><span class="label">Cápsula</span>
               <select id="capsule"></select>
-              <span class="mini">Las cápsulas se administran en la pestaña “Cápsulas”.</span>
+              <span class="mini">Elegí “Línea Permanente” para que la prenda vaya a la cápsula general. Las demás cápsulas aparecen en Colección.</span>
             </label>
             <label class="field"><span class="label">Título</span><input id="title" placeholder="Voto femenino" /></label>
           </div>
@@ -177,9 +177,8 @@
             <label class="field"><span class="label">Precio</span><input id="price" type="number" min="0" step="100" /></label>
             <label class="field"><span class="label">Corte</span>
               <select id="cut">
-                <option>Unisex</option>
-                <option>Corte dama</option>
-                <option>Oversize</option>
+                <option value="Unisex">Unisex</option>
+                <option value="Femenina">Femenina</option>
               </select>
             </label>
           </div>
@@ -338,7 +337,7 @@
           <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <div>
               <h2 class="title" style="margin:0">Remeras lisas</h2>
-              <div class="mini">Alta y actualización por corte, color y talle. Ejemplo: Oversize · Hueso · M · 12 unidades.</div>
+              <div class="mini">Alta y actualización por corte, color y talle. Ejemplo: Unisex · Hueso · M · 12 unidades.</div>
             </div>
           </div>
 
@@ -348,7 +347,6 @@
             <label class="field"><span class="label">Corte</span>
               <select id="stockCut">
                 <option value="unisex">Unisex</option>
-                <option value="oversize">Oversize</option>
                 <option value="femenina">Femenina</option>
               </select>
             </label>
@@ -434,8 +432,8 @@
     };
 
     const SIZE_ORDER = ['XS','S','M','L','XL','XXL'];
-    const CUT_ORDER = ['unisex','oversize','femenina'];
-    const CUT_LABELS = { unisex:'Unisex', oversize:'Oversize', femenina:'Femenina' };
+    const CUT_ORDER = ['unisex','femenina'];
+    const CUT_LABELS = { unisex:'Unisex', femenina:'Femenina' };
     const IMAGE_SLOTS = [1,2,3];
     let sb = null;
     let currentUser = null;
@@ -548,12 +546,16 @@
 
     const normalizeCut = value => {
       const key = String(value || '').trim().toLowerCase();
-      if (['femenino','femenina','corte dama','dama'].includes(key)) return 'femenina';
-      if (['oversize','over'].includes(key)) return 'oversize';
+      if (['femenino','femenina','corte dama','dama','mujer'].includes(key)) return 'femenina';
       return 'unisex';
     };
     const getCutLabel = value => CUT_LABELS[normalizeCut(value)] || 'Unisex';
     const normalizeColor = value => String(value || '').trim().replace(/\s+/g, ' ') || 'Hueso';
+    const normalizeTextKey = value => String(value || '').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    const GENERAL_CAPSULE_NAME = 'Línea Permanente';
+    const GENERAL_CAPSULE_ALIASES = ['general', 'linea permanente', 'línea permanente', 'permanente', 'seleccion abierta', 'selección abierta', 'catalogo general', 'catálogo general'];
+    const isGeneralCapsuleName = name => GENERAL_CAPSULE_ALIASES.includes(normalizeTextKey(name));
+    const getDisplayCapsuleName = name => isGeneralCapsuleName(name) ? GENERAL_CAPSULE_NAME : String(name || '').trim();
     const stockSort = (a, b) => {
       const ci = CUT_ORDER.indexOf(normalizeCut(a.cut));
       const cj = CUT_ORDER.indexOf(normalizeCut(b.cut));
@@ -582,12 +584,14 @@
     const renderCapsuleOptionsInProductForm = () => {
       const select = el('capsule');
       if (!select) return;
-      const currentValue = currentProduct?.capsule || select.value || '';
-      const activeCapsules = capsules.filter(c => c.is_active);
-      const extraOption = currentValue && !activeCapsules.some(c => c.name === currentValue)
+      const currentRaw = currentProduct?.capsule || select.value || '';
+      const currentValue = isGeneralCapsuleName(currentRaw) ? GENERAL_CAPSULE_NAME : currentRaw;
+      const activeCapsules = capsules.filter(c => c.is_active && !isGeneralCapsuleName(c.name));
+      const extraOption = currentValue && currentValue !== GENERAL_CAPSULE_NAME && !activeCapsules.some(c => c.name === currentValue)
         ? `<option value="${currentValue}">${currentValue} (sin ficha activa)</option>` : '';
       select.innerHTML = `
         <option value="">Elegí una cápsula</option>
+        <option value="${GENERAL_CAPSULE_NAME}">${GENERAL_CAPSULE_NAME} · cápsula general</option>
         ${activeCapsules.map(c => `<option value="${c.name}">${c.name}</option>`).join('')}
         ${extraOption}
       `;
@@ -631,7 +635,7 @@
       const count = el('capsuleProductsCount');
       if (!wrap || !count) return;
       const capsuleName = el('capsuleName').value.trim() || currentCapsule?.name || '';
-      const linked = products.filter(product => String(product.capsule || '').trim() === capsuleName);
+      const linked = products.filter(product => getDisplayCapsuleName(product.capsule) === getDisplayCapsuleName(capsuleName));
       count.textContent = linked.length;
       if (!capsuleName) {
         wrap.innerHTML = '<div class="empty-state">Guardá o elegí una cápsula para ver sus productos vinculados.</div>';
@@ -1230,11 +1234,11 @@
         return;
       }
       list.innerHTML = capsules.map(capsule => {
-        const linkedCount = products.filter(product => String(product.capsule || '').trim() === String(capsule.name || '').trim()).length;
+        const linkedCount = products.filter(product => getDisplayCapsuleName(product.capsule) === getDisplayCapsuleName(capsule.name)).length;
         return `
           <div class="item ${currentCapsule?.id === capsule.id ? 'active' : ''}" data-capsule-id="${capsule.id}">
             <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
-              <h4>${capsule.name}</h4>
+              <h4>${getDisplayCapsuleName(capsule.name)}</h4>
               <span class="badge">${capsule.is_featured_drop ? 'Drop destacado' : (capsule.is_active ? 'Activa' : 'Inactiva')}</span>
             </div>
             <p>${linkedCount} producto(s) · ${capsule.badge_label || 'Sin etiqueta'}</p>
@@ -1274,7 +1278,7 @@
             <h4>${p.title}</h4>
             <span class="badge">${p.is_active ? 'Activo' : 'Inactivo'}</span>
           </div>
-          <p>${p.capsule} · ${p.sku || 'sin SKU'} · $${Number(p.price || 0).toLocaleString('es-AR')}</p>
+          <p>${getDisplayCapsuleName(p.capsule)} · ${p.sku || 'sin SKU'} · $${Number(p.price || 0).toLocaleString('es-AR')}</p>
         </div>
       `).join('');
       list.querySelectorAll('.item[data-id]').forEach(node => {
@@ -1286,7 +1290,7 @@
       id:'',
       slug:'',
       sku:'',
-      capsule:'',
+      capsule: GENERAL_CAPSULE_NAME,
       title:'',
       description:'',
       price:'',
@@ -1304,14 +1308,14 @@
       el('title').value = product.title || '';
       el('description').value = product.description || '';
       el('price').value = product.price || '';
-      el('cut').value = product.cut || 'Unisex';
+      el('cut').value = getCutLabel(product.cut || 'Unisex');
       el('sortDate').value = product.sort_date || new Date().toISOString().slice(0,10);
       el('featured').value = String(Boolean(product.featured));
       el('artType').value = product.art_type || 'poster';
       el('isActive').value = String(Boolean(product.is_active));
       currentProduct = product;
       renderCapsuleOptionsInProductForm();
-      el('capsule').value = product.capsule || '';
+      el('capsule').value = isGeneralCapsuleName(product.capsule) ? GENERAL_CAPSULE_NAME : (product.capsule || '');
     };
 
     const clearImages = () => {
@@ -1376,7 +1380,7 @@
         title,
         description: el('description').value.trim(),
         price: Number(el('price').value || 0),
-        cut: el('cut').value,
+        cut: getCutLabel(el('cut').value),
         sort_date: el('sortDate').value,
         featured: el('featured').value === 'true',
         art_type: el('artType').value,
