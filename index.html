@@ -3293,13 +3293,13 @@
       <div class="shipping-panel is-cart" id="cartShippingPanel">
         <div class="shipping-head"><div><strong>Entrega PUDO</strong><br><span>Calculá domicilio o Smart Locker antes de pagar.</span></div></div>
         <div class="shipping-grid">
-          <label class="shipping-field full"><span class="shipping-label">Calle</span><input id="cartShippingAddress" class="shipping-input" type="text" placeholder="Av. Belgrano" /></label>
-          <label class="shipping-field"><span class="shipping-label">Número</span><input id="cartShippingNumber" class="shipping-input" type="text" placeholder="123" /></label>
-          <label class="shipping-field"><span class="shipping-label">Piso / depto</span><input id="cartShippingFloor" class="shipping-input" type="text" placeholder="Opcional" /></label>
-          <label class="shipping-field"><span class="shipping-label">Distrito</span><input id="cartShippingLocality" class="shipping-input" type="text" placeholder="Adrogué" /></label>
-          <label class="shipping-field"><span class="shipping-label">Ciudad</span><input id="cartShippingCity" class="shipping-input" type="text" placeholder="Adrogué" /></label>
-          <label class="shipping-field"><span class="shipping-label">Provincia</span><input id="cartShippingProvince" class="shipping-input" type="text" placeholder="Buenos Aires" /></label>
-          <label class="shipping-field"><span class="shipping-label">Código postal</span><input id="cartShippingPostalCode" class="shipping-input" type="text" inputmode="numeric" placeholder="1846" /></label>
+          <label class="shipping-field full"><span class="shipping-label">Calle</span><input id="cartShippingAddress" class="shipping-input" type="text" /></label>
+          <label class="shipping-field"><span class="shipping-label">Número</span><input id="cartShippingNumber" class="shipping-input" type="text" /></label>
+          <label class="shipping-field"><span class="shipping-label">Piso / depto</span><input id="cartShippingFloor" class="shipping-input" type="text" /></label>
+          <label class="shipping-field"><span class="shipping-label">Distrito</span><input id="cartShippingLocality" class="shipping-input" type="text" /></label>
+          <label class="shipping-field"><span class="shipping-label">Ciudad</span><input id="cartShippingCity" class="shipping-input" type="text" /></label>
+          <label class="shipping-field"><span class="shipping-label">Provincia</span><input id="cartShippingProvince" class="shipping-input" type="text" /></label>
+          <label class="shipping-field"><span class="shipping-label">Código postal</span><input id="cartShippingPostalCode" class="shipping-input" type="text" inputmode="numeric" /></label>
         </div>
         <div class="shipping-actions"><button class="shipping-calc-btn" type="button" onclick="quotePudoShipping('cart')">Calcular envío PUDO</button><span class="shipping-help">Hasta 7 remeras por envío. En compras desde $100.000, SIN RECREO bonifica el envío.</span></div>
         <div id="cartShippingStatus" class="shipping-status hidden"></div>
@@ -3331,16 +3331,17 @@
 <!-- ── BUY MODAL ── -->
 <div class="modal-overlay" id="buyModal" role="dialog" aria-modal="true" aria-label="Elegir producto">
   <div class="modal" id="modalInner">
-    <div class="modal-header"><h2 class="modal-title">Elegí modelo y talle</h2><button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button></div>
+    <div class="modal-header"><h2 class="modal-title">Elegí modelo, talle y estampa</h2><button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button></div>
     <div class="modal-body">
       <div class="modal-product-row" id="modalProductRow"></div>
       <div class="modal-section-title">Modelo</div><div class="fit-selector" id="modalFits"></div>
       <div class="modal-section-title">Color</div><div class="fit-selector" id="modalColors"></div>
       <div class="modal-section-title">Talle</div><div class="size-selector" id="modalSizes"></div>
+      <div class="modal-section-title">Tamaño de estampa</div><div class="fit-selector" id="modalStampSizes"></div>
       <div class="modal-stock-note" id="modalStockNote"></div>
-      <div id="modalSizePrompt" class="modal-customer-prompt hidden">Elegí modelo, color y talle para continuar.</div><span id="modalTotal" class="hidden">$0</span>
+      <div id="modalSizePrompt" class="modal-customer-prompt hidden">Elegí modelo, color, talle y tamaño de estampa para continuar.</div><span id="modalTotal" class="hidden">$0</span>
       <button class="modal-secondary-cta" id="modalAddCartCta" type="button" onclick="addConfiguredToCart(true)">Agregar al carrito</button>
-      <div class="modal-secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Elegí modelo, color y talle. Después continuás desde el carrito con entrega y forma de pago.</div>
+      <div class="modal-secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Elegí modelo, color, talle y tamaño de estampa. Después continuás desde el carrito con entrega y forma de pago.</div>
     </div>
   </div>
 </div>
@@ -3715,6 +3716,7 @@
   let selectedSize = null;
   let selectedFit = 'unisex';
   let selectedColor = 'Hueso';
+  let selectedStampSize = 'normal';
   let selectedPayMethod = 'mp';
   let sbClient = null;
   let blankStockRows = [];
@@ -3935,7 +3937,7 @@
     return [{
       title: currentProduct.title,
       sku: currentProduct.sku,
-      price: Number(currentProduct.price || 0),
+      price: getProductPriceWithStamp(currentProduct, selectedStampSize),
       quantity: 1
     }];
   };
@@ -3944,7 +3946,8 @@
   const getContextSubtotal = (context = 'single', useTransfer = false) => {
     if (context === 'cart') return cart.reduce((sum, item) => sum + Number(useTransfer ? getTransferPrice(item) : item.price || 0) * Number(item.qty || 1), 0);
     if (!currentProduct) return 0;
-    return Number(useTransfer ? getTransferPrice(currentProduct) : currentProduct.price || 0);
+    const singleProduct = { ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize) };
+    return Number(useTransfer ? getTransferPrice(singleProduct) : singleProduct.price || 0);
   };
   const getFreeShippingThreshold = () => Number(STORE_CONFIG.freeShippingMinAmount || 100000);
   const isFreeShippingContext = (context = 'single') => getContextSubtotal(context, false) >= getFreeShippingThreshold();
@@ -4162,6 +4165,19 @@
 
   /* ─── HELPERS ─── */
   const fmt = v => new Intl.NumberFormat('es-AR', { style:'currency', currency:'ARS', maximumFractionDigits:0 }).format(v);
+  const STAMP_SIZE_OPTIONS = [
+    { id:'normal', label:'Normal', surcharge:0 },
+    { id:'grande', label:'Grande', surcharge:500 },
+    { id:'extra-grande', label:'Extra Grande', surcharge:1000 }
+  ];
+  const getStampSizeOption = id => STAMP_SIZE_OPTIONS.find(option => option.id === id) || STAMP_SIZE_OPTIONS[0];
+  const getStampSizeLabel = id => getStampSizeOption(id).label;
+  const getStampSizeSurcharge = id => Number(getStampSizeOption(id).surcharge || 0);
+  const getProductPriceWithStamp = (product = {}, stampSize = 'normal') => Number(product.price || 0) + getStampSizeSurcharge(stampSize);
+  const getStampSizeMeta = id => {
+    const option = getStampSizeOption(id);
+    return option.surcharge > 0 ? `${option.label} (+${fmt(option.surcharge)})` : option.label;
+  };
   const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[m]));
   const normalizeTextKey = value => String(value || '')
     .trim()
@@ -4259,7 +4275,11 @@
   const getVariantId = (p, size, fit = 'unisex') => getBlankStockId(p, size, fit, getDefaultColor(p, fit));
   const describeFitAndSize = (fit, size, color = '') => `${getFitLabel(fit)}${color ? ' · ' + normalizeColor(color) : ''} · Talle ${size}`;
   const getProductUrl = p => `${location.origin}${location.pathname}#${p.id}`;
-  const truncateWords = (text, maxWords = 10) => {
+  const PRODUCT_DESCRIPTION_WORD_LIMIT_DESKTOP = 20;
+  const PRODUCT_DESCRIPTION_DESKTOP_QUERY = '(min-width: 681px)';
+  const shouldTruncateProductDescriptions = () => window.matchMedia(PRODUCT_DESCRIPTION_DESKTOP_QUERY).matches;
+
+  const truncateWords = (text, maxWords = PRODUCT_DESCRIPTION_WORD_LIMIT_DESKTOP) => {
     const normalized = String(text || '').trim().replace(/\s+/g, ' ');
     if (!normalized) return { short: '', full: '', truncated: false };
     const words = normalized.split(' ');
@@ -4486,10 +4506,26 @@
     };
   };
 
+  const loadOrdersCount = async (client) => {
+    if (!client) return null;
+    try {
+      const { count, error } = await client
+        .from('orders')
+        .select('id', { count: 'exact', head: true });
+      if (error) throw error;
+      return Number(count ?? 0);
+    } catch (error) {
+      console.warn('No se pudo cargar la cantidad de pedidos:', error);
+      return null;
+    }
+  };
+
   const loadPublicStoreMetrics = async () => {
     const localMetrics = computeLocalStoreMetrics();
     const client = initSupabaseClient();
     if (!client) return localMetrics;
+
+    const ordersCount = await loadOrdersCount(client);
 
     try {
       const { data, error } = await client.rpc('get_store_public_metrics');
@@ -4498,11 +4534,14 @@
       return {
         activeDrops: Number(row?.active_products ?? localMetrics.activeDrops ?? 0),
         activeCapsules: Number(row?.active_capsules ?? localMetrics.activeCapsules ?? 0),
-        customersCount: row?.total_orders == null ? localMetrics.customersCount : Number(row.total_orders)
+        customersCount: ordersCount ?? (row?.total_orders == null ? localMetrics.customersCount : Number(row.total_orders))
       };
     } catch (error) {
       console.warn('No se pudieron cargar las métricas públicas de la tienda:', error);
-      return localMetrics;
+      return {
+        ...localMetrics,
+        customersCount: ordersCount ?? localMetrics.customersCount
+      };
     }
   };
 
@@ -5178,14 +5217,14 @@
       return;
     }
 
-    const isProductsModal = targetId === 'productsModalGrid';
+    const truncateDescriptions = shouldTruncateProductDescriptions();
 
     grid.innerHTML = items.map(p => {
       const sizes = getAvailableSizes(p);
       const stock = getTotalStock(p);
       const transferPrice = getTransferPrice(p);
-      const descData = truncateWords(p.description, 10);
-      const descriptionHtml = isProductsModal && descData.truncated
+      const descData = truncateWords(p.description, PRODUCT_DESCRIPTION_WORD_LIMIT_DESKTOP);
+      const descriptionHtml = truncateDescriptions && descData.truncated
         ? `<p class="pcard-desc"><span class="pcard-desc-inline" data-desc-role="text" data-full="${escapeHtml(descData.full)}" data-short="${escapeHtml(descData.short)}">${escapeHtml(descData.short)}</span><button class="pcard-desc-toggle" type="button" data-desc-role="toggle" data-expanded="false" onclick="toggleProductDescription(event)">ver más...</button></p>`
         : `<p class="pcard-desc">${escapeHtml(p.description)}</p>`;
       return `
@@ -5347,6 +5386,16 @@
     updateModalStockNote();
   };
 
+  const renderModalStampSizeOptions = () => {
+    const wrap = document.getElementById('modalStampSizes');
+    if (!wrap) return;
+    wrap.innerHTML = STAMP_SIZE_OPTIONS.map(option => `
+      <button class="fit-btn ${selectedStampSize === option.id ? 'selected' : ''}" type="button" onclick="selectStampSize(this,'${option.id}')">
+        <span>${option.label}</span>
+        <small>${option.surcharge > 0 ? '+' + fmt(option.surcharge) : 'Sin adicional'}</small>
+      </button>`).join('');
+  };
+
   const updateModalStockNote = () => {
     const note = document.getElementById('modalStockNote');
     if (!note || !currentProduct) return;
@@ -5386,6 +5435,7 @@
     selectedFit = getDefaultFit(currentProduct);
     selectedColor = getDefaultColor(currentProduct, selectedFit);
     selectedSize = getSizesForFitColor(currentProduct, selectedFit, selectedColor)[0] || null;
+    selectedStampSize = 'normal';
     selectedShippingOption = null;
     singleShippingQuotes = [];
     renderShippingOptions('single', []);
@@ -5410,7 +5460,7 @@
       <div class="modal-product-info">
         <div class="modal-product-cap">${currentProduct.capsule}</div>
         <div class="modal-product-name">${currentProduct.title}</div>
-        <div class="modal-product-price">${fmt(currentProduct.price)}</div>
+        <div class="modal-product-price" id="modalProductPrice">${fmt(getProductPriceWithStamp(currentProduct, selectedStampSize))}</div>
         <div class="modal-note" style="margin-top:8px">
           Código ${currentProduct.sku} · ${currentProduct.cut} · ${getTotalStock(currentProduct)} unidades disponibles
         </div>
@@ -5420,6 +5470,7 @@
     renderModalFitOptions(currentProduct);
     renderModalColorOptions(currentProduct);
     renderModalSizeOptions(currentProduct);
+    renderModalStampSizeOptions();
 
     document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('selected'));
     const first = document.querySelector('.pay-method-btn');
@@ -5482,13 +5533,40 @@
     updateModalTotal();
   };
 
+  const selectStampSize = (btn, stampSize) => {
+    document.querySelectorAll('#modalStampSizes .fit-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedStampSize = getStampSizeOption(stampSize).id;
+    updateModalTotal();
+  };
+
   const addConfiguredToCart = (closeAfter = false) => {
     if (isPreLaunchMode()) { showPreLaunchNotice(); return; }
-    if (!currentProduct || !selectedSize) { alert('Elegí modelo y talle antes de agregar al carrito.'); return; }
+    if (!currentProduct || !selectedSize) { alert('Elegí modelo, color, talle y tamaño de estampa antes de agregar al carrito.'); return; }
     const selectedBlankStockId = getBlankStockId(currentProduct, selectedSize, selectedFit, selectedColor);
     if (!selectedBlankStockId) { alert('No encontramos stock base válido para esa combinación.'); return; }
-    const existing = cart.find(item => item.id === currentProduct.id && item.selectedSize === selectedSize && normalizeFit(item.selectedFit) === normalizeFit(selectedFit) && normalizeColor(item.selectedColor) === normalizeColor(selectedColor));
-    if (existing) existing.qty += 1; else cart.push({ ...currentProduct, qty: 1, selectedSize, selectedFit, selectedColor, selectedBlankStockId, selectedVariantId: selectedBlankStockId });
+    const stampSize = getStampSizeOption(selectedStampSize).id;
+    const stampSurcharge = getStampSizeSurcharge(stampSize);
+    const finalPrice = getProductPriceWithStamp(currentProduct, stampSize);
+    const existing = cart.find(item => item.id === currentProduct.id && item.selectedSize === selectedSize && normalizeFit(item.selectedFit) === normalizeFit(selectedFit) && normalizeColor(item.selectedColor) === normalizeColor(selectedColor) && (item.selectedStampSize || 'normal') === stampSize);
+    if (existing) {
+      existing.qty += 1;
+    } else {
+      cart.push({
+        ...currentProduct,
+        qty: 1,
+        price: finalPrice,
+        baseProductPrice: Number(currentProduct.price || 0),
+        selectedSize,
+        selectedFit,
+        selectedColor,
+        selectedStampSize: stampSize,
+        selectedStampLabel: getStampSizeLabel(stampSize),
+        stampSurcharge,
+        selectedBlankStockId,
+        selectedVariantId: selectedBlankStockId
+      });
+    }
     selectedCartShippingOption = null; cartShippingQuotes = []; renderShippingOptions('cart', []); renderShippingSummary('cart'); updateCartUI();
     closeModal({ restoreCapsule: false }); openCartDrawer();
   };
@@ -5506,7 +5584,12 @@
   };
 
   const updateModalTotal = () => {
-    if (!currentProduct) return; const modalTotal = document.getElementById('modalTotal'); if (modalTotal) modalTotal.textContent = fmt(currentProduct.price || 0);
+    if (!currentProduct) return;
+    const finalPrice = getProductPriceWithStamp(currentProduct, selectedStampSize);
+    const modalTotal = document.getElementById('modalTotal');
+    const modalProductPrice = document.getElementById('modalProductPrice');
+    if (modalTotal) modalTotal.textContent = fmt(finalPrice);
+    if (modalProductPrice) modalProductPrice.textContent = fmt(finalPrice);
   };
 
   const copyTransferField = async (field) => {
@@ -5532,11 +5615,15 @@ ${value}`);
     const subTotal = Number(item.basePrice ?? (quantity ? unitPrice * quantity : unitPrice) ?? 0);
     const discount = Number(item.discount ?? Math.max(0, subTotal - Number(item.lineTotal || 0)));
     const total = Number(item.lineTotal || Math.max(0, subTotal - discount));
+    const stampSize = item.stampSize || item.stamp_size || item.selectedStampSize || 'normal';
+    const stampLabel = item.stampSizeLabel || item.stamp_size_label || item.selectedStampLabel || getStampSizeLabel(stampSize);
+    const stampSurcharge = Number(item.stampSurcharge ?? item.stamp_surcharge ?? getStampSizeSurcharge(stampSize));
 
     return `• Producto: ${item.title || 'Producto'}
 • Código: ${item.sku || 'Sin código'}
 • Cápsula: ${item.capsule || 'Sin cápsula'}
 • Variante: ${describeFitAndSize(item.fit || 'unisex', item.size || 'A confirmar')}${quantity > 1 ? ` · x${quantity}` : ''}
+• Tamaño de estampa: ${stampLabel}${stampSurcharge > 0 ? ` (+${fmt(stampSurcharge)} por unidad)` : ''}
 • Sub Total: ${fmt(subTotal)}
 • Descuento: ${fmt(discount)}
 • Total: ${fmt(total)}`;
@@ -5555,9 +5642,12 @@ ${value}`);
         size: selectedSize,
         fit: selectedFit,
         quantity: 1,
-        basePrice: Number(currentProduct.price || 0),
-        discount: Number(currentProduct.price || 0) - Number(getTransferPrice(currentProduct) || 0),
-        lineTotal: Number(getTransferPrice(currentProduct) || 0)
+        stampSize: selectedStampSize,
+        stampSizeLabel: getStampSizeLabel(selectedStampSize),
+        stampSurcharge: getStampSizeSurcharge(selectedStampSize),
+        basePrice: getProductPriceWithStamp(currentProduct, selectedStampSize),
+        discount: getProductPriceWithStamp(currentProduct, selectedStampSize) - Number(getTransferPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize) }) || 0),
+        lineTotal: Number(getTransferPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize) }) || 0)
       }]
     });
   };
@@ -5627,11 +5717,14 @@ ${value}`);
           capsule: currentProduct?.capsule || 'Sin cápsula',
           size: selectedSize || 'A confirmar',
           fit: selectedFit || 'unisex',
+          stampSize: selectedStampSize || 'normal',
+          stampSizeLabel: getStampSizeLabel(selectedStampSize || 'normal'),
+          stampSurcharge: getStampSizeSurcharge(selectedStampSize || 'normal'),
           quantity: 1,
-          basePrice: Number(currentProduct?.price || 0),
-          subTotal: Number(currentProduct?.price || 0),
-          discount: Number(currentProduct?.price || 0) - Number(getTransferPrice(currentProduct || { price: 0 }) || 0),
-          lineTotal: Number(getTransferPrice(currentProduct || { price: 0 }) || 0)
+          basePrice: currentProduct ? getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') : 0,
+          subTotal: currentProduct ? getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') : 0,
+          discount: currentProduct ? getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') - Number(getTransferPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') }) || 0) : 0,
+          lineTotal: currentProduct ? Number(getTransferPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') }) || 0) : 0
         }];
 
     const shippingCharge = Number(shipping?.charge || 0);
@@ -5718,22 +5811,32 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
     const normalizedFit = normalizeFit(fit);
     const normalizedColor = normalizeColor(color || product.selectedColor || 'Hueso');
     const blankStockId = getBlankStockId(product, size, normalizedFit, normalizedColor) || product.selectedBlankStockId || product.selectedVariantId || '';
-    const unitPrice = paymentMethod === 'transfer' ? Number(getTransferPrice(product) || 0) : Number(product.price || 0);
+    const stampSize = product.selectedStampSize || 'normal';
+    const stampLabel = product.selectedStampLabel || getStampSizeLabel(stampSize);
+    const stampSurcharge = Number(product.stampSurcharge ?? getStampSizeSurcharge(stampSize));
+    const baseProductPrice = Number(product.baseProductPrice ?? Math.max(0, Number(product.price || 0) - stampSurcharge));
     const basePrice = Number(product.price || 0);
+    const unitPrice = paymentMethod === 'transfer' ? Number(getTransferPrice(product) || 0) : basePrice;
     const qty = Number(quantity || 1);
     return {
       product_id: product.dbId || product.product_id || null,
       product_slug: product.id || product.slug || '',
-      product_title: product.title || '',
+      product_title: `${product.title || ''} · Estampa ${stampLabel}`,
+      product_base_title: product.title || '',
       sku: product.sku || '',
       capsule: product.capsule || '',
       blank_stock_id: blankStockId,
       size,
       fit: normalizedFit,
       color: normalizedColor,
+      stamp_size: stampSize,
+      stamp_size_label: stampLabel,
+      stamp_surcharge: stampSurcharge,
+      stamp_note: stampSurcharge > 0 ? `Adicional por estampa ${stampLabel}: ${fmt(stampSurcharge)}` : 'Estampa Normal sin adicional',
       quantity: qty,
       unit_price: unitPrice,
       base_price: basePrice,
+      product_base_price: baseProductPrice,
       line_total: unitPrice * qty,
       discount: Math.max(0, (basePrice - unitPrice) * qty)
     };
@@ -5771,13 +5874,14 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
     rememberCurrentShoppingContextForCart();
     const p = products.find(item => item.id === id); if (!p) return;
     const defaultFit = getDefaultFit(p); const defaultColor = getDefaultColor(p, defaultFit); const defaultSize = getSizesForFitColor(p, defaultFit, defaultColor)[0] || 'Único'; const selectedBlankStockId = getBlankStockId(p, defaultSize, defaultFit, defaultColor);
-    const existing = cart.find(item => item.id === id && item.selectedSize === defaultSize && normalizeFit(item.selectedFit) === normalizeFit(defaultFit) && normalizeColor(item.selectedColor) === normalizeColor(defaultColor));
-    if (existing) existing.qty += 1; else cart.push({ ...p, qty: 1, selectedSize: defaultSize, selectedFit: defaultFit, selectedColor: defaultColor, selectedBlankStockId, selectedVariantId: selectedBlankStockId });
+    const stampSize = 'normal';
+    const existing = cart.find(item => item.id === id && item.selectedSize === defaultSize && normalizeFit(item.selectedFit) === normalizeFit(defaultFit) && normalizeColor(item.selectedColor) === normalizeColor(defaultColor) && (item.selectedStampSize || 'normal') === stampSize);
+    if (existing) existing.qty += 1; else cart.push({ ...p, qty: 1, price: getProductPriceWithStamp(p, stampSize), baseProductPrice: Number(p.price || 0), selectedSize: defaultSize, selectedFit: defaultFit, selectedColor: defaultColor, selectedStampSize: stampSize, selectedStampLabel: getStampSizeLabel(stampSize), stampSurcharge: getStampSizeSurcharge(stampSize), selectedBlankStockId, selectedVariantId: selectedBlankStockId });
     selectedCartShippingOption = null; cartShippingQuotes = []; renderShippingOptions('cart', []); renderShippingSummary('cart'); updateCartUI(); openCartDrawer();
   };
 
-  const removeFromCart = (id, size, fit = 'unisex', color = 'Hueso') => {
-    const idx = cart.findIndex(c => c.id === id && c.selectedSize === size && normalizeFit(c.selectedFit) === normalizeFit(fit) && normalizeColor(c.selectedColor || 'Hueso') === normalizeColor(color));
+  const removeFromCart = (id, size, fit = 'unisex', color = 'Hueso', stampSize = 'normal') => {
+    const idx = cart.findIndex(c => c.id === id && c.selectedSize === size && normalizeFit(c.selectedFit) === normalizeFit(fit) && normalizeColor(c.selectedColor || 'Hueso') === normalizeColor(color) && (c.selectedStampSize || 'normal') === stampSize);
     if (idx !== -1) cart.splice(idx, 1);
     selectedCartShippingOption = null;
     cartShippingQuotes = [];
@@ -5791,7 +5895,13 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
     const body = document.getElementById('cartBody'); const footer = document.getElementById('cartFooter');
     if (!cart.length) { body.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛍️</div><p>' + (isPreLaunchMode() ? 'La compra online se habilitará próximamente.' : 'Tu carrito está vacío') + '</p></div>'; footer.style.display = 'none'; selectedCartShippingOption = null; cartShippingQuotes = []; cartCheckoutOpen = false; return; }
     footer.style.display = ''; fillDeliveryInputs('cart');
-    body.innerHTML = cart.map(item => { const img = getImageList(item)[0]; return '<div class="cart-item"><div class="cart-item-img"><img src="' + img + '" alt="' + escapeHtml(item.title) + '" style="width:100%;height:100%;object-fit:cover;display:block" /></div><div class="cart-item-info"><div class="cart-item-name">' + escapeHtml(item.title) + '</div><div class="cart-item-meta">' + escapeHtml(item.capsule) + ' · ' + describeFitAndSize(item.selectedFit || 'unisex', item.selectedSize, item.selectedColor || 'Hueso') + ' · x' + item.qty + '</div><div class="cart-item-price">' + fmt(item.price * item.qty) + '</div></div><button class="cart-item-remove" onclick="removeFromCart(\'' + item.id + '\',\'' + item.selectedSize + '\')" aria-label="Eliminar ' + escapeHtml(item.title) + '">✕</button></div>'; }).join('');
+    body.innerHTML = cart.map(item => {
+      const img = getImageList(item)[0];
+      const stampSize = item.selectedStampSize || 'normal';
+      const stampMeta = getStampSizeMeta(stampSize);
+      const removeArgs = [item.id, item.selectedSize, item.selectedFit || 'unisex', item.selectedColor || 'Hueso', stampSize].map(value => JSON.stringify(value)).join(',');
+      return '<div class="cart-item"><div class="cart-item-img"><img src="' + img + '" alt="' + escapeHtml(item.title) + '" style="width:100%;height:100%;object-fit:cover;display:block" /></div><div class="cart-item-info"><div class="cart-item-name">' + escapeHtml(item.title) + '</div><div class="cart-item-meta">' + escapeHtml(item.capsule) + ' · ' + describeFitAndSize(item.selectedFit || 'unisex', item.selectedSize, item.selectedColor || 'Hueso') + ' · Estampa ' + escapeHtml(stampMeta) + ' · x' + item.qty + '</div><div class="cart-item-price">' + fmt(item.price * item.qty) + '</div></div><button class="cart-item-remove" onclick="removeFromCart(' + removeArgs + ')" aria-label="Eliminar ' + escapeHtml(item.title) + '">✕</button></div>';
+    }).join('');
     const useTransfer = selectedPayMethod === 'transfer'; const subtotal = cart.reduce((sum, item) => sum + Number(useTransfer ? getTransferPrice(item) : item.price || 0) * Number(item.qty || 1), 0);
     const shipping = cartDeliveryMethod === 'pickup' ? getPickupShippingOption() : selectedCartShippingOption; const shippingCharge = Number(shipping?.charge || 0);
     document.getElementById('cartTotal').textContent = fmt(subtotal); const grand = document.getElementById('cartGrandTotal'); if (grand) grand.textContent = fmt(subtotal + shippingCharge);
@@ -5939,6 +6049,9 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
           size: item.selectedSize,
           fit: item.selectedFit || 'unisex',
           color: item.selectedColor || 'Hueso',
+          stampSize: item.selectedStampSize || 'normal',
+          stampSizeLabel: item.selectedStampLabel || getStampSizeLabel(item.selectedStampSize || 'normal'),
+          stampSurcharge: Number(item.stampSurcharge || 0),
           quantity: item.qty,
           basePrice: Number(item.price || 0),
           discount: (Number(item.price || 0) - Number(getTransferPrice(item) || 0)) * Number(item.qty || 1),
@@ -5977,7 +6090,7 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
     if (cart.length === 1) {
       const single = cart[0];
       const directLink = getMpLink(single, single.selectedSize, single.selectedFit || 'unisex');
-      if (directLink) {
+      if (directLink && (single.selectedStampSize || 'normal') === 'normal') {
         if (Number(shipping.charge || 0) > 0) {
           alert('Este carrito tiene envío PUDO. Para cobrar prendas + envío juntos, usá el checkout backend de Mercado Pago, no links directos por talle.');
           return;
@@ -6025,7 +6138,17 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
 
   /* ─── SETUP ─── */
   updateFixedHeaderHeight();
-  window.addEventListener('resize', updateFixedHeaderHeight);
+  let lastProductDescriptionDesktopMode = shouldTruncateProductDescriptions();
+  window.addEventListener('resize', () => {
+    updateFixedHeaderHeight();
+    const currentProductDescriptionDesktopMode = shouldTruncateProductDescriptions();
+    if (currentProductDescriptionDesktopMode !== lastProductDescriptionDesktopMode) {
+      lastProductDescriptionDesktopMode = currentProductDescriptionDesktopMode;
+      applyFilters();
+      if (currentCapsuleView) renderCapsuleModalProducts(currentCapsuleView.name);
+      if (document.getElementById('productsModal')?.classList.contains('open')) renderProducts(products.filter(product => getTotalStock(product) > 0), 'productsModalGrid');
+    }
+  });
   window.addEventListener('load', updateFixedHeaderHeight);
   setTimeout(updateFixedHeaderHeight, 250);
   initStore();
