@@ -2915,8 +2915,18 @@
 
     /* ── MODAL AUTOMÁTICO · PREVENTA DOCENTE ── */
     .presale-modal-shell {
-      max-width: min(760px, calc(100vw - 28px));
-      overflow: hidden;
+      max-width: min(820px, calc(100vw - 28px));
+      max-height: min(92vh, 920px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    #preSaleModal {
+      align-items: center;
+    }
+    #preSaleModal .modal-body {
+      padding-bottom: 26px;
     }
     .presale-card {
       position: relative;
@@ -2951,12 +2961,19 @@
       text-transform: uppercase;
       margin-bottom: 18px;
     }
+    .presale-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 0 0 16px;
+    }
     .presale-title {
       font-family: var(--font-display);
       font-size: clamp(2.8rem, 7vw, 5.2rem);
       letter-spacing: .035em;
       line-height: .92;
-      margin: 0 0 16px;
+      margin: 0;
     }
     .presale-title em {
       font-family: var(--font-serif);
@@ -2993,38 +3010,67 @@
       font-size: .9rem;
       margin-bottom: 4px;
     }
-    .presale-switch-row {
+    .presale-delivery-note {
       display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(232,120,90,.14);
+      border: 1px solid rgba(232,120,90,.28);
+      color: rgba(255,255,255,.88);
+      font-size: .9rem;
+      line-height: 1.58;
+      font-weight: 700;
+      margin: -2px 0 18px;
+    }
+    .presale-delivery-note strong { color: #fff; }
+    .presale-payment-locked-note {
+      margin: 10px 0 0;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.78);
+      font-size: .82rem;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+    .presale-payment-locked-note strong { color: #fff; }
+    .presale-switch-row {
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 16px;
-      border-radius: 20px;
+      justify-content: center;
+      gap: 14px;
+      padding: 13px 15px 13px 18px;
+      border-radius: 999px;
       background: rgba(255,255,255,.96);
       color: var(--ink);
-      margin: 18px 0 16px;
+      border: 1px solid rgba(255,255,255,.20);
+      box-shadow: 0 14px 34px rgba(0,0,0,.18);
+      cursor: pointer;
+      min-width: min(360px, 100%);
+      flex: none;
     }
     .presale-switch-copy {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
+      display: inline-flex;
+      align-items: center;
       min-width: 0;
     }
     .presale-switch-copy strong {
-      font-size: .9rem;
+      font-size: .84rem;
       letter-spacing: .08em;
       text-transform: uppercase;
+      white-space: nowrap;
     }
     .presale-switch-copy span {
-      color: var(--muted);
-      font-size: .82rem;
-      line-height: 1.45;
+      display: none;
     }
     .presale-switch {
       position: relative;
       display: inline-flex;
-      width: 62px;
-      height: 34px;
+      width: 74px;
+      height: 40px;
       flex: none;
     }
     .presale-switch input { opacity: 0; width: 0; height: 0; }
@@ -3040,8 +3086,8 @@
     .presale-slider::before {
       content: "";
       position: absolute;
-      width: 26px;
-      height: 26px;
+      width: 32px;
+      height: 32px;
       left: 4px;
       top: 4px;
       border-radius: 50%;
@@ -3053,7 +3099,7 @@
       background: var(--accent);
     }
     .presale-switch input:checked + .presale-slider::before {
-      transform: translateX(28px);
+      transform: translateX(34px);
     }
     .presale-actions {
       display: grid;
@@ -3084,6 +3130,16 @@
     .presale-mode .announce {
       background: #7b3f2d;
     }
+    .payment-locked-by-presale,
+    .payment-locked-by-presale:hover {
+      background: #e9e2d8 !important;
+      color: #7d746c !important;
+      border-color: #ded4c7 !important;
+      cursor: not-allowed !important;
+      box-shadow: none !important;
+      transform: none !important;
+      opacity: .92;
+    }
     .presale-locker-chip {
       display: inline-flex;
       align-items: center;
@@ -3100,9 +3156,13 @@
       text-transform: uppercase;
     }
     @media (max-width: 680px) {
+      #preSaleModal { align-items: flex-start; padding: 12px; }
+      .presale-modal-shell { max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); }
       .presale-card { padding: 26px 18px; }
+      .presale-title-row { flex-direction: column; align-items: flex-start; }
       .presale-benefits { grid-template-columns: 1fr; }
-      .presale-switch-row { align-items: flex-start; }
+      .presale-switch-row { width: 100%; min-width: 0; justify-content: space-between; }
+      .presale-switch-copy strong { white-space: normal; }
       .presale-actions { grid-template-columns: 1fr; }
     }
 
@@ -3494,23 +3554,27 @@
     <div class="modal-body">
       <article class="presale-card">
         <div class="presale-kicker">✦ Para quienes no tienen recreo</div>
-        <h2 class="presale-title">PREVENTA<br><em>SIN RECREO</em></h2>
+        <div class="presale-title-row">
+          <h2 class="presale-title">PREVENTA<br><em>SIN RECREO</em></h2>
+          <label class="presale-switch-row" for="preSaleSwitch">
+            <span class="presale-switch-copy">
+              <strong>ACTIVAR MODO PREVENTA</strong>
+              <span>Activar beneficios de preventa.</span>
+            </span>
+            <span class="presale-switch" aria-hidden="true">
+              <input id="preSaleSwitch" type="checkbox" onchange="syncPreSaleSwitchLabel()" />
+              <span class="presale-slider"></span>
+            </span>
+          </label>
+        </div>
         <p class="presale-lead">Activá una versión de la tienda pensada para docentes y auxiliares: beneficios claros, compra simple y seguimiento directo por WhatsApp.</p>
         <div class="presale-benefits" aria-label="Beneficios de preventa">
-          <div class="presale-benefit"><strong>🚚 Locker bonificado</strong>Envío sin cargo por PUDO a Smart Locker.</div>
+          <div class="presale-benefit"><strong>🚚 Locker bonificado</strong>Envío sin cargo por PUDO a Smart Locker. No aplica a entrega a domicilio.</div>
           <div class="presale-benefit"><strong>💳 3 cuotas sin interés</strong>Pagando con Mercado Pago.</div>
           <div class="presale-benefit"><strong>💸 Transferencia disponible</strong>También podés pagar con transferencia o Cuenta DNI.</div>
         </div>
-        <label class="presale-switch-row" for="preSaleSwitch">
-          <span class="presale-switch-copy">
-            <strong>Activar modo preventa</strong>
-            <span>Si lo activás, la tienda muestra los beneficios de preventa. Si no, seguís con la tienda normal.</span>
-          </span>
-          <span class="presale-switch" aria-hidden="true">
-            <input id="preSaleSwitch" type="checkbox" onchange="syncPreSaleSwitchLabel()" />
-            <span class="presale-slider"></span>
-          </span>
-        </label>
+        <div class="presale-delivery-note"><span aria-hidden="true">📦</span><span><strong>Importante:</strong> las entregas de compras realizadas en preventa comienzan a partir del <strong>26 de mayo</strong>.</span></div>
+        <div class="presale-payment-locked-note"><strong>Modo preventa:</strong> si no lo activás, podés navegar y armar tu carrito, pero el pago queda inactivo.</div>
         <div class="presale-actions">
           <button class="presale-primary" type="button" onclick="confirmPreSaleModal()">Entrar a la tienda</button>
           <button class="presale-secondary" type="button" onclick="continueRegularStore()">Seguir normal</button>
@@ -4011,7 +4075,8 @@
     try { localStorage.setItem(getPreSaleStorageKey(), String(Boolean(active))); } catch (error) {}
   };
   const isPreSaleMode = () => Boolean(preSaleMode);
-  const getPreSaleBannerHtml = () => `<div><strong>Preventa exclusiva para docentes y auxiliares.</strong> Envío sin cargo por PUDO a Smart Locker y ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés con Mercado Pago. Transferencia / Cuenta DNI sigue disponible.</div><span class="prelaunch-pill">Modo preventa activo</span>`;
+  const isPaymentEnabled = () => isPreSaleMode();
+  const getPreSaleBannerHtml = () => `<div><strong>Preventa exclusiva para docentes y auxiliares.</strong> Envío sin cargo por PUDO a Smart Locker, ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés con Mercado Pago y entregas desde el 26 de mayo. Transferencia / Cuenta DNI sigue disponible.</div><span class="prelaunch-pill">Modo preventa activo</span>`;
   const getNormalBannerHtml = () => `<div><strong>Tienda SIN RECREO activa.</strong> Elegí tu prenda, completá tus datos y cerrá la compra online.</div><span class="prelaunch-pill">Compra online disponible</span>`;
 
   const renderPreSaleUi = () => {
@@ -4025,8 +4090,8 @@
         if (strong) strong.textContent = 'Locker gratis en preventa';
         if (span) span.textContent = 'Envío sin cargo por PUDO Smart Locker';
       } else {
-        if (strong) strong.textContent = 'Envío gratis';
-        if (span) span.textContent = 'En compras desde $100.000';
+        if (strong) strong.textContent = 'Preventa disponible';
+        if (span) span.textContent = 'Activá el modo preventa para habilitar el pago';
       }
     }
 
@@ -4034,10 +4099,10 @@
     const whatsAppTextNode = document.getElementById('heroWhatsAppText');
     if (mpTextNode) mpTextNode.innerHTML = isPreSaleMode()
       ? `<strong>Preventa:</strong> ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés con Mercado Pago`
-      : `<strong>MercadoPago:</strong> ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés`;
+      : `<strong>Preventa:</strong> activá el modo para habilitar el pago`;
     if (whatsAppTextNode) whatsAppTextNode.innerHTML = isPreSaleMode()
       ? '<strong>PUDO Locker:</strong> envío sin cargo en preventa'
-      : '<strong>WhatsApp:</strong> atención personalizada';
+      : '<strong>Pago:</strong> inactivo hasta activar preventa';
 
     document.querySelectorAll('.shipping-help').forEach(node => {
       node.textContent = isPreSaleMode()
@@ -4076,7 +4141,7 @@
   const syncPreSaleSwitchLabel = () => {
     const input = document.getElementById('preSaleSwitch');
     const primary = document.querySelector('#preSaleModal .presale-primary');
-    if (primary && input) primary.textContent = input.checked ? 'Entrar con modo preventa' : 'Entrar con tienda normal';
+    if (primary && input) primary.textContent = input.checked ? 'Entrar con modo preventa' : 'Entrar sin activar preventa';
   };
 
   const openPreSaleModal = () => {
@@ -4496,7 +4561,7 @@
     const method = option.type === 'locker' ? (option.shippingMethodName + (option.lockerName ? ' · ' + option.lockerName : '')) : option.shippingMethodName;
     const destinationText = option.type === 'locker' ? ((option.address || 'Punto PUDO') + (option.city ? ', ' + option.city : '')) : ((destination.address || '') + ' ' + (destination.number || '') + (destination.city ? ', ' + destination.city : ''));
     const freeText = option.freeReason === 'preventa-locker' ? ('Envío sin cargo por preventa docente. Costo real: ' + fmt(option.realPrice) + '.') : ('Envío bonificado por SIN RECREO. Costo real: ' + fmt(option.realPrice) + '.');
-    node.innerHTML = '<strong>Entrega seleccionada:</strong> ' + escapeHtml(method) + '<br>' + escapeHtml(destinationText) + '<br>' + (option.isFree ? freeText : ('Costo de envío: ' + fmt(option.charge) + '.'));
+    node.innerHTML = '<strong>Entrega seleccionada:</strong> ' + escapeHtml(method) + '<br>' + escapeHtml(destinationText) + '<br>' + (option.isFree ? freeText : ('Costo de envío: ' + fmt(option.charge) + '.')) + (isPreSaleMode() ? '<br><strong>Preventa:</strong> las entregas comienzan a partir del 26 de mayo.' : '');
     node.classList.remove('hidden');
   };
   const quotePudoShipping = async (context = 'single') => {
@@ -6353,7 +6418,7 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
     const useTransfer = selectedPayMethod === 'transfer'; const subtotal = cart.reduce((sum, item) => sum + Number(useTransfer ? getTransferPrice(item) : item.price || 0) * Number(item.qty || 1), 0);
     const shipping = cartDeliveryMethod === 'pickup' ? getPickupShippingOption() : selectedCartShippingOption; const shippingCharge = Number(shipping?.charge || 0);
     document.getElementById('cartTotal').textContent = fmt(subtotal); const grand = document.getElementById('cartGrandTotal'); if (grand) grand.textContent = fmt(subtotal + shippingCharge);
-    const checkoutPanel = document.getElementById('cartCheckoutPanel'); if (checkoutPanel) checkoutPanel.classList.toggle('hidden', !cartCheckoutOpen); const openBtn = document.getElementById('cartOpenCheckoutButton'); if (openBtn) { openBtn.classList.toggle('hidden', cartCheckoutOpen); openBtn.disabled = false; openBtn.removeAttribute('aria-disabled'); openBtn.classList.remove('prelaunch-disabled'); openBtn.textContent = 'Finalizar compra'; }
+    const checkoutPanel = document.getElementById('cartCheckoutPanel'); if (checkoutPanel) checkoutPanel.classList.toggle('hidden', !cartCheckoutOpen); const openBtn = document.getElementById('cartOpenCheckoutButton'); if (openBtn) { openBtn.classList.toggle('hidden', cartCheckoutOpen); const paymentBlocked = !isPaymentEnabled(); openBtn.disabled = paymentBlocked; openBtn.setAttribute('aria-disabled', paymentBlocked ? 'true' : 'false'); openBtn.classList.toggle('payment-locked-by-presale', paymentBlocked); openBtn.classList.remove('prelaunch-disabled'); openBtn.textContent = paymentBlocked ? 'Activá modo preventa para pagar' : 'Finalizar compra'; }
     updateCartDeliveryUI(); updateTransferPanel(); updateCartCheckoutCta(); renderShippingSummary('cart');
   };
 
@@ -6420,7 +6485,7 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
   const getPickupShippingOption = () => ({ provider:'RETIRO', type:'pickup', shippingMethodId:'pickup-corimayo-burzaco', shippingMethodName: STORE_CONFIG.pickupLabel || 'Retiro en zona Corimayo · Burzaco', lockerId:null, realPrice:0, charge:0, isFree:true, destination:{ address:'Retiro coordinado', city:'Burzaco', province:'Buenos Aires', postalCode:'' }, packageItem: buildPudoPackageItem('cart') });
   const updateCartDeliveryUI = () => { document.getElementById('deliveryChoicePudo')?.classList.toggle('selected', cartDeliveryMethod === 'pudo'); document.getElementById('deliveryChoicePickup')?.classList.toggle('selected', cartDeliveryMethod === 'pickup'); document.getElementById('cartShippingPanel')?.classList.toggle('hidden', cartDeliveryMethod !== 'pudo'); document.getElementById('cartPickupSummary')?.classList.toggle('hidden', cartDeliveryMethod !== 'pickup'); if (cartDeliveryMethod === 'pickup') hideShippingStatus('cart'); };
   const selectCartDeliveryMethod = (method = 'pudo') => { cartDeliveryMethod = method === 'pickup' ? 'pickup' : 'pudo'; if (cartDeliveryMethod === 'pickup') selectedCartShippingOption = getPickupShippingOption(); else if (selectedCartShippingOption?.provider === 'RETIRO') selectedCartShippingOption = null; updateCartUI(); };
-  const openCartCheckout = () => { if (isPreLaunchMode()) { showPreLaunchNotice(); return; } if (!cart.length) return; cartCheckoutOpen = true; updateCartUI(); document.getElementById('cartCheckoutPanel')?.scrollIntoView({ behavior:'smooth', block:'start' }); };
+  const openCartCheckout = () => { if (isPreLaunchMode()) { showPreLaunchNotice(); return; } if (!cart.length) return; if (!isPaymentEnabled()) { openPreSaleModal(); return; } cartCheckoutOpen = true; updateCartUI(); document.getElementById('cartCheckoutPanel')?.scrollIntoView({ behavior:'smooth', block:'start' }); };
   const updateCartCheckoutCta = () => {
     const cta = document.getElementById('cartFinalCheckoutButton');
     const secure = document.getElementById('cartSecureNote');
@@ -6429,6 +6494,15 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
     if (isPreLaunchMode()) {
       cta.className = 'modal-cta prelaunch-disabled';
       cta.textContent = 'Próximamente podrás comprar';
+      cta.disabled = true;
+      cta.setAttribute('aria-disabled','true');
+      if (secure) secure.textContent = '';
+      if (mpNote) mpNote.classList.add('hidden');
+      return;
+    }
+    if (!isPaymentEnabled()) {
+      cta.className = 'modal-cta payment-locked-by-presale';
+      cta.textContent = 'Activá modo preventa para pagar';
       cta.disabled = true;
       cta.setAttribute('aria-disabled','true');
       if (secure) secure.textContent = '';
@@ -6483,12 +6557,14 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
 
   const finishCartCheckout = async () => {
     if (isPreLaunchMode()) { showPreLaunchNotice(); return; }
+    if (!isPaymentEnabled()) { openPreSaleModal(); return; }
     if (selectedPayMethod === 'transfer') return checkoutWhatsApp();
     return checkoutMP();
   };
 
   const checkoutWhatsApp = async () => {
     if (isPreLaunchMode()) { showPreLaunchNotice(); return; }
+    if (!isPaymentEnabled()) { openPreSaleModal(); return; }
     if (!cart.length) return;
 
     const customer = collectCartCustomer();
@@ -6557,6 +6633,7 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
 
   const checkoutMP = async () => {
     if (isPreLaunchMode()) { showPreLaunchNotice(); return; }
+    if (!isPaymentEnabled()) { openPreSaleModal(); return; }
     if (!cart.length) return;
 
     const customer = collectCartCustomer();
