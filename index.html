@@ -1479,6 +1479,28 @@
     }
     .badge-discount { background: rgba(26,122,58,.12); color: #1a7a3a; }
     .badge-cuotas { background: rgba(0,188,255,.12); color: #0086b5; }
+    .pay-method-btn.transfer-highlight {
+      border-color: rgba(26,122,58,.24);
+      background: rgba(26,122,58,.045);
+    }
+    .pay-method-btn.transfer-highlight:hover,
+    .pay-method-btn.transfer-highlight.selected {
+      border-color: #1a7a3a;
+      background: rgba(26,122,58,.085);
+    }
+    .mp-mobile-note {
+      margin: -4px 0 14px;
+      padding: 11px 13px;
+      border-radius: 14px;
+      background: rgba(0,158,227,.08);
+      border: 1px solid rgba(0,158,227,.18);
+      color: #16627b;
+      font-size: .78rem;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+    .mp-mobile-note strong { color: var(--ink); }
+    .mp-mobile-note.hidden { display: none !important; }
 
     .modal-total {
       display: flex;
@@ -3310,9 +3332,9 @@
 
       <div class="modal-section-title">Medio de pago</div>
       <div class="pay-methods cart-pay-methods">
-        <button class="pay-method-btn selected" onclick="selectPayMethod(this, 'mp')" type="button"><div class="pay-method-icon mp"><svg width="22" height="22" viewBox="0 0 48 48" fill="white"><ellipse cx="24" cy="24" rx="22" ry="14" fill="white"/><text x="24" y="29" text-anchor="middle" font-size="14" font-weight="bold" fill="#009ee3" font-family="Arial">MP</text></svg></div><div class="pay-method-info"><div class="pay-method-name">MercadoPago</div><div class="pay-method-detail">Débito, crédito, saldo MP</div></div><span class="pay-method-badge badge-cuotas">3 cuotas s/i</span></button>
-        <button class="pay-method-btn" onclick="selectPayMethod(this, 'card')" type="button"><div class="pay-method-icon card"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div class="pay-method-info"><div class="pay-method-name">Tarjeta de crédito/débito</div><div class="pay-method-detail">Visa, Mastercard, American Express</div></div><span class="pay-method-badge badge-cuotas">3 cuotas</span></button>
-        <button class="pay-method-btn" onclick="selectPayMethod(this, 'transfer')" type="button"><div class="pay-method-icon transfer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="pay-method-info"><div class="pay-method-name">Transferencia bancaria o Cuenta DNI</div><div class="pay-method-detail">CVU / Alias · Pago inmediato</div></div><span class="pay-method-badge badge-discount">10% OFF</span></button>
+        <button class="pay-method-btn selected" onclick="selectPayMethod(this, 'mp')" type="button"><div class="pay-method-icon mp"><svg width="22" height="22" viewBox="0 0 48 48" fill="white"><ellipse cx="24" cy="24" rx="22" ry="14" fill="white"/><text x="24" y="29" text-anchor="middle" font-size="14" font-weight="bold" fill="#009ee3" font-family="Arial">MP</text></svg></div><div class="pay-method-info"><div class="pay-method-name">Mercado Pago / Cuenta MP</div><div class="pay-method-detail">Intentamos abrir la app; si no, continúa en checkout seguro</div></div><span class="pay-method-badge badge-cuotas">3 cuotas s/i</span></button>
+        <button class="pay-method-btn" onclick="selectPayMethod(this, 'card')" type="button"><div class="pay-method-icon card"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div class="pay-method-info"><div class="pay-method-name">Tarjeta de crédito/débito</div><div class="pay-method-detail">También se procesa por Mercado Pago</div></div><span class="pay-method-badge badge-cuotas">3 cuotas</span></button>
+        <button class="pay-method-btn transfer-highlight" onclick="selectPayMethod(this, 'transfer')" type="button"><div class="pay-method-icon transfer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="pay-method-info"><div class="pay-method-name">Transferencia bancaria o Cuenta DNI</div><div class="pay-method-detail">Alternativa rápida si no recordás la clave de Mercado Pago</div></div><span class="pay-method-badge badge-discount">10% OFF</span></button>
       </div>
 
       <div class="transfer-panel" id="transferPanel" hidden>
@@ -3322,8 +3344,9 @@
         <div class="modal-note">Al confirmar la transferencia, te abrimos WhatsApp con el pedido armado para que envíes el comprobante o solicites link de pago de CUENTA DNI.</div>
       </div>
 
-      <button class="modal-cta mp-style" id="cartFinalCheckoutButton" type="button" onclick="finishCartCheckout()">Pagar con Mercado Pago</button>
+      <button class="modal-cta mp-style" id="cartFinalCheckoutButton" type="button" onclick="finishCartCheckout()">Pagar con Mercado Pago / Cuenta MP</button>
       <div class="modal-secure" id="cartSecureNote"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Compra segura · Producto, entrega y pago se definen desde el carrito</div>
+      <div class="mp-mobile-note" id="cartMpMobileNote"><strong>Tip:</strong> en celular el pago se abre en la misma pestaña para darle más chances a Mercado Pago de continuar con la app. Si no abre la app, podés seguir en la web o elegir Transferencia / Cuenta DNI.</div>
     </div>
   </div>
 </div>
@@ -5973,7 +5996,36 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
   const updateCartDeliveryUI = () => { document.getElementById('deliveryChoicePudo')?.classList.toggle('selected', cartDeliveryMethod === 'pudo'); document.getElementById('deliveryChoicePickup')?.classList.toggle('selected', cartDeliveryMethod === 'pickup'); document.getElementById('cartShippingPanel')?.classList.toggle('hidden', cartDeliveryMethod !== 'pudo'); document.getElementById('cartPickupSummary')?.classList.toggle('hidden', cartDeliveryMethod !== 'pickup'); if (cartDeliveryMethod === 'pickup') hideShippingStatus('cart'); };
   const selectCartDeliveryMethod = (method = 'pudo') => { cartDeliveryMethod = method === 'pickup' ? 'pickup' : 'pudo'; if (cartDeliveryMethod === 'pickup') selectedCartShippingOption = getPickupShippingOption(); else if (selectedCartShippingOption?.provider === 'RETIRO') selectedCartShippingOption = null; updateCartUI(); };
   const openCartCheckout = () => { if (isPreLaunchMode()) { showPreLaunchNotice(); return; } if (!cart.length) return; cartCheckoutOpen = true; updateCartUI(); document.getElementById('cartCheckoutPanel')?.scrollIntoView({ behavior:'smooth', block:'start' }); };
-  const updateCartCheckoutCta = () => { const cta = document.getElementById('cartFinalCheckoutButton'); const secure = document.getElementById('cartSecureNote'); if (!cta) return; if (isPreLaunchMode()) { cta.className = 'modal-cta prelaunch-disabled'; cta.textContent = 'Próximamente podrás comprar'; cta.disabled = true; cta.setAttribute('aria-disabled','true'); if (secure) secure.textContent = 'La compra online todavía no está habilitada. Esta es una vista previa de la tienda.'; return; } cta.disabled = false; cta.removeAttribute('aria-disabled'); cta.style.opacity = '1'; cta.style.cursor = 'pointer'; if (selectedPayMethod === 'transfer') { cta.className = 'modal-cta'; cta.textContent = 'Confirmar transferencia por WhatsApp'; if (secure) secure.textContent = 'Reservá el pedido y cerrá el pago con contacto directo por WhatsApp'; } else { cta.className = 'modal-cta mp-style'; cta.textContent = 'Pagar con Mercado Pago'; if (secure) secure.textContent = 'Pago en entorno seguro de Mercado Pago · Producto y entrega incluidos'; } };
+  const updateCartCheckoutCta = () => {
+    const cta = document.getElementById('cartFinalCheckoutButton');
+    const secure = document.getElementById('cartSecureNote');
+    const mpNote = document.getElementById('cartMpMobileNote');
+    if (!cta) return;
+    if (isPreLaunchMode()) {
+      cta.className = 'modal-cta prelaunch-disabled';
+      cta.textContent = 'Próximamente podrás comprar';
+      cta.disabled = true;
+      cta.setAttribute('aria-disabled','true');
+      if (secure) secure.textContent = 'La compra online todavía no está habilitada. Esta es una vista previa de la tienda.';
+      if (mpNote) mpNote.classList.add('hidden');
+      return;
+    }
+    cta.disabled = false;
+    cta.removeAttribute('aria-disabled');
+    cta.style.opacity = '1';
+    cta.style.cursor = 'pointer';
+    if (selectedPayMethod === 'transfer') {
+      cta.className = 'modal-cta';
+      cta.textContent = 'Confirmar transferencia / Cuenta DNI por WhatsApp';
+      if (secure) secure.textContent = 'Reservá el pedido y cerrá el pago con contacto directo por WhatsApp';
+      if (mpNote) mpNote.classList.add('hidden');
+    } else {
+      cta.className = 'modal-cta mp-style';
+      cta.textContent = 'Pagar con Mercado Pago / Cuenta MP';
+      if (secure) secure.textContent = 'Pago en entorno seguro de Mercado Pago · Producto y entrega incluidos';
+      if (mpNote) mpNote.classList.remove('hidden');
+    }
+  };
 
   const setCartCheckoutBusy = (busy = false, label = '') => {
     const cta = document.getElementById('cartFinalCheckoutButton');
@@ -6095,7 +6147,7 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
           alert('Este carrito tiene envío PUDO. Para cobrar prendas + envío juntos, usá el checkout backend de Mercado Pago, no links directos por talle.');
           return;
         }
-        window.open(directLink, '_blank');
+        window.location.href = directLink;
         return;
       }
     }
@@ -6114,21 +6166,20 @@ En un momento les envío el comprobante por este medio. ¿Me confirman disponibi
       return;
     }
 
-    const popup = openSafePopup('Preparando Mercado Pago…');
     setCartCheckoutBusy(true, 'Creando link de pago…');
 
     try {
       const checkoutUrl = await createMPPreference(mpItems, customer, shipping);
 
       if (checkoutUrl) {
-        navigateCheckoutTarget(popup, checkoutUrl);
+        // En celular conviene navegar en la misma pestaña: evita una pestaña intermedia
+        // y le da más chances a Mercado Pago de continuar con la app instalada.
+        window.location.href = checkoutUrl;
         return;
       }
 
-      if (popup && !popup.closed) popup.close();
       alert('No se pudo crear el link de Mercado Pago. Revisá la Edge Function create-mp-preference y el token de Mercado Pago.');
     } catch (error) {
-      if (popup && !popup.closed) popup.close();
       console.error('Error cerrando Mercado Pago:', error);
       alert('No pudimos iniciar Mercado Pago. Revisá la consola o la Edge Function create-mp-preference.');
     } finally {
