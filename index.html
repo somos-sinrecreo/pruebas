@@ -3103,7 +3103,7 @@
     }
     .presale-actions {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 10px;
     }
     .presale-primary,
@@ -3129,6 +3129,22 @@
     .presale-secondary:hover { background: rgba(255,255,255,.14); }
     .presale-mode .announce {
       background: #7b3f2d;
+    }
+    .presale-header-btn {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(192,90,58,.24);
+      font-weight: 900;
+    }
+    .presale-header-btn:hover {
+      background: var(--accent-light);
+      border-color: var(--accent-light);
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(192,90,58,.30);
+    }
+    .presale-header-btn.hidden {
+      display: none !important;
     }
     .payment-locked-by-presale,
     .payment-locked-by-presale:hover {
@@ -3164,6 +3180,13 @@
       .presale-switch-row { width: 100%; min-width: 0; justify-content: space-between; }
       .presale-switch-copy strong { white-space: normal; }
       .presale-actions { grid-template-columns: 1fr; }
+      .header-right .presale-header-btn {
+        width: auto;
+        min-width: 0;
+        padding: 0 11px;
+        font-size: .72rem;
+        letter-spacing: .01em;
+      }
     }
 
   </style>
@@ -3211,6 +3234,7 @@
       <button class="hbtn icon mobile-menu-toggle" type="button" onclick="openMobileMenu()" aria-label="Abrir menú">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
+      <button class="hbtn presale-header-btn" id="preSaleHeaderButton" type="button" onclick="activatePreSaleFromHeader()">Activar Preventa</button>
       <button class="hbtn" type="button" onclick="openCartDrawer()" aria-label="Carrito">
         <span class="cart-badge">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M3 4h2l2.2 10.2a1 1 0 001 .8h8.8a1 1 0 001-.8L21 7H7"/></svg>
@@ -3571,13 +3595,11 @@
         <div class="presale-benefits" aria-label="Beneficios de preventa">
           <div class="presale-benefit"><strong>🚚 Locker bonificado</strong>Envío sin cargo por PUDO a Smart Locker. No aplica a entrega a domicilio.</div>
           <div class="presale-benefit"><strong>💳 3 cuotas sin interés</strong>Pagando con Mercado Pago.</div>
-          <div class="presale-benefit"><strong>💸 Transferencia disponible</strong>También podés pagar con transferencia o Cuenta DNI.</div>
+          <div class="presale-benefit"><strong>💸 Transferencia disponible</strong>También podés pagar con transferencia o Cuenta DNI con 20% de reintegro.</div>
         </div>
         <div class="presale-delivery-note"><span aria-hidden="true">📦</span><span><strong>Importante:</strong> las entregas de compras realizadas en preventa comienzan a partir del <strong>26 de mayo</strong>.</span></div>
-        <div class="presale-payment-locked-note"><strong>Modo preventa:</strong> si no lo activás, podés navegar y armar tu carrito, pero el pago queda inactivo.</div>
         <div class="presale-actions">
           <button class="presale-primary" type="button" onclick="confirmPreSaleModal()">Entrar a la tienda</button>
-          <button class="presale-secondary" type="button" onclick="continueRegularStore()">Seguir normal</button>
         </div>
       </article>
     </div>
@@ -3672,7 +3694,7 @@
       <div class="pay-methods cart-pay-methods">
         <button class="pay-method-btn selected" onclick="selectPayMethod(this, 'mp')" type="button"><div class="pay-method-icon mp"><svg width="22" height="22" viewBox="0 0 48 48" fill="white"><ellipse cx="24" cy="24" rx="22" ry="14" fill="white"/><text x="24" y="29" text-anchor="middle" font-size="14" font-weight="bold" fill="#009ee3" font-family="Arial">MP</text></svg></div><div class="pay-method-info"><div class="pay-method-name">Mercado Pago / Cuenta MP</div><div class="pay-method-detail">Pagá con dinero en cuenta, tarjeta u otros medios habilitados</div></div><span class="pay-method-badge badge-cuotas">3 cuotas s/i</span></button>
         <button class="pay-method-btn" onclick="selectPayMethod(this, 'card')" type="button"><div class="pay-method-icon card"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div class="pay-method-info"><div class="pay-method-name">Tarjeta de crédito/débito</div><div class="pay-method-detail">También se procesa por Mercado Pago</div></div><span class="pay-method-badge badge-cuotas">3 cuotas</span></button>
-        <button class="pay-method-btn transfer-highlight" onclick="selectPayMethod(this, 'transfer')" type="button"><div class="pay-method-icon transfer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="pay-method-info"><div class="pay-method-name">Transferencia bancaria o Cuenta DNI</div><div class="pay-method-detail">Pago directo con 10% OFF y confirmación por WhatsApp</div></div><span class="pay-method-badge badge-discount">10% OFF</span></button>
+        <button class="pay-method-btn transfer-highlight" onclick="selectPayMethod(this, 'transfer')" type="button"><div class="pay-method-icon transfer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="pay-method-info"><div class="pay-method-name">Transferencia bancaria o Cuenta DNI</div><div class="pay-method-detail">Transferencia con 10% OFF · Cuenta DNI con 20% de reintegro</div></div><span class="pay-method-badge badge-discount">10% OFF</span></button>
       </div>
 
       <div class="transfer-panel" id="transferPanel" hidden>
@@ -4076,7 +4098,7 @@
   };
   const isPreSaleMode = () => Boolean(preSaleMode);
   const isPaymentEnabled = () => isPreSaleMode();
-  const getPreSaleBannerHtml = () => `<div><strong>Preventa exclusiva para docentes y auxiliares.</strong> Envío sin cargo por PUDO a Smart Locker, ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés con Mercado Pago y entregas desde el 26 de mayo. Transferencia / Cuenta DNI sigue disponible.</div><span class="prelaunch-pill">Modo preventa activo</span>`;
+  const getPreSaleBannerHtml = () => `<div><strong>Preventa exclusiva para docentes y auxiliares.</strong> Envío sin cargo por PUDO a Smart Locker, ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés con Mercado Pago y entregas desde el 26 de mayo. Transferencia disponible y Cuenta DNI con 20% de reintegro.</div><span class="prelaunch-pill">Modo preventa activo</span>`;
   const getNormalBannerHtml = () => `<div><strong>Tienda SIN RECREO activa.</strong> Elegí tu prenda, completá tus datos y cerrá la compra online.</div><span class="prelaunch-pill">Compra online disponible</span>`;
 
   const renderPreSaleUi = () => {
@@ -4111,6 +4133,7 @@
     });
     const deliveryPudo = document.getElementById('deliveryChoicePudo')?.querySelector('span');
     if (deliveryPudo) deliveryPudo.textContent = isPreSaleMode() ? 'Locker gratis · domicilio con costo' : 'Domicilio o Smart Locker';
+    refreshPreSaleHeaderButton();
   };
 
   const resetShippingAfterPreSaleChange = () => {
@@ -4139,9 +4162,20 @@
   };
 
   const syncPreSaleSwitchLabel = () => {
-    const input = document.getElementById('preSaleSwitch');
     const primary = document.querySelector('#preSaleModal .presale-primary');
-    if (primary && input) primary.textContent = input.checked ? 'Entrar con modo preventa' : 'Entrar sin activar preventa';
+    if (primary) primary.textContent = 'Entrar a la tienda';
+  };
+
+  const refreshPreSaleHeaderButton = () => {
+    const button = document.getElementById('preSaleHeaderButton');
+    if (!button) return;
+    button.classList.toggle('hidden', isPreSaleMode());
+    button.setAttribute('aria-hidden', isPreSaleMode() ? 'true' : 'false');
+  };
+
+  const activatePreSaleFromHeader = () => {
+    applyPreSaleMode(true);
+    closePreSaleModal();
   };
 
   const openPreSaleModal = () => {
