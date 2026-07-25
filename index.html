@@ -1357,6 +1357,35 @@
       opacity: .78;
       letter-spacing: .02em;
     }
+    .fit-btn.fit-with-measurements {
+      flex: 1 1 220px;
+      min-width: 210px;
+      align-items: flex-start;
+      text-align: left;
+      padding: 12px 14px;
+    }
+    .fit-btn.fit-with-measurements > span {
+      width: 100%;
+    }
+    .fit-btn .garment-measurements {
+      width: 100%;
+      max-width: 34ch;
+      margin-top: 2px;
+      font-size: .64rem;
+      line-height: 1.28;
+      font-weight: 700;
+      opacity: .72;
+      white-space: normal;
+    }
+    .fit-btn .garment-stock,
+    .sz-btn .garment-stock {
+      opacity: .62;
+    }
+    .sz-btn .garment-measurement {
+      font-size: .68rem;
+      font-weight: 800;
+      opacity: .76;
+    }
     .sz-btn:hover:not(:disabled), .sz-btn.selected {
       border-color: var(--ink);
       background: var(--ink);
@@ -1466,6 +1495,13 @@
     .pay-method-icon.mp { background: #00bcff; }
     .pay-method-icon.card { background: #1a1a2e; }
     .pay-method-icon.transfer { background: #1a3a2e; }
+    .pay-method-icon.cuenta-dni {
+      background: linear-gradient(135deg, #00a6d6, #0b6fb3);
+      color: #fff;
+      font-size: .82rem;
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
     .pay-method-info { flex: 1; }
     .pay-method-name { font-weight: 700; font-size: .94rem; margin-bottom: 2px; }
     .pay-method-detail { font-size: .8rem; color: var(--muted); }
@@ -1479,6 +1515,7 @@
     }
     .badge-discount { background: rgba(26,122,58,.12); color: #1a7a3a; }
     .badge-cuotas { background: rgba(0,188,255,.12); color: #0086b5; }
+    .badge-reintegro { background: rgba(0,158,227,.13); color: #0077a6; }
     .pay-method-btn.transfer-highlight {
       border-color: rgba(26,122,58,.24);
       background: rgba(26,122,58,.045);
@@ -1487,6 +1524,15 @@
     .pay-method-btn.transfer-highlight.selected {
       border-color: #1a7a3a;
       background: rgba(26,122,58,.085);
+    }
+    .pay-method-btn.cuenta-dni-highlight {
+      border-color: rgba(0,158,227,.24);
+      background: rgba(0,158,227,.045);
+    }
+    .pay-method-btn.cuenta-dni-highlight:hover,
+    .pay-method-btn.cuenta-dni-highlight.selected {
+      border-color: #009ee3;
+      background: rgba(0,158,227,.09);
     }
     .mp-mobile-note {
       margin: -4px 0 14px;
@@ -1592,15 +1638,22 @@
     .cart-item-meta { font-size: .78rem; color: var(--muted); margin-bottom: 8px; }
     .cart-item-price { font-family: var(--font-display); font-size: 1.1rem; }
     .cart-item-remove {
-      background: none;
-      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: var(--cream);
+      border: 1px solid var(--line);
       cursor: pointer;
       color: var(--muted);
       font-size: 1.1rem;
-      padding: 4px;
-      transition: color .15s;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+      transition: color .15s, background .15s, border-color .15s;
     }
-    .cart-item-remove:hover { color: var(--accent); }
+    .cart-item-remove:hover { color: var(--accent); background: rgba(192,90,58,.08); border-color: rgba(192,90,58,.22); }
     .cart-footer {
       padding: 16px 22px 24px;
       border-top: 1px solid var(--line);
@@ -2010,7 +2063,7 @@
     }
     .action-share:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-    /* ── ACCESO FLOTANTE · EFEMÉRIDES ── */
+    /* ── ACCESO FLOTANTE · MUJERES DE LA CIENCIA ── */
     .float-efemerides {
       position: fixed;
       right: 22px;
@@ -2204,6 +2257,132 @@
       margin-bottom: 8px;
     }
 
+    .science-tribute {
+      position: relative;
+      overflow: hidden;
+      min-height: 430px;
+      border-radius: 30px;
+      padding: 34px;
+      background: var(--ink);
+      color: #fff;
+      display: grid;
+      grid-template-columns: minmax(220px, .82fr) minmax(0, 1.18fr);
+      gap: 28px;
+      align-items: stretch;
+      box-shadow: var(--sh-lg);
+    }
+    .science-tribute::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 88% 6%, rgba(232,120,90,.40), transparent 48%),
+        radial-gradient(ellipse at 5% 92%, rgba(255,255,255,.10), transparent 42%);
+      pointer-events: none;
+    }
+    .science-tribute::after {
+      content: "CIENCIA";
+      position: absolute;
+      right: -14px;
+      bottom: -22px;
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 14vw, 10rem);
+      line-height: .8;
+      letter-spacing: .02em;
+      color: rgba(255,255,255,.045);
+      pointer-events: none;
+      user-select: none;
+    }
+    .science-tribute > * { position: relative; z-index: 1; }
+    .science-tribute-visual {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 100%;
+      padding: 24px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .science-tribute-symbol {
+      width: 86px;
+      height: 86px;
+      border-radius: 28px;
+      display: grid;
+      place-items: center;
+      background: rgba(232,120,90,.18);
+      color: var(--accent-light);
+      font-size: 2.8rem;
+      box-shadow: 0 18px 48px rgba(0,0,0,.18);
+    }
+    .science-tribute-note {
+      color: rgba(255,255,255,.68);
+      font-size: .88rem;
+      line-height: 1.65;
+      max-width: 30ch;
+    }
+    .science-tribute-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+    }
+    .science-tribute-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(232,120,90,.16);
+      color: var(--accent-light);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .science-tribute-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6.6vw, 6rem);
+      letter-spacing: .035em;
+      line-height: .88;
+      margin: 0;
+    }
+    .science-tribute-title em {
+      font-family: var(--font-serif);
+      font-size: .64em;
+      font-style: italic;
+      color: var(--accent-light);
+    }
+    .science-tribute-lead {
+      max-width: 64ch;
+      color: rgba(255,255,255,.74);
+      font-size: 1rem;
+      line-height: 1.78;
+    }
+    .science-tribute-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .science-tribute-actions .club-cta {
+      width: auto;
+      min-height: 52px;
+      padding-inline: 24px;
+    }
+    @media (max-width: 680px) {
+      .science-tribute {
+        grid-template-columns: 1fr;
+        padding: 26px 18px;
+        min-height: 0;
+      }
+      .science-tribute-visual { padding: 18px; }
+      .science-tribute-symbol { width: 72px; height: 72px; font-size: 2.25rem; }
+      .science-tribute-actions .club-cta { width: 100%; }
+    }
+
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1100px) {
@@ -2248,6 +2427,10 @@
       .hero-main { padding: 32px 24px; min-height: 380px; }
       .hero-right { flex-direction: column; }
       .hero-title { font-size: 3.2rem; }
+      .hero-stat-card.fade-up { opacity: 1; transform: none; }
+      .hero-stat-card .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero-stat-card .stat-item strong { font-size: 2rem; }
+      .hero-stat-card .stat-customers { display: none !important; }
       .payment-status-title { font-size: 1.45rem; }
       .capsule-grid { grid-template-columns: 1fr; }
       .products-grid { grid-template-columns: 1fr; }
@@ -2913,40 +3096,53 @@
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── MODAL AUTOMÁTICO · PREVENTA DOCENTE ── */
-    .presale-modal-shell {
-      max-width: min(820px, calc(100vw - 28px));
-      max-height: min(92vh, 920px);
+
+    /* ── PROMO OCULTA POR QR ── */
+    .promo-modal-shell {
+      max-width: min(760px, calc(100vw - 28px));
+      max-height: min(92vh, 860px);
       overflow-y: auto;
       overflow-x: hidden;
       overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
     }
-    #preSaleModal {
-      align-items: center;
-    }
-    #preSaleModal .modal-body {
-      padding-bottom: 26px;
-    }
-    .presale-card {
+    .promo-qr-card {
       position: relative;
       overflow: hidden;
       border-radius: var(--r-xl);
       background: var(--ink);
       color: #fff;
       padding: 34px;
+      min-height: 430px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 26px;
     }
-    .presale-card::before {
+    .promo-qr-card::before {
       content: "";
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse at 92% 4%, rgba(232,120,90,.42), transparent 50%),
-        radial-gradient(ellipse at 6% 94%, rgba(255,255,255,.10), transparent 44%);
+        radial-gradient(ellipse at 90% 4%, rgba(232,120,90,.44), transparent 48%),
+        radial-gradient(ellipse at 8% 94%, rgba(255,255,255,.10), transparent 42%);
       pointer-events: none;
     }
-    .presale-card > * { position: relative; z-index: 1; }
-    .presale-kicker {
+    .promo-qr-card::after {
+      content: "SR";
+      position: absolute;
+      right: -10px;
+      bottom: -34px;
+      font-family: var(--font-display);
+      font-size: clamp(9rem, 24vw, 15rem);
+      line-height: .8;
+      letter-spacing: -.02em;
+      color: rgba(255,255,255,.045);
+      pointer-events: none;
+      user-select: none;
+    }
+    .promo-qr-card > * { position: relative; z-index: 1; }
+    .promo-qr-kicker {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -2961,234 +3157,200 @@
       text-transform: uppercase;
       margin-bottom: 18px;
     }
-    .presale-title-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      margin: 0 0 16px;
-    }
-    .presale-title {
+    .promo-qr-title {
       font-family: var(--font-display);
-      font-size: clamp(2.8rem, 7vw, 5.2rem);
+      font-size: clamp(3.05rem, 8vw, 6.4rem);
       letter-spacing: .035em;
-      line-height: .92;
-      margin: 0;
+      line-height: .88;
+      margin: 0 0 18px;
     }
-    .presale-title em {
+    .promo-qr-title em {
       font-family: var(--font-serif);
       font-style: italic;
-      font-size: .72em;
+      font-size: .70em;
       color: var(--accent-light);
     }
-    .presale-lead {
-      max-width: 60ch;
-      color: rgba(255,255,255,.74);
-      font-size: .98rem;
+    .promo-qr-lead {
+      max-width: 58ch;
+      color: rgba(255,255,255,.76);
+      font-size: 1rem;
       line-height: 1.75;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
-    .presale-benefits {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .promo-qr-code {
+      display: inline-flex;
+      align-items: center;
       gap: 10px;
-      margin: 20px 0 22px;
-    }
-    .presale-benefit {
-      padding: 13px 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-      color: rgba(255,255,255,.82);
-      font-size: .84rem;
-      line-height: 1.45;
-      font-weight: 700;
-    }
-    .presale-benefit strong {
-      display: block;
-      color: #fff;
-      font-size: .9rem;
-      margin-bottom: 4px;
-    }
-    .presale-delivery-note {
-      display: flex;
-      align-items: flex-start;
-      gap: 11px;
-      padding: 14px 16px;
-      border-radius: 18px;
-      background: rgba(232,120,90,.14);
-      border: 1px solid rgba(232,120,90,.28);
-      color: rgba(255,255,255,.88);
-      font-size: .9rem;
-      line-height: 1.58;
-      font-weight: 700;
-      margin: -2px 0 18px;
-    }
-    .presale-delivery-note strong { color: #fff; }
-    .presale-payment-locked-note {
-      margin: 10px 0 0;
+      width: fit-content;
       padding: 12px 14px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.08);
+      border-radius: 18px;
+      background: rgba(255,255,255,.10);
       border: 1px solid rgba(255,255,255,.14);
-      color: rgba(255,255,255,.78);
-      font-size: .82rem;
-      line-height: 1.55;
-      font-weight: 700;
-    }
-    .presale-payment-locked-note strong { color: #fff; }
-    .presale-switch-row {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      padding: 13px 15px 13px 18px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.96);
-      color: var(--ink);
-      border: 1px solid rgba(255,255,255,.20);
-      box-shadow: 0 14px 34px rgba(0,0,0,.18);
-      cursor: pointer;
-      min-width: min(360px, 100%);
-      flex: none;
-    }
-    .presale-switch-copy {
-      display: inline-flex;
-      align-items: center;
-      min-width: 0;
-    }
-    .presale-switch-copy strong {
-      font-size: .84rem;
+      color: rgba(255,255,255,.88);
+      font-size: .86rem;
+      font-weight: 900;
       letter-spacing: .08em;
       text-transform: uppercase;
-      white-space: nowrap;
     }
-    .presale-switch-copy span {
-      display: none;
-    }
-    .presale-switch {
-      position: relative;
-      display: inline-flex;
-      width: 74px;
-      height: 40px;
-      flex: none;
-    }
-    .presale-switch input { opacity: 0; width: 0; height: 0; }
-    .presale-slider {
-      position: absolute;
-      cursor: pointer;
-      inset: 0;
-      background: #d8d0c6;
-      border-radius: 999px;
-      transition: .2s;
-      box-shadow: inset 0 0 0 1px rgba(14,14,16,.10);
-    }
-    .presale-slider::before {
-      content: "";
-      position: absolute;
-      width: 32px;
-      height: 32px;
-      left: 4px;
-      top: 4px;
-      border-radius: 50%;
-      background: #fff;
-      transition: .2s;
-      box-shadow: 0 3px 10px rgba(14,14,16,.20);
-    }
-    .presale-switch input:checked + .presale-slider {
-      background: var(--accent);
-    }
-    .presale-switch input:checked + .presale-slider::before {
-      transform: translateX(34px);
-    }
-    .presale-actions {
+    .promo-qr-actions {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
-    .presale-primary,
-    .presale-secondary {
-      min-height: 50px;
+    .promo-qr-primary,
+    .promo-qr-secondary {
+      min-height: 52px;
       border-radius: 999px;
       padding: 14px 18px;
       font-weight: 900;
       cursor: pointer;
       transition: all .18s;
     }
-    .presale-primary {
+    .promo-qr-primary {
       border: 1px solid var(--accent);
       background: var(--accent);
       color: #fff;
     }
-    .presale-primary:hover { background: var(--accent-light); transform: translateY(-1px); }
-    .presale-secondary {
+    .promo-qr-primary:hover { background: var(--accent-light); transform: translateY(-1px); }
+    .promo-qr-secondary {
       border: 1px solid rgba(255,255,255,.22);
       background: rgba(255,255,255,.08);
       color: #fff;
     }
-    .presale-secondary:hover { background: rgba(255,255,255,.14); }
-    .presale-mode .announce {
-      background: #7b3f2d;
+    .promo-qr-secondary:hover { background: rgba(255,255,255,.14); }
+    .promo-qr-small {
+      color: rgba(255,255,255,.54);
+      font-size: .76rem;
+      line-height: 1.55;
+      margin-top: 10px;
     }
-    .presale-header-btn {
+    .promo-active-strip {
+      background: #fff7ef;
+      border: 1px solid rgba(192,90,58,.20);
+      color: #7b3f2d;
+      border-radius: 18px;
+      padding: 12px 14px;
+      font-size: .84rem;
+      font-weight: 800;
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+
+    .cart-promo-panel {
+      margin: 0 0 14px;
+      padding: 14px;
+      border-radius: 18px;
+      background: #fff7ef;
+      border: 1px solid rgba(192,90,58,.20);
+    }
+    .cart-promo-label {
+      display: block;
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 900;
+      color: #7b3f2d;
+      margin-bottom: 8px;
+    }
+    .cart-promo-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+    .cart-promo-input {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid rgba(192,90,58,.24);
+      border-radius: 999px;
+      padding: 11px 14px;
+      background: #fff;
+      outline: none;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .cart-promo-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(192,90,58,.10);
+    }
+    .cart-promo-btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 14px;
       background: var(--accent);
       color: #fff;
-      border-color: var(--accent);
-      box-shadow: 0 8px 24px rgba(192,90,58,.24);
       font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
     }
-    .presale-header-btn:hover {
-      background: var(--accent-light);
-      border-color: var(--accent-light);
-      color: #fff;
-      box-shadow: 0 10px 30px rgba(192,90,58,.30);
+    .cart-promo-btn:hover { background: var(--accent-light); }
+    .cart-promo-remove {
+      border: 1px solid rgba(14,14,16,.12);
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: #fff;
+      color: var(--muted);
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
     }
-    .presale-header-btn.hidden {
-      display: none !important;
+    .cart-promo-applied,
+    .cart-promo-status {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: .82rem;
+      font-weight: 800;
+      line-height: 1.55;
     }
-    .payment-locked-by-presale,
-    .payment-locked-by-presale:hover {
-      background: #e9e2d8 !important;
-      color: #7d746c !important;
-      border-color: #ded4c7 !important;
-      cursor: not-allowed !important;
-      box-shadow: none !important;
-      transform: none !important;
-      opacity: .92;
+    .cart-promo-applied {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: rgba(26,122,58,.07);
+      border: 1px solid rgba(26,122,58,.16);
+      color: #1a3a2e;
     }
-    .presale-locker-chip {
+    .cart-promo-status { background: rgba(14,14,16,.04); border: 1px solid rgba(14,14,16,.06); color: var(--muted); }
+    .cart-promo-status.error { background: rgba(156,47,47,.08); border-color: rgba(156,47,47,.18); color: var(--danger, #9c2f2f); }
+    .cart-promo-status.success { background: rgba(26,122,58,.07); border-color: rgba(26,122,58,.16); color: #1a7a3a; }
+    @media (max-width: 680px) {
+      .cart-promo-form { grid-template-columns: 1fr; }
+      .cart-promo-btn, .cart-promo-remove { width: 100%; }
+      .cart-promo-applied { align-items: flex-start; flex-direction: column; }
+    }
+    .promo-price-old {
+      display: inline-block;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: .9rem;
+      font-weight: 700;
+      text-decoration: line-through;
+      margin-bottom: 4px;
+    }
+    .promo-price-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
       width: fit-content;
-      margin-top: 8px;
-      padding: 7px 10px;
+      margin-top: 6px;
+      padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(26,122,58,.10);
-      color: #1a7a3a;
-      font-size: .72rem;
+      background: rgba(192,90,58,.10);
+      color: var(--accent);
+      font-size: .70rem;
       font-weight: 900;
-      letter-spacing: .05em;
+      letter-spacing: .08em;
       text-transform: uppercase;
     }
     @media (max-width: 680px) {
-      #preSaleModal { align-items: flex-start; padding: 12px; }
-      .presale-modal-shell { max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); }
-      .presale-card { padding: 26px 18px; }
-      .presale-title-row { flex-direction: column; align-items: flex-start; }
-      .presale-benefits { grid-template-columns: 1fr; }
-      .presale-switch-row { width: 100%; min-width: 0; justify-content: space-between; }
-      .presale-switch-copy strong { white-space: normal; }
-      .presale-actions { grid-template-columns: 1fr; }
-      .header-right .presale-header-btn {
-        width: auto;
-        min-width: 0;
-        padding: 0 11px;
-        font-size: .72rem;
-        letter-spacing: .01em;
-      }
+      #promoQrModal { align-items: flex-start; padding: 12px; }
+      .promo-modal-shell { max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); }
+      .promo-qr-card { padding: 26px 18px; min-height: 0; }
+      .promo-qr-actions { grid-template-columns: 1fr; }
     }
-
   </style>
 </head>
 <body>
@@ -3196,7 +3358,7 @@
 <!-- Announce bar -->
 <div class="announce" aria-label="Novedades">
   <div class="announce-track">
-    <span>PREVENTA SIN RECREO ABIERTA</span>
+    <span>TIENDA SIN RECREO ABIERTA</span>
     <span class="dot">✦</span>
     <span>CÁPSULAS EDITORIALES DISPONIBLES</span>
     <span class="dot">✦</span>
@@ -3204,7 +3366,7 @@
     <span class="dot">✦</span>
     <span class="announce-featured-capsule">CÁPSULA DESTACADA DEL MES</span>
     <span class="dot">✦</span>
-    <span>PREVENTA SIN RECREO ABIERTA</span>
+    <span>TIENDA SIN RECREO ABIERTA</span>
     <span class="dot">✦</span>
     <span>CÁPSULAS EDITORIALES DISPONIBLES</span>
     <span class="dot">✦</span>
@@ -3221,7 +3383,7 @@
     <div class="header-left">
       <div class="search-pill">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input id="searchInput" type="search" placeholder="Buscá cápsulas o diseños…" aria-label="Buscar productos" />
+        <input id="searchInput" type="search" placeholder="Buscar una prenda por nombre…" aria-label="Buscar prendas por nombre" />
       </div>
     </div>
 
@@ -3234,7 +3396,6 @@
       <button class="hbtn icon mobile-menu-toggle" type="button" onclick="openMobileMenu()" aria-label="Abrir menú">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
-      <button class="hbtn presale-header-btn" id="preSaleHeaderButton" type="button" onclick="activatePreSaleFromHeader()">Activar Preventa</button>
       <button class="hbtn" type="button" onclick="openCartDrawer()" aria-label="Carrito">
         <span class="cart-badge">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M3 4h2l2.2 10.2a1 1 0 001 .8h8.8a1 1 0 001-.8L21 7H7"/></svg>
@@ -3242,7 +3403,7 @@
         </span>
         <span>Carrito</span>
       </button>
-      <a class="hbtn" href="https://wa.me/5491138614767?text=%2AHola%2C%20SIN%20RECREO%2A%20%F0%9F%91%8B%0A%0AEstoy%20mirando%20la%20tienda%20y%20quiero%20hacer%20una%20consulta%20por%20una%20remera.%0A%0A_Me%20ayudan%20a%20elegir%20talle%2C%20color%20o%20forma%20de%20entrega%3F_" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+      <a class="hbtn" href="https://wa.me/5491140492855?text=%2AHola%2C%20SIN%20RECREO%2A%20%F0%9F%91%8B%0A%0AEstoy%20mirando%20la%20tienda%20y%20quiero%20hacer%20una%20consulta%20por%20una%20remera.%0A%0A_Me%20ayudan%20a%20elegir%20talle%2C%20color%20o%20forma%20de%20entrega%3F_" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.76-.87-2.03-.97-.27-.1-.47-.14-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.52.14-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12 2a10 10 0 00-8.5 15.27L2 22l4.86-1.48A10 10 0 1012 2z"/></svg>
         <span>Consultar</span>
       </a>
@@ -3301,13 +3462,14 @@
 
       <div class="hero-right">
         <div class="hero-stat-card fade-up">
-          <div class="stat-grid">
-            <div class="stat-item"><strong id="statActiveDrops">0</strong><span>drops activos</span></div>
-            <div class="stat-item"><strong id="statActiveCapsules">0</strong><span>cápsulas</span></div>
-            <div class="stat-item"><strong id="statCustomers">0</strong><span>clientes</span></div>
-            <div class="stat-item"><strong id="statInstallments">3x</strong><span>cuotas sin interés</span></div>
+          <!-- Contadores temporalmente apagados para mejorar la carga. Para reactivar, quitar hidden y cambiar HERO_COUNTERS_ENABLED a true. -->
+          <div class="stat-grid hidden" data-counter-section="off" aria-hidden="true">
+            <div class="stat-item"><strong id="statActiveDrops" data-stat="active-drops">0</strong><span>drops activos</span></div>
+            <div class="stat-item"><strong id="statActiveCapsules" data-stat="active-capsules">0</strong><span>cápsulas</span></div>
+            <div class="stat-item stat-customers"><strong id="statCustomers" data-stat="customers">0</strong><span>clientes</span></div>
+            <div class="stat-item"><strong id="statInstallments" data-stat="installments">3x</strong><span>cuotas sin interés</span></div>
           </div>
-          <div class="divider"></div>
+          <div class="divider hidden" data-counter-section="off" aria-hidden="true"></div>
           <div class="pay-info">
             <div class="pay-row">
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
@@ -3316,6 +3478,10 @@
             <div class="pay-row">
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
               <span id="heroTransferText"><strong>Transferencia:</strong> 10% de descuento</span>
+            </div>
+            <div class="pay-row">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="4"/><path d="M8 9h3a3 3 0 010 6H8V9Zm9 0v6"/><path d="M15 9h4"/></svg>
+              <span id="heroCuentaDniText"><strong>Cuenta DNI:</strong> 20% de reintegro lun. a vier. · tope $6000 semanal</span>
             </div>
             <div class="pay-row">
               <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.1-.198.05-.372-.025-.521-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.075-.792.372-.272.297-1.04 1.016-1.04 2.48 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 2C6.555 2 2.1 6.455 2.1 11.95c0 1.76.46 3.414 1.265 4.848L2 22l5.348-1.402a9.909 9.909 0 0 0 4.702 1.19h.004c5.492 0 9.95-4.455 9.95-9.95S17.546 2 12.05 2Z"/></svg>
@@ -3357,6 +3523,11 @@
         <span>Pagando por transferencia bancaria</span>
       </div>
       <div class="trust-item">
+        <div class="trust-icon">🏦</div>
+        <strong>Cuenta DNI 20%</strong>
+        <span>Reintegro lunes a viernes · tope $6000 semanal por cuenta</span>
+      </div>
+      <div class="trust-item">
         <div class="trust-icon">💬</div>
         <strong>Atención real</strong>
         <span>Respondemos por WhatsApp en 24h</span>
@@ -3372,7 +3543,7 @@
         <div>
           <div class="section-label">Compra online</div>
           <h2 class="section-title">Así funciona</h2>
-          <p class="section-sub">Recorré el catálogo, elegí tu prenda y cerrá la compra con Mercado Pago, transferencia o Cuenta DNI.</p>
+          <p class="section-sub">Recorré el catálogo, elegí tu prenda y cerrá la compra con Mercado Pago, tarjeta, transferencia o Cuenta DNI.</p>
         </div>
       </div>
       <div class="how-steps fade-up">
@@ -3530,7 +3701,7 @@
       <div class="footer-col">
         <h5>Contacto</h5>
         <a href="https://instagram.com/somos.sinrecreo" target="_blank" rel="noopener noreferrer">@somos.sinrecreo</a>
-        <a href="https://wa.me/5491138614767?text=%2AHola%2C%20SIN%20RECREO%2A%20%F0%9F%91%8B%0A%0AEstoy%20mirando%20la%20tienda%20y%20quiero%20hacer%20una%20consulta%20por%20una%20remera.%0A%0A_Me%20ayudan%20a%20elegir%20talle%2C%20color%20o%20forma%20de%20entrega%3F_" target="_blank" rel="noopener noreferrer">WhatsApp 11 3861-4767</a>
+        <a href="https://wa.me/5491140492855?text=%2AHola%2C%20SIN%20RECREO%2A%20%F0%9F%91%8B%0A%0AEstoy%20mirando%20la%20tienda%20y%20quiero%20hacer%20una%20consulta%20por%20una%20remera.%0A%0A_Me%20ayudan%20a%20elegir%20talle%2C%20color%20o%20forma%20de%20entrega%3F_" target="_blank" rel="noopener noreferrer">WhatsApp 11 4049-2855</a>
         <a href="/cdn-cgi/l/email-protection#cca4a3a0ad8cbfa5a2bea9afbea9a3e2afa3a1e2adbe"><span class="__cf_email__" data-cfemail="e1898e8d80a192888f93848293848ecf828e8ccf8093">[email&#160;protected]</span></a>
         <a id="adminFooterLink" href="./admin.html">Acceso admin</a>
       </div>
@@ -3542,6 +3713,7 @@
         <span class="pay-logo">Visa</span>
         <span class="pay-logo">Mastercard</span>
         <span class="pay-logo">Transferencia</span>
+        <span class="pay-logo">Cuenta DNI</span>
       </div>
     </div>
   </div>
@@ -3554,57 +3726,47 @@
 </button>
 
 <!-- ── FLOATING WA ── -->
-<a class="float-wa" href="https://wa.me/5491138614767?text=%2AHola%2C%20SIN%20RECREO%2A%20%F0%9F%91%8B%0A%0AEstoy%20mirando%20la%20tienda%20y%20quiero%20hacer%20una%20consulta%20por%20una%20remera.%0A%0A_Me%20ayudan%20a%20elegir%20talle%2C%20color%20o%20forma%20de%20entrega%3F_" target="_blank" rel="noopener noreferrer" aria-label="Consultar por WhatsApp">
+<a class="float-wa" href="https://wa.me/5491140492855?text=%2AHola%2C%20SIN%20RECREO%2A%20%F0%9F%91%8B%0A%0AEstoy%20mirando%20la%20tienda%20y%20quiero%20hacer%20una%20consulta%20por%20una%20remera.%0A%0A_Me%20ayudan%20a%20elegir%20talle%2C%20color%20o%20forma%20de%20entrega%3F_" target="_blank" rel="noopener noreferrer" aria-label="Consultar por WhatsApp">
   <svg width="28" height="28" viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.76-.87-2.03-.97-.27-.1-.47-.14-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.52.14-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12 2a10 10 0 00-8.5 15.27L2 22l4.86-1.48A10 10 0 1012 2z"/></svg>
 </a>
 
-<!-- ── FLOATING EFEMÉRIDES ── -->
-<button class="float-efemerides" type="button" onclick="openEfemeridesModal(event)" aria-label="Abrir cápsula Efemérides">
-  <span class="float-efemerides-icon" aria-hidden="true">✦</span>
-  <span>Efemérides</span>
+<!-- ── FLOATING MUJERES DE LA CIENCIA ── -->
+<button class="float-efemerides" type="button" onclick="openEfemeridesModal(event)" aria-label="Abrir homenaje Mujeres de la Ciencia">
+  <span class="float-efemerides-icon" aria-hidden="true">🔬</span>
+  <span>Mujeres de la Ciencia</span>
 </button>
 
 
-<!-- ── MODAL AUTOMÁTICO · PREVENTA DOCENTE ── -->
-<div class="modal-overlay" id="preSaleModal" role="dialog" aria-modal="true" aria-label="Preventa exclusiva para docentes y auxiliares">
-  <div class="modal presale-modal-shell">
+<!-- ── MODAL OCULTO · PROMO POR QR ── -->
+<div class="modal-overlay" id="promoQrModal" role="dialog" aria-modal="true" aria-label="Promoción especial SIN RECREO">
+  <div class="modal promo-modal-shell">
     <div class="modal-header">
       <div>
-        <div class="modal-section-title">Preventa exclusiva</div>
-        <h2 class="modal-title">Docentes y auxiliares</h2>
+        <div class="modal-section-title">Acceso por QR</div>
+        <h2 class="modal-title">Promoción especial</h2>
       </div>
-      <button class="modal-close" type="button" onclick="closePreSaleModal()" aria-label="Cerrar preventa">✕</button>
+      <button class="modal-close" type="button" onclick="declineQrPromo()" aria-label="Cerrar promoción">✕</button>
     </div>
     <div class="modal-body">
-      <article class="presale-card">
-        <div class="presale-kicker">✦ Para quienes no tienen recreo</div>
-        <div class="presale-title-row">
-          <h2 class="presale-title">PREVENTA<br><em>SIN RECREO</em></h2>
-          <label class="presale-switch-row" for="preSaleSwitch">
-            <span class="presale-switch-copy">
-              <strong>ACTIVAR MODO PREVENTA</strong>
-              <span>Activar beneficios de preventa.</span>
-            </span>
-            <span class="presale-switch" aria-hidden="true">
-              <input id="preSaleSwitch" type="checkbox" onchange="syncPreSaleSwitchLabel()" />
-              <span class="presale-slider"></span>
-            </span>
-          </label>
+      <article class="promo-qr-card">
+        <div>
+          <div class="promo-qr-kicker">✦ Beneficio SIN RECREO</div>
+          <h2 class="promo-qr-title">20% OFF<br><em>próxima compra</em></h2>
+          <p class="promo-qr-lead">Por comprar o recibir un regalo de SIN RECREO, tenés 20% de descuento para usar ahora en la tienda.</p>
+          <div class="promo-qr-code" id="promoQrCodeLabel">Código: SINRECREO20</div>
         </div>
-        <p class="presale-lead">Activá una versión de la tienda pensada para docentes y auxiliares: beneficios claros, compra simple y seguimiento directo por WhatsApp.</p>
-        <div class="presale-benefits" aria-label="Beneficios de preventa">
-          <div class="presale-benefit"><strong>🚚 Locker bonificado</strong>Envío sin cargo por PUDO a Smart Locker. No aplica a entrega a domicilio.</div>
-          <div class="presale-benefit"><strong>💳 3 cuotas sin interés</strong>Pagando con Mercado Pago.</div>
-          <div class="presale-benefit"><strong>💸 Transferencia disponible</strong>También podés pagar con transferencia o Cuenta DNI con 20% de reintegro.</div>
-        </div>
-        <div class="presale-delivery-note"><span aria-hidden="true">📦</span><span><strong>Importante:</strong> las entregas de compras realizadas en preventa comienzan a partir del <strong>26 de mayo</strong>.</span></div>
-        <div class="presale-actions">
-          <button class="presale-primary" type="button" onclick="confirmPreSaleModal()">Entrar a la tienda</button>
+        <div>
+          <div class="promo-qr-actions">
+            <button class="promo-qr-primary" type="button" onclick="acceptQrPromo()">Aceptar promoción</button>
+            <button class="promo-qr-secondary" type="button" onclick="declineQrPromo()">No, gracias</button>
+          </div>
+          <p class="promo-qr-small">El descuento se aplica sobre las prendas del catálogo. No acumulable con otros descuentos internos de la tienda.</p>
         </div>
       </article>
     </div>
   </div>
 </div>
+
 
 <!-- ── MOBILE MENU ── -->
 <div class="mobile-nav-backdrop" id="mobileNavBackdrop" onclick="closeMobileMenu()"></div>
@@ -3647,6 +3809,16 @@
     <div class="cart-subtotal">
       <span class="cart-subtotal-label">Subtotal prendas</span>
       <span class="cart-subtotal-price" id="cartTotal">$0</span>
+    </div>
+
+    <div class="cart-promo-panel" id="cartPromoPanel">
+      <span class="cart-promo-label">Código promocional</span>
+      <div class="cart-promo-form">
+        <input id="cartPromoInput" class="cart-promo-input" type="text" placeholder="Ej: SINRECREO20" autocomplete="off" aria-label="Código de descuento promocional" onkeydown="if(event.key==='Enter'){event.preventDefault();applyCartPromoCode();}" />
+        <button class="cart-promo-btn" id="cartPromoApplyBtn" type="button" onclick="applyCartPromoCode()">Aplicar</button>
+      </div>
+      <div class="cart-promo-applied hidden" id="cartPromoApplied"></div>
+      <div class="cart-promo-status hidden" id="cartPromoStatus"></div>
     </div>
 
     <div class="cart-grand-total">
@@ -3694,14 +3866,15 @@
       <div class="pay-methods cart-pay-methods">
         <button class="pay-method-btn selected" onclick="selectPayMethod(this, 'mp')" type="button"><div class="pay-method-icon mp"><svg width="22" height="22" viewBox="0 0 48 48" fill="white"><ellipse cx="24" cy="24" rx="22" ry="14" fill="white"/><text x="24" y="29" text-anchor="middle" font-size="14" font-weight="bold" fill="#009ee3" font-family="Arial">MP</text></svg></div><div class="pay-method-info"><div class="pay-method-name">Mercado Pago / Cuenta MP</div><div class="pay-method-detail">Pagá con dinero en cuenta, tarjeta u otros medios habilitados</div></div><span class="pay-method-badge badge-cuotas">3 cuotas s/i</span></button>
         <button class="pay-method-btn" onclick="selectPayMethod(this, 'card')" type="button"><div class="pay-method-icon card"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div class="pay-method-info"><div class="pay-method-name">Tarjeta de crédito/débito</div><div class="pay-method-detail">También se procesa por Mercado Pago</div></div><span class="pay-method-badge badge-cuotas">3 cuotas</span></button>
-        <button class="pay-method-btn transfer-highlight" onclick="selectPayMethod(this, 'transfer')" type="button"><div class="pay-method-icon transfer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="pay-method-info"><div class="pay-method-name">Transferencia bancaria o Cuenta DNI</div><div class="pay-method-detail">Transferencia con 10% OFF · Cuenta DNI con 20% de reintegro</div></div><span class="pay-method-badge badge-discount">10% OFF</span></button>
+        <button class="pay-method-btn transfer-highlight" onclick="selectPayMethod(this, 'transfer')" type="button"><div class="pay-method-icon transfer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="pay-method-info"><div class="pay-method-name">Transferencia bancaria</div><div class="pay-method-detail">Pagá por transferencia y aplicamos 10% OFF en la tienda</div></div><span class="pay-method-badge badge-discount">10% OFF</span></button>
+        <button class="pay-method-btn cuenta-dni-highlight" onclick="selectPayMethod(this, 'cuenta_dni')" type="button"><div class="pay-method-icon cuenta-dni">DNI</div><div class="pay-method-info"><div class="pay-method-name">Cuenta DNI</div><div class="pay-method-detail">20% de reintegro de lunes a viernes · tope $6000 semanal por cuenta. No se descuenta en la tienda.</div></div><span class="pay-method-badge badge-reintegro">20% reintegro</span></button>
       </div>
 
       <div class="transfer-panel" id="transferPanel" hidden>
-        <div class="transfer-head"><strong>Transferencia con contacto directo</strong><span id="transferDiscountBadge">10% OFF</span></div>
-        <div class="transfer-grid"><div class="transfer-item"><label>Alias</label><strong id="transferAliasValue">SINRECREO.TIENDA</strong></div><div class="transfer-item"><label>Titular</label><span id="transferOwnerValue">SIN RECREO</span></div><div class="transfer-item"><label>CVU</label><span id="transferCbuValue">0000003100000000000000</span></div></div>
-        <div class="transfer-actions"><button class="transfer-btn" type="button" onclick="copyTransferField('alias')">Copiar alias</button><button class="transfer-btn" type="button" onclick="copyTransferField('cbu')">Copiar CVU</button></div>
-        <div class="modal-note">Al confirmar la transferencia, te abrimos WhatsApp con el pedido armado para que envíes el comprobante o solicites link de pago de CUENTA DNI.</div>
+        <div class="transfer-head"><strong id="transferPanelTitle">Transferencia con contacto directo</strong><span id="transferDiscountBadge">10% OFF</span></div>
+        <div class="transfer-grid" id="transferDataGrid"><div class="transfer-item"><label>Alias</label><strong id="transferAliasValue">SINRECREO.TIENDA</strong></div><div class="transfer-item"><label>Titular</label><span id="transferOwnerValue">SIN RECREO</span></div><div class="transfer-item"><label>CVU</label><span id="transferCbuValue">0000003100000000000000</span></div></div>
+        <div class="transfer-actions" id="transferActions"><button class="transfer-btn" type="button" onclick="copyTransferField('alias')">Copiar alias</button><button class="transfer-btn" type="button" onclick="copyTransferField('cbu')">Copiar CVU</button></div>
+        <div class="modal-note" id="transferPanelNote">Al confirmar la transferencia, te abrimos WhatsApp con el pedido armado para que envíes el comprobante.</div>
       </div>
 
       <button class="modal-cta mp-style" id="cartFinalCheckoutButton" type="button" onclick="finishCartCheckout()">Pagar con Mercado Pago / Cuenta MP</button>
@@ -3712,17 +3885,17 @@
 <!-- ── BUY MODAL ── -->
 <div class="modal-overlay" id="buyModal" role="dialog" aria-modal="true" aria-label="Elegir producto">
   <div class="modal" id="modalInner">
-    <div class="modal-header"><h2 class="modal-title">Elegí modelo, talle y estampa</h2><button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button></div>
+    <div class="modal-header"><h2 class="modal-title">Elegí corte, talle y estampa</h2><button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button></div>
     <div class="modal-body">
       <div class="modal-product-row" id="modalProductRow"></div>
-      <div class="modal-section-title">Modelo</div><div class="fit-selector" id="modalFits"></div>
+      <div class="modal-section-title">Corte</div><div class="fit-selector" id="modalFits"></div>
       <div class="modal-section-title">Color</div><div class="fit-selector" id="modalColors"></div>
       <div class="modal-section-title">Talle</div><div class="size-selector" id="modalSizes"></div>
       <div class="modal-section-title">Tamaño de estampa</div><div class="fit-selector" id="modalStampSizes"></div>
       <div class="modal-stock-note" id="modalStockNote"></div>
-      <div id="modalSizePrompt" class="modal-customer-prompt hidden">Elegí modelo, color, talle y tamaño de estampa para continuar.</div><span id="modalTotal" class="hidden">$0</span>
+      <div id="modalSizePrompt" class="modal-customer-prompt hidden">Elegí corte, color, talle y tamaño de estampa para continuar.</div><span id="modalTotal" class="hidden">$0</span>
       <button class="modal-secondary-cta" id="modalAddCartCta" type="button" onclick="addConfiguredToCart(true)">Agregar al carrito</button>
-      <div class="modal-secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Elegí modelo, color, talle y tamaño de estampa. Después continuás desde el carrito con entrega y forma de pago.</div>
+      <div class="modal-secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Elegí corte, color, talle y tamaño de estampa. Después continuás desde el carrito con entrega y forma de pago.</div>
     </div>
   </div>
 </div>
@@ -3751,16 +3924,16 @@
   </div>
 </div>
 
-<!-- ── EFEMÉRIDES MODAL ── -->
-<div class="modal-overlay" id="efemeridesModal" role="dialog" aria-modal="true" aria-label="Cápsula Efemérides">
+<!-- ── MUJERES DE LA CIENCIA MODAL ── -->
+<div class="modal-overlay" id="efemeridesModal" role="dialog" aria-modal="true" aria-label="Mujeres de la Ciencia">
   <div class="modal modal-wide products-modal-shell efemerides-modal-shell">
     <div class="modal-header capsule-modal-header">
       <div>
-        <div class="modal-section-title">Efemérides</div>
-        <h2 class="modal-title">La remera del día</h2>
-        <p class="capsule-modal-sub">Acceso rápido a la última prenda cargada en la cápsula EFEMÉRIDES.</p>
+        <div class="modal-section-title">Mujeres de la Ciencia</div>
+        <h2 class="modal-title">Homenaje a las que hicieron ciencia</h2>
+        <p class="capsule-modal-sub">Antes de entrar a la cápsula, una pausa para nombrar a quienes abrieron caminos, hicieron descubrimientos y muchas veces quedaron fuera del relato oficial.</p>
       </div>
-      <button class="modal-close" onclick="closeEfemeridesModal()" aria-label="Cerrar Efemérides">✕</button>
+      <button class="modal-close" onclick="closeEfemeridesModal()" aria-label="Cerrar Mujeres de la Ciencia">✕</button>
     </div>
     <div class="modal-body" id="efemeridesModalBody">
       <!-- rendered by JS -->
@@ -3838,7 +4011,7 @@
               Membresía próximamente
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
-            <a class="club-cta secondary" href="https://wa.me/5491138614767?text=%2AHola%2C%20SIN%20RECREO%2A%20%F0%9F%91%8B%0A%0AQuiero%20que%20me%20avisen%20cuando%20abra%20la%20membres%C3%ADa%20del%20%2AClub%20SIN%20RECREO%2A.%0A%0A_Me%20interesa%20recibir%20la%20info%20apenas%20est%C3%A9%20disponible._%20%E2%9C%A8" target="_blank" rel="noopener noreferrer">Quiero que me avisen por WhatsApp</a>
+            <a class="club-cta secondary" href="https://wa.me/5491140492855?text=%2AHola%2C%20SIN%20RECREO%2A%20%F0%9F%91%8B%0A%0AQuiero%20que%20me%20avisen%20cuando%20abra%20la%20membres%C3%ADa%20del%20%2AClub%20SIN%20RECREO%2A.%0A%0A_Me%20interesa%20recibir%20la%20info%20apenas%20est%C3%A9%20disponible._%20%E2%9C%A8" target="_blank" rel="noopener noreferrer">Quiero que me avisen por WhatsApp</a>
             <p class="club-smallprint">La elección mensual estará sujeta al stock disponible al momento de solicitar la prenda. Mientras tanto, podés comprar cualquier prenda activa del catálogo.</p>
           </div>
         </div>
@@ -3851,14 +4024,21 @@
 <script>
 
   /* ─── CONFIGURACIÓN GENERAL ─── */
+  // Contadores del hero apagados temporalmente a pedido.
+  // Para reactivarlos: cambiar a true y quitar la clase hidden del bloque data-counter-section.
+  const HERO_COUNTERS_ENABLED = false;
+
   const STORE_CONFIG = {
-    whatsappNumber: '5491138614767',
+    whatsappNumber: '5491140492855',
     instagramUrl: 'https://instagram.com/somos.sinrecreo',
     clubSubscriptionUrl: '',
     transferAlias: 'lucas.faga.mp',
     transferOwner: 'Lucas Matias Faga',
     transferCBU: '0000003100065142182346',
     transferDiscount: 10,
+    cuentaDniRebatePercent: 20,
+    cuentaDniWeeklyCap: 6000,
+    cuentaDniDays: 'lunes a viernes',
     installmentsCount: 3,
     freeShippingMinAmount: 100000,
     preLaunchMode: false,
@@ -3876,9 +4056,20 @@
     pudoWeightPerItemGrams: 400,
     pickupLabel: 'Retiro en zona Corimayo · Burzaco',
     pickupDetails: 'Sin costo de envío. Coordinamos día y horario por WhatsApp después de la compra.',
-    preSaleStorageKey: 'sinrecreo_preventa_docente_v1',
-    preSaleDefaultMode: false,
-    preSaleModalDelayMs: 650,
+    promoStorageKey: 'sinrecreo_promo_activa_v1',
+    promoDeclineStorageKey: 'sinrecreo_promo_rechazada_v1',
+    promos: {
+      regalo20: {
+        code: 'regalo20',
+        publicCode: 'SINRECREO20',
+        discount: 20,
+        title: '20% OFF EN TU PRÓXIMA COMPRA',
+        subtitle: 'Por comprar o recibir un regalo de SIN RECREO',
+        body: 'Escaneaste un QR especial. Activá la promoción y vas a ver el descuento aplicado en las prendas de la tienda.',
+        acceptText: 'Aceptar promoción',
+        declineText: 'Seguir sin descuento'
+      }
+    },
     useSupabase: true,
     supabaseUrl: 'https://bhzwcevmeqzofuwnwpnm.supabase.co',
     supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoendjZXZtZXF6b2Z1d253cG5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5OTExNzksImV4cCI6MjA5MjU2NzE3OX0.LGDbzUNprkAfbiOC7oFuew0EpCOPll9ckdGL-LidhGA',
@@ -4071,68 +4262,369 @@
       heroCtaText:'Ver cápsula',
       featured:false,
       isActive:true
+    },
+    'Mujeres de la Ciencia': {
+      name:'Mujeres de la Ciencia',
+      tag:'Nueva sección',
+      desc:'Estampas que homenajean a científicas reales y devuelven nombre propio a descubrimientos, métodos e historias.',
+      heroTitle:'Cápsula "Mujeres de la Ciencia" — activa ahora',
+      heroBody:'Una colección para vestir memoria, ciencia y reparación: mujeres que investigaron, descubrieron y abrieron camino.',
+      heroCtaText:'Ver cápsula',
+      featured:false,
+      isActive:true
     }
   };
 
   const state = { query:'', catalogView:'featured', sort:'featured', capsules:new Set(), cuts:new Set(), sizes:new Set(), minPrice:'', maxPrice:'' };
   const cart = [];
   let preSaleMode = false;
+  let activePromo = null;
+  let pendingPromo = null;
+  let dynamicPromoCodes = [];
+  let remotePromoCatalogLoaded = false;
+
+  const getPromoStorageKey = () => STORE_CONFIG.promoStorageKey || 'sinrecreo_promo_activa_v1';
+  const getPromoDeclineStorageKey = () => STORE_CONFIG.promoDeclineStorageKey || 'sinrecreo_promo_rechazada_v1';
+  const normalizePromoCode = value => String(value || '').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+  const parsePromoBoundaryDate = (value = '', endOfDay = false) => {
+    if (!value) return null;
+    const raw = String(value).trim();
+    const normalized = /^\d{4}-\d{2}-\d{2}$/.test(raw) ? `${raw}T${endOfDay ? '23:59:59' : '00:00:00'}` : raw;
+    const date = new Date(normalized);
+    return Number.isNaN(date.getTime()) ? null : date;
+  };
+  const getPromoType = (promo = activePromo) => String(promo?.promoType || promo?.promo_type || 'percent').toLowerCase() === 'bogo' ? 'bogo' : 'percent';
+  const isBogoPromoRecord = (promo = activePromo) => getPromoType(promo) === 'bogo';
+  const getPromoBuyQty = (promo = activePromo) => Math.max(2, Number(promo?.buyQty ?? promo?.buy_qty ?? 2) || 2);
+  const getPromoPayQty = (promo = activePromo) => {
+    const buyQty = getPromoBuyQty(promo);
+    const raw = Math.max(1, Number(promo?.payQty ?? promo?.pay_qty ?? 1) || 1);
+    return Math.min(raw, buyQty - 1);
+  };
+  const getPromoFreeQty = (promo = activePromo) => Math.max(1, getPromoBuyQty(promo) - getPromoPayQty(promo));
+  const getPromoBenefitLabel = (promo = activePromo) => {
+    if (!promo) return 'PROMO';
+    if (isBogoPromoRecord(promo)) {
+      const buyQty = getPromoBuyQty(promo);
+      const payQty = getPromoPayQty(promo);
+      return buyQty === 2 && payQty === 1 ? '2x1' : `${buyQty}x${payQty}`;
+    }
+    return `${Number(promo.discount || promo.discount_percent || 0)}% OFF`;
+  };
+  const isPromoCurrentlyAvailable = (promo = {}) => {
+    if (!promo || promo.isActive === false) return false;
+    if (isBogoPromoRecord(promo)) {
+      const buyQty = getPromoBuyQty(promo);
+      const payQty = getPromoPayQty(promo);
+      if (!(buyQty > payQty && payQty > 0)) return false;
+    } else {
+      const discount = Number(promo.discount || promo.discount_percent || 0);
+      if (!(discount > 0)) return false;
+    }
+    const now = new Date();
+    const startsAt = parsePromoBoundaryDate(promo.startsAt || promo.starts_at || '', false);
+    const endsAt = parsePromoBoundaryDate(promo.endsAt || promo.ends_at || '', true);
+    if (startsAt && now < startsAt) return false;
+    if (endsAt && now > endsAt) return false;
+    const maxUses = promo.maxUses ?? promo.max_uses;
+    const usedCount = Number(promo.usedCount ?? promo.used_count ?? 0);
+    if (maxUses !== null && maxUses !== undefined && maxUses !== '' && usedCount >= Number(maxUses)) return false;
+    return true;
+  };
+  const getPromoSource = () => remotePromoCatalogLoaded ? dynamicPromoCodes : Object.values(STORE_CONFIG.promos || {});
+  const getPromoByCode = (code = '') => {
+    const normalized = normalizePromoCode(code);
+    if (!normalized) return null;
+    return getPromoSource().find(promo =>
+      isPromoCurrentlyAvailable(promo) &&
+      (normalizePromoCode(promo.code) === normalized || normalizePromoCode(promo.publicCode) === normalized)
+    ) || null;
+  };
+  const getPromoCodeFromUrl = () => {
+    const params = new URLSearchParams(window.location.search);
+    const direct = params.get('promo') || params.get('codigo') || params.get('cupon') || params.get('coupon') || '';
+    if (direct) return direct;
+    const hash = String(window.location.hash || '').replace(/^#/, '');
+    if (!hash) return '';
+    const hashParams = new URLSearchParams(hash.includes('=') ? hash : 'promo=' + hash);
+    return hashParams.get('promo') || hashParams.get('codigo') || hashParams.get('cupon') || hashParams.get('coupon') || '';
+  };
+  const getPromoFromUrl = () => getPromoByCode(getPromoCodeFromUrl());
+  const readStoredPromo = () => {
+    try {
+      const raw = localStorage.getItem(getPromoStorageKey());
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return getPromoByCode(parsed?.code || parsed?.publicCode || parsed?.id || '');
+    } catch (error) {
+      return null;
+    }
+  };
+  const saveActivePromo = promo => {
+    try {
+      if (!promo) localStorage.removeItem(getPromoStorageKey());
+      else localStorage.setItem(getPromoStorageKey(), JSON.stringify({
+        id: promo.id || '',
+        code: promo.code,
+        publicCode: promo.publicCode,
+        discount: promo.discount,
+        promoType: getPromoType(promo),
+        buyQty: getPromoBuyQty(promo),
+        payQty: getPromoPayQty(promo),
+        acceptedAt: new Date().toISOString()
+      }));
+    } catch (error) {}
+  };
+  const markPromoDeclined = promo => {
+    try {
+      if (promo?.code) localStorage.setItem(getPromoDeclineStorageKey(), JSON.stringify({ code: promo.code, declinedAt: new Date().toISOString() }));
+    } catch (error) {}
+  };
+  const isPromoActive = () => Boolean(activePromo && isPromoCurrentlyAvailable(activePromo));
+  const getActivePromoDiscount = () => Number(activePromo?.discount || 0);
+  const isActivePercentPromo = () => isPromoActive() && !isBogoPromoRecord(activePromo);
+  const isActiveBogoPromo = () => isPromoActive() && isBogoPromoRecord(activePromo);
+  const applyActivePromoToAmount = amount => {
+    const value = Number(amount || 0);
+    const discount = getActivePromoDiscount();
+    return isActivePercentPromo() && discount > 0 ? Math.max(0, Math.round(value * (1 - discount / 100))) : value;
+  };
+  const getEffectiveProductPrice = (product = {}, stampSize = 'normal') => applyActivePromoToAmount(getProductPriceWithStamp(product, stampSize));
+  const getEffectiveUnitPrice = (product = {}, paymentMethod = 'mp') => {
+    const basePrice = Number(product.price || 0);
+    if (isPromoActive()) return applyActivePromoToAmount(basePrice);
+    return paymentMethod === 'transfer' ? Number(getTransferPrice(product) || 0) : basePrice;
+  };
+  const isTransferPaymentMethod = method => method === 'transfer';
+  const isCuentaDniPaymentMethod = method => method === 'cuenta_dni';
+  const isWhatsAppPaymentMethod = method => isTransferPaymentMethod(method) || isCuentaDniPaymentMethod(method);
+  const getPricingPaymentMethod = method => isTransferPaymentMethod(method) ? 'transfer' : 'mp';
+  const getCuentaDniBenefitText = () => `${STORE_CONFIG.cuentaDniRebatePercent || 20}% de reintegro de ${STORE_CONFIG.cuentaDniDays || 'lunes a viernes'} · tope ${fmt(STORE_CONFIG.cuentaDniWeeklyCap || 6000)} semanal por cuenta`;
+  const getPaymentMethodDisplayName = (method = selectedPayMethod) => {
+    if (isTransferPaymentMethod(method)) return 'transferencia bancaria';
+    if (isCuentaDniPaymentMethod(method)) return 'Cuenta DNI';
+    if (method === 'card') return 'tarjeta por Mercado Pago';
+    return 'Mercado Pago / Cuenta MP';
+  };
+  const getPromoDiscountAmount = amount => Math.max(0, Number(amount || 0) - applyActivePromoToAmount(amount));
+  const getPromoLabel = () => activePromo?.publicCode || activePromo?.code || 'PROMO';
+  const getPromoPayload = () => isPromoActive() ? {
+    promo_id: activePromo?.id || null,
+    promo_code: getPromoLabel(),
+    promo_discount: getActivePromoDiscount(),
+    promo_type: getPromoType(activePromo),
+    promo_buy_qty: isActiveBogoPromo() ? getPromoBuyQty(activePromo) : null,
+    promo_pay_qty: isActiveBogoPromo() ? getPromoPayQty(activePromo) : null,
+    promo_description: activePromo?.title || activePromo?.body || getPromoBenefitLabel(activePromo)
+  } : { promo_id: null, promo_code: '', promo_discount: 0, promo_type: '', promo_buy_qty: null, promo_pay_qty: null, promo_description: '' };
+  const hasPromoDeepLink = () => Boolean(getPromoFromUrl());
+  const initPromoSystem = () => {
+    pendingPromo = getPromoFromUrl();
+    activePromo = readStoredPromo();
+    if (activePromo && !isPromoCurrentlyAvailable(activePromo)) {
+      activePromo = null;
+      saveActivePromo(null);
+    }
+    renderPromoActiveUi();
+    renderCartPromoPanel();
+  };
+  const clearPromoParamsFromUrl = () => {
+    try {
+      const url = new URL(window.location.href);
+      ['promo','codigo','cupon','coupon'].forEach(key => url.searchParams.delete(key));
+      if (url.hash && /promo=|codigo=|cupon=|coupon=/i.test(url.hash)) url.hash = '';
+      window.history.replaceState({}, '', url.toString());
+    } catch (error) {}
+  };
+  const openQrPromoModal = (promo = pendingPromo || activePromo) => {
+    if (!promo) return;
+    pendingPromo = promo;
+    const codeLabel = document.getElementById('promoQrCodeLabel');
+    if (codeLabel) codeLabel.textContent = `Código: ${promo.publicCode || promo.code || 'SINRECREO20'}`;
+    document.getElementById('promoQrModal')?.classList.add('open');
+    refreshBodyScrollLock();
+  };
+  const closeQrPromoModal = () => {
+    document.getElementById('promoQrModal')?.classList.remove('open');
+    refreshBodyScrollLock();
+  };
+  const activatePromo = (promo, { scrollCatalog = false, statusMessage = '' } = {}) => {
+    if (!promo) return false;
+    activePromo = promo;
+    saveActivePromo(promo);
+    clearPromoParamsFromUrl();
+    renderPromoActiveUi();
+    refreshCatalogData();
+    updateCartUI();
+    if (statusMessage) showCartPromoStatus(statusMessage, 'success');
+    if (scrollCatalog && !cart.length) {
+      const catalog = document.getElementById('catalogo');
+      if (catalog) catalog.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    return true;
+  };
+  const acceptQrPromo = () => {
+    const promo = pendingPromo || getPromoFromUrl() || activePromo || getPromoByCode('regalo20');
+    if (!promo) { closeQrPromoModal(); return; }
+    pendingPromo = null;
+    closeQrPromoModal();
+    activatePromo(promo, { scrollCatalog: true });
+  };
+  const declineQrPromo = () => {
+    const promo = pendingPromo || getPromoFromUrl();
+    if (promo) markPromoDeclined(promo);
+    pendingPromo = null;
+    closeQrPromoModal();
+    clearPromoParamsFromUrl();
+  };
+  const showCartPromoStatus = (message = '', type = 'info') => {
+    const status = document.getElementById('cartPromoStatus');
+    if (!status) return;
+    status.textContent = message;
+    status.className = `cart-promo-status ${type === 'error' ? 'error' : type === 'success' ? 'success' : ''}`;
+    status.classList.toggle('hidden', !message);
+  };
+  const getCartOriginalSubtotal = () => cart.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 1), 0);
+  const getCartPromoPricing = (paymentMethod = selectedPayMethod) => {
+    const pricingMethod = getPricingPaymentMethod(paymentMethod);
+    const rows = cart.map(item => {
+      const qty = Math.max(1, Number(item.qty || 1));
+      const unitBase = Number(item.price || 0);
+      const unitPrice = Number(getEffectiveUnitPrice(item, pricingMethod) || 0);
+      return {
+        unitBase,
+        subTotal: unitBase * qty,
+        unitPrice,
+        lineTotal: unitPrice * qty,
+        discount: Math.max(0, (unitBase - unitPrice) * qty),
+        qty
+      };
+    });
+    if (!isActiveBogoPromo()) return rows;
+
+    const buyQty = getPromoBuyQty(activePromo);
+    const freeQtyPerGroup = getPromoFreeQty(activePromo);
+    const units = [];
+    cart.forEach((item, cartIndex) => {
+      const qty = Math.max(1, Number(item.qty || 1));
+      const unitBase = Number(item.price || 0);
+      for (let i = 0; i < qty; i += 1) units.push({ cartIndex, price: unitBase });
+    });
+    const freeUnits = Math.floor(units.length / buyQty) * freeQtyPerGroup;
+    if (freeUnits <= 0) return rows.map(row => ({ ...row, unitPrice: row.unitBase, lineTotal: row.subTotal, discount: 0 }));
+
+    const discountByIndex = new Map();
+    units
+      .sort((a, b) => a.price - b.price)
+      .slice(0, freeUnits)
+      .forEach(unit => discountByIndex.set(unit.cartIndex, Number(discountByIndex.get(unit.cartIndex) || 0) + unit.price));
+
+    return rows.map((row, index) => {
+      const discount = Math.min(row.subTotal, Math.round(Number(discountByIndex.get(index) || 0)));
+      const lineTotal = Math.max(0, row.subTotal - discount);
+      return { ...row, unitPrice: row.qty ? lineTotal / row.qty : lineTotal, lineTotal, discount };
+    });
+  };
+  const getCartPromoSavings = (paymentMethod = selectedPayMethod) => getCartPromoPricing(paymentMethod).reduce((sum, row) => sum + Number(row.discount || 0), 0);
+  const getCartPromoLinePricing = (cartIndex, paymentMethod = selectedPayMethod) => getCartPromoPricing(paymentMethod)[cartIndex] || null;
+  const renderCartPromoPanel = () => {
+    const panel = document.getElementById('cartPromoPanel');
+    if (!panel) return;
+    const applied = document.getElementById('cartPromoApplied');
+    const input = document.getElementById('cartPromoInput');
+    const applyBtn = document.getElementById('cartPromoApplyBtn');
+    if (!isPromoActive()) {
+      applied?.classList.add('hidden');
+      if (applyBtn) applyBtn.textContent = 'Aplicar';
+      return;
+    }
+    const savings = isActiveBogoPromo() ? getCartPromoSavings() : getPromoDiscountAmount(getCartOriginalSubtotal());
+    const benefit = getPromoBenefitLabel(activePromo);
+    if (applied) {
+      applied.innerHTML = `<div>🎁 <strong>${escapeHtml(getPromoLabel())}</strong> activo · ${escapeHtml(benefit)}${savings > 0 ? ` · Ahorrás ${fmt(savings)}` : ''}</div><button class="cart-promo-remove" type="button" onclick="clearActivePromoFromCart()">Quitar</button>`;
+      applied.classList.remove('hidden');
+    }
+    if (input && document.activeElement !== input) input.value = getPromoLabel();
+    if (applyBtn) applyBtn.textContent = 'Cambiar';
+  };
+  const applyCartPromoCode = () => {
+    const input = document.getElementById('cartPromoInput');
+    const code = String(input?.value || '').trim();
+    if (!code) {
+      showCartPromoStatus('Escribí un código promocional para aplicarlo.', 'error');
+      input?.focus();
+      return;
+    }
+    const promo = getPromoByCode(code);
+    if (!promo) {
+      showCartPromoStatus('Ese código no está vigente o no existe. Revisá mayúsculas, fechas o si sigue activo.', 'error');
+      input?.focus();
+      return;
+    }
+    activatePromo(promo, { statusMessage: `Código ${promo.publicCode || promo.code} aplicado correctamente.` });
+  };
+  const clearActivePromoFromCart = () => {
+    activePromo = null;
+    pendingPromo = null;
+    saveActivePromo(null);
+    const input = document.getElementById('cartPromoInput');
+    if (input) input.value = '';
+    showCartPromoStatus('Código quitado. El carrito volvió al precio según forma de pago.', 'info');
+    renderPromoActiveUi();
+    refreshCatalogData();
+    updateCartUI();
+  };
+  const renderPromoActiveUi = () => {
+    const existing = document.getElementById('promoActiveStrip');
+    if (!isPromoActive()) {
+      existing?.remove();
+      renderCartPromoPanel();
+      return;
+    }
+    const checkoutPanel = document.getElementById('cartCheckoutPanel');
+    const html = `<div class="promo-active-strip" id="promoActiveStrip">🎁 Promo ${getPromoLabel()} activa: ${getPromoBenefitLabel(activePromo)} aplicado sobre las prendas. No acumulable con otros descuentos internos.</div>`;
+    if (checkoutPanel) {
+      if (existing) existing.outerHTML = html;
+      else checkoutPanel.insertAdjacentHTML('afterbegin', html);
+    }
+    renderCartPromoPanel();
+  };
 
   const isPreLaunchMode = () => Boolean(STORE_CONFIG.preLaunchMode);
   const showPreLaunchNotice = () => {
     alert(STORE_CONFIG.preLaunchMessage || 'Próximamente podrás comprar nuestras remeras en la tienda.');
   };
 
-  const getPreSaleStorageKey = () => STORE_CONFIG.preSaleStorageKey || 'sinrecreo_preventa_docente_v1';
-  const readStoredPreSaleMode = () => {
-    try {
-      const raw = localStorage.getItem(getPreSaleStorageKey());
-      if (raw === null) return Boolean(STORE_CONFIG.preSaleDefaultMode);
-      return raw === 'true';
-    } catch (error) {
-      return Boolean(STORE_CONFIG.preSaleDefaultMode);
-    }
-  };
-  const savePreSaleMode = (active = false) => {
-    try { localStorage.setItem(getPreSaleStorageKey(), String(Boolean(active))); } catch (error) {}
-  };
-  const isPreSaleMode = () => Boolean(preSaleMode);
-  const isPaymentEnabled = () => isPreSaleMode();
-  const getPreSaleBannerHtml = () => `<div><strong>Preventa exclusiva para docentes y auxiliares.</strong> Envío sin cargo por PUDO a Smart Locker, ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés con Mercado Pago y entregas desde el 26 de mayo. Transferencia disponible y Cuenta DNI con 20% de reintegro.</div><span class="prelaunch-pill">Modo preventa activo</span>`;
+  // Modo venta normal: pagos habilitados y sin modal/bloqueo de preventa.
   const getNormalBannerHtml = () => `<div><strong>Tienda SIN RECREO activa.</strong> Elegí tu prenda, completá tus datos y cerrá la compra online.</div><span class="prelaunch-pill">Compra online disponible</span>`;
+  const getPreSaleStorageKey = () => 'sinrecreo_venta_normal_v1';
+  const readStoredPreSaleMode = () => false;
+  const savePreSaleMode = () => {};
+  const isPreSaleMode = () => false;
+  const isPaymentEnabled = () => true;
+  const getPreSaleBannerHtml = getNormalBannerHtml;
 
   const renderPreSaleUi = () => {
-    document.body.classList.toggle('presale-mode', isPreSaleMode());
+    document.body.classList.remove('presale-mode');
 
     const trustFirst = document.querySelector('.trust-grid .trust-item:first-child');
     if (trustFirst) {
       const strong = trustFirst.querySelector('strong');
       const span = trustFirst.querySelector('span');
-      if (isPreSaleMode()) {
-        if (strong) strong.textContent = 'Locker gratis en preventa';
-        if (span) span.textContent = 'Envío sin cargo por PUDO Smart Locker';
-      } else {
-        if (strong) strong.textContent = 'Preventa disponible';
-        if (span) span.textContent = 'Activá el modo preventa para habilitar el pago';
-      }
+      if (strong) strong.textContent = 'Envío gratis';
+      if (span) span.textContent = `En compras desde ${fmt(getFreeShippingThreshold())}`;
     }
 
     const mpTextNode = document.getElementById('heroMpText');
     const whatsAppTextNode = document.getElementById('heroWhatsAppText');
-    if (mpTextNode) mpTextNode.innerHTML = isPreSaleMode()
-      ? `<strong>Preventa:</strong> ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés con Mercado Pago`
-      : `<strong>Preventa:</strong> activá el modo para habilitar el pago`;
-    if (whatsAppTextNode) whatsAppTextNode.innerHTML = isPreSaleMode()
-      ? '<strong>PUDO Locker:</strong> envío sin cargo en preventa'
-      : '<strong>Pago:</strong> inactivo hasta activar preventa';
+    if (mpTextNode) mpTextNode.innerHTML = `<strong>MercadoPago:</strong> ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés`;
+    if (whatsAppTextNode) whatsAppTextNode.innerHTML = '<strong>WhatsApp:</strong> atención personalizada';
 
     document.querySelectorAll('.shipping-help').forEach(node => {
-      node.textContent = isPreSaleMode()
-        ? 'Preventa: envío sin cargo solo a PUDO Smart Locker. La entrega a domicilio no queda bonificada.'
-        : 'Hasta 7 remeras por envío. En compras desde $100.000, SIN RECREO bonifica el envío.';
+      node.textContent = 'Hasta 7 remeras por envío. En compras desde $100.000, SIN RECREO bonifica el envío.';
     });
     const deliveryPudo = document.getElementById('deliveryChoicePudo')?.querySelector('span');
-    if (deliveryPudo) deliveryPudo.textContent = isPreSaleMode() ? 'Locker gratis · domicilio con costo' : 'Domicilio o Smart Locker';
+    if (deliveryPudo) deliveryPudo.textContent = 'Domicilio o Smart Locker';
     refreshPreSaleHeaderButton();
   };
 
@@ -4148,9 +4640,8 @@
   };
 
   const applyPreSaleMode = (active = false, options = {}) => {
-    const { persist = true, rerender = true } = options;
-    preSaleMode = Boolean(active);
-    if (persist) savePreSaleMode(preSaleMode);
+    const { rerender = true } = options;
+    preSaleMode = false;
     renderPreSaleUi();
     resetShippingAfterPreSaleChange();
     if (rerender) {
@@ -4161,52 +4652,18 @@
     }
   };
 
-  const syncPreSaleSwitchLabel = () => {
-    const primary = document.querySelector('#preSaleModal .presale-primary');
-    if (primary) primary.textContent = 'Entrar a la tienda';
-  };
-
+  const syncPreSaleSwitchLabel = () => {};
   const refreshPreSaleHeaderButton = () => {
     const button = document.getElementById('preSaleHeaderButton');
-    if (!button) return;
-    button.classList.toggle('hidden', isPreSaleMode());
-    button.setAttribute('aria-hidden', isPreSaleMode() ? 'true' : 'false');
+    if (button) button.classList.add('hidden');
   };
+  const activatePreSaleFromHeader = () => applyPreSaleMode(false);
+  const openPreSaleModal = () => {};
+  const closePreSaleModal = () => {};
+  const confirmPreSaleModal = () => applyPreSaleMode(false);
+  const continueRegularStore = () => applyPreSaleMode(false);
 
-  const activatePreSaleFromHeader = () => {
-    applyPreSaleMode(true);
-    closePreSaleModal();
-  };
-
-  const openPreSaleModal = () => {
-    const modal = document.getElementById('preSaleModal');
-    const input = document.getElementById('preSaleSwitch');
-    if (!modal || !input) return;
-    input.checked = isPreSaleMode();
-    syncPreSaleSwitchLabel();
-    modal.classList.add('open');
-    refreshBodyScrollLock();
-  };
-
-  const closePreSaleModal = () => {
-    document.getElementById('preSaleModal')?.classList.remove('open');
-    refreshBodyScrollLock();
-  };
-
-  const confirmPreSaleModal = () => {
-    const active = Boolean(document.getElementById('preSaleSwitch')?.checked);
-    applyPreSaleMode(active);
-    closePreSaleModal();
-  };
-
-  const continueRegularStore = () => {
-    const input = document.getElementById('preSaleSwitch');
-    if (input) input.checked = false;
-    applyPreSaleMode(false);
-    closePreSaleModal();
-  };
-
-  preSaleMode = readStoredPreSaleMode();
+  preSaleMode = false;
 
   let capsulesData = [];
   let featuredCapsule = null;
@@ -4450,10 +4907,10 @@
 
   const getContextQuantity = (context = 'single') => getContextItems(context).reduce((sum, item) => sum + Number(item.quantity || 0), 0);
   const getContextSubtotal = (context = 'single', useTransfer = false) => {
-    if (context === 'cart') return cart.reduce((sum, item) => sum + Number(useTransfer ? getTransferPrice(item) : item.price || 0) * Number(item.qty || 1), 0);
+    if (context === 'cart') return cart.reduce((sum, item) => sum + Number(getEffectiveUnitPrice(item, useTransfer ? 'transfer' : 'mp') || 0) * Number(item.qty || 1), 0);
     if (!currentProduct) return 0;
     const singleProduct = { ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize) };
-    return Number(useTransfer ? getTransferPrice(singleProduct) : singleProduct.price || 0);
+    return Number(getEffectiveUnitPrice(singleProduct, useTransfer ? 'transfer' : 'mp') || 0);
   };
   const getFreeShippingThreshold = () => Number(STORE_CONFIG.freeShippingMinAmount || 100000);
   const isFreeShippingContext = (context = 'single') => getContextSubtotal(context, false) >= getFreeShippingThreshold();
@@ -4537,7 +4994,7 @@
           realPrice,
           charge: freeByRule ? 0 : realPrice,
           isFree: freeByRule,
-          freeReason: isPreSaleMode() && optionType === 'locker' ? 'preventa-locker' : (freeByRule ? 'monto-minimo' : ''),
+          freeReason: isPreSaleMode() && optionType === 'locker' ? 'monto-minimo' : (freeByRule ? 'monto-minimo' : ''),
           destination,
           packageItem
         });
@@ -4560,10 +5017,10 @@
         ? `${option.shippingMethodName}${option.lockerName ? ' · ' + option.lockerName : ''}`
         : option.shippingMethodName;
       const detail = option.type === 'locker'
-        ? `${option.address || 'Punto PUDO'}${option.city ? ' · ' + option.city : ''}${option.lockerLocationDetails ? ' · ' + option.lockerLocationDetails : ''}${dates ? ' · Entrega estimada: ' + dates : ''}${isPreSaleMode() ? ' · Beneficio preventa' : ''}`
-        : `Entrega a domicilio${dates ? ' · Estimada: ' + dates : ''}${isPreSaleMode() ? ' · No incluido en envío gratis de preventa' : ''}`;
+        ? `${option.address || 'Punto PUDO'}${option.city ? ' · ' + option.city : ''}${option.lockerLocationDetails ? ' · ' + option.lockerLocationDetails : ''}${dates ? ' · Entrega estimada: ' + dates : ''}${isPreSaleMode() ? '' : ''}`
+        : `Entrega a domicilio${dates ? ' · Estimada: ' + dates : ''}${isPreSaleMode() ? '' : ''}`;
       const selectedClass = selected && selected.shippingMethodId === option.shippingMethodId && String(selected.lockerId || '') === String(option.lockerId || '') ? 'selected' : '';
-      const priceLabel = option.isFree ? (option.freeReason === 'preventa-locker' ? 'GRATIS PREVENTA' : 'BONIFICADO') : fmt(option.charge);
+      const priceLabel = option.isFree ? (option.freeReason === 'monto-minimo' ? 'BONIFICADO' : 'BONIFICADO') : fmt(option.charge);
       return `<button class="shipping-option ${selectedClass}" type="button" onclick="selectShippingOption('${context}', ${idx})">
         <div>
           <div class="shipping-option-title">${escapeHtml(title)}</div>
@@ -4594,8 +5051,8 @@
     const destination = option.destination || {};
     const method = option.type === 'locker' ? (option.shippingMethodName + (option.lockerName ? ' · ' + option.lockerName : '')) : option.shippingMethodName;
     const destinationText = option.type === 'locker' ? ((option.address || 'Punto PUDO') + (option.city ? ', ' + option.city : '')) : ((destination.address || '') + ' ' + (destination.number || '') + (destination.city ? ', ' + destination.city : ''));
-    const freeText = option.freeReason === 'preventa-locker' ? ('Envío sin cargo por preventa docente. Costo real: ' + fmt(option.realPrice) + '.') : ('Envío bonificado por SIN RECREO. Costo real: ' + fmt(option.realPrice) + '.');
-    node.innerHTML = '<strong>Entrega seleccionada:</strong> ' + escapeHtml(method) + '<br>' + escapeHtml(destinationText) + '<br>' + (option.isFree ? freeText : ('Costo de envío: ' + fmt(option.charge) + '.')) + (isPreSaleMode() ? '<br><strong>Preventa:</strong> las entregas comienzan a partir del 26 de mayo.' : '');
+    const freeText = option.freeReason === 'monto-minimo' ? ('Envío sin cargo por preventa docente. Costo real: ' + fmt(option.realPrice) + '.') : ('Envío bonificado por SIN RECREO. Costo real: ' + fmt(option.realPrice) + '.');
+    node.innerHTML = '<strong>Entrega seleccionada:</strong> ' + escapeHtml(method) + '<br>' + escapeHtml(destinationText) + '<br>' + (option.isFree ? freeText : ('Costo de envío: ' + fmt(option.charge) + '.'));
     node.classList.remove('hidden');
   };
   const quotePudoShipping = async (context = 'single') => {
@@ -4701,6 +5158,42 @@
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '');
   const getWhatsAppBase = () => `https://wa.me/${STORE_CONFIG.whatsappNumber}`;
+  const isAndroidWhatsAppClient = () => /Android/i.test(navigator.userAgent || '');
+  const isMobileWhatsAppClient = () => /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+  const getWhatsAppWebUrl = message => `${getWhatsAppBase()}?text=${encodeURIComponent(String(message || ''))}`;
+  const getWhatsAppAppUrl = message => {
+    const text = encodeURIComponent(String(message || ''));
+    const phone = encodeURIComponent(STORE_CONFIG.whatsappNumber);
+    if (isAndroidWhatsAppClient()) {
+      const fallback = encodeURIComponent(getWhatsAppWebUrl(message));
+      return `intent://send?phone=${phone}&text=${text}#Intent;scheme=whatsapp;S.browser_fallback_url=${fallback};end`;
+    }
+    return `whatsapp://send?phone=${phone}&text=${text}`;
+  };
+  const getWhatsAppLaunchUrl = message => isMobileWhatsAppClient() ? getWhatsAppAppUrl(message) : getWhatsAppWebUrl(message);
+  const openWhatsApp = (message, options = {}) => {
+    const launchUrl = getWhatsAppLaunchUrl(message);
+    const webUrl = getWhatsAppWebUrl(message);
+    const popup = options?.popup || null;
+
+    if (popup && !popup.closed) {
+      try {
+        popup.document.open();
+        popup.document.write(`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Abrir WhatsApp · SIN RECREO</title><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#faf9f6;color:#1a1a1b;display:grid;place-items:center;min-height:100vh;margin:0;padding:24px;text-align:center}main{max-width:420px}h1{font-size:24px;margin:0 0 10px}p{color:#6d6863;line-height:1.6;margin:0 0 20px}.btn{display:block;padding:15px 20px;margin:10px 0;border-radius:999px;text-decoration:none;font-weight:800}.primary{background:#25D366;color:#fff}.secondary{background:#fff;color:#1a1a1b;border:1px solid #e8e1d7}</style></head><body><main><h1>Tu pedido está listo</h1><p>Estamos abriendo WhatsApp. Si no se abre automáticamente, tocá el botón.</p><a class="btn primary" href="${escapeHtml(launchUrl)}">Abrir WhatsApp</a><a class="btn secondary" href="${escapeHtml(webUrl)}">Continuar en el navegador</a></main></body></html>`);
+        popup.document.close();
+        popup.location.href = launchUrl;
+        return;
+      } catch (error) {
+        // Si el navegador bloquea la navegación de la pestaña auxiliar, seguimos en la pestaña actual.
+      }
+    }
+
+    if (isMobileWhatsAppClient()) {
+      window.location.href = launchUrl;
+      return;
+    }
+    window.open(webUrl, '_blank', 'noopener,noreferrer');
+  };
   const buildGenericWhatsAppMessage = () => `*Hola, SIN RECREO* 👋
 
 Estoy mirando la tienda y quiero hacer una consulta por una remera.
@@ -4731,13 +5224,25 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
   const GENERAL_CAPSULE_NAME = 'Línea Permanente';
   const GENERAL_CAPSULE_ALIASES = ['general', 'linea permanente', 'línea permanente', 'permanente', 'seleccion abierta', 'selección abierta', 'catalogo general', 'catálogo general'];
   const isGeneralCapsuleName = name => GENERAL_CAPSULE_ALIASES.includes(normalizeTextKey(name));
-  const getDisplayCapsuleName = name => isGeneralCapsuleName(name) ? GENERAL_CAPSULE_NAME : String(name || '').trim();
-  const EFEMERIDES_CAPSULE_NAME = 'Efemérides';
-  const isEfemeridesCapsuleName = name => normalizeTextKey(name) === 'efemerides';
+  const WOMEN_SCIENCE_CAPSULE_NAME = 'Mujeres de la Ciencia';
+  const WOMEN_SCIENCE_CAPSULE_ALIASES = ['efemerides', 'efemérides', 'mujeres de la ciencia', 'mujeres ciencia', 'mujeres cientificas', 'mujeres científicas'];
+  const isWomenScienceCapsuleName = name => WOMEN_SCIENCE_CAPSULE_ALIASES.includes(normalizeTextKey(name));
+  const getDisplayCapsuleName = name => isGeneralCapsuleName(name)
+    ? GENERAL_CAPSULE_NAME
+    : (isWomenScienceCapsuleName(name) ? WOMEN_SCIENCE_CAPSULE_NAME : String(name || '').trim());
+  // Compatibilidad: si en Supabase todavía figura como “Efemérides”, se muestra y se abre como “Mujeres de la Ciencia”.
+  const EFEMERIDES_CAPSULE_NAME = WOMEN_SCIENCE_CAPSULE_NAME;
+  const isEfemeridesCapsuleName = isWomenScienceCapsuleName;
   const capsuleMatches = (productCapsule, capsuleName) => isGeneralCapsuleName(productCapsule) && isGeneralCapsuleName(capsuleName)
     ? true
-    : normalizeTextKey(productCapsule) === normalizeTextKey(capsuleName);
-  const getTransferPrice = p => p.transferPrice ?? Math.round(p.price * (1 - ((p.transferDiscount ?? STORE_CONFIG.transferDiscount) / 100)));
+    : (isWomenScienceCapsuleName(productCapsule) && isWomenScienceCapsuleName(capsuleName)
+      ? true
+      : normalizeTextKey(productCapsule) === normalizeTextKey(capsuleName));
+  const getTransferPrice = p => {
+    const basePrice = Number(p?.price || 0);
+    if (isPromoActive()) return applyActivePromoToAmount(basePrice);
+    return p.transferPrice ?? Math.round(basePrice * (1 - ((p.transferDiscount ?? STORE_CONFIG.transferDiscount) / 100)));
+  };
   const normalizeFit = fit => {
     const key = String(fit || '').trim().toLowerCase();
     if (['femenino','femenina','corte dama','dama','mujer'].includes(key)) return 'femenina';
@@ -4754,7 +5259,16 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
   };
   const makeVariantSizeKey = (fit, size) => normalizeFit(fit) === 'unisex' ? String(size || '') : `${normalizeFit(fit).toUpperCase()}__${String(size || '')}`;
   const SIZE_ORDER = ['XS','S','M','L','XL','XXL'];
-  const getFitLabel = fit => ({ unisex:'Unisex', femenina:'Femenina' }[normalizeFit(fit)] || 'Unisex');
+  const GARMENT_MEASUREMENTS = {
+    unisex: { S:'48×65 cm', M:'49×69 cm', L:'51×71 cm', XL:'54×73 cm', XXL:'56×76 cm' },
+    femenina: { S:'41×57 cm', M:'43×60 cm', L:'45×62 cm', XL:'47×64 cm', XXL:'51×68 cm' }
+  };
+  const getFitLabel = fit => ({ unisex:'Unisex', femenina:'Femenino' }[normalizeFit(fit)] || 'Unisex');
+  const getSizeMeasurement = (fit, size) => (GARMENT_MEASUREMENTS[normalizeFit(fit)] || {})[String(size || '').trim()] || '';
+  const getFitMeasurementsSummary = fit => SIZE_ORDER
+    .filter(size => getSizeMeasurement(fit, size))
+    .map(size => `${size} ${getSizeMeasurement(fit, size)}`)
+    .join(' · ');
   const getFitOrder = fit => ({ unisex:0, femenina:1 }[normalizeFit(fit)] ?? 9);
   const buildBlankStockSnapshot = (rows = []) => {
     const byFitColorSize = {};
@@ -4817,7 +5331,13 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
   const getBlankStockId = (p, size, fit = 'unisex', color = 'Hueso') => (p.blankStockIdsByKey && p.blankStockIdsByKey[`${normalizeFit(fit)}|${normalizeColor(color)}|${size}`]) || '';
   const getVariantId = (p, size, fit = 'unisex') => getBlankStockId(p, size, fit, getDefaultColor(p, fit));
   const describeFitAndSize = (fit, size, color = '') => `${getFitLabel(fit)}${color ? ' · ' + normalizeColor(color) : ''} · Talle ${size}`;
-  const getProductUrl = p => `${location.origin}${location.pathname}#${p.id}`;
+  const PRODUCT_DEEP_LINK_PARAM_KEYS = ['producto', 'product', 'prenda', 'p'];
+  let productDeepLinkHandled = false;
+  const getProductUrl = p => {
+    const url = new URL(window.location.origin + window.location.pathname);
+    url.searchParams.set('producto', String(p?.id || p?.slug || p?.dbId || '').trim());
+    return url.toString();
+  };
   const PRODUCT_DESCRIPTION_WORD_LIMIT_DESKTOP = 20;
   const PRODUCT_DESCRIPTION_DESKTOP_QUERY = '(min-width: 681px)';
   const shouldTruncateProductDescriptions = () => window.matchMedia(PRODUCT_DESCRIPTION_DESKTOP_QUERY).matches;
@@ -5006,6 +5526,49 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     return normalized.length ? normalized : getCapsuleFallbackData();
   };
 
+  const normalizePromoRecord = (row = {}) => {
+    const rawCode = String(row.code || row.public_code || '').trim();
+    const promoType = String(row.promo_type || row.promoType || 'percent').toLowerCase() === 'bogo' ? 'bogo' : 'percent';
+    const discount = Number(row.discount_percent ?? row.discount ?? 0);
+    const buyQty = Math.max(2, Number(row.buy_qty ?? row.buyQty ?? 2) || 2);
+    const payQty = Math.min(Math.max(1, Number(row.pay_qty ?? row.payQty ?? 1) || 1), buyQty - 1);
+    return {
+      id: row.id || rawCode,
+      code: rawCode,
+      publicCode: String(row.public_code || rawCode).trim().toUpperCase(),
+      promoType,
+      discount,
+      buyQty,
+      payQty,
+      title: row.description || row.title || (promoType === 'bogo' ? (buyQty === 2 && payQty === 1 ? '2x1' : `${buyQty}x${payQty}`) : `${discount}% OFF`),
+      subtitle: row.subtitle || '',
+      body: row.description || '',
+      isActive: row.is_active !== false,
+      startsAt: row.starts_at || row.valid_from || '',
+      endsAt: row.ends_at || row.valid_until || '',
+      maxUses: row.max_uses ?? null,
+      usedCount: Number(row.used_count || 0)
+    };
+  };
+
+  const loadPromoCodesFromSupabase = async () => {
+    const client = initSupabaseClient();
+    if (!client) return [];
+    try {
+      const { data, error } = await client
+        .from('promo_codes')
+        .select('id, code, description, promo_type, discount_percent, buy_qty, pay_qty, is_active, starts_at, ends_at, max_uses, used_count, created_at')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      remotePromoCatalogLoaded = true;
+      return (data || []).map(normalizePromoRecord).filter(promo => promo.code);
+    } catch (error) {
+      remotePromoCatalogLoaded = false;
+      console.warn('No se pudieron cargar códigos promocionales desde Supabase. Se usa el fallback local si existe:', error);
+      return [];
+    }
+  };
+
   const renderFeaturedCapsule = () => {
     const list = capsulesData.length ? capsulesData : getCapsuleFallbackData();
     featuredCapsule = list.find(item => item.featured) || list[0] || null;
@@ -5037,9 +5600,9 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
 
   const computeLocalStoreMetrics = () => {
     const activeProducts = products.filter(product => getTotalStock(product) > 0);
-    const activeCapsuleNames = new Set(activeProducts.map(product => product.capsule).filter(Boolean));
+    const activeCapsuleNames = new Set(activeProducts.map(product => getDisplayCapsuleName(product.capsule)).filter(Boolean));
     const activeCapsules = capsulesData.length
-      ? capsulesData.filter(capsule => capsule.isActive !== false && activeCapsuleNames.has(capsule.name)).length
+      ? capsulesData.filter(capsule => capsule.isActive !== false && activeCapsuleNames.has(getDisplayCapsuleName(capsule.name))).length
       : activeCapsuleNames.size;
 
     return {
@@ -5065,6 +5628,7 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
 
   const loadPublicStoreMetrics = async () => {
     const localMetrics = computeLocalStoreMetrics();
+    if (!HERO_COUNTERS_ENABLED) return localMetrics;
     const client = initSupabaseClient();
     if (!client) return localMetrics;
 
@@ -5089,22 +5653,25 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
   };
 
   const renderHeroStats = () => {
-    const activeDropsNode = document.getElementById('statActiveDrops');
-    const activeCapsulesNode = document.getElementById('statActiveCapsules');
-    const customersNode = document.getElementById('statCustomers');
-    const installmentsNode = document.getElementById('statInstallments');
-    const mpTextNode = document.getElementById('heroMpText');
-    const transferTextNode = document.getElementById('heroTransferText');
+    const setText = (selector, value) => document.querySelectorAll(selector).forEach(node => { node.textContent = value; });
+    const setHtml = (selector, value) => document.querySelectorAll(selector).forEach(node => { node.innerHTML = value; });
 
-    if (activeDropsNode) activeDropsNode.textContent = String(storeMetrics.activeDrops ?? 0);
-    if (activeCapsulesNode) activeCapsulesNode.textContent = String(storeMetrics.activeCapsules ?? 0);
-    if (customersNode) {
+    document.querySelectorAll('[data-counter-section]').forEach(node => {
+      node.classList.toggle('hidden', !HERO_COUNTERS_ENABLED);
+      node.setAttribute('aria-hidden', HERO_COUNTERS_ENABLED ? 'false' : 'true');
+    });
+
+    if (HERO_COUNTERS_ENABLED) {
       const customersCount = Number(storeMetrics.customersCount ?? 0);
-      customersNode.textContent = customersCount > 0 ? `+${customersCount}` : '0';
+      setText('[data-stat="active-drops"], #statActiveDrops', String(storeMetrics.activeDrops ?? 0));
+      setText('[data-stat="active-capsules"], #statActiveCapsules', String(storeMetrics.activeCapsules ?? 0));
+      setText('[data-stat="customers"], #statCustomers', customersCount > 0 ? `+${customersCount}` : '0');
+      setText('[data-stat="installments"], #statInstallments', `${STORE_CONFIG.installmentsCount || 3}x`);
     }
-    if (installmentsNode) installmentsNode.textContent = `${STORE_CONFIG.installmentsCount || 3}x`;
-    if (mpTextNode) mpTextNode.innerHTML = `<strong>MercadoPago:</strong> ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés`;
-    if (transferTextNode) transferTextNode.innerHTML = `<strong>Transferencia:</strong> ${STORE_CONFIG.transferDiscount}% de descuento`;
+
+    setHtml('#heroMpText', `<strong>MercadoPago:</strong> ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés`);
+    setHtml('#heroTransferText', `<strong>Transferencia:</strong> ${STORE_CONFIG.transferDiscount}% de descuento`);
+    setHtml('#heroCuentaDniText', `<strong>Cuenta DNI:</strong> ${getCuentaDniBenefitText()}`);
   };
 
 
@@ -5252,6 +5819,78 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     return Math.max(0, Number(productSalesMap[productId] || 0));
   };
 
+  const getProductSearchText = product => normalizeTextKey([
+    product?.title,
+    product?.capsule,
+    getDisplayCapsuleName(product?.capsule || ''),
+    product?.description,
+    product?.sku,
+    product?.id,
+    product?.dbId
+  ].filter(Boolean).join(' '));
+
+  const productMatchesSearch = (product, query = '') => {
+    const terms = normalizeTextKey(query).split(/\s+/).filter(Boolean);
+    if (!terms.length) return true;
+    const haystack = getProductSearchText(product);
+    return terms.every(term => haystack.includes(term));
+  };
+
+  const getProductFromDeepLinkValue = (value = '') => {
+    const cleaned = decodeURIComponent(String(value || '').replace(/^#/, '').trim());
+    const normalized = normalizeTextKey(cleaned);
+    if (!normalized) return null;
+    return products.find(product => [
+      product.id,
+      product.dbId,
+      product.sku,
+      product.title
+    ].some(candidate => normalizeTextKey(candidate) === normalized)) || null;
+  };
+
+  const getProductDeepLinkValueFromUrl = () => {
+    const params = new URLSearchParams(window.location.search || '');
+    for (const key of PRODUCT_DEEP_LINK_PARAM_KEYS) {
+      const value = params.get(key);
+      if (value) return value;
+    }
+
+    const rawHash = String(window.location.hash || '').replace(/^#/, '').trim();
+    if (!rawHash) return '';
+
+    if (rawHash.includes('=')) {
+      const hashParams = new URLSearchParams(rawHash);
+      for (const key of PRODUCT_DEEP_LINK_PARAM_KEYS) {
+        const value = hashParams.get(key);
+        if (value) return value;
+      }
+    }
+
+    return rawHash;
+  };
+
+  const getProductFromUrl = () => getProductFromDeepLinkValue(getProductDeepLinkValueFromUrl());
+
+  const handleProductDeepLink = ({ force = false } = {}) => {
+    if (productDeepLinkHandled && !force) return false;
+    const linkedProduct = getProductFromUrl();
+    if (!linkedProduct) return false;
+
+    productDeepLinkHandled = true;
+    closePreSaleModal?.();
+    closeQrPromoModal?.();
+    closeCapsuleModal?.();
+    closeProductsModal?.();
+    closeEfemeridesModal?.();
+    closeClubModal?.();
+    closeCartDrawer?.();
+
+    requestAnimationFrame(() => {
+      openBuyModal(linkedProduct.id);
+    });
+    return true;
+  };
+
   const getCatalogCollections = () => {
     const active = products.filter(product => getTotalStock(product) > 0);
     const byNewest = [...active].sort((a, b) => new Date(b.sortDate || 0) - new Date(a.sortDate || 0));
@@ -5315,47 +5954,33 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
   const getEfemeridesCapsuleName = () => {
     const record = (capsulesData.length ? capsulesData : getCapsuleFallbackData())
       .find(item => isEfemeridesCapsuleName(item.name) || isEfemeridesCapsuleName(item.rawName));
-    return record?.name || getLatestEfemeridesProduct()?.capsule || EFEMERIDES_CAPSULE_NAME;
+    return record?.name || EFEMERIDES_CAPSULE_NAME;
   };
 
   const renderEfemeridesModal = () => {
     const body = document.getElementById('efemeridesModalBody');
     if (!body) return;
-    const product = getLatestEfemeridesProduct();
-    if (!product) {
-      body.innerHTML = `
-        <div class="efemerides-empty">
-          <strong>Efemérides todavía no tiene prendas visibles</strong>
-          <p>Cuando cargues una remera en la cápsula <b>Efemérides</b>, este acceso mostrará automáticamente la última prenda cargada.</p>
-        </div>`;
-      return;
-    }
-
-    const images = getImageList(product);
-    const stock = getTotalStock(product);
-    const transferPrice = getTransferPrice(product);
+    const count = getEfemeridesProducts().length;
     body.innerHTML = `
-      <article class="efemerides-feature">
-        <div class="efemerides-media">
-          <img src="${images[0]}" alt="${escapeHtml(product.title)}" />
+      <article class="science-tribute">
+        <div class="science-tribute-visual">
+          <div class="science-tribute-symbol" aria-hidden="true">🔬</div>
+          <p class="science-tribute-note">Una cápsula para sacar del pie de página a quienes observaron, calcularon, curaron, clasificaron, programaron, enseñaron y descubrieron.</p>
         </div>
-        <div class="efemerides-copy">
-          <div class="efemerides-kicker">✦ Última efeméride cargada</div>
-          <h3 class="efemerides-title">${escapeHtml(product.title)}</h3>
-          <p class="efemerides-desc">${escapeHtml(product.description || 'Una prenda de la cápsula Efemérides, pensada para vestir una fecha, una idea y una conversación.')}</p>
+        <div class="science-tribute-copy">
+          <div class="science-tribute-kicker">✦ Nueva sección · SIN RECREO</div>
+          <h3 class="science-tribute-title">MUJERES<br><em>de la Ciencia</em></h3>
+          <p class="science-tribute-lead">Un homenaje a las mujeres que hicieron ciencia incluso cuando el mundo no estaba dispuesto a nombrarlas. Esta cápsula reúne estampas con memoria, descubrimiento y reparación: vestir una idea también puede ser devolverle lugar a una historia.</p>
           <div class="efemerides-meta">
-            <span class="efemerides-chip">${escapeHtml(getDisplayCapsuleName(product.capsule))}</span>
-            <span class="efemerides-chip">Código ${escapeHtml(product.sku || 'SIN CÓDIGO')}</span>
-            <span class="efemerides-chip">${stock} ${stock === 1 ? 'unidad' : 'unidades'} disponibles</span>
+            <span class="efemerides-chip">Ciencia con nombre propio</span>
+            <span class="efemerides-chip">Historia que vuelve</span>
+            <span class="efemerides-chip">${count} ${count === 1 ? 'prenda visible' : 'prendas visibles'}</span>
           </div>
-          <div class="efemerides-price">
-            <strong>${fmt(product.price || 0)}</strong>
-            <span>3 x ${fmt(Math.round((product.price || 0) / 3))} sin interés · ${fmt(transferPrice)} por transferencia</span>
-          </div>
-          <div class="efemerides-actions">
-            <button class="modal-secondary-cta" type="button" onclick="openBuyModal('${product.id}', event)">Elegir talle y agregar</button>
-            <button class="club-cta secondary" type="button" onclick="addToCart('${product.id}', event)">Agregar directo al carrito</button>
-            <button class="efemerides-outline" type="button" onclick="openEfemeridesCollection()">VER COLECCIÓN COMPLETA</button>
+          <div class="science-tribute-actions">
+            <button class="club-cta primary" type="button" onclick="openEfemeridesCollection()">
+              Ingresar a la cápsula
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
           </div>
         </div>
       </article>`;
@@ -5455,13 +6080,15 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
   const initStore = async () => {
     try {
       if (isSupabaseConfigured()) {
-        const [remoteProducts, remoteCapsules] = await Promise.all([
+        const [remoteProducts, remoteCapsules, remotePromos] = await Promise.all([
           loadProductsFromSupabase(),
           loadCapsulesFromSupabase().catch(error => {
             console.error('Error cargando cápsulas desde Supabase:', error);
             return getCapsuleFallbackData();
-          })
+          }),
+          loadPromoCodesFromSupabase()
         ]);
+        dynamicPromoCodes = Array.isArray(remotePromos) ? remotePromos : [];
         if (remoteProducts?.length) {
           products = remoteProducts;
         } else {
@@ -5470,6 +6097,8 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
         capsulesData = remoteCapsules?.length ? remoteCapsules : getCapsuleFallbackData();
       } else {
         console.warn('Supabase no está configurado. Se muestran los productos de ejemplo.');
+        remotePromoCatalogLoaded = false;
+        dynamicPromoCodes = [];
         capsulesData = getCapsuleFallbackData();
       }
     } catch (error) {
@@ -5482,10 +6111,14 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
       wireAdminAccessLinks();
       wireCheckoutCustomerInputs();
       wireDeliveryInputs();
+      initPromoSystem();
       refreshCatalogData();
       renderPaymentStatusBanner();
       observeElements();
-      setTimeout(openPreSaleModal, Number(STORE_CONFIG.preSaleModalDelayMs || 650));
+      const productDeepLinkWasHandled = handleProductDeepLink();
+      if (pendingPromo) {
+        setTimeout(() => openQrPromoModal(pendingPromo), 300);
+      }
     }
   };
 
@@ -5562,8 +6195,7 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
 
   const openPaymentHelp = () => {
     const status = getPaymentStatusFromUrl() || 'sin estado';
-    const msg = encodeURIComponent(buildPaymentHelpMessage(status));
-    window.open(`${getWhatsAppBase()}?text=${msg}`, '_blank');
+    openWhatsApp(buildPaymentHelpMessage(status));
   };
 
   const placeholderImage = (title, n, accent='#b35c44') => {
@@ -5744,16 +6376,28 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
 
   const applyFilters = () => {
     const collections = getCatalogCollections();
-    const base = collections.featured;
+    const query = String(state.query || '').trim();
+    const hasSearch = Boolean(query);
+    const base = hasSearch
+      ? products
+          .filter(product => getTotalStock(product) > 0)
+          .sort((a, b) => Number(b.featured) - Number(a.featured) || new Date(b.sortDate || 0) - new Date(a.sortDate || 0))
+      : collections.featured;
 
-    const filtered = base.filter(product => {
-      if (!state.query) return true;
-      return `${product.title} ${product.capsule} ${product.description} ${product.sku || ''}`.toLowerCase().includes(state.query.toLowerCase());
-    });
+    const filtered = base.filter(product => productMatchesSearch(product, query));
 
     renderProducts(filtered, 'productsGrid');
     const rc = document.getElementById('resultsCount');
-    if (rc) rc.textContent = 'Te presentamos nuestras prendas destacadas del mes.';
+    const title = document.querySelector('.catalog-toolbar .section-title');
+    if (title) title.textContent = hasSearch ? 'Resultados de búsqueda' : 'Destacados del Catálogo';
+    if (rc) {
+      if (hasSearch) {
+        const countText = `${filtered.length} ${filtered.length === 1 ? 'prenda encontrada' : 'prendas encontradas'}`;
+        rc.textContent = `${countText} para “${query}”. Buscamos por nombre, cápsula, descripción y código.`;
+      } else {
+        rc.textContent = 'Te presentamos nuestras prendas destacadas del mes.';
+      }
+    }
   };
 
   const renderProducts = (items, targetId = 'productsGrid') => {
@@ -5775,7 +6419,12 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     grid.innerHTML = items.map(p => {
       const sizes = getAvailableSizes(p);
       const stock = getTotalStock(p);
-      const transferPrice = getTransferPrice(p);
+      const baseCardPrice = Number(p.price || 0);
+      const displayPrice = getEffectiveProductPrice(p, 'normal');
+      const transferPrice = getTransferPrice({ ...p, price: baseCardPrice });
+      const promoCardHtml = isPromoActive()
+        ? `<div class="promo-price-old">${fmt(baseCardPrice)}</div><div class="promo-price-badge">${getActivePromoDiscount()}% OFF · ${escapeHtml(getPromoLabel())}</div>`
+        : '';
       const descData = truncateWords(p.description, PRODUCT_DESCRIPTION_WORD_LIMIT_DESKTOP);
       const descriptionHtml = truncateDescriptions && descData.truncated
         ? `<p class="pcard-desc"><span class="pcard-desc-inline" data-desc-role="text" data-full="${escapeHtml(descData.full)}" data-short="${escapeHtml(descData.short)}">${escapeHtml(descData.short)}</span><button class="pcard-desc-toggle" type="button" data-desc-role="toggle" data-expanded="false" onclick="toggleProductDescription(event)">ver más...</button></p>`
@@ -5805,9 +6454,10 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
             ${descriptionHtml}
             ${getAvailableFits(p).length > 1 ? `<div class="pcard-transfer" style="margin-top:-4px">Disponible en femenino o unisex según talle, en Negro, Blanco y color Hueso</div>` : ``}
             <div class="pcard-price-block">
-              <div class="pcard-price">${fmt(p.price)}</div>
-              <div class="pcard-cuotas">3 x ${fmt(Math.round(p.price / 3))} sin interés</div>
-              <div class="pcard-transfer">💸 ${fmt(transferPrice)} por transferencia</div>
+              ${promoCardHtml}
+              <div class="pcard-price">${fmt(displayPrice)}</div>
+              <div class="pcard-cuotas">3 x ${fmt(Math.round(displayPrice / 3))} sin interés</div>
+              <div class="pcard-transfer">${isPromoActive() ? '🎁 Precio promocional aplicado' : '💸 ' + fmt(transferPrice) + ' por transferencia'}</div>
             </div>
             <div class="size-row">${sizes.map(sz => {
               const parsedSize = parseVariantSizeKey(sz);
@@ -5869,8 +6519,7 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
       alert('Copiamos el link del producto para que puedas compartirlo.');
     } catch (error) {
       if (error?.name === 'AbortError') return;
-      const whatsappUrl = `${getWhatsAppBase()}?text=${encodeURIComponent(shareData.text + ' ' + url)}`;
-      window.open(whatsappUrl, '_blank');
+      openWhatsApp(shareData.text + ' ' + url);
     }
   };
 
@@ -5889,7 +6538,7 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
       return `
       <button class="fit-btn ${tone} ${selectedFit === fit ? 'selected' : ''}" type="button" onclick="selectFit(this,'${fit}')" ${stock <= 0 ? 'disabled' : ''}>
         <span>${getFitLabel(fit)}</span>
-        <small>${getStockLabel(stock)}</small>
+        <small class="garment-stock">${getStockLabel(stock)}</small>
       </button>`;
     }).join('');
   };
@@ -5899,7 +6548,7 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     if (!colorWrap) return;
     const colors = getAllColorsForFit(product, selectedFit);
     if (!colors.length) {
-      colorWrap.innerHTML = '<div class="mini">Sin colores cargados para este modelo</div>';
+      colorWrap.innerHTML = '<div class="mini">Sin colores cargados para este corte</div>';
       return;
     }
     const preferredColor = colors.find(color => getColorStockTotal(product, selectedFit, color) > 0) || colors[0] || '';
@@ -5930,10 +6579,12 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     sizeWrap.innerHTML = sizes.map(sz => {
       const stock = getStockForSelection(product, sz, selectedFit, selectedColor);
       const tone = getStockTone(stock);
+      const measurement = getSizeMeasurement(selectedFit, sz);
       return `
       <button class="sz-btn ${tone} ${selectedSize === sz ? 'selected' : ''}" type="button" onclick="selectSize(this,'${sz}')" ${stock <= 0 ? 'disabled' : ''}>
         <span>${sz}</span>
-        <small>${getStockLabel(stock)}</small>
+        ${measurement ? `<small class="garment-measurement">${measurement}</small>` : ''}
+        <small class="garment-stock">${getStockLabel(stock)}</small>
       </button>`;
     }).join('');
     updateModalStockNote();
@@ -6095,7 +6746,7 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
 
   const addConfiguredToCart = (closeAfter = false) => {
     if (isPreLaunchMode()) { showPreLaunchNotice(); return; }
-    if (!currentProduct || !selectedSize) { alert('Elegí modelo, color, talle y tamaño de estampa antes de agregar al carrito.'); return; }
+    if (!currentProduct || !selectedSize) { alert('Elegí corte, color, talle y tamaño de estampa antes de agregar al carrito.'); return; }
     const selectedBlankStockId = getBlankStockId(currentProduct, selectedSize, selectedFit, selectedColor);
     if (!selectedBlankStockId) { alert('No encontramos stock base válido para esa combinación.'); return; }
     const stampSize = getStampSizeOption(selectedStampSize).id;
@@ -6131,18 +6782,50 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
 
   const updateTransferPanel = () => {
     const panel = document.getElementById('transferPanel'); if (!panel) return;
-    const show = selectedPayMethod === 'transfer'; panel.hidden = !show;
-    const alias = document.getElementById('transferAliasValue'); const owner = document.getElementById('transferOwnerValue'); const cbu = document.getElementById('transferCbuValue'); const badge = document.getElementById('transferDiscountBadge');
-    if (alias) alias.textContent = STORE_CONFIG.transferAlias; if (owner) owner.textContent = STORE_CONFIG.transferOwner; if (cbu) cbu.textContent = STORE_CONFIG.transferCBU; if (badge) badge.textContent = STORE_CONFIG.transferDiscount + '% OFF';
+    const isTransfer = selectedPayMethod === 'transfer';
+    const isCuentaDni = selectedPayMethod === 'cuenta_dni';
+    panel.hidden = !(isTransfer || isCuentaDni);
+
+    const title = document.getElementById('transferPanelTitle');
+    const alias = document.getElementById('transferAliasValue');
+    const owner = document.getElementById('transferOwnerValue');
+    const cbu = document.getElementById('transferCbuValue');
+    const badge = document.getElementById('transferDiscountBadge');
+    const dataGrid = document.getElementById('transferDataGrid');
+    const actions = document.getElementById('transferActions');
+    const note = document.getElementById('transferPanelNote');
+
+    if (alias) alias.textContent = STORE_CONFIG.transferAlias;
+    if (owner) owner.textContent = STORE_CONFIG.transferOwner;
+    if (cbu) cbu.textContent = STORE_CONFIG.transferCBU;
+
+    if (isCuentaDni) {
+      if (title) title.textContent = 'Cuenta DNI con reintegro';
+      if (badge) badge.textContent = `${STORE_CONFIG.cuentaDniRebatePercent || 20}% REINTEGRO`;
+      if (dataGrid) dataGrid.classList.add('hidden');
+      if (actions) actions.classList.add('hidden');
+      if (note) note.innerHTML = `${getCuentaDniBenefitText()}. <strong>La tienda no descuenta ese reintegro en la orden de pago:</strong> el total se cobra completo y el beneficio lo reintegra Cuenta DNI según sus condiciones.`;
+      return;
+    }
+
+    if (title) title.textContent = 'Transferencia con contacto directo';
+    if (badge) badge.textContent = isPromoActive() ? `${getActivePromoDiscount()}% OFF PROMO` : STORE_CONFIG.transferDiscount + '% OFF';
+    if (dataGrid) dataGrid.classList.remove('hidden');
+    if (actions) actions.classList.remove('hidden');
+    if (note) note.textContent = 'Al confirmar la transferencia, te abrimos WhatsApp con el pedido armado para que envíes el comprobante.';
   };
 
   const updateModalTotal = () => {
     if (!currentProduct) return;
-    const finalPrice = getProductPriceWithStamp(currentProduct, selectedStampSize);
+    const basePrice = getProductPriceWithStamp(currentProduct, selectedStampSize);
+    const finalPrice = getEffectiveProductPrice(currentProduct, selectedStampSize);
     const modalTotal = document.getElementById('modalTotal');
     const modalProductPrice = document.getElementById('modalProductPrice');
+    const priceHtml = isPromoActive()
+      ? `<span class="promo-price-old">${fmt(basePrice)}</span><br>${fmt(finalPrice)} <span class="promo-price-badge">${getActivePromoDiscount()}% OFF</span>`
+      : fmt(finalPrice);
     if (modalTotal) modalTotal.textContent = fmt(finalPrice);
-    if (modalProductPrice) modalProductPrice.textContent = fmt(finalPrice);
+    if (modalProductPrice) modalProductPrice.innerHTML = priceHtml;
   };
 
   const copyTransferField = async (field) => {
@@ -6172,6 +6855,11 @@ ${value}`);
     const stampLabel = item.stampSizeLabel || item.stamp_size_label || item.selectedStampLabel || getStampSizeLabel(stampSize);
     const stampSurcharge = Number(item.stampSurcharge ?? item.stamp_surcharge ?? getStampSizeSurcharge(stampSize));
     const color = item.color || item.selectedColor || '';
+    const paymentMethod = item.paymentMethod || item.payment_method || selectedPayMethod;
+    const benefitLabel = isPromoActive() ? `promo ${getPromoLabel()} (${getPromoBenefitLabel(activePromo)})` : 'transferencia';
+    const benefitLine = isCuentaDniPaymentMethod(paymentMethod)
+      ? `• Reintegro Cuenta DNI: ${getCuentaDniBenefitText()} (no aplicado por la tienda)`
+      : `• Descuento ${benefitLabel}: ${fmt(discount)}`;
 
     return `👕 *${item.title || 'Producto'}*
 • Código: ${item.sku || 'Sin código'}
@@ -6180,13 +6868,13 @@ ${value}`);
 • Estampa: ${stampLabel}${stampSurcharge > 0 ? ` (+${fmt(stampSurcharge)} por unidad)` : ''}
 • Cantidad: ${quantity}
 • Precio lista: ${fmt(subTotal)}
-• Descuento transferencia: ${fmt(discount)}
+${benefitLine}
 • Total prenda: *${fmt(total)}*`;
   };
 
   const buildTransferMessage = () => {
     const customer = getCheckoutCustomer();
-    if (!currentProduct) return '*Hola, SIN RECREO* 👋\n\nQuiero comprar por *transferencia / Cuenta DNI*. ¿Me ayudan a cerrar el pedido?';
+    if (!currentProduct) return '*Hola, SIN RECREO* 👋\n\nQuiero comprar por *' + getPaymentMethodDisplayName() + '*. ¿Me ayudan a cerrar el pedido?';
 
     return buildTransferOrderMessage({
       customer,
@@ -6197,23 +6885,24 @@ ${value}`);
         size: selectedSize,
         fit: selectedFit,
         quantity: 1,
+        paymentMethod: selectedPayMethod,
         stampSize: selectedStampSize,
         stampSizeLabel: getStampSizeLabel(selectedStampSize),
         stampSurcharge: getStampSizeSurcharge(selectedStampSize),
         basePrice: getProductPriceWithStamp(currentProduct, selectedStampSize),
-        discount: getProductPriceWithStamp(currentProduct, selectedStampSize) - Number(getTransferPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize) }) || 0),
-        lineTotal: Number(getTransferPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize) }) || 0)
-      }]
+        discount: isTransferPaymentMethod(selectedPayMethod) ? getProductPriceWithStamp(currentProduct, selectedStampSize) - Number(getTransferPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize) }) || 0) : 0,
+        lineTotal: Number(getEffectiveUnitPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize) }, getPricingPaymentMethod(selectedPayMethod)) || 0)
+      }],
+      paymentMethod: selectedPayMethod
     });
   };
 
   const openTransferWhatsApp = (customMessage) => {
 
-    const msg = encodeURIComponent(customMessage || buildTransferMessage());
-    window.open(`${getWhatsAppBase()}?text=${msg}`, '_blank');
+    openWhatsApp(customMessage || buildTransferMessage());
   };
 
-  const createTransferOrder = async (items, customer = {}, context = 'single', shipping = null) => {
+  const createTransferOrder = async (items, customer = {}, context = 'single', shipping = null, paymentMethod = 'transfer') => {
     if (!STORE_CONFIG.transferOrderEndpoint) return null;
     try {
       const headers = {
@@ -6229,14 +6918,15 @@ ${value}`);
           customer_name: customer.name || '',
           customer_email: customer.email || '',
           customer_phone: customer.phone || '',
-          payment_method: 'transferencia',
-          transfer_discount: STORE_CONFIG.transferDiscount,
+          payment_method: isCuentaDniPaymentMethod(paymentMethod) ? 'cuenta_dni' : 'transferencia',
+          transfer_discount: isTransferPaymentMethod(paymentMethod) && !isPromoActive() ? STORE_CONFIG.transferDiscount : 0,
+          ...getPromoPayload(),
           shipping: serializeShippingOption(shipping),
           shipping_price: Number(shipping?.charge || 0),
           shipping_provider: shipping ? (shipping.provider || 'PUDO') : null,
           notes: context === 'cart'
-            ? 'Pedido iniciado por transferencia desde el carrito de la tienda'
-            : 'Pedido iniciado por transferencia desde la ficha de producto'
+            ? `Pedido iniciado por ${getPaymentMethodDisplayName(paymentMethod)} desde el carrito de la tienda`
+            : `Pedido iniciado por ${getPaymentMethodDisplayName(paymentMethod)} desde la ficha de producto`
         })
       });
       const data = await res.json();
@@ -6249,7 +6939,7 @@ ${value}`);
   };
 
 
-  const buildTransferOrderMessage = ({ customer = {}, items = [], total = 0, orderId = '', orderCode = '', shipping = null } = {}) => {
+  const buildTransferOrderMessage = ({ customer = {}, items = [], total = 0, orderId = '', orderCode = '', shipping = null, paymentMethod = selectedPayMethod } = {}) => {
     const normalizedItems = items.length
       ? items.map(item => {
           const quantity = Number(item.quantity || 1);
@@ -6263,7 +6953,8 @@ ${value}`);
             basePrice,
             subTotal,
             lineTotal,
-            discount
+            discount,
+            paymentMethod: item.paymentMethod || item.payment_method || paymentMethod
           };
         })
       : [{
@@ -6276,10 +6967,11 @@ ${value}`);
           stampSizeLabel: getStampSizeLabel(selectedStampSize || 'normal'),
           stampSurcharge: getStampSizeSurcharge(selectedStampSize || 'normal'),
           quantity: 1,
+          paymentMethod,
           basePrice: currentProduct ? getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') : 0,
           subTotal: currentProduct ? getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') : 0,
-          discount: currentProduct ? getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') - Number(getTransferPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') }) || 0) : 0,
-          lineTotal: currentProduct ? Number(getTransferPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') }) || 0) : 0
+          discount: currentProduct && isTransferPaymentMethod(paymentMethod) ? getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') - Number(getTransferPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') }) || 0) : 0,
+          lineTotal: currentProduct ? Number(getEffectiveUnitPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') }, getPricingPaymentMethod(paymentMethod)) || 0) : 0
         }];
 
     const shippingCharge = Number(shipping?.charge || 0);
@@ -6289,10 +6981,19 @@ ${value}`);
     const computedDiscount = normalizedItems.reduce((acc, item) => acc + Number(item.discount || 0), 0);
     const itemsText = normalizedItems.map(buildTransferLineBlock).join('\n\n');
     const shippingText = describeShippingForMessage(shipping);
+    const isCuentaDni = isCuentaDniPaymentMethod(paymentMethod);
+    const paymentTitle = isCuentaDni ? 'Cuenta DNI' : 'transferencia bancaria';
+    const benefitSummary = isCuentaDni
+      ? `• Reintegro Cuenta DNI: ${getCuentaDniBenefitText()} (no aplicado por la tienda)`
+      : `• Descuento ${isPromoActive() ? 'promo ' + getPromoLabel() + ' (' + getPromoBenefitLabel(activePromo) + ')' : 'transferencia'}: ${fmt(computedDiscount)}`;
+    const totalLabel = isCuentaDni ? 'Total a pagar en tienda' : 'Total a transferir';
+    const finalNote = isCuentaDni
+      ? '_La tienda no aplica el reintegro en esta orden. Cuenta DNI lo acredita según sus condiciones._'
+      : '_En un momento envío el comprobante por este chat. ¿Me confirman disponibilidad y próximos pasos?_';
 
     return `*Hola, SIN RECREO* 👋
 
-Quiero confirmar este pedido por *transferencia / Cuenta DNI*.
+Quiero confirmar este pedido por *${paymentTitle}*.
 
 🧾 *Pedido*
 • Nº: ${orderCode || (orderId ? '#' + String(orderId).slice(0, 8).toUpperCase() : 'Pendiente')}
@@ -6301,9 +7002,9 @@ ${itemsText}
 
 💳 *Resumen*
 • Precio de prendas: ${fmt(computedSubTotal)}
-• Descuento transferencia: ${fmt(computedDiscount)}
+${benefitSummary}
 • Envío: ${shipping?.isFree ? 'Bonificado' : fmt(shippingCharge)}
-• *Total a transferir: ${fmt(computedTotal)}*
+• *${totalLabel}: ${fmt(computedTotal)}*
 
 🚚 *Entrega*
 ${shippingText}
@@ -6313,7 +7014,7 @@ ${shippingText}
 • Email: ${customer.email || 'A confirmar'}
 • Teléfono: ${customer.phone || 'A confirmar'}
 
-_En un momento envío el comprobante por este chat. ¿Me confirman disponibilidad y próximos pasos?_`;
+${finalNote}`;
   };
 
   const collectCartCustomer = () => {
@@ -6336,6 +7037,7 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
           customer_name: customer.name || '',
           customer_email: customer.email || '',
           customer_phone: customer.phone || '',
+          ...getPromoPayload(),
           shipping: serializeShippingOption(shipping),
           shipping_price: Number(shipping?.charge || 0),
           shipping_provider: shipping ? (shipping.provider || 'PUDO') : null
@@ -6354,7 +7056,7 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
   };
 
 
-  const buildCheckoutItem = (product, quantity = 1, fit = 'unisex', size = '', color = 'Hueso', paymentMethod = 'mp') => {
+  const buildCheckoutItem = (product, quantity = 1, fit = 'unisex', size = '', color = 'Hueso', paymentMethod = 'mp', linePricing = null) => {
     const normalizedFit = normalizeFit(fit);
     const normalizedColor = normalizeColor(color || product.selectedColor || 'Hueso');
     const blankStockId = getBlankStockId(product, size, normalizedFit, normalizedColor) || product.selectedBlankStockId || product.selectedVariantId || '';
@@ -6363,8 +7065,11 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
     const stampSurcharge = Number(product.stampSurcharge ?? getStampSizeSurcharge(stampSize));
     const baseProductPrice = Number(product.baseProductPrice ?? Math.max(0, Number(product.price || 0) - stampSurcharge));
     const basePrice = Number(product.price || 0);
-    const unitPrice = paymentMethod === 'transfer' ? Number(getTransferPrice(product) || 0) : basePrice;
     const qty = Number(quantity || 1);
+    const lineSubTotal = Number(linePricing?.subTotal ?? (basePrice * qty));
+    const lineTotal = Number(linePricing?.lineTotal ?? (Number(getEffectiveUnitPrice(product, paymentMethod) || 0) * qty));
+    const unitPrice = Number(linePricing?.unitPrice ?? (qty ? lineTotal / qty : lineTotal));
+    const lineDiscount = Number(linePricing?.discount ?? Math.max(0, lineSubTotal - lineTotal));
     return {
       product_id: product.dbId || product.product_id || null,
       product_slug: product.id || product.slug || '',
@@ -6384,8 +7089,8 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
       unit_price: unitPrice,
       base_price: basePrice,
       product_base_price: baseProductPrice,
-      line_total: unitPrice * qty,
-      discount: Math.max(0, (basePrice - unitPrice) * qty)
+      line_total: lineTotal,
+      discount: lineDiscount
     };
   };
 
@@ -6437,22 +7142,40 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
     updateCartUI();
   };
 
+  const removeCartItemByIndex = index => {
+    const idx = Number(index);
+    if (!Number.isInteger(idx) || idx < 0 || idx >= cart.length) return;
+    cart.splice(idx, 1);
+    selectedCartShippingOption = null;
+    cartShippingQuotes = [];
+    renderShippingOptions('cart', []);
+    renderShippingSummary('cart');
+    updateCartUI();
+  };
+
   const updateCartUI = () => {
     const count = cart.reduce((sum, item) => sum + item.qty, 0); document.getElementById('cartCount').textContent = count; const floatingCount = document.getElementById('cartCountFloat'); if (floatingCount) floatingCount.textContent = count;
     const body = document.getElementById('cartBody'); const footer = document.getElementById('cartFooter');
     if (!cart.length) { body.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛍️</div><p>' + (isPreLaunchMode() ? 'La compra online se habilitará próximamente.' : 'Tu carrito está vacío') + '</p></div>'; footer.style.display = 'none'; selectedCartShippingOption = null; cartShippingQuotes = []; cartCheckoutOpen = false; return; }
     footer.style.display = ''; fillDeliveryInputs('cart');
-    body.innerHTML = cart.map(item => {
+    const cartPricing = getCartPromoPricing(selectedPayMethod);
+    body.innerHTML = cart.map((item, cartIndex) => {
       const img = getImageList(item)[0];
       const stampSize = item.selectedStampSize || 'normal';
       const stampMeta = getStampSizeMeta(stampSize);
       const removeArgs = [item.id, item.selectedSize, item.selectedFit || 'unisex', item.selectedColor || 'Hueso', stampSize].map(value => JSON.stringify(value)).join(',');
-      return '<div class="cart-item"><div class="cart-item-img"><img src="' + img + '" alt="' + escapeHtml(item.title) + '" style="width:100%;height:100%;object-fit:cover;display:block" /></div><div class="cart-item-info"><div class="cart-item-name">' + escapeHtml(item.title) + '</div><div class="cart-item-meta">' + escapeHtml(item.capsule) + ' · ' + describeFitAndSize(item.selectedFit || 'unisex', item.selectedSize, item.selectedColor || 'Hueso') + ' · Estampa ' + escapeHtml(stampMeta) + ' · x' + item.qty + '</div><div class="cart-item-price">' + fmt(item.price * item.qty) + '</div></div><button class="cart-item-remove" onclick="removeFromCart(' + removeArgs + ')" aria-label="Eliminar ' + escapeHtml(item.title) + '">✕</button></div>';
+      const pricing = cartPricing[cartIndex] || {};
+      const lineTotal = Number(pricing.lineTotal ?? (Number(getEffectiveUnitPrice(item, getPricingPaymentMethod(selectedPayMethod)) || 0) * Number(item.qty || 1)));
+      const discount = Number(pricing.discount || 0);
+      const promoLine = isPromoActive() && discount > 0 ? '<div class="cart-item-meta">Promo ' + escapeHtml(getPromoLabel()) + ' (' + escapeHtml(getPromoBenefitLabel(activePromo)) + '): -' + fmt(discount) + '</div>' : '';
+      return '<div class="cart-item"><div class="cart-item-img"><img src="' + img + '" alt="' + escapeHtml(item.title) + '" style="width:100%;height:100%;object-fit:cover;display:block" /></div><div class="cart-item-info"><div class="cart-item-name">' + escapeHtml(item.title) + '</div><div class="cart-item-meta">' + escapeHtml(item.capsule) + ' · ' + describeFitAndSize(item.selectedFit || 'unisex', item.selectedSize, item.selectedColor || 'Hueso') + ' · Estampa ' + escapeHtml(stampMeta) + ' · x' + item.qty + '</div>' + promoLine + '<div class="cart-item-price">' + fmt(lineTotal) + '</div></div><button class="cart-item-remove" type="button" onclick="removeCartItemByIndex(' + cartIndex + ')" aria-label="Eliminar ' + escapeHtml(item.title) + '">✕</button></div>';
     }).join('');
-    const useTransfer = selectedPayMethod === 'transfer'; const subtotal = cart.reduce((sum, item) => sum + Number(useTransfer ? getTransferPrice(item) : item.price || 0) * Number(item.qty || 1), 0);
+    renderPromoActiveUi();
+    renderCartPromoPanel();
+    const subtotal = cartPricing.reduce((sum, row) => sum + Number(row.lineTotal || 0), 0);
     const shipping = cartDeliveryMethod === 'pickup' ? getPickupShippingOption() : selectedCartShippingOption; const shippingCharge = Number(shipping?.charge || 0);
     document.getElementById('cartTotal').textContent = fmt(subtotal); const grand = document.getElementById('cartGrandTotal'); if (grand) grand.textContent = fmt(subtotal + shippingCharge);
-    const checkoutPanel = document.getElementById('cartCheckoutPanel'); if (checkoutPanel) checkoutPanel.classList.toggle('hidden', !cartCheckoutOpen); const openBtn = document.getElementById('cartOpenCheckoutButton'); if (openBtn) { openBtn.classList.toggle('hidden', cartCheckoutOpen); const paymentBlocked = !isPaymentEnabled(); openBtn.disabled = paymentBlocked; openBtn.setAttribute('aria-disabled', paymentBlocked ? 'true' : 'false'); openBtn.classList.toggle('payment-locked-by-presale', paymentBlocked); openBtn.classList.remove('prelaunch-disabled'); openBtn.textContent = paymentBlocked ? 'Activá modo preventa para pagar' : 'Finalizar compra'; }
+    const checkoutPanel = document.getElementById('cartCheckoutPanel'); if (checkoutPanel) checkoutPanel.classList.toggle('hidden', !cartCheckoutOpen); const openBtn = document.getElementById('cartOpenCheckoutButton'); if (openBtn) { openBtn.classList.toggle('hidden', cartCheckoutOpen); const paymentBlocked = !isPaymentEnabled(); openBtn.disabled = paymentBlocked; openBtn.setAttribute('aria-disabled', paymentBlocked ? 'true' : 'false'); openBtn.classList.toggle('payment-locked-by-presale', paymentBlocked); openBtn.classList.remove('prelaunch-disabled'); openBtn.textContent = paymentBlocked ? 'Finalizar compra' : 'Finalizar compra'; }
     updateCartDeliveryUI(); updateTransferPanel(); updateCartCheckoutCta(); renderShippingSummary('cart');
   };
 
@@ -6536,7 +7259,7 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
     }
     if (!isPaymentEnabled()) {
       cta.className = 'modal-cta payment-locked-by-presale';
-      cta.textContent = 'Activá modo preventa para pagar';
+      cta.textContent = 'Finalizar compra';
       cta.disabled = true;
       cta.setAttribute('aria-disabled','true');
       if (secure) secure.textContent = '';
@@ -6549,12 +7272,17 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
     cta.style.cursor = 'pointer';
     if (selectedPayMethod === 'transfer') {
       cta.className = 'modal-cta';
-      cta.textContent = 'Confirmar transferencia / Cuenta DNI por WhatsApp';
+      cta.textContent = 'Confirmar transferencia por WhatsApp';
+      if (secure) secure.textContent = '';
+      if (mpNote) mpNote.classList.add('hidden');
+    } else if (selectedPayMethod === 'cuenta_dni') {
+      cta.className = 'modal-cta';
+      cta.textContent = 'Confirmar Cuenta DNI por WhatsApp';
       if (secure) secure.textContent = '';
       if (mpNote) mpNote.classList.add('hidden');
     } else {
       cta.className = 'modal-cta mp-style';
-      cta.textContent = 'Pagar con Mercado Pago / Cuenta MP';
+      cta.textContent = selectedPayMethod === 'card' ? 'Pagar con tarjeta por Mercado Pago' : 'Pagar con Mercado Pago / Cuenta MP';
       if (secure) secure.textContent = '';
       if (mpNote) mpNote.classList.add('hidden');
     }
@@ -6592,11 +7320,11 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
   const finishCartCheckout = async () => {
     if (isPreLaunchMode()) { showPreLaunchNotice(); return; }
     if (!isPaymentEnabled()) { openPreSaleModal(); return; }
-    if (selectedPayMethod === 'transfer') return checkoutWhatsApp();
+    if (isWhatsAppPaymentMethod(selectedPayMethod)) return checkoutWhatsApp(selectedPayMethod);
     return checkoutMP();
   };
 
-  const checkoutWhatsApp = async () => {
+  const checkoutWhatsApp = async (paymentMethod = 'transfer') => {
     if (isPreLaunchMode()) { showPreLaunchNotice(); return; }
     if (!isPaymentEnabled()) { openPreSaleModal(); return; }
     if (!cart.length) return;
@@ -6606,14 +7334,16 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
     const shipping = validateSelectedShipping('cart');
     if (!shipping) return;
 
-    const validItems = cart.map(item => buildCheckoutItem(
+    const cartPricing = getCartPromoPricing(paymentMethod);
+    const validItems = cart.map((item, index) => buildCheckoutItem(
       item,
       item.qty,
       item.selectedFit || 'unisex',
       item.selectedSize || '',
       item.selectedColor || 'Hueso',
-      'transfer'
-    )).filter(item => item.product_id && item.blank_stock_id);
+      getPricingPaymentMethod(paymentMethod),
+      cartPricing[index]
+    )).map(item => ({ ...item, payment_method: paymentMethod, paymentMethod })).filter(item => item.product_id && item.blank_stock_id);
 
     if (!validItems.length) {
       alert('No encontramos productos válidos con stock base para registrar el pedido.');
@@ -6624,34 +7354,39 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
     setCartCheckoutBusy(true, 'Generando pedido…');
 
     try {
-      const transferOrder = await createTransferOrder(validItems, customer, 'cart', shipping);
+      const transferOrder = await createTransferOrder(validItems, customer, 'cart', shipping, paymentMethod);
 
-      const total = cart.reduce((sum, item) => sum + (getTransferPrice(item) * item.qty), 0) + Number(shipping.charge || 0);
+      const total = cartPricing.reduce((sum, row) => sum + Number(row.lineTotal || 0), 0) + Number(shipping.charge || 0);
       const transferMessage = buildTransferOrderMessage({
         customer,
-        items: cart.map(item => ({
-          title: item.title,
-          sku: item.sku,
-          capsule: item.capsule,
-          size: item.selectedSize,
-          fit: item.selectedFit || 'unisex',
-          color: item.selectedColor || 'Hueso',
-          stampSize: item.selectedStampSize || 'normal',
-          stampSizeLabel: item.selectedStampLabel || getStampSizeLabel(item.selectedStampSize || 'normal'),
-          stampSurcharge: Number(item.stampSurcharge || 0),
-          quantity: item.qty,
-          basePrice: Number(item.price || 0),
-          discount: (Number(item.price || 0) - Number(getTransferPrice(item) || 0)) * Number(item.qty || 1),
-          lineTotal: Number(getTransferPrice(item) || 0) * Number(item.qty || 1)
-        })),
+        items: cart.map((item, index) => {
+          const pricing = cartPricing[index] || {};
+          return {
+            title: item.title,
+            sku: item.sku,
+            capsule: item.capsule,
+            size: item.selectedSize,
+            fit: item.selectedFit || 'unisex',
+            color: item.selectedColor || 'Hueso',
+            stampSize: item.selectedStampSize || 'normal',
+            stampSizeLabel: item.selectedStampLabel || getStampSizeLabel(item.selectedStampSize || 'normal'),
+            stampSurcharge: Number(item.stampSurcharge || 0),
+            quantity: item.qty,
+            paymentMethod,
+            basePrice: Number(item.price || 0),
+            subTotal: Number(pricing.subTotal ?? (Number(item.price || 0) * Number(item.qty || 1))),
+            discount: Number(pricing.discount || 0),
+            lineTotal: Number(pricing.lineTotal ?? (Number(getEffectiveUnitPrice(item, getPricingPaymentMethod(paymentMethod)) || 0) * Number(item.qty || 1)))
+          };
+        }),
         total,
+        paymentMethod,
         shipping,
         orderId: transferOrder?.order_id || '',
         orderCode: transferOrder?.order_code || ''
       });
 
-      const whatsappUrl = getWhatsAppBase() + '?text=' + encodeURIComponent(transferMessage);
-      navigateCheckoutTarget(popup, whatsappUrl);
+      openWhatsApp(transferMessage, { popup });
 
       if (!transferOrder?.ok) {
         alert('Te abrimos WhatsApp, pero no pudimos registrar el pedido pendiente en Supabase.');
@@ -6678,7 +7413,7 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
     if (cart.length === 1) {
       const single = cart[0];
       const directLink = getMpLink(single, single.selectedSize, single.selectedFit || 'unisex');
-      if (directLink && (single.selectedStampSize || 'normal') === 'normal') {
+      if (!isPromoActive() && directLink && (single.selectedStampSize || 'normal') === 'normal') {
         if (Number(shipping.charge || 0) > 0) {
           alert('Este carrito tiene envío PUDO. Para cobrar prendas + envío juntos, usá el checkout backend de Mercado Pago, no links directos por talle.');
           return;
@@ -6688,13 +7423,15 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
       }
     }
 
-    const mpItems = cart.map(item => buildCheckoutItem(
+    const cartPricing = getCartPromoPricing('mp');
+    const mpItems = cart.map((item, index) => buildCheckoutItem(
       item,
       item.qty,
       item.selectedFit || 'unisex',
       item.selectedSize || '',
       item.selectedColor || 'Hueso',
-      'mp'
+      'mp',
+      cartPricing[index]
     )).filter(item => item.product_id && item.blank_stock_id);
 
     if (!mpItems.length) {
@@ -6744,6 +7481,15 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
   document.getElementById('searchInput').addEventListener('input', e => {
     state.query = e.target.value.trim();
     applyFilters();
+  });
+  document.getElementById('searchInput').addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    if (state.query) document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  window.addEventListener('hashchange', () => {
+    productDeepLinkHandled = false;
+    handleProductDeepLink({ force: true });
   });
 
   document.getElementById('minPrice')?.addEventListener('input', e => {
@@ -6847,6 +7593,21 @@ _En un momento envío el comprobante por este chat. ¿Me confirman disponibilida
       document.querySelectorAll('.catalog-pill[data-catalog-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.catalogView === state.catalogView));
       applyFilters();
     });
+  });
+
+  // En celulares, los enlaces wa.me se convierten en un enlace directo a la app.
+  // Esto evita que Android abra whatsapp.com/download aunque WhatsApp ya esté instalado.
+  document.addEventListener('click', event => {
+    const link = event.target.closest?.('a[href^="https://wa.me/"]');
+    if (!link || !isMobileWhatsAppClient()) return;
+    try {
+      const url = new URL(link.href);
+      const message = url.searchParams.get('text') || '';
+      event.preventDefault();
+      openWhatsApp(message);
+    } catch (error) {
+      // Si la URL no pudiera leerse, dejamos que el enlace original siga su curso.
+    }
   });
 
   /* ─── SCROLL ANIMATIONS ─── */
