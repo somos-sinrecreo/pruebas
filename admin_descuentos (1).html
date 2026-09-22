@@ -85,18 +85,6 @@
     .empty-state{border:1px dashed #d6cec4;border-radius:18px;padding:28px;text-align:center;background:#fcfbf9;color:var(--muted)}
     @media (max-width:1000px){.grid{grid-template-columns:1fr}.orders-grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:repeat(2,1fr)}.detail-grid,.img-grid,.variant-grid,.row{grid-template-columns:1fr}}
     @media (max-width:700px){.summary-grid{grid-template-columns:1fr}}
-
-    .literal-admin-panel{margin:0 0 18px;background:#19191b;color:#fff;border-radius:18px;padding:18px;border:1px solid #2f2f31}
-    .literal-admin-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-    .literal-admin-title{font-family:var(--display);font-size:1.7rem;letter-spacing:.04em;margin:0}
-    .literal-admin-title span{color:#d79a86}
-    .literal-admin-copy{font-size:.82rem;line-height:1.55;color:#bbb7b3;margin-top:4px;max-width:72ch}
-    .literal-admin-panel .btn{background:#b35c44;color:#fff}
-    .literal-fields{display:grid;grid-template-columns:1fr 1fr 120px;gap:10px;margin-top:14px}
-    .literal-fields .field .label{color:#c6c1bc}.literal-fields input,.literal-fields select{background:#fff;color:#1a1a1b}
-    .literal-hint{font-size:.76rem;color:#a9a5a1;margin-top:10px}
-    @media(max-width:760px){.literal-fields{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
-
   </style>
 </head>
 <body>
@@ -156,7 +144,6 @@
           <div class="toolbar" style="margin-bottom:12px">
             <button class="btn btn-accent" id="newProductBtn">Nuevo producto</button>
             <button class="btn btn-soft" id="reloadBtn">Recargar</button>
-            <button class="btn btn-soft" id="setupLiteralBtn" type="button" title="Crea o actualiza las dos cápsulas especiales de LITERAL">Preparar LITERAL</button>
           </div>
           <div id="productList" class="list"></div>
         </aside>
@@ -174,26 +161,6 @@
 
           <input id="productId" type="hidden" />
 
-
-          <div class="literal-admin-panel">
-            <div class="literal-admin-head">
-              <div><h3 class="literal-admin-title">CARGA <span>LITERAL</span></h3><div class="literal-admin-copy">Para discos y películas elegí el tipo acá. El admin asigna automáticamente la cápsula correcta y arma la descripción breve como “Artista/Director · Año”.</div></div>
-              <button class="btn" type="button" id="newLiteralBtn">Nueva LITERAL</button>
-            </div>
-            <div class="literal-fields">
-              <label class="field"><span class="label">Tipo LITERAL</span>
-                <select id="literalType">
-                  <option value="none">No es LITERAL</option>
-                  <option value="discos">💿 Disco</option>
-                  <option value="cine">🎬 Película</option>
-                </select>
-              </label>
-              <label class="field"><span class="label" id="literalCreditLabel">Artista / Director</span><input id="literalCredit" placeholder="Pink Floyd / Quentin Tarantino" /></label>
-              <label class="field"><span class="label">Año</span><input id="literalYear" inputmode="numeric" maxlength="4" placeholder="1973" /></label>
-            </div>
-            <div class="literal-hint" id="literalHint">Si es LITERAL, usá el título del disco o película como “Título”. Imagen 1: obra/póster · Imagen 2: mockup · Imagen 3: detalle.</div>
-          </div>
-
           <div class="row">
             <label class="field"><span class="label">Slug</span><input id="slug" placeholder="voto-femenino" /></label>
             <label class="field"><span class="label">SKU</span><input id="sku" placeholder="SR-MA-001" /></label>
@@ -202,7 +169,7 @@
           <div class="row">
             <label class="field"><span class="label">Cápsula</span>
               <select id="capsule"></select>
-              <span class="mini">Para LITERAL no hace falta elegirla manualmente: el selector especial de arriba asigna “LITERAL · DISCOS” o “LITERAL · CINE”.</span>
+              <span class="mini">Elegí “Línea Permanente” para que la prenda vaya a la cápsula general. Las demás cápsulas aparecen en Colección.</span>
             </label>
             <label class="field"><span class="label">Título</span><input id="title" placeholder="Voto femenino" /></label>
           </div>
@@ -644,11 +611,6 @@
       el('ordersViewBtn').addEventListener('click', () => switchView('orders'));
       el('newProductBtn').addEventListener('click', newProduct);
       el('reloadBtn').addEventListener('click', loadProducts);
-      el('setupLiteralBtn').addEventListener('click', setupLiteralCapsules);
-      el('newLiteralBtn').addEventListener('click', newLiteralProduct);
-      el('literalType').addEventListener('change', () => { refreshLiteralAdminUi(); syncLiteralDescription(); });
-      el('literalCredit').addEventListener('input', syncLiteralDescription);
-      el('literalYear').addEventListener('input', syncLiteralDescription);
       el('newCapsuleBtn').addEventListener('click', newCapsule);
       el('reloadCapsulesBtn').addEventListener('click', loadCapsules);
       el('reloadOrdersBtn').addEventListener('click', loadOrders);
@@ -702,15 +664,6 @@
     const normalizeColor = value => String(value || '').trim().replace(/\s+/g, ' ') || 'Hueso';
     const normalizeTextKey = value => String(value || '').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
     const GENERAL_CAPSULE_NAME = 'Línea Permanente';
-    const LITERAL_DISCOS_CAPSULE = 'LITERAL · DISCOS';
-    const LITERAL_CINE_CAPSULE = 'LITERAL · CINE';
-    const getLiteralTypeFromCapsule = capsule => {
-      const key = normalizeTextKey(capsule);
-      if (key === normalizeTextKey(LITERAL_DISCOS_CAPSULE)) return 'discos';
-      if (key === normalizeTextKey(LITERAL_CINE_CAPSULE)) return 'cine';
-      return 'none';
-    };
-    const getLiteralCapsuleFromType = type => type === 'discos' ? LITERAL_DISCOS_CAPSULE : (type === 'cine' ? LITERAL_CINE_CAPSULE : '');
     const GENERAL_CAPSULE_ALIASES = ['general', 'linea permanente', 'línea permanente', 'permanente', 'seleccion abierta', 'selección abierta', 'catalogo general', 'catálogo general'];
     const isGeneralCapsuleName = name => GENERAL_CAPSULE_ALIASES.includes(normalizeTextKey(name));
     const getDisplayCapsuleName = name => isGeneralCapsuleName(name) ? GENERAL_CAPSULE_NAME : String(name || '').trim();
@@ -725,75 +678,6 @@
       return (si === -1 ? 999 : si) - (sj === -1 ? 999 : sj);
     };
     const describeStockVariant = (fit, size, color) => `${getCutLabel(fit)} · ${normalizeColor(color)} · Talle ${size || '—'}`;
-
-
-    const parseLiteralDescription = description => {
-      const text = String(description || '').trim();
-      const match = text.match(/^(.*?)\s*[·|—|-]\s*((?:19|20)\d{2})$/);
-      return match ? { credit: match[1].trim(), year: match[2] } : { credit: text, year: '' };
-    };
-
-    const refreshLiteralAdminUi = () => {
-      const type = el('literalType')?.value || 'none';
-      const isLiteral = type !== 'none';
-      if (el('literalCredit')) el('literalCredit').disabled = !isLiteral;
-      if (el('literalYear')) el('literalYear').disabled = !isLiteral;
-      if (el('literalCreditLabel')) el('literalCreditLabel').textContent = type === 'discos' ? 'Artista' : (type === 'cine' ? 'Director / crédito' : 'Artista / Director');
-      if (el('capsule')) {
-        if (!isLiteral && getLiteralTypeFromCapsule(el('capsule').value) !== 'none') el('capsule').value = GENERAL_CAPSULE_NAME;
-        el('capsule').disabled = isLiteral;
-      }
-      if (el('literalHint')) el('literalHint').textContent = isLiteral
-        ? `Se guardará dentro de ${getLiteralCapsuleFromType(type)}. Título = ${type === 'discos' ? 'nombre del disco' : 'nombre de la película'}.`
-        : 'Si es LITERAL, usá el título del disco o película como “Título”. Imagen 1: obra/póster · Imagen 2: mockup · Imagen 3: detalle.';
-      if (isLiteral && el('capsule')) {
-        const capsuleName = getLiteralCapsuleFromType(type);
-        if (![...el('capsule').options].some(opt => opt.value === capsuleName)) {
-          const option = document.createElement('option'); option.value = capsuleName; option.textContent = capsuleName; el('capsule').appendChild(option);
-        }
-        el('capsule').value = capsuleName;
-      }
-    };
-
-    const syncLiteralDescription = () => {
-      const type = el('literalType')?.value || 'none';
-      if (type === 'none') return;
-      const credit = el('literalCredit')?.value.trim() || '';
-      const year = el('literalYear')?.value.trim() || '';
-      const parts = [credit, year].filter(Boolean);
-      if (parts.length && el('description')) el('description').value = parts.join(' · ');
-    };
-
-    const setupLiteralCapsules = async () => {
-      clearStatus();
-      const btn = el('setupLiteralBtn');
-      if (btn) { btn.disabled = true; btn.textContent = 'Preparando…'; }
-      try {
-        const rows = [
-          { name:LITERAL_DISCOS_CAPSULE, slug:'literal-discos', badge_label:'LITERAL / DISCOS', short_description:'Tapas de discos llevadas a la remera sin filtros ni reinterpretaciones.', hero_title:'LITERAL · DISCOS', hero_body:'La portada original. El disco que es parte de tu historia.', hero_cta_text:'Ver discos', is_active:true, is_featured_drop:false },
-          { name:LITERAL_CINE_CAPSULE, slug:'literal-cine', badge_label:'LITERAL / CINE', short_description:'Pósters de películas llevados a la remera sin filtros ni reinterpretaciones.', hero_title:'LITERAL · PELÍCULAS', hero_body:'El póster original. La película que quedó con vos.', hero_cta_text:'Ver películas', is_active:true, is_featured_drop:false }
-        ];
-        const { error } = await sb.from('capsules').upsert(rows, { onConflict:'name' });
-        if (error) throw error;
-        await loadCapsules();
-        showStatus('LITERAL listo: ya podés cargar discos y películas desde el editor de catálogo.');
-      } catch (err) {
-        showStatus(err.message || 'No se pudieron preparar las cápsulas LITERAL.', 'err');
-      } finally {
-        if (btn) { btn.disabled = false; btn.textContent = 'Preparar LITERAL'; }
-      }
-    };
-
-    const newLiteralProduct = async () => {
-      const hasDiscos = capsules.some(c => normalizeTextKey(c.name) === normalizeTextKey(LITERAL_DISCOS_CAPSULE));
-      const hasCine = capsules.some(c => normalizeTextKey(c.name) === normalizeTextKey(LITERAL_CINE_CAPSULE));
-      if (!hasDiscos || !hasCine) await setupLiteralCapsules();
-      newProduct();
-      el('literalType').value = 'discos';
-      el('artType').value = 'poster';
-      refreshLiteralAdminUi();
-      el('title')?.focus();
-    };
 
     const capsuleBlankForm = () => ({
       id:'',
@@ -1709,12 +1593,6 @@
       currentProduct = product;
       renderCapsuleOptionsInProductForm();
       el('capsule').value = isGeneralCapsuleName(product.capsule) ? GENERAL_CAPSULE_NAME : (product.capsule || '');
-      const literalType = getLiteralTypeFromCapsule(product.capsule);
-      el('literalType').value = literalType;
-      const parsedLiteral = parseLiteralDescription(product.description);
-      el('literalCredit').value = literalType === 'none' ? '' : parsedLiteral.credit;
-      el('literalYear').value = literalType === 'none' ? '' : parsedLiteral.year;
-      refreshLiteralAdminUi();
     };
 
     const clearImages = () => {
@@ -1769,16 +1647,13 @@
       .replace(/(^-|-$)/g, '');
 
     const collectForm = () => {
-      syncLiteralDescription();
       const title = el('title').value.trim();
       const slug = slugify(el('slug').value.trim() || title);
-      const literalType = el('literalType')?.value || 'none';
-      const capsuleValue = literalType === 'none' ? el('capsule').value.trim() : getLiteralCapsuleFromType(literalType);
       return {
         id: el('productId').value || null,
         slug,
         sku: el('sku').value.trim() || null,
-        capsule: capsuleValue,
+        capsule: el('capsule').value.trim(),
         title,
         description: el('description').value.trim(),
         price: Number(el('price').value || 0),

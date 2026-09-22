@@ -85,18 +85,6 @@
     .empty-state{border:1px dashed #d6cec4;border-radius:18px;padding:28px;text-align:center;background:#fcfbf9;color:var(--muted)}
     @media (max-width:1000px){.grid{grid-template-columns:1fr}.orders-grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:repeat(2,1fr)}.detail-grid,.img-grid,.variant-grid,.row{grid-template-columns:1fr}}
     @media (max-width:700px){.summary-grid{grid-template-columns:1fr}}
-
-    .literal-admin-panel{margin:0 0 18px;background:#19191b;color:#fff;border-radius:18px;padding:18px;border:1px solid #2f2f31}
-    .literal-admin-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-    .literal-admin-title{font-family:var(--display);font-size:1.7rem;letter-spacing:.04em;margin:0}
-    .literal-admin-title span{color:#d79a86}
-    .literal-admin-copy{font-size:.82rem;line-height:1.55;color:#bbb7b3;margin-top:4px;max-width:72ch}
-    .literal-admin-panel .btn{background:#b35c44;color:#fff}
-    .literal-fields{display:grid;grid-template-columns:1fr 1fr 120px;gap:10px;margin-top:14px}
-    .literal-fields .field .label{color:#c6c1bc}.literal-fields input,.literal-fields select{background:#fff;color:#1a1a1b}
-    .literal-hint{font-size:.76rem;color:#a9a5a1;margin-top:10px}
-    @media(max-width:760px){.literal-fields{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
-
   </style>
 </head>
 <body>
@@ -156,7 +144,6 @@
           <div class="toolbar" style="margin-bottom:12px">
             <button class="btn btn-accent" id="newProductBtn">Nuevo producto</button>
             <button class="btn btn-soft" id="reloadBtn">Recargar</button>
-            <button class="btn btn-soft" id="setupLiteralBtn" type="button" title="Crea o actualiza las dos cápsulas especiales de LITERAL">Preparar LITERAL</button>
           </div>
           <div id="productList" class="list"></div>
         </aside>
@@ -174,26 +161,6 @@
 
           <input id="productId" type="hidden" />
 
-
-          <div class="literal-admin-panel">
-            <div class="literal-admin-head">
-              <div><h3 class="literal-admin-title">CARGA <span>LITERAL</span></h3><div class="literal-admin-copy">Para discos y películas elegí el tipo acá. El admin asigna automáticamente la cápsula correcta y arma la descripción breve como “Artista/Director · Año”.</div></div>
-              <button class="btn" type="button" id="newLiteralBtn">Nueva LITERAL</button>
-            </div>
-            <div class="literal-fields">
-              <label class="field"><span class="label">Tipo LITERAL</span>
-                <select id="literalType">
-                  <option value="none">No es LITERAL</option>
-                  <option value="discos">💿 Disco</option>
-                  <option value="cine">🎬 Película</option>
-                </select>
-              </label>
-              <label class="field"><span class="label" id="literalCreditLabel">Artista / Director</span><input id="literalCredit" placeholder="Pink Floyd / Quentin Tarantino" /></label>
-              <label class="field"><span class="label">Año</span><input id="literalYear" inputmode="numeric" maxlength="4" placeholder="1973" /></label>
-            </div>
-            <div class="literal-hint" id="literalHint">Si es LITERAL, usá el título del disco o película como “Título”. Imagen 1: obra/póster · Imagen 2: mockup · Imagen 3: detalle.</div>
-          </div>
-
           <div class="row">
             <label class="field"><span class="label">Slug</span><input id="slug" placeholder="voto-femenino" /></label>
             <label class="field"><span class="label">SKU</span><input id="sku" placeholder="SR-MA-001" /></label>
@@ -202,7 +169,7 @@
           <div class="row">
             <label class="field"><span class="label">Cápsula</span>
               <select id="capsule"></select>
-              <span class="mini">Para LITERAL no hace falta elegirla manualmente: el selector especial de arriba asigna “LITERAL · DISCOS” o “LITERAL · CINE”.</span>
+              <span class="mini">Elegí “Línea Permanente” para que la prenda vaya a la cápsula general. Las demás cápsulas aparecen en Colección.</span>
             </label>
             <label class="field"><span class="label">Título</span><input id="title" placeholder="Voto femenino" /></label>
           </div>
@@ -425,7 +392,7 @@
           <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px">
             <h2 class="title" style="margin:0">Códigos promo</h2>
           </div>
-          <p class="mini" style="line-height:1.6;margin-bottom:14px">Cargá códigos vigentes para aplicar desde el carrito: porcentaje o promo 2x1. No se acumulan con el 10% de transferencia.</p>
+          <p class="mini" style="line-height:1.6;margin-bottom:14px">Cargá los códigos vigentes que después se pueden aplicar desde el carrito. El descuento se calcula sobre las prendas y no se acumula con el 10% de transferencia.</p>
           <div class="toolbar" style="margin-bottom:12px">
             <button class="btn btn-accent" id="newPromoBtn" type="button">Nuevo código</button>
             <button class="btn btn-soft" id="reloadPromosBtn" type="button">Recargar</button>
@@ -437,7 +404,7 @@
           <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <div>
               <h2 class="title" style="margin:0">Editor de promociones</h2>
-              <div class="mini">Ejemplo: SINRECREO20 · 20% o 2x1 · activo hasta una fecha determinada.</div>
+              <div class="mini">Ejemplo: SINRECREO20 · 20% · activo hasta una fecha determinada.</div>
             </div>
             <div class="toolbar">
               <button class="btn btn-dark" id="savePromoBtn" type="button">Guardar código</button>
@@ -450,26 +417,10 @@
 
           <div class="row">
             <label class="field"><span class="label">Código</span><input id="promoCode" placeholder="SINRECREO20" style="text-transform:uppercase;font-weight:800;letter-spacing:.04em" /></label>
-            <label class="field"><span class="label">Tipo de promo</span>
-              <select id="promoType">
-                <option value="percent">Descuento porcentual</option>
-                <option value="bogo">2x1</option>
-              </select>
-            </label>
+            <label class="field"><span class="label">Descuento %</span><input id="promoDiscountPercent" type="number" min="1" max="100" step="1" placeholder="20" /></label>
           </div>
 
-          <div class="row" style="margin-top:12px">
-            <label class="field" id="promoDiscountField"><span class="label">Descuento %</span><input id="promoDiscountPercent" type="number" min="1" max="100" step="1" placeholder="20" /></label>
-            <div class="field" id="promoBogoInfo">
-              <span class="label">Regla 2x1</span>
-              <div class="summary-card" style="height:100%;display:flex;flex-direction:column;justify-content:center">
-                <strong>2x1</strong>
-                <span class="mini">Por cada 2 prendas del carrito, se bonifica 1 de menor valor.</span>
-              </div>
-            </div>
-          </div>
-
-          <label class="field" style="margin-top:12px"><span class="label">Descripción interna / motivo</span><input id="promoDescription" placeholder="Promo QR, lanzamiento, docentes, 2x1, etc." /></label>
+          <label class="field" style="margin-top:12px"><span class="label">Descripción interna / motivo</span><input id="promoDescription" placeholder="Promo QR, lanzamiento, docentes, etc." /></label>
 
           <div class="row" style="margin-top:12px">
             <label class="field"><span class="label">Vigente desde</span><input id="promoStartsAt" type="date" /></label>
@@ -495,7 +446,7 @@
           </div>
 
           <div class="notice" style="margin-top:16px">
-            Importante: para que el carrito lea estos códigos, la tabla <strong>promo_codes</strong> debe tener los campos nuevos <strong>promo_type</strong>, <strong>buy_qty</strong> y <strong>pay_qty</strong>. Corré el SQL actualizado en Supabase.
+            Importante: para que el carrito lea estos códigos, debe existir la tabla <strong>promo_codes</strong> en Supabase y tener permisos de lectura pública para códigos activos. Te dejo el SQL junto al archivo actualizado.
           </div>
 
           <div class="divider"></div>
@@ -644,11 +595,6 @@
       el('ordersViewBtn').addEventListener('click', () => switchView('orders'));
       el('newProductBtn').addEventListener('click', newProduct);
       el('reloadBtn').addEventListener('click', loadProducts);
-      el('setupLiteralBtn').addEventListener('click', setupLiteralCapsules);
-      el('newLiteralBtn').addEventListener('click', newLiteralProduct);
-      el('literalType').addEventListener('change', () => { refreshLiteralAdminUi(); syncLiteralDescription(); });
-      el('literalCredit').addEventListener('input', syncLiteralDescription);
-      el('literalYear').addEventListener('input', syncLiteralDescription);
       el('newCapsuleBtn').addEventListener('click', newCapsule);
       el('reloadCapsulesBtn').addEventListener('click', loadCapsules);
       el('reloadOrdersBtn').addEventListener('click', loadOrders);
@@ -667,7 +613,7 @@
       el('saveCapsuleBtn').addEventListener('click', saveCapsule);
       el('saveCapsuleBtnBottom').addEventListener('click', saveCapsule);
       el('deactivateCapsuleBtn').addEventListener('click', deactivateCapsule);
-      ['promoCode','promoDiscountPercent','promoStartsAt','promoEndsAt','promoIsActive','promoType'].forEach(id => {
+      ['promoCode','promoDiscountPercent','promoStartsAt','promoEndsAt','promoIsActive'].forEach(id => {
         el(id)?.addEventListener('input', updatePromoPreview);
         el(id)?.addEventListener('change', updatePromoPreview);
       });
@@ -702,15 +648,6 @@
     const normalizeColor = value => String(value || '').trim().replace(/\s+/g, ' ') || 'Hueso';
     const normalizeTextKey = value => String(value || '').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
     const GENERAL_CAPSULE_NAME = 'Línea Permanente';
-    const LITERAL_DISCOS_CAPSULE = 'LITERAL · DISCOS';
-    const LITERAL_CINE_CAPSULE = 'LITERAL · CINE';
-    const getLiteralTypeFromCapsule = capsule => {
-      const key = normalizeTextKey(capsule);
-      if (key === normalizeTextKey(LITERAL_DISCOS_CAPSULE)) return 'discos';
-      if (key === normalizeTextKey(LITERAL_CINE_CAPSULE)) return 'cine';
-      return 'none';
-    };
-    const getLiteralCapsuleFromType = type => type === 'discos' ? LITERAL_DISCOS_CAPSULE : (type === 'cine' ? LITERAL_CINE_CAPSULE : '');
     const GENERAL_CAPSULE_ALIASES = ['general', 'linea permanente', 'línea permanente', 'permanente', 'seleccion abierta', 'selección abierta', 'catalogo general', 'catálogo general'];
     const isGeneralCapsuleName = name => GENERAL_CAPSULE_ALIASES.includes(normalizeTextKey(name));
     const getDisplayCapsuleName = name => isGeneralCapsuleName(name) ? GENERAL_CAPSULE_NAME : String(name || '').trim();
@@ -725,75 +662,6 @@
       return (si === -1 ? 999 : si) - (sj === -1 ? 999 : sj);
     };
     const describeStockVariant = (fit, size, color) => `${getCutLabel(fit)} · ${normalizeColor(color)} · Talle ${size || '—'}`;
-
-
-    const parseLiteralDescription = description => {
-      const text = String(description || '').trim();
-      const match = text.match(/^(.*?)\s*[·|—|-]\s*((?:19|20)\d{2})$/);
-      return match ? { credit: match[1].trim(), year: match[2] } : { credit: text, year: '' };
-    };
-
-    const refreshLiteralAdminUi = () => {
-      const type = el('literalType')?.value || 'none';
-      const isLiteral = type !== 'none';
-      if (el('literalCredit')) el('literalCredit').disabled = !isLiteral;
-      if (el('literalYear')) el('literalYear').disabled = !isLiteral;
-      if (el('literalCreditLabel')) el('literalCreditLabel').textContent = type === 'discos' ? 'Artista' : (type === 'cine' ? 'Director / crédito' : 'Artista / Director');
-      if (el('capsule')) {
-        if (!isLiteral && getLiteralTypeFromCapsule(el('capsule').value) !== 'none') el('capsule').value = GENERAL_CAPSULE_NAME;
-        el('capsule').disabled = isLiteral;
-      }
-      if (el('literalHint')) el('literalHint').textContent = isLiteral
-        ? `Se guardará dentro de ${getLiteralCapsuleFromType(type)}. Título = ${type === 'discos' ? 'nombre del disco' : 'nombre de la película'}.`
-        : 'Si es LITERAL, usá el título del disco o película como “Título”. Imagen 1: obra/póster · Imagen 2: mockup · Imagen 3: detalle.';
-      if (isLiteral && el('capsule')) {
-        const capsuleName = getLiteralCapsuleFromType(type);
-        if (![...el('capsule').options].some(opt => opt.value === capsuleName)) {
-          const option = document.createElement('option'); option.value = capsuleName; option.textContent = capsuleName; el('capsule').appendChild(option);
-        }
-        el('capsule').value = capsuleName;
-      }
-    };
-
-    const syncLiteralDescription = () => {
-      const type = el('literalType')?.value || 'none';
-      if (type === 'none') return;
-      const credit = el('literalCredit')?.value.trim() || '';
-      const year = el('literalYear')?.value.trim() || '';
-      const parts = [credit, year].filter(Boolean);
-      if (parts.length && el('description')) el('description').value = parts.join(' · ');
-    };
-
-    const setupLiteralCapsules = async () => {
-      clearStatus();
-      const btn = el('setupLiteralBtn');
-      if (btn) { btn.disabled = true; btn.textContent = 'Preparando…'; }
-      try {
-        const rows = [
-          { name:LITERAL_DISCOS_CAPSULE, slug:'literal-discos', badge_label:'LITERAL / DISCOS', short_description:'Tapas de discos llevadas a la remera sin filtros ni reinterpretaciones.', hero_title:'LITERAL · DISCOS', hero_body:'La portada original. El disco que es parte de tu historia.', hero_cta_text:'Ver discos', is_active:true, is_featured_drop:false },
-          { name:LITERAL_CINE_CAPSULE, slug:'literal-cine', badge_label:'LITERAL / CINE', short_description:'Pósters de películas llevados a la remera sin filtros ni reinterpretaciones.', hero_title:'LITERAL · PELÍCULAS', hero_body:'El póster original. La película que quedó con vos.', hero_cta_text:'Ver películas', is_active:true, is_featured_drop:false }
-        ];
-        const { error } = await sb.from('capsules').upsert(rows, { onConflict:'name' });
-        if (error) throw error;
-        await loadCapsules();
-        showStatus('LITERAL listo: ya podés cargar discos y películas desde el editor de catálogo.');
-      } catch (err) {
-        showStatus(err.message || 'No se pudieron preparar las cápsulas LITERAL.', 'err');
-      } finally {
-        if (btn) { btn.disabled = false; btn.textContent = 'Preparar LITERAL'; }
-      }
-    };
-
-    const newLiteralProduct = async () => {
-      const hasDiscos = capsules.some(c => normalizeTextKey(c.name) === normalizeTextKey(LITERAL_DISCOS_CAPSULE));
-      const hasCine = capsules.some(c => normalizeTextKey(c.name) === normalizeTextKey(LITERAL_CINE_CAPSULE));
-      if (!hasDiscos || !hasCine) await setupLiteralCapsules();
-      newProduct();
-      el('literalType').value = 'discos';
-      el('artType').value = 'poster';
-      refreshLiteralAdminUi();
-      el('title')?.focus();
-    };
 
     const capsuleBlankForm = () => ({
       id:'',
@@ -1094,9 +962,7 @@
     };
 
     const normalizePromoCodeForStorage = value => String(value || '').trim().toUpperCase().replace(/[^A-Z0-9_-]/g, '');
-    const promoBlankForm = () => ({ id:'', code:'', description:'', promo_type:'percent', discount_percent:20, buy_qty:2, pay_qty:1, is_active:true, starts_at:'', ends_at:'', max_uses:'', used_count:0 });
-    const getPromoAdminType = promo => String(promo?.promo_type || 'percent').toLowerCase() === 'bogo' ? 'bogo' : 'percent';
-    const getPromoAdminBenefitLabel = promo => getPromoAdminType(promo) === 'bogo' ? '2x1' : `${Number(promo?.discount_percent || 0)}% OFF`;
+    const promoBlankForm = () => ({ id:'', code:'', description:'', discount_percent:20, is_active:true, starts_at:'', ends_at:'', max_uses:'', used_count:0 });
     const formatDateInput = value => value ? String(value).slice(0, 10) : '';
     const parsePromoBoundaryDate = (value = '', endOfDay = false) => {
       if (!value) return null;
@@ -1113,27 +979,21 @@
       if (starts && now < starts) return false;
       if (ends && now > ends) return false;
       if (promo.max_uses !== null && promo.max_uses !== undefined && promo.max_uses !== '' && Number(promo.used_count || 0) >= Number(promo.max_uses)) return false;
-      return getPromoAdminType(promo) === 'bogo' ? true : Number(promo.discount_percent || 0) > 0;
+      return Number(promo.discount_percent || 0) > 0;
     };
     const updatePromoPreview = () => {
       const code = normalizePromoCodeForStorage(el('promoCode')?.value || '');
-      const type = el('promoType')?.value === 'bogo' ? 'bogo' : 'percent';
       const discount = Number(el('promoDiscountPercent')?.value || 0);
       const previewDiscount = el('promoPreviewDiscount');
       const previewText = el('promoPreviewText');
-      const discountField = el('promoDiscountField');
-      const bogoInfo = el('promoBogoInfo');
-      if (discountField) discountField.classList.toggle('hidden', type === 'bogo');
-      if (bogoInfo) bogoInfo.classList.toggle('hidden', type !== 'bogo');
-      if (previewDiscount) previewDiscount.textContent = type === 'bogo' ? '2x1' : `${discount || 0}%`;
-      if (previewText) previewText.textContent = code ? `${code} · ${type === 'bogo' ? '2x1' : 'porcentaje'} · ${el('promoIsActive')?.value === 'true' ? 'activo' : 'inactivo'}` : 'Código sin cargar';
+      if (previewDiscount) previewDiscount.textContent = `${discount || 0}%`;
+      if (previewText) previewText.textContent = code ? `${code} · ${el('promoIsActive')?.value === 'true' ? 'activo' : 'inactivo'}` : 'Código sin cargar';
     };
     const fillPromoForm = promo => {
       const row = promo || promoBlankForm();
       el('promoId').value = row.id || '';
       el('promoCode').value = row.code || '';
       el('promoDescription').value = row.description || '';
-      el('promoType').value = getPromoAdminType(row);
       el('promoDiscountPercent').value = Number(row.discount_percent || 0);
       el('promoStartsAt').value = formatDateInput(row.starts_at);
       el('promoEndsAt').value = formatDateInput(row.ends_at);
@@ -1145,17 +1005,13 @@
     };
     const collectPromoForm = () => {
       const code = normalizePromoCodeForStorage(el('promoCode').value);
-      const promoType = el('promoType').value === 'bogo' ? 'bogo' : 'percent';
-      const discount = promoType === 'bogo' ? 0 : Number(el('promoDiscountPercent').value || 0);
+      const discount = Number(el('promoDiscountPercent').value || 0);
       const maxUsesRaw = el('promoMaxUses').value;
       return {
         id: el('promoId').value || null,
         code,
         description: el('promoDescription').value.trim() || null,
-        promo_type: promoType,
         discount_percent: discount,
-        buy_qty: 2,
-        pay_qty: 1,
         starts_at: el('promoStartsAt').value || null,
         ends_at: el('promoEndsAt').value || null,
         max_uses: maxUsesRaw === '' ? null : Math.max(0, parseInt(maxUsesRaw, 10) || 0),
@@ -1176,7 +1032,7 @@
             <h4>${promo.code}</h4>
             <span class="badge">${isPromoVigente(promo) ? 'Vigente' : (promo.is_active ? 'Fuera de fecha' : 'Inactivo')}</span>
           </div>
-          <p>${getPromoAdminBenefitLabel(promo)} · ${promo.description || 'sin descripción'}${promo.ends_at ? ' · hasta ' + formatDateInput(promo.ends_at) : ''}</p>
+          <p>${Number(promo.discount_percent || 0)}% OFF · ${promo.description || 'sin descripción'}${promo.ends_at ? ' · hasta ' + formatDateInput(promo.ends_at) : ''}</p>
         </div>
       `).join('');
       list.querySelectorAll('.item[data-id]').forEach(node => {
@@ -1188,7 +1044,7 @@
       try {
         const { data, error } = await sb
           .from('promo_codes')
-          .select('id, code, description, promo_type, discount_percent, buy_qty, pay_qty, is_active, starts_at, ends_at, max_uses, used_count, created_at')
+          .select('id, code, description, discount_percent, is_active, starts_at, ends_at, max_uses, used_count, created_at')
           .order('created_at', { ascending: false });
         if (error) throw error;
         promoCodes = data || [];
@@ -1217,7 +1073,7 @@
       try {
         const payload = collectPromoForm();
         if (!payload.code) throw new Error('Completá el código promocional.');
-        if (payload.promo_type === 'percent' && !(payload.discount_percent > 0 && payload.discount_percent <= 100)) throw new Error('El descuento debe estar entre 1 y 100.');
+        if (!(payload.discount_percent > 0 && payload.discount_percent <= 100)) throw new Error('El descuento debe estar entre 1 y 100.');
         let savedId = payload.id;
         if (savedId) {
           const { error } = await sb.from('promo_codes').update(payload).eq('id', savedId);
@@ -1709,12 +1565,6 @@
       currentProduct = product;
       renderCapsuleOptionsInProductForm();
       el('capsule').value = isGeneralCapsuleName(product.capsule) ? GENERAL_CAPSULE_NAME : (product.capsule || '');
-      const literalType = getLiteralTypeFromCapsule(product.capsule);
-      el('literalType').value = literalType;
-      const parsedLiteral = parseLiteralDescription(product.description);
-      el('literalCredit').value = literalType === 'none' ? '' : parsedLiteral.credit;
-      el('literalYear').value = literalType === 'none' ? '' : parsedLiteral.year;
-      refreshLiteralAdminUi();
     };
 
     const clearImages = () => {
@@ -1769,16 +1619,13 @@
       .replace(/(^-|-$)/g, '');
 
     const collectForm = () => {
-      syncLiteralDescription();
       const title = el('title').value.trim();
       const slug = slugify(el('slug').value.trim() || title);
-      const literalType = el('literalType')?.value || 'none';
-      const capsuleValue = literalType === 'none' ? el('capsule').value.trim() : getLiteralCapsuleFromType(literalType);
       return {
         id: el('productId').value || null,
         slug,
         sku: el('sku').value.trim() || null,
-        capsule: capsuleValue,
+        capsule: el('capsule').value.trim(),
         title,
         description: el('description').value.trim(),
         price: Number(el('price').value || 0),

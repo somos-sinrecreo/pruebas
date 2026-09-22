@@ -2063,7 +2063,7 @@
     }
     .action-share:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-    /* ── ACCESO FLOTANTE · MUJERES DE LA CIENCIA ── */
+    /* ── ACCESO FLOTANTE · EFEMÉRIDES ── */
     .float-efemerides {
       position: fixed;
       right: 22px;
@@ -2255,132 +2255,6 @@
       font-size: 1.8rem;
       letter-spacing: .03em;
       margin-bottom: 8px;
-    }
-
-    .science-tribute {
-      position: relative;
-      overflow: hidden;
-      min-height: 430px;
-      border-radius: 30px;
-      padding: 34px;
-      background: var(--ink);
-      color: #fff;
-      display: grid;
-      grid-template-columns: minmax(220px, .82fr) minmax(0, 1.18fr);
-      gap: 28px;
-      align-items: stretch;
-      box-shadow: var(--sh-lg);
-    }
-    .science-tribute::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 88% 6%, rgba(232,120,90,.40), transparent 48%),
-        radial-gradient(ellipse at 5% 92%, rgba(255,255,255,.10), transparent 42%);
-      pointer-events: none;
-    }
-    .science-tribute::after {
-      content: "CIENCIA";
-      position: absolute;
-      right: -14px;
-      bottom: -22px;
-      font-family: var(--font-display);
-      font-size: clamp(5rem, 14vw, 10rem);
-      line-height: .8;
-      letter-spacing: .02em;
-      color: rgba(255,255,255,.045);
-      pointer-events: none;
-      user-select: none;
-    }
-    .science-tribute > * { position: relative; z-index: 1; }
-    .science-tribute-visual {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 18px;
-      min-height: 100%;
-      padding: 24px;
-      border-radius: 26px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-    }
-    .science-tribute-symbol {
-      width: 86px;
-      height: 86px;
-      border-radius: 28px;
-      display: grid;
-      place-items: center;
-      background: rgba(232,120,90,.18);
-      color: var(--accent-light);
-      font-size: 2.8rem;
-      box-shadow: 0 18px 48px rgba(0,0,0,.18);
-    }
-    .science-tribute-note {
-      color: rgba(255,255,255,.68);
-      font-size: .88rem;
-      line-height: 1.65;
-      max-width: 30ch;
-    }
-    .science-tribute-copy {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 16px;
-    }
-    .science-tribute-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      width: fit-content;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(232,120,90,.16);
-      color: var(--accent-light);
-      font-size: .72rem;
-      font-weight: 900;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-    .science-tribute-title {
-      font-family: var(--font-display);
-      font-size: clamp(3rem, 6.6vw, 6rem);
-      letter-spacing: .035em;
-      line-height: .88;
-      margin: 0;
-    }
-    .science-tribute-title em {
-      font-family: var(--font-serif);
-      font-size: .64em;
-      font-style: italic;
-      color: var(--accent-light);
-    }
-    .science-tribute-lead {
-      max-width: 64ch;
-      color: rgba(255,255,255,.74);
-      font-size: 1rem;
-      line-height: 1.78;
-    }
-    .science-tribute-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-    .science-tribute-actions .club-cta {
-      width: auto;
-      min-height: 52px;
-      padding-inline: 24px;
-    }
-    @media (max-width: 680px) {
-      .science-tribute {
-        grid-template-columns: 1fr;
-        padding: 26px 18px;
-        min-height: 0;
-      }
-      .science-tribute-visual { padding: 18px; }
-      .science-tribute-symbol { width: 72px; height: 72px; font-size: 2.25rem; }
-      .science-tribute-actions .club-cta { width: 100%; }
     }
 
 
@@ -3235,93 +3109,6 @@
       line-height: 1.55;
       margin-bottom: 12px;
     }
-
-    .cart-promo-panel {
-      margin: 0 0 14px;
-      padding: 14px;
-      border-radius: 18px;
-      background: #fff7ef;
-      border: 1px solid rgba(192,90,58,.20);
-    }
-    .cart-promo-label {
-      display: block;
-      font-size: .72rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-weight: 900;
-      color: #7b3f2d;
-      margin-bottom: 8px;
-    }
-    .cart-promo-form {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 8px;
-      align-items: center;
-    }
-    .cart-promo-input {
-      width: 100%;
-      min-width: 0;
-      border: 1px solid rgba(192,90,58,.24);
-      border-radius: 999px;
-      padding: 11px 14px;
-      background: #fff;
-      outline: none;
-      font-weight: 800;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      color: var(--ink);
-    }
-    .cart-promo-input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(192,90,58,.10);
-    }
-    .cart-promo-btn {
-      border: 0;
-      border-radius: 999px;
-      padding: 11px 14px;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 900;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .cart-promo-btn:hover { background: var(--accent-light); }
-    .cart-promo-remove {
-      border: 1px solid rgba(14,14,16,.12);
-      border-radius: 999px;
-      padding: 9px 12px;
-      background: #fff;
-      color: var(--muted);
-      font-weight: 900;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .cart-promo-applied,
-    .cart-promo-status {
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      font-size: .82rem;
-      font-weight: 800;
-      line-height: 1.55;
-    }
-    .cart-promo-applied {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      background: rgba(26,122,58,.07);
-      border: 1px solid rgba(26,122,58,.16);
-      color: #1a3a2e;
-    }
-    .cart-promo-status { background: rgba(14,14,16,.04); border: 1px solid rgba(14,14,16,.06); color: var(--muted); }
-    .cart-promo-status.error { background: rgba(156,47,47,.08); border-color: rgba(156,47,47,.18); color: var(--danger, #9c2f2f); }
-    .cart-promo-status.success { background: rgba(26,122,58,.07); border-color: rgba(26,122,58,.16); color: #1a7a3a; }
-    @media (max-width: 680px) {
-      .cart-promo-form { grid-template-columns: 1fr; }
-      .cart-promo-btn, .cart-promo-remove { width: 100%; }
-      .cart-promo-applied { align-items: flex-start; flex-direction: column; }
-    }
     .promo-price-old {
       display: inline-block;
       color: var(--muted);
@@ -3345,149 +3132,12 @@
       letter-spacing: .08em;
       text-transform: uppercase;
     }
-    .spring-promo-banner {
-      background:
-        radial-gradient(circle at 14% 20%, rgba(255,255,255,.16), transparent 24%),
-        linear-gradient(115deg, #b84428 0%, var(--accent) 52%, #db7c4e 100%);
-      color: #fff;
-      border-bottom: 1px solid rgba(14,14,16,.12);
-    }
-    .spring-promo-inner {
-      min-height: 92px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(240px, .75fr);
-      align-items: center;
-      gap: 30px;
-      padding-top: 17px;
-      padding-bottom: 17px;
-    }
-    .spring-promo-kicker {
-      display: block;
-      margin-bottom: 3px;
-      font-size: .69rem;
-      font-weight: 900;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      opacity: .86;
-    }
-    .spring-promo-title {
-      display: block;
-      font-family: var(--font-display);
-      font-size: clamp(1.55rem, 3vw, 2.65rem);
-      line-height: .98;
-      letter-spacing: .02em;
-    }
-    .spring-promo-detail {
-      display: block;
-      margin-top: 7px;
-      font-size: .82rem;
-      font-weight: 700;
-      line-height: 1.45;
-      opacity: .9;
-    }
-    .spring-promo-shipping {
-      padding-left: 28px;
-      border-left: 1px solid rgba(255,255,255,.32);
-    }
-    .spring-promo-shipping span,
-    .spring-promo-shipping small { display: block; }
-    .spring-promo-shipping span {
-      font-size: .7rem;
-      font-weight: 900;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-      opacity: .82;
-    }
-    .spring-promo-shipping strong {
-      display: block;
-      margin: 2px 0;
-      font-family: var(--font-display);
-      font-size: 1.72rem;
-      letter-spacing: .02em;
-    }
-    .spring-promo-shipping small { font-size: .78rem; font-weight: 700; opacity: .86; }
     @media (max-width: 680px) {
       #promoQrModal { align-items: flex-start; padding: 12px; }
       .promo-modal-shell { max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); }
       .promo-qr-card { padding: 26px 18px; min-height: 0; }
       .promo-qr-actions { grid-template-columns: 1fr; }
-      .spring-promo-inner { grid-template-columns: 1fr; gap: 14px; padding-top: 16px; padding-bottom: 16px; }
-      .spring-promo-shipping { padding: 12px 0 0; border-left: 0; border-top: 1px solid rgba(255,255,255,.28); }
-      .spring-promo-shipping strong { font-size: 1.45rem; }
     }
-
-
-    /* ── LITERAL · campaña discos + cine ── */
-    .nav-link-literal{color:var(--accent);font-weight:800}
-    .literal-section{padding:56px 0 8px}
-    .literal-stage{
-      position:relative;overflow:hidden;background:var(--ink);color:var(--paper);
-      border-radius:30px;padding:54px;border:1px solid rgba(255,255,255,.08);
-      box-shadow:0 24px 70px rgba(26,26,27,.16)
-    }
-    .literal-stage::before{
-      content:'LITERAL';position:absolute;right:-22px;top:-48px;font-family:var(--display);
-      font-size:clamp(8rem,20vw,18rem);line-height:1;color:rgba(255,255,255,.035);letter-spacing:.02em;pointer-events:none
-    }
-    .literal-stage-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:46px;align-items:end}
-    .literal-kicker{font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#d6a08f;margin-bottom:14px}
-    .literal-title{font-family:var(--display);font-size:clamp(4rem,8vw,7.5rem);line-height:.82;letter-spacing:.015em;margin:0}
-    .literal-title em{font-family:var(--serif);font-weight:400;color:#d6a08f}
-    .literal-copy{font-size:1rem;line-height:1.75;color:rgba(250,249,246,.72);max-width:52ch;margin:24px 0 0}
-    .literal-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .literal-choice{
-      min-height:190px;text-align:left;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.055);color:white;
-      border-radius:22px;padding:24px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;transition:.25s ease
-    }
-    .literal-choice:hover{transform:translateY(-3px);background:rgba(255,255,255,.095);border-color:rgba(255,255,255,.28)}
-    .literal-choice-icon{font-size:2rem}.literal-choice strong{font-family:var(--display);font-size:2.1rem;letter-spacing:.04em}
-    .literal-choice span{font-size:.82rem;color:rgba(255,255,255,.62);line-height:1.45}
-    .literal-choice-count{display:inline-flex;margin-top:7px;font-weight:800;color:#d6a08f!important}
-    .literal-manifesto{position:relative;z-index:1;display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
-    .literal-manifesto span{border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 12px;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.7)}
-
-    .literal-modal-shell{max-width:1180px;background:#f4efe8}
-    .literal-modal-header{background:var(--ink);color:white;border-bottom:0}
-    .literal-modal-header .modal-section-title{color:#d6a08f}.literal-modal-header .modal-title{color:white}
-    .literal-modal-header .modal-close{color:white;border-color:rgba(255,255,255,.18)}
-    .literal-modal-body{padding:0}
-    .literal-intro{background:var(--ink);color:white;padding:0 34px 32px}
-    .literal-intro-line{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:rgba(255,255,255,.72)}
-    .literal-controls{position:sticky;top:0;z-index:5;background:rgba(244,239,232,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:18px 28px;display:grid;grid-template-columns:auto minmax(220px,1fr) auto;gap:12px;align-items:center}
-    .literal-tabs{display:flex;gap:8px}.literal-tab{border:1px solid var(--line);background:white;border-radius:999px;padding:11px 16px;font-weight:800;cursor:pointer;color:var(--ink)}
-    .literal-tab.active{background:var(--ink);color:white;border-color:var(--ink)}
-    .literal-search-wrap{position:relative}.literal-search{width:100%;border:1px solid var(--line);border-radius:999px;padding:12px 16px 12px 42px;background:white;outline:none}
-    .literal-search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);opacity:.48}
-    .literal-surprise{border:0;background:var(--accent);color:white;border-radius:999px;padding:12px 16px;font-weight:800;cursor:pointer;white-space:nowrap}
-    .literal-results-meta{padding:22px 28px 0;color:var(--muted);font-size:.82rem}
-    .literal-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;padding:18px 28px 30px}
-    .literal-card{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;min-width:0;transition:.2s ease}
-    .literal-card:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(26,26,27,.09)}
-    .literal-art{aspect-ratio:4/5;background:#e8e1d7;overflow:hidden;position:relative;cursor:pointer}
-    .literal-art img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}.literal-card:hover .literal-art img{transform:scale(1.02)}
-    .literal-kind-badge{position:absolute;left:10px;top:10px;background:rgba(26,26,27,.9);color:white;border-radius:999px;padding:6px 9px;font-size:.64rem;font-weight:800;letter-spacing:.08em}
-    .literal-card-body{padding:16px;display:flex;flex-direction:column;gap:7px;flex:1}
-    .literal-card-title{font-family:var(--display);font-size:1.48rem;letter-spacing:.025em;line-height:.95;margin:0}.literal-card-meta{font-size:.78rem;color:var(--muted);min-height:1.2em}
-    .literal-card-price{font-weight:800;margin-top:auto;padding-top:8px}.literal-card-actions{display:flex;gap:8px;margin-top:8px}
-    .literal-card-buy{flex:1;border:0;background:var(--ink);color:white;border-radius:999px;padding:10px 12px;font-weight:800;cursor:pointer}
-    .literal-card-share{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:white;cursor:pointer}
-    .literal-empty{grid-column:1/-1;text-align:center;padding:58px 20px;color:var(--muted)}
-    .literal-request{margin:0 28px 30px;border:1px dashed #cbbbae;border-radius:20px;padding:22px;display:flex;justify-content:space-between;align-items:center;gap:20px;background:#fffaf5}
-    .literal-request strong{display:block;font-family:var(--display);font-size:1.5rem;letter-spacing:.03em;color:var(--ink)}
-    .literal-request span{font-size:.84rem;color:var(--muted)}
-    .literal-request a{border-radius:999px;background:var(--accent);color:white;padding:12px 16px;font-weight:800;white-space:nowrap}
-
-    @media(max-width:900px){
-      .literal-stage{padding:34px 24px}.literal-stage-grid{grid-template-columns:1fr;gap:28px}.literal-choice-grid{grid-template-columns:1fr 1fr}
-      .literal-controls{grid-template-columns:1fr}.literal-tabs{order:1}.literal-search-wrap{order:2}.literal-surprise{order:3;width:100%}
-      .literal-grid{grid-template-columns:repeat(2,minmax(0,1fr));padding:16px}.literal-results-meta{padding:18px 16px 0}.literal-request{margin:0 16px 24px}
-    }
-    @media(max-width:560px){
-      .literal-section{padding-top:32px}.literal-stage{border-radius:22px;padding:28px 18px}.literal-choice-grid{grid-template-columns:1fr}.literal-choice{min-height:142px}
-      .literal-title{font-size:4.4rem}.literal-grid{grid-template-columns:1fr 1fr;gap:10px}.literal-card-body{padding:12px}.literal-card-title{font-size:1.2rem}
-      .literal-card-actions{flex-direction:column}.literal-card-share{display:none}.literal-request{align-items:flex-start;flex-direction:column}.literal-request a{width:100%;text-align:center}
-    }
-
   </style>
 </head>
 <body>
@@ -3555,7 +3205,6 @@
     <div class="container nav-scroll">
       <a class="nav-link" href="#linea-permanente">Línea Permanente</a>
       <a class="nav-link" href="#capsulas-coleccion">Cápsulas de Colección</a>
-      <a class="nav-link nav-link-literal" href="#literal" onclick="openLiteralModal(event)">LITERAL</a>
       <a class="nav-link nav-link-club" href="#club" onclick="openClubModal(event)">Club SIN RECREO</a>
       <a class="nav-link" href="#productos" onclick="openProductsModal(event)">Productos</a>
       <a class="nav-link" href="#como-comprar">Cómo comprar</a>
@@ -3575,21 +3224,6 @@
     <span class="prelaunch-pill">Compra online disponible</span>
   </div>
 </div>
-
-<section class="spring-promo-banner hidden" id="springPromoBanner" aria-label="Promo Primavera en Remera">
-  <div class="container spring-promo-inner">
-    <div>
-      <span class="spring-promo-kicker">✦ Promo Primavera en Remera</span>
-      <strong class="spring-promo-title">Todas las remeras a $25.000</strong>
-      <span class="spring-promo-detail">Hasta el 21 de diciembre de 2026 inclusive · Precio final promocional, no acumulable con otros descuentos internos.</span>
-    </div>
-    <div class="spring-promo-shipping">
-      <span>Envío gratis</span>
-      <strong>desde $100.000</strong>
-      <small>Con 4 remeras ya alcanzás el beneficio.</small>
-    </div>
-  </div>
-</section>
 
 <main>
 
@@ -3688,33 +3322,6 @@
     </div>
   </div>
 
-
-
-  <!-- ── LITERAL ── -->
-  <section class="literal-section" id="literal">
-    <div class="container">
-      <div class="literal-stage fade-up">
-        <div class="literal-stage-grid">
-          <div>
-            <div class="literal-kicker">SIN RECREO presenta · Nueva línea</div>
-            <h2 class="literal-title">LITE<em>RAL</em></h2>
-            <p class="literal-copy"><strong>Hay imágenes que no necesitan diseño.</strong><br>Tapas de discos y pósters de películas llevados a la remera sin filtros, sin reinterpretaciones y sin inventar nada.</p>
-            <div class="literal-manifesto"><span>La imagen tal cual</span><span>Discos</span><span>Películas</span><span>Tu historia, puesta</span></div>
-          </div>
-          <div class="literal-choice-grid">
-            <button class="literal-choice" type="button" onclick="openLiteralModal(event,'discos')">
-              <div class="literal-choice-icon">💿</div>
-              <div><strong>DISCOS</strong><span>Tapas que ya son parte de tu memoria.</span><span class="literal-choice-count" id="literalDiscosCount">0 disponibles →</span></div>
-            </button>
-            <button class="literal-choice" type="button" onclick="openLiteralModal(event,'cine')">
-              <div class="literal-choice-icon">🎬</div>
-              <div><strong>PELÍCULAS</strong><span>Pósters que no necesitan presentación.</span><span class="literal-choice-count" id="literalCineCount">0 disponibles →</span></div>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ── CÓMO COMPRAR ── -->
   <section class="section" id="como-comprar" style="padding-bottom: 0;">
@@ -3875,7 +3482,6 @@
         <a href="#catalogo">Catálogo completo</a>
         <a href="#linea-permanente">Línea Permanente</a>
         <a href="#capsulas-coleccion">Cápsulas de Colección</a>
-        <a href="#literal" onclick="openLiteralModal(event)">LITERAL</a>
         <a href="#catalogo">Nuevos drops</a>
         <a href="#catalogo">Destacados</a>
       </div>
@@ -3911,10 +3517,10 @@
   <svg width="28" height="28" viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.76-.87-2.03-.97-.27-.1-.47-.14-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.52.14-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12 2a10 10 0 00-8.5 15.27L2 22l4.86-1.48A10 10 0 1012 2z"/></svg>
 </a>
 
-<!-- ── FLOATING MUJERES DE LA CIENCIA ── -->
-<button class="float-efemerides" type="button" onclick="openEfemeridesModal(event)" aria-label="Abrir homenaje Mujeres de la Ciencia">
-  <span class="float-efemerides-icon" aria-hidden="true">🔬</span>
-  <span>Mujeres de la Ciencia</span>
+<!-- ── FLOATING EFEMÉRIDES ── -->
+<button class="float-efemerides" type="button" onclick="openEfemeridesModal(event)" aria-label="Abrir cápsula Efemérides">
+  <span class="float-efemerides-icon" aria-hidden="true">✦</span>
+  <span>Efemérides</span>
 </button>
 
 
@@ -3962,7 +3568,6 @@
   <nav class="mobile-nav-links" aria-label="Navegación móvil">
     <a href="#linea-permanente" onclick="closeMobileMenu()">Línea Permanente</a>
     <a href="#capsulas-coleccion" onclick="closeMobileMenu()">Cápsulas de Colección</a>
-    <a href="#literal" onclick="openLiteralModal(event); closeMobileMenu();">LITERAL · Discos + Cine</a>
     <a href="#club" onclick="closeMobileMenu(); openClubModal(event);">Club SIN RECREO</a>
     <a href="#productos" onclick="openProductsModal(event); closeMobileMenu();">Productos</a>
     <a href="#como-comprar" onclick="closeMobileMenu()">Cómo comprar</a>
@@ -3991,16 +3596,6 @@
     <div class="cart-subtotal">
       <span class="cart-subtotal-label">Subtotal prendas</span>
       <span class="cart-subtotal-price" id="cartTotal">$0</span>
-    </div>
-
-    <div class="cart-promo-panel" id="cartPromoPanel">
-      <span class="cart-promo-label">Código promocional</span>
-      <div class="cart-promo-form">
-        <input id="cartPromoInput" class="cart-promo-input" type="text" placeholder="Ej: SINRECREO20" autocomplete="off" aria-label="Código de descuento promocional" onkeydown="if(event.key==='Enter'){event.preventDefault();applyCartPromoCode();}" />
-        <button class="cart-promo-btn" id="cartPromoApplyBtn" type="button" onclick="applyCartPromoCode()">Aplicar</button>
-      </div>
-      <div class="cart-promo-applied hidden" id="cartPromoApplied"></div>
-      <div class="cart-promo-status hidden" id="cartPromoStatus"></div>
     </div>
 
     <div class="cart-grand-total">
@@ -4048,7 +3643,7 @@
       <div class="pay-methods cart-pay-methods">
         <button class="pay-method-btn selected" onclick="selectPayMethod(this, 'mp')" type="button"><div class="pay-method-icon mp"><svg width="22" height="22" viewBox="0 0 48 48" fill="white"><ellipse cx="24" cy="24" rx="22" ry="14" fill="white"/><text x="24" y="29" text-anchor="middle" font-size="14" font-weight="bold" fill="#009ee3" font-family="Arial">MP</text></svg></div><div class="pay-method-info"><div class="pay-method-name">Mercado Pago / Cuenta MP</div><div class="pay-method-detail">Pagá con dinero en cuenta, tarjeta u otros medios habilitados</div></div><span class="pay-method-badge badge-cuotas">3 cuotas s/i</span></button>
         <button class="pay-method-btn" onclick="selectPayMethod(this, 'card')" type="button"><div class="pay-method-icon card"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div class="pay-method-info"><div class="pay-method-name">Tarjeta de crédito/débito</div><div class="pay-method-detail">También se procesa por Mercado Pago</div></div><span class="pay-method-badge badge-cuotas">3 cuotas</span></button>
-        <button class="pay-method-btn transfer-highlight" onclick="selectPayMethod(this, 'transfer')" type="button"><div class="pay-method-icon transfer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="pay-method-info"><div class="pay-method-name">Transferencia bancaria</div><div class="pay-method-detail" id="transferMethodDetail">Pagá por transferencia y aplicamos 10% OFF en la tienda</div></div><span class="pay-method-badge badge-discount" id="transferMethodBadge">10% OFF</span></button>
+        <button class="pay-method-btn transfer-highlight" onclick="selectPayMethod(this, 'transfer')" type="button"><div class="pay-method-icon transfer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="pay-method-info"><div class="pay-method-name">Transferencia bancaria</div><div class="pay-method-detail">Pagá por transferencia y aplicamos 10% OFF en la tienda</div></div><span class="pay-method-badge badge-discount">10% OFF</span></button>
         <button class="pay-method-btn cuenta-dni-highlight" onclick="selectPayMethod(this, 'cuenta_dni')" type="button"><div class="pay-method-icon cuenta-dni">DNI</div><div class="pay-method-info"><div class="pay-method-name">Cuenta DNI</div><div class="pay-method-detail">20% de reintegro de lunes a viernes · tope $6000 semanal por cuenta. No se descuenta en la tienda.</div></div><span class="pay-method-badge badge-reintegro">20% reintegro</span></button>
       </div>
 
@@ -4065,43 +3660,9 @@
 </div>
 
 <!-- ── BUY MODAL ── -->
-
-<!-- ── LITERAL MODAL ── -->
-<div class="modal-overlay" id="literalModal" role="dialog" aria-modal="true" aria-label="LITERAL · Discos y películas">
-  <div class="modal modal-wide literal-modal-shell">
-    <div class="modal-header literal-modal-header">
-      <div>
-        <div class="modal-section-title">SIN RECREO / LITERAL</div>
-        <h2 class="modal-title">NO LA REDISEÑAMOS. LA VESTIMOS.</h2>
-      </div>
-      <button class="modal-close" onclick="closeLiteralModal()" aria-label="Cerrar LITERAL">✕</button>
-    </div>
-    <div class="modal-body literal-modal-body">
-      <div class="literal-intro"><div class="literal-intro-line">La portada original. El póster original. Elegí la imagen que es parte de tu historia.</div></div>
-      <div class="literal-controls">
-        <div class="literal-tabs" role="tablist" aria-label="Tipo de LITERAL">
-          <button class="literal-tab active" id="literalTabDiscos" type="button" onclick="setLiteralKind('discos')">💿 Discos</button>
-          <button class="literal-tab" id="literalTabCine" type="button" onclick="setLiteralKind('cine')">🎬 Películas</button>
-        </div>
-        <div class="literal-search-wrap">
-          <span class="literal-search-icon">⌕</span>
-          <input class="literal-search" id="literalSearch" type="search" placeholder="Buscá un artista, disco o año…" oninput="renderLiteralProducts()" />
-        </div>
-        <button class="literal-surprise" type="button" onclick="surpriseLiteral()">SORPRENDEME ↻</button>
-      </div>
-      <div class="literal-results-meta" id="literalResultsMeta">Explorá LITERAL.</div>
-      <div class="literal-grid" id="literalGrid"></div>
-      <div class="literal-request">
-        <div><strong>¿NO ESTÁ LA TUYA?</strong><span>Decinos qué disco o película querés vestir. También nos sirve para decidir los próximos drops.</span></div>
-        <a id="literalRequestLink" href="#" target="_blank" rel="noopener noreferrer">PEDIR UNA PORTADA →</a>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="modal-overlay" id="buyModal" role="dialog" aria-modal="true" aria-label="Elegir producto">
   <div class="modal" id="modalInner">
-    <div class="modal-header"><h2 class="modal-title">Elegí corte, talle y estampa</h2><button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button></div>
+    <div class="modal-header"><h2 class="modal-title">Elegí modelo, talle y estampa</h2><button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button></div>
     <div class="modal-body">
       <div class="modal-product-row" id="modalProductRow"></div>
       <div class="modal-section-title">Corte</div><div class="fit-selector" id="modalFits"></div>
@@ -4109,9 +3670,9 @@
       <div class="modal-section-title">Talle</div><div class="size-selector" id="modalSizes"></div>
       <div class="modal-section-title">Tamaño de estampa</div><div class="fit-selector" id="modalStampSizes"></div>
       <div class="modal-stock-note" id="modalStockNote"></div>
-      <div id="modalSizePrompt" class="modal-customer-prompt hidden">Elegí corte, color, talle y tamaño de estampa para continuar.</div><span id="modalTotal" class="hidden">$0</span>
+      <div id="modalSizePrompt" class="modal-customer-prompt hidden">Elegí modelo, color, talle y tamaño de estampa para continuar.</div><span id="modalTotal" class="hidden">$0</span>
       <button class="modal-secondary-cta" id="modalAddCartCta" type="button" onclick="addConfiguredToCart(true)">Agregar al carrito</button>
-      <div class="modal-secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Elegí corte, color, talle y tamaño de estampa. Después continuás desde el carrito con entrega y forma de pago.</div>
+      <div class="modal-secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Elegí modelo, color, talle y tamaño de estampa. Después continuás desde el carrito con entrega y forma de pago.</div>
     </div>
   </div>
 </div>
@@ -4140,16 +3701,16 @@
   </div>
 </div>
 
-<!-- ── MUJERES DE LA CIENCIA MODAL ── -->
-<div class="modal-overlay" id="efemeridesModal" role="dialog" aria-modal="true" aria-label="Mujeres de la Ciencia">
+<!-- ── EFEMÉRIDES MODAL ── -->
+<div class="modal-overlay" id="efemeridesModal" role="dialog" aria-modal="true" aria-label="Cápsula Efemérides">
   <div class="modal modal-wide products-modal-shell efemerides-modal-shell">
     <div class="modal-header capsule-modal-header">
       <div>
-        <div class="modal-section-title">Mujeres de la Ciencia</div>
-        <h2 class="modal-title">Homenaje a las que hicieron ciencia</h2>
-        <p class="capsule-modal-sub">Antes de entrar a la cápsula, una pausa para nombrar a quienes abrieron caminos, hicieron descubrimientos y muchas veces quedaron fuera del relato oficial.</p>
+        <div class="modal-section-title">Efemérides</div>
+        <h2 class="modal-title">La remera del día</h2>
+        <p class="capsule-modal-sub">Acceso rápido a la última prenda cargada en la cápsula EFEMÉRIDES.</p>
       </div>
-      <button class="modal-close" onclick="closeEfemeridesModal()" aria-label="Cerrar Mujeres de la Ciencia">✕</button>
+      <button class="modal-close" onclick="closeEfemeridesModal()" aria-label="Cerrar Efemérides">✕</button>
     </div>
     <div class="modal-body" id="efemeridesModalBody">
       <!-- rendered by JS -->
@@ -4257,15 +3818,6 @@
     cuentaDniDays: 'lunes a viernes',
     installmentsCount: 3,
     freeShippingMinAmount: 100000,
-    springPromo: {
-      enabled: true,
-      code: 'PRIMAVERA2026',
-      title: 'Primavera en Remera',
-      unitPrice: 25000,
-      startsAt: '2026-09-21',
-      endsAt: '2026-12-21',
-      endLabel: '21/12/2026'
-    },
     preLaunchMode: false,
     preLaunchMessage: 'Próximamente podrás comprar nuestras remeras en la tienda. Por ahora podés chusmear el catálogo completo y escribirnos por WhatsApp si querés consultar algo.',
     mpMode: 'backend', // 'direct_links' o 'backend'
@@ -4288,7 +3840,6 @@
         code: 'regalo20',
         publicCode: 'SINRECREO20',
         discount: 20,
-        managedLocally: true,
         title: '20% OFF EN TU PRÓXIMA COMPRA',
         subtitle: 'Por comprar o recibir un regalo de SIN RECREO',
         body: 'Escaneaste un QR especial. Activá la promoción y vas a ver el descuento aplicado en las prendas de la tienda.',
@@ -4302,19 +3853,6 @@
     supabaseStorageBucket: 'product-images', // legado: imágenes nuevas en Cloudflare R2
     adminUrl: './admin.html'
   };
-
-  const LITERAL_DISCOS_CAPSULE = 'LITERAL · DISCOS';
-  const LITERAL_CINE_CAPSULE = 'LITERAL · CINE';
-  const LITERAL_CAPSULES = [LITERAL_DISCOS_CAPSULE, LITERAL_CINE_CAPSULE];
-  const getLiteralKind = productOrCapsule => {
-    const capsule = typeof productOrCapsule === 'string' ? productOrCapsule : (productOrCapsule?.capsule || '');
-    const key = normalizeTextKey(capsule);
-    if (key === normalizeTextKey(LITERAL_DISCOS_CAPSULE)) return 'discos';
-    if (key === normalizeTextKey(LITERAL_CINE_CAPSULE)) return 'cine';
-    return null;
-  };
-  const isLiteralCapsuleName = name => Boolean(getLiteralKind(String(name || '')));
-  const isLiteralProduct = product => Boolean(getLiteralKind(product));
 
   /* Catálogo local de respaldo. Ejemplo de estructura:
     {
@@ -4501,16 +4039,6 @@
       heroCtaText:'Ver cápsula',
       featured:false,
       isActive:true
-    },
-    'Mujeres de la Ciencia': {
-      name:'Mujeres de la Ciencia',
-      tag:'Nueva sección',
-      desc:'Estampas que homenajean a científicas reales y devuelven nombre propio a descubrimientos, métodos e historias.',
-      heroTitle:'Cápsula "Mujeres de la Ciencia" — activa ahora',
-      heroBody:'Una colección para vestir memoria, ciencia y reparación: mujeres que investigaron, descubrieron y abrieron camino.',
-      heroCtaText:'Ver cápsula',
-      featured:false,
-      isActive:true
     }
   };
 
@@ -4519,105 +4047,16 @@
   let preSaleMode = false;
   let activePromo = null;
   let pendingPromo = null;
-  let dynamicPromoCodes = [];
-  let remotePromoCatalogLoaded = false;
 
   const getPromoStorageKey = () => STORE_CONFIG.promoStorageKey || 'sinrecreo_promo_activa_v1';
   const getPromoDeclineStorageKey = () => STORE_CONFIG.promoDeclineStorageKey || 'sinrecreo_promo_rechazada_v1';
   const normalizePromoCode = value => String(value || '').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
-  const parsePromoBoundaryDate = (value = '', endOfDay = false) => {
-    if (!value) return null;
-    const raw = String(value).trim();
-    const normalized = /^\d{4}-\d{2}-\d{2}$/.test(raw) ? `${raw}T${endOfDay ? '23:59:59' : '00:00:00'}` : raw;
-    const date = new Date(normalized);
-    return Number.isNaN(date.getTime()) ? null : date;
-  };
-  const getSpringPromoConfig = () => STORE_CONFIG.springPromo || {};
-  const isSpringPromoActive = () => {
-    const promo = getSpringPromoConfig();
-    if (!promo.enabled || !(Number(promo.unitPrice || 0) > 0)) return false;
-    const now = new Date();
-    const startsAt = parsePromoBoundaryDate(promo.startsAt || '', false);
-    const endsAt = parsePromoBoundaryDate(promo.endsAt || '', true);
-    if (startsAt && now < startsAt) return false;
-    if (endsAt && now > endsAt) return false;
-    return true;
-  };
-  const getSpringPromoPrice = () => Number(getSpringPromoConfig().unitPrice || 25000);
-  const getSpringPromoLabel = () => String(getSpringPromoConfig().title || 'Primavera en Remera');
-  const getSpringPromoCode = () => String(getSpringPromoConfig().code || 'PRIMAVERA2026');
-  const getSpringPromoEndLabel = () => String(getSpringPromoConfig().endLabel || '21/12/2026');
-  const getPromoType = (promo = activePromo) => String(promo?.promoType || promo?.promo_type || 'percent').toLowerCase() === 'bogo' ? 'bogo' : 'percent';
-  const isBogoPromoRecord = (promo = activePromo) => getPromoType(promo) === 'bogo';
-  const getPromoBuyQty = (promo = activePromo) => Math.max(2, Number(promo?.buyQty ?? promo?.buy_qty ?? 2) || 2);
-  const getPromoPayQty = (promo = activePromo) => {
-    const buyQty = getPromoBuyQty(promo);
-    const raw = Math.max(1, Number(promo?.payQty ?? promo?.pay_qty ?? 1) || 1);
-    return Math.min(raw, buyQty - 1);
-  };
-  const getPromoFreeQty = (promo = activePromo) => Math.max(1, getPromoBuyQty(promo) - getPromoPayQty(promo));
-  const getPromoBenefitLabel = (promo = activePromo) => {
-    if (!promo) return 'PROMO';
-    if (isBogoPromoRecord(promo)) {
-      const buyQty = getPromoBuyQty(promo);
-      const payQty = getPromoPayQty(promo);
-      return buyQty === 2 && payQty === 1 ? '2x1' : `${buyQty}x${payQty}`;
-    }
-    return `${Number(promo.discount || promo.discount_percent || 0)}% OFF`;
-  };
-  const isPromoCurrentlyAvailable = (promo = {}) => {
-    if (!promo || promo.isActive === false) return false;
-    if (isBogoPromoRecord(promo)) {
-      const buyQty = getPromoBuyQty(promo);
-      const payQty = getPromoPayQty(promo);
-      if (!(buyQty > payQty && payQty > 0)) return false;
-    } else {
-      const discount = Number(promo.discount || promo.discount_percent || 0);
-      if (!(discount > 0)) return false;
-    }
-    const now = new Date();
-    const startsAt = parsePromoBoundaryDate(promo.startsAt || promo.starts_at || '', false);
-    const endsAt = parsePromoBoundaryDate(promo.endsAt || promo.ends_at || '', true);
-    if (startsAt && now < startsAt) return false;
-    if (endsAt && now > endsAt) return false;
-    const maxUses = promo.maxUses ?? promo.max_uses;
-    const usedCount = Number(promo.usedCount ?? promo.used_count ?? 0);
-    if (maxUses !== null && maxUses !== undefined && maxUses !== '' && usedCount >= Number(maxUses)) return false;
-    return true;
-  };
-  const getPromoAliases = (promo = {}) => [promo.code, promo.publicCode]
-    .map(normalizePromoCode)
-    .filter(Boolean);
-  const getPromoSource = () => {
-    const localPromos = Object.values(STORE_CONFIG.promos || {});
-    if (!remotePromoCatalogLoaded) return localPromos;
-
-    // Supabase es la fuente principal para los codigos creados desde el admin.
-    // Las promociones marcadas como managedLocally quedan fijas en la pagina:
-    // el QR historico regalo20 / SINRECREO20 no vence ni depende de la tabla.
-    const locallyManagedAliases = new Set(
-      localPromos.filter(promo => promo.managedLocally).flatMap(getPromoAliases)
-    );
-    const remotePromos = dynamicPromoCodes.filter(promo =>
-      !getPromoAliases(promo).some(alias => locallyManagedAliases.has(alias))
-    );
-    const remoteAliases = new Set(remotePromos.flatMap(getPromoAliases));
-    const localFallbacks = localPromos.filter(promo =>
-      promo.managedLocally || !getPromoAliases(promo).some(alias => remoteAliases.has(alias))
-    );
-    return [...remotePromos, ...localFallbacks];
-  };
   const getPromoByCode = (code = '') => {
     const normalized = normalizePromoCode(code);
-    if (!normalized) return null;
-    const aliases = new Set([normalized]);
-    Object.values(STORE_CONFIG.promos || {}).forEach(promo => {
-      const promoAliases = getPromoAliases(promo);
-      if (promoAliases.includes(normalized)) promoAliases.forEach(alias => aliases.add(alias));
-    });
-    return getPromoSource().find(promo =>
-      isPromoCurrentlyAvailable(promo) &&
-      getPromoAliases(promo).some(alias => aliases.has(alias))
+    const promos = STORE_CONFIG.promos || {};
+    return Object.values(promos).find(promo =>
+      normalizePromoCode(promo.code) === normalized ||
+      normalizePromoCode(promo.publicCode) === normalized
     ) || null;
   };
   const getPromoCodeFromUrl = () => {
@@ -4643,16 +4082,7 @@
   const saveActivePromo = promo => {
     try {
       if (!promo) localStorage.removeItem(getPromoStorageKey());
-      else localStorage.setItem(getPromoStorageKey(), JSON.stringify({
-        id: promo.id || '',
-        code: promo.code,
-        publicCode: promo.publicCode,
-        discount: promo.discount,
-        promoType: getPromoType(promo),
-        buyQty: getPromoBuyQty(promo),
-        payQty: getPromoPayQty(promo),
-        acceptedAt: new Date().toISOString()
-      }));
+      else localStorage.setItem(getPromoStorageKey(), JSON.stringify({ code: promo.code, publicCode: promo.publicCode, discount: promo.discount, acceptedAt: new Date().toISOString() }));
     } catch (error) {}
   };
   const markPromoDeclined = promo => {
@@ -4660,22 +4090,16 @@
       if (promo?.code) localStorage.setItem(getPromoDeclineStorageKey(), JSON.stringify({ code: promo.code, declinedAt: new Date().toISOString() }));
     } catch (error) {}
   };
-  // La campaña de primavera tiene prioridad y no se acumula con cupones ni con el descuento por transferencia.
-  const isPromoActive = () => !isSpringPromoActive() && Boolean(activePromo && isPromoCurrentlyAvailable(activePromo));
+  const isPromoActive = () => Boolean(activePromo);
   const getActivePromoDiscount = () => Number(activePromo?.discount || 0);
-  const isActivePercentPromo = () => isPromoActive() && !isBogoPromoRecord(activePromo);
-  const isActiveBogoPromo = () => isPromoActive() && isBogoPromoRecord(activePromo);
   const applyActivePromoToAmount = amount => {
     const value = Number(amount || 0);
     const discount = getActivePromoDiscount();
-    return isActivePercentPromo() && discount > 0 ? Math.max(0, Math.round(value * (1 - discount / 100))) : value;
+    return discount > 0 ? Math.max(0, Math.round(value * (1 - discount / 100))) : value;
   };
-  const getEffectiveProductPrice = (product = {}, stampSize = 'normal') => isSpringPromoActive()
-    ? getSpringPromoPrice()
-    : applyActivePromoToAmount(getProductPriceWithStamp(product, stampSize));
+  const getEffectiveProductPrice = (product = {}, stampSize = 'normal') => applyActivePromoToAmount(getProductPriceWithStamp(product, stampSize));
   const getEffectiveUnitPrice = (product = {}, paymentMethod = 'mp') => {
     const basePrice = Number(product.price || 0);
-    if (isSpringPromoActive()) return getSpringPromoPrice();
     if (isPromoActive()) return applyActivePromoToAmount(basePrice);
     return paymentMethod === 'transfer' ? Number(getTransferPrice(product) || 0) : basePrice;
   };
@@ -4692,34 +4116,11 @@
   };
   const getPromoDiscountAmount = amount => Math.max(0, Number(amount || 0) - applyActivePromoToAmount(amount));
   const getPromoLabel = () => activePromo?.publicCode || activePromo?.code || 'PROMO';
-  const getPromoPayload = () => isSpringPromoActive() ? {
-    promo_id: null,
-    promo_code: getSpringPromoCode(),
-    promo_discount: 0,
-    promo_type: 'fixed_price',
-    promo_fixed_price: getSpringPromoPrice(),
-    promo_buy_qty: null,
-    promo_pay_qty: null,
-    promo_description: `${getSpringPromoLabel()} · todas las remeras a $25.000 hasta el ${getSpringPromoEndLabel()}`
-  } : isPromoActive() ? {
-    promo_id: activePromo?.id || null,
-    promo_code: getPromoLabel(),
-    promo_discount: getActivePromoDiscount(),
-    promo_type: getPromoType(activePromo),
-    promo_buy_qty: isActiveBogoPromo() ? getPromoBuyQty(activePromo) : null,
-    promo_pay_qty: isActiveBogoPromo() ? getPromoPayQty(activePromo) : null,
-    promo_description: activePromo?.title || activePromo?.body || getPromoBenefitLabel(activePromo)
-  } : { promo_id: null, promo_code: '', promo_discount: 0, promo_type: '', promo_buy_qty: null, promo_pay_qty: null, promo_description: '' };
   const hasPromoDeepLink = () => Boolean(getPromoFromUrl());
   const initPromoSystem = () => {
-    pendingPromo = isSpringPromoActive() ? null : getPromoFromUrl();
+    pendingPromo = getPromoFromUrl();
     activePromo = readStoredPromo();
-    if (activePromo && !isPromoCurrentlyAvailable(activePromo)) {
-      activePromo = null;
-      saveActivePromo(null);
-    }
     renderPromoActiveUi();
-    renderCartPromoPanel();
   };
   const clearPromoParamsFromUrl = () => {
     try {
@@ -4741,27 +4142,20 @@
     document.getElementById('promoQrModal')?.classList.remove('open');
     refreshBodyScrollLock();
   };
-  const activatePromo = (promo, { scrollCatalog = false, statusMessage = '' } = {}) => {
-    if (!promo) return false;
+  const acceptQrPromo = () => {
+    const promo = pendingPromo || getPromoFromUrl() || activePromo || getPromoByCode('regalo20');
+    if (!promo) { closeQrPromoModal(); return; }
     activePromo = promo;
     saveActivePromo(promo);
+    closeQrPromoModal();
     clearPromoParamsFromUrl();
     renderPromoActiveUi();
     refreshCatalogData();
     updateCartUI();
-    if (statusMessage) showCartPromoStatus(statusMessage, 'success');
-    if (scrollCatalog && !cart.length) {
+    if (!cart.length) {
       const catalog = document.getElementById('catalogo');
       if (catalog) catalog.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    return true;
-  };
-  const acceptQrPromo = () => {
-    const promo = pendingPromo || getPromoFromUrl() || activePromo || getPromoByCode('regalo20');
-    if (!promo) { closeQrPromoModal(); return; }
-    pendingPromo = null;
-    closeQrPromoModal();
-    activatePromo(promo, { scrollCatalog: true });
   };
   const declineQrPromo = () => {
     const promo = pendingPromo || getPromoFromUrl();
@@ -4770,153 +4164,18 @@
     closeQrPromoModal();
     clearPromoParamsFromUrl();
   };
-  const showCartPromoStatus = (message = '', type = 'info') => {
-    const status = document.getElementById('cartPromoStatus');
-    if (!status) return;
-    status.textContent = message;
-    status.className = `cart-promo-status ${type === 'error' ? 'error' : type === 'success' ? 'success' : ''}`;
-    status.classList.toggle('hidden', !message);
-  };
-  const getCartOriginalSubtotal = () => cart.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 1), 0);
-  const getCartPromoPricing = (paymentMethod = selectedPayMethod) => {
-    const pricingMethod = getPricingPaymentMethod(paymentMethod);
-    const rows = cart.map(item => {
-      const qty = Math.max(1, Number(item.qty || 1));
-      const unitBase = Number(item.price || 0);
-      const unitPrice = Number(getEffectiveUnitPrice(item, pricingMethod) || 0);
-      return {
-        unitBase,
-        subTotal: unitBase * qty,
-        unitPrice,
-        lineTotal: unitPrice * qty,
-        discount: Math.max(0, (unitBase - unitPrice) * qty),
-        qty
-      };
-    });
-    if (!isActiveBogoPromo()) return rows;
-
-    const buyQty = getPromoBuyQty(activePromo);
-    const freeQtyPerGroup = getPromoFreeQty(activePromo);
-    const units = [];
-    cart.forEach((item, cartIndex) => {
-      const qty = Math.max(1, Number(item.qty || 1));
-      const unitBase = Number(item.price || 0);
-      for (let i = 0; i < qty; i += 1) units.push({ cartIndex, price: unitBase });
-    });
-    const freeUnits = Math.floor(units.length / buyQty) * freeQtyPerGroup;
-    if (freeUnits <= 0) return rows.map(row => ({ ...row, unitPrice: row.unitBase, lineTotal: row.subTotal, discount: 0 }));
-
-    const discountByIndex = new Map();
-    units
-      .sort((a, b) => a.price - b.price)
-      .slice(0, freeUnits)
-      .forEach(unit => discountByIndex.set(unit.cartIndex, Number(discountByIndex.get(unit.cartIndex) || 0) + unit.price));
-
-    return rows.map((row, index) => {
-      const discount = Math.min(row.subTotal, Math.round(Number(discountByIndex.get(index) || 0)));
-      const lineTotal = Math.max(0, row.subTotal - discount);
-      return { ...row, unitPrice: row.qty ? lineTotal / row.qty : lineTotal, lineTotal, discount };
-    });
-  };
-  const getCartPromoSavings = (paymentMethod = selectedPayMethod) => getCartPromoPricing(paymentMethod).reduce((sum, row) => sum + Number(row.discount || 0), 0);
-  const getCartPromoLinePricing = (cartIndex, paymentMethod = selectedPayMethod) => getCartPromoPricing(paymentMethod)[cartIndex] || null;
-  const renderCartPromoPanel = () => {
-    const panel = document.getElementById('cartPromoPanel');
-    if (!panel) return;
-    const applied = document.getElementById('cartPromoApplied');
-    const input = document.getElementById('cartPromoInput');
-    const applyBtn = document.getElementById('cartPromoApplyBtn');
-    if (isSpringPromoActive()) {
-      if (applied) {
-        applied.innerHTML = `<div>🌼 <strong>${escapeHtml(getSpringPromoLabel())}</strong> activa · Todas las remeras a ${fmt(getSpringPromoPrice())} hasta el ${escapeHtml(getSpringPromoEndLabel())}.</div>`;
-        applied.classList.remove('hidden');
-      }
-      if (input) {
-        input.value = '';
-        input.placeholder = 'Promo Primavera activa';
-        input.disabled = true;
-      }
-      if (applyBtn) {
-        applyBtn.textContent = 'Activa';
-        applyBtn.disabled = true;
-      }
-      showCartPromoStatus('Esta promoción no se acumula con cupones ni con el descuento por transferencia.', 'info');
-      return;
-    }
-    if (input) {
-      input.disabled = false;
-      input.placeholder = 'Ej: SINRECREO20';
-    }
-    if (applyBtn) applyBtn.disabled = false;
-    if (!isPromoActive()) {
-      applied?.classList.add('hidden');
-      if (applyBtn) applyBtn.textContent = 'Aplicar';
-      return;
-    }
-    const savings = isActiveBogoPromo() ? getCartPromoSavings() : getPromoDiscountAmount(getCartOriginalSubtotal());
-    const benefit = getPromoBenefitLabel(activePromo);
-    if (applied) {
-      applied.innerHTML = `<div>🎁 <strong>${escapeHtml(getPromoLabel())}</strong> activo · ${escapeHtml(benefit)}${savings > 0 ? ` · Ahorrás ${fmt(savings)}` : ''}</div><button class="cart-promo-remove" type="button" onclick="clearActivePromoFromCart()">Quitar</button>`;
-      applied.classList.remove('hidden');
-    }
-    if (input && document.activeElement !== input) input.value = getPromoLabel();
-    if (applyBtn) applyBtn.textContent = 'Cambiar';
-  };
-  const applyCartPromoCode = () => {
-    if (isSpringPromoActive()) {
-      showCartPromoStatus(`La promo ${getSpringPromoLabel()} ya deja todas las remeras a ${fmt(getSpringPromoPrice())} y no es acumulable.`, 'info');
-      return;
-    }
-    const input = document.getElementById('cartPromoInput');
-    const code = String(input?.value || '').trim();
-    if (!code) {
-      showCartPromoStatus('Escribí un código promocional para aplicarlo.', 'error');
-      input?.focus();
-      return;
-    }
-    const promo = getPromoByCode(code);
-    if (!promo) {
-      showCartPromoStatus('Ese código no está vigente o no existe. Revisá mayúsculas, fechas o si sigue activo.', 'error');
-      input?.focus();
-      return;
-    }
-    activatePromo(promo, { statusMessage: `Código ${promo.publicCode || promo.code} aplicado correctamente.` });
-  };
-  const clearActivePromoFromCart = () => {
-    activePromo = null;
-    pendingPromo = null;
-    saveActivePromo(null);
-    const input = document.getElementById('cartPromoInput');
-    if (input) input.value = '';
-    showCartPromoStatus('Código quitado. El carrito volvió al precio según forma de pago.', 'info');
-    renderPromoActiveUi();
-    refreshCatalogData();
-    updateCartUI();
-  };
   const renderPromoActiveUi = () => {
     const existing = document.getElementById('promoActiveStrip');
-    if (isSpringPromoActive()) {
-      const checkoutPanel = document.getElementById('cartCheckoutPanel');
-      const html = `<div class="promo-active-strip" id="promoActiveStrip">🌼 ${escapeHtml(getSpringPromoLabel())}: todas las remeras a ${fmt(getSpringPromoPrice())} hasta el ${escapeHtml(getSpringPromoEndLabel())}. No acumulable con otros descuentos internos.</div>`;
-      if (checkoutPanel) {
-        if (existing) existing.outerHTML = html;
-        else checkoutPanel.insertAdjacentHTML('afterbegin', html);
-      }
-      renderCartPromoPanel();
-      return;
-    }
     if (!isPromoActive()) {
       existing?.remove();
-      renderCartPromoPanel();
       return;
     }
     const checkoutPanel = document.getElementById('cartCheckoutPanel');
-    const html = `<div class="promo-active-strip" id="promoActiveStrip">🎁 Promo ${getPromoLabel()} activa: ${getPromoBenefitLabel(activePromo)} aplicado sobre las prendas. No acumulable con otros descuentos internos.</div>`;
+    const html = `<div class="promo-active-strip" id="promoActiveStrip">🎁 Promo ${getPromoLabel()} activa: ${getActivePromoDiscount()}% de descuento aplicado sobre las prendas. No acumulable con otros descuentos internos.</div>`;
     if (checkoutPanel) {
       if (existing) existing.outerHTML = html;
       else checkoutPanel.insertAdjacentHTML('afterbegin', html);
     }
-    renderCartPromoPanel();
   };
 
   const isPreLaunchMode = () => Boolean(STORE_CONFIG.preLaunchMode);
@@ -4933,18 +4192,6 @@
   const isPaymentEnabled = () => true;
   const getPreSaleBannerHtml = getNormalBannerHtml;
 
-  const renderSpringPromoUi = () => {
-    const active = isSpringPromoActive();
-    document.getElementById('springPromoBanner')?.classList.toggle('hidden', !active);
-
-    const transferDetail = document.getElementById('transferMethodDetail');
-    const transferBadge = document.getElementById('transferMethodBadge');
-    if (transferDetail) transferDetail.textContent = active
-      ? `La promo ${getSpringPromoLabel()} ya está aplicada; no se suma otro descuento.`
-      : `Pagá por transferencia y aplicamos ${STORE_CONFIG.transferDiscount}% OFF en la tienda`;
-    if (transferBadge) transferBadge.textContent = active ? fmt(getSpringPromoPrice()) : `${STORE_CONFIG.transferDiscount}% OFF`;
-  };
-
   const renderPreSaleUi = () => {
     document.body.classList.remove('presale-mode');
 
@@ -4957,30 +4204,15 @@
     }
 
     const mpTextNode = document.getElementById('heroMpText');
-    const transferTextNode = document.getElementById('heroTransferText');
     const whatsAppTextNode = document.getElementById('heroWhatsAppText');
     if (mpTextNode) mpTextNode.innerHTML = `<strong>MercadoPago:</strong> ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés`;
-    if (transferTextNode) transferTextNode.innerHTML = isSpringPromoActive()
-      ? `<strong>Promo Primavera:</strong> ${fmt(getSpringPromoPrice())} precio final`
-      : `<strong>Transferencia:</strong> ${STORE_CONFIG.transferDiscount}% de descuento`;
     if (whatsAppTextNode) whatsAppTextNode.innerHTML = '<strong>WhatsApp:</strong> atención personalizada';
-
-    const trustTransfer = document.querySelector('.trust-grid .trust-item:nth-child(3)');
-    if (trustTransfer) {
-      const strong = trustTransfer.querySelector('strong');
-      const span = trustTransfer.querySelector('span');
-      if (strong) strong.textContent = isSpringPromoActive() ? 'Precio único de primavera' : `${STORE_CONFIG.transferDiscount}% off transferencia`;
-      if (span) span.textContent = isSpringPromoActive()
-        ? `Todas las remeras a ${fmt(getSpringPromoPrice())} hasta el ${getSpringPromoEndLabel()}`
-        : 'Pagando por transferencia bancaria';
-    }
 
     document.querySelectorAll('.shipping-help').forEach(node => {
       node.textContent = 'Hasta 7 remeras por envío. En compras desde $100.000, SIN RECREO bonifica el envío.';
     });
     const deliveryPudo = document.getElementById('deliveryChoicePudo')?.querySelector('span');
     if (deliveryPudo) deliveryPudo.textContent = 'Domicilio o Smart Locker';
-    renderSpringPromoUi();
     refreshPreSaleHeaderButton();
   };
 
@@ -5027,8 +4259,6 @@
   let pendingCapsuleReturn = null;
   let pendingProductsReturn = false;
   let pendingEfemeridesReturn = false;
-  let pendingLiteralReturn = null;
-  let literalCurrentKind = 'discos';
   let productSalesMap = {};
   let bestsellerProducts = [];
   let productSalesSource = 'fallback';
@@ -5409,9 +4639,7 @@
     const destination = option.destination || {};
     const method = option.type === 'locker' ? (option.shippingMethodName + (option.lockerName ? ' · ' + option.lockerName : '')) : option.shippingMethodName;
     const destinationText = option.type === 'locker' ? ((option.address || 'Punto PUDO') + (option.city ? ', ' + option.city : '')) : ((destination.address || '') + ' ' + (destination.number || '') + (destination.city ? ', ' + destination.city : ''));
-    const freeText = option.freeReason === 'monto-minimo'
-      ? (`Envío gratis por compra desde ${fmt(getFreeShippingThreshold())}. Costo real: ${fmt(option.realPrice)}.`)
-      : (`Envío bonificado por SIN RECREO. Costo real: ${fmt(option.realPrice)}.`);
+    const freeText = option.freeReason === 'monto-minimo' ? ('Envío sin cargo por preventa docente. Costo real: ' + fmt(option.realPrice) + '.') : ('Envío bonificado por SIN RECREO. Costo real: ' + fmt(option.realPrice) + '.');
     node.innerHTML = '<strong>Entrega seleccionada:</strong> ' + escapeHtml(method) + '<br>' + escapeHtml(destinationText) + '<br>' + (option.isFree ? freeText : ('Costo de envío: ' + fmt(option.charge) + '.'));
     node.classList.remove('hidden');
   };
@@ -5509,7 +4737,6 @@
   const getProductPriceWithStamp = (product = {}, stampSize = 'normal') => Number(product.price || 0) + getStampSizeSurcharge(stampSize);
   const getStampSizeMeta = id => {
     const option = getStampSizeOption(id);
-    if (isSpringPromoActive()) return `${option.label} (incluida en promo)`;
     return option.surcharge > 0 ? `${option.label} (+${fmt(option.surcharge)})` : option.label;
   };
   const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[m]));
@@ -5519,27 +4746,6 @@
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '');
   const getWhatsAppBase = () => `https://wa.me/${STORE_CONFIG.whatsappNumber}`;
-  const isAndroidWhatsAppClient = () => /Android/i.test(navigator.userAgent || '');
-  const isMobileWhatsAppClient = () => /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
-  const getWhatsAppWebUrl = message => `${getWhatsAppBase()}?text=${encodeURIComponent(String(message || ''))}`;
-  const getWhatsAppAppUrl = message => {
-    const text = encodeURIComponent(String(message || ''));
-    const phone = encodeURIComponent(STORE_CONFIG.whatsappNumber);
-    if (isAndroidWhatsAppClient()) {
-      const fallback = encodeURIComponent(getWhatsAppWebUrl(message));
-      return `intent://send?phone=${phone}&text=${text}#Intent;scheme=whatsapp;S.browser_fallback_url=${fallback};end`;
-    }
-    return `whatsapp://send?phone=${phone}&text=${text}`;
-  };
-  const getWhatsAppLaunchUrl = message => isMobileWhatsAppClient() ? getWhatsAppAppUrl(message) : getWhatsAppWebUrl(message);
-  const openWhatsApp = message => {
-    const launchUrl = getWhatsAppLaunchUrl(message);
-
-    // Abrimos WhatsApp en la misma pestaña. Evitamos crear una ventana vacía y
-    // redirigirla después, porque algunos navegadores muestran un aviso de
-    // “Sitio externo” con toda la URL y el texto completo del pedido.
-    window.location.assign(launchUrl);
-  };
   const buildGenericWhatsAppMessage = () => `*Hola, SIN RECREO* 👋
 
 Estoy mirando la tienda y quiero hacer una consulta por una remera.
@@ -5570,23 +4776,14 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
   const GENERAL_CAPSULE_NAME = 'Línea Permanente';
   const GENERAL_CAPSULE_ALIASES = ['general', 'linea permanente', 'línea permanente', 'permanente', 'seleccion abierta', 'selección abierta', 'catalogo general', 'catálogo general'];
   const isGeneralCapsuleName = name => GENERAL_CAPSULE_ALIASES.includes(normalizeTextKey(name));
-  const WOMEN_SCIENCE_CAPSULE_NAME = 'Mujeres de la Ciencia';
-  const WOMEN_SCIENCE_CAPSULE_ALIASES = ['efemerides', 'efemérides', 'mujeres de la ciencia', 'mujeres ciencia', 'mujeres cientificas', 'mujeres científicas'];
-  const isWomenScienceCapsuleName = name => WOMEN_SCIENCE_CAPSULE_ALIASES.includes(normalizeTextKey(name));
-  const getDisplayCapsuleName = name => isGeneralCapsuleName(name)
-    ? GENERAL_CAPSULE_NAME
-    : (isWomenScienceCapsuleName(name) ? WOMEN_SCIENCE_CAPSULE_NAME : String(name || '').trim());
-  // Compatibilidad: si en Supabase todavía figura como “Efemérides”, se muestra y se abre como “Mujeres de la Ciencia”.
-  const EFEMERIDES_CAPSULE_NAME = WOMEN_SCIENCE_CAPSULE_NAME;
-  const isEfemeridesCapsuleName = isWomenScienceCapsuleName;
+  const getDisplayCapsuleName = name => isGeneralCapsuleName(name) ? GENERAL_CAPSULE_NAME : String(name || '').trim();
+  const EFEMERIDES_CAPSULE_NAME = 'Efemérides';
+  const isEfemeridesCapsuleName = name => normalizeTextKey(name) === 'efemerides';
   const capsuleMatches = (productCapsule, capsuleName) => isGeneralCapsuleName(productCapsule) && isGeneralCapsuleName(capsuleName)
     ? true
-    : (isWomenScienceCapsuleName(productCapsule) && isWomenScienceCapsuleName(capsuleName)
-      ? true
-      : normalizeTextKey(productCapsule) === normalizeTextKey(capsuleName));
+    : normalizeTextKey(productCapsule) === normalizeTextKey(capsuleName);
   const getTransferPrice = p => {
     const basePrice = Number(p?.price || 0);
-    if (isSpringPromoActive()) return getSpringPromoPrice();
     if (isPromoActive()) return applyActivePromoToAmount(basePrice);
     return p.transferPrice ?? Math.round(basePrice * (1 - ((p.transferDiscount ?? STORE_CONFIG.transferDiscount) / 100)));
   };
@@ -5723,7 +4920,7 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
   };
 
   const refreshBodyScrollLock = () => {
-    const hasOpenLayer = ['buyModal', 'capsuleModal', 'productsModal', 'clubModal', 'efemeridesModal', 'literalModal'].some(id => document.getElementById(id)?.classList.contains('open'))
+    const hasOpenLayer = ['buyModal', 'capsuleModal', 'productsModal', 'clubModal', 'efemeridesModal'].some(id => document.getElementById(id)?.classList.contains('open'))
       || document.getElementById('cartDrawer')?.classList.contains('open')
       || document.getElementById('mobileNavDrawer')?.classList.contains('open');
     document.body.style.overflow = hasOpenLayer ? 'hidden' : '';
@@ -5873,53 +5070,6 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     return normalized.length ? normalized : getCapsuleFallbackData();
   };
 
-  const normalizePromoRecord = (row = {}) => {
-    const rawCode = String(row.code || row.public_code || '').trim();
-    const normalizedRawCode = normalizePromoCode(rawCode);
-    const localAliasPromo = Object.values(STORE_CONFIG.promos || {}).find(promo =>
-      getPromoAliases(promo).includes(normalizedRawCode)
-    );
-    const promoType = String(row.promo_type || row.promoType || 'percent').toLowerCase() === 'bogo' ? 'bogo' : 'percent';
-    const discount = Number(row.discount_percent ?? row.discount ?? 0);
-    const buyQty = Math.max(2, Number(row.buy_qty ?? row.buyQty ?? 2) || 2);
-    const payQty = Math.min(Math.max(1, Number(row.pay_qty ?? row.payQty ?? 1) || 1), buyQty - 1);
-    return {
-      id: row.id || rawCode,
-      code: rawCode,
-      publicCode: String(row.public_code || localAliasPromo?.publicCode || rawCode).trim().toUpperCase(),
-      promoType,
-      discount,
-      buyQty,
-      payQty,
-      title: row.description || row.title || (promoType === 'bogo' ? (buyQty === 2 && payQty === 1 ? '2x1' : `${buyQty}x${payQty}`) : `${discount}% OFF`),
-      subtitle: row.subtitle || '',
-      body: row.description || '',
-      isActive: row.is_active !== false,
-      startsAt: row.starts_at || row.valid_from || '',
-      endsAt: row.ends_at || row.valid_until || '',
-      maxUses: row.max_uses ?? null,
-      usedCount: Number(row.used_count || 0)
-    };
-  };
-
-  const loadPromoCodesFromSupabase = async () => {
-    const client = initSupabaseClient();
-    if (!client) return [];
-    try {
-      const { data, error } = await client
-        .from('promo_codes')
-        .select('id, code, description, promo_type, discount_percent, buy_qty, pay_qty, is_active, starts_at, ends_at, max_uses, used_count, created_at')
-        .order('created_at', { ascending: false });
-      if (error) throw error;
-      remotePromoCatalogLoaded = true;
-      return (data || []).map(normalizePromoRecord).filter(promo => promo.code);
-    } catch (error) {
-      remotePromoCatalogLoaded = false;
-      console.warn('No se pudieron cargar códigos promocionales desde Supabase. Se usa el fallback local si existe:', error);
-      return [];
-    }
-  };
-
   const renderFeaturedCapsule = () => {
     const list = capsulesData.length ? capsulesData : getCapsuleFallbackData();
     featuredCapsule = list.find(item => item.featured) || list[0] || null;
@@ -5951,9 +5101,9 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
 
   const computeLocalStoreMetrics = () => {
     const activeProducts = products.filter(product => getTotalStock(product) > 0);
-    const activeCapsuleNames = new Set(activeProducts.map(product => getDisplayCapsuleName(product.capsule)).filter(Boolean));
+    const activeCapsuleNames = new Set(activeProducts.map(product => product.capsule).filter(Boolean));
     const activeCapsules = capsulesData.length
-      ? capsulesData.filter(capsule => capsule.isActive !== false && activeCapsuleNames.has(getDisplayCapsuleName(capsule.name))).length
+      ? capsulesData.filter(capsule => capsule.isActive !== false && activeCapsuleNames.has(capsule.name)).length
       : activeCapsuleNames.size;
 
     return {
@@ -6021,9 +5171,7 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     }
 
     setHtml('#heroMpText', `<strong>MercadoPago:</strong> ${STORE_CONFIG.installmentsCount || 3} cuotas sin interés`);
-    setHtml('#heroTransferText', isSpringPromoActive()
-      ? `<strong>Promo Primavera:</strong> ${fmt(getSpringPromoPrice())} precio final`
-      : `<strong>Transferencia:</strong> ${STORE_CONFIG.transferDiscount}% de descuento`);
+    setHtml('#heroTransferText', `<strong>Transferencia:</strong> ${STORE_CONFIG.transferDiscount}% de descuento`);
     setHtml('#heroCuentaDniText', `<strong>Cuenta DNI:</strong> ${getCuentaDniBenefitText()}`);
   };
 
@@ -6307,33 +5455,47 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
   const getEfemeridesCapsuleName = () => {
     const record = (capsulesData.length ? capsulesData : getCapsuleFallbackData())
       .find(item => isEfemeridesCapsuleName(item.name) || isEfemeridesCapsuleName(item.rawName));
-    return record?.name || EFEMERIDES_CAPSULE_NAME;
+    return record?.name || getLatestEfemeridesProduct()?.capsule || EFEMERIDES_CAPSULE_NAME;
   };
 
   const renderEfemeridesModal = () => {
     const body = document.getElementById('efemeridesModalBody');
     if (!body) return;
-    const count = getEfemeridesProducts().length;
+    const product = getLatestEfemeridesProduct();
+    if (!product) {
+      body.innerHTML = `
+        <div class="efemerides-empty">
+          <strong>Efemérides todavía no tiene prendas visibles</strong>
+          <p>Cuando cargues una remera en la cápsula <b>Efemérides</b>, este acceso mostrará automáticamente la última prenda cargada.</p>
+        </div>`;
+      return;
+    }
+
+    const images = getImageList(product);
+    const stock = getTotalStock(product);
+    const transferPrice = getTransferPrice(product);
     body.innerHTML = `
-      <article class="science-tribute">
-        <div class="science-tribute-visual">
-          <div class="science-tribute-symbol" aria-hidden="true">🔬</div>
-          <p class="science-tribute-note">Una cápsula para sacar del pie de página a quienes observaron, calcularon, curaron, clasificaron, programaron, enseñaron y descubrieron.</p>
+      <article class="efemerides-feature">
+        <div class="efemerides-media">
+          <img src="${images[0]}" alt="${escapeHtml(product.title)}" />
         </div>
-        <div class="science-tribute-copy">
-          <div class="science-tribute-kicker">✦ Nueva sección · SIN RECREO</div>
-          <h3 class="science-tribute-title">MUJERES<br><em>de la Ciencia</em></h3>
-          <p class="science-tribute-lead">Un homenaje a las mujeres que hicieron ciencia incluso cuando el mundo no estaba dispuesto a nombrarlas. Esta cápsula reúne estampas con memoria, descubrimiento y reparación: vestir una idea también puede ser devolverle lugar a una historia.</p>
+        <div class="efemerides-copy">
+          <div class="efemerides-kicker">✦ Última efeméride cargada</div>
+          <h3 class="efemerides-title">${escapeHtml(product.title)}</h3>
+          <p class="efemerides-desc">${escapeHtml(product.description || 'Una prenda de la cápsula Efemérides, pensada para vestir una fecha, una idea y una conversación.')}</p>
           <div class="efemerides-meta">
-            <span class="efemerides-chip">Ciencia con nombre propio</span>
-            <span class="efemerides-chip">Historia que vuelve</span>
-            <span class="efemerides-chip">${count} ${count === 1 ? 'prenda visible' : 'prendas visibles'}</span>
+            <span class="efemerides-chip">${escapeHtml(getDisplayCapsuleName(product.capsule))}</span>
+            <span class="efemerides-chip">Código ${escapeHtml(product.sku || 'SIN CÓDIGO')}</span>
+            <span class="efemerides-chip">${stock} ${stock === 1 ? 'unidad' : 'unidades'} disponibles</span>
           </div>
-          <div class="science-tribute-actions">
-            <button class="club-cta primary" type="button" onclick="openEfemeridesCollection()">
-              Ingresar a la cápsula
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
+          <div class="efemerides-price">
+            <strong>${fmt(product.price || 0)}</strong>
+            <span>3 x ${fmt(Math.round((product.price || 0) / 3))} sin interés · ${fmt(transferPrice)} por transferencia</span>
+          </div>
+          <div class="efemerides-actions">
+            <button class="modal-secondary-cta" type="button" onclick="openBuyModal('${product.id}', event)">Elegir talle y agregar</button>
+            <button class="club-cta secondary" type="button" onclick="addToCart('${product.id}', event)">Agregar directo al carrito</button>
+            <button class="efemerides-outline" type="button" onclick="openEfemeridesCollection()">VER COLECCIÓN COMPLETA</button>
           </div>
         </div>
       </article>`;
@@ -6358,91 +5520,7 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     openCapsuleModal(capsuleName);
   };
 
-
-  /* ─── LITERAL ─── */
-  const getLiteralProducts = (kind = literalCurrentKind) => products
-    .filter(product => getLiteralKind(product) === kind)
-    .filter(product => getTotalStock(product) > 0)
-    .sort((a,b) => Number(b.featured) - Number(a.featured) || new Date(b.sortDate || 0) - new Date(a.sortDate || 0));
-
-  const updateLiteralHomeCounts = () => {
-    const discos = getLiteralProducts('discos').length;
-    const cine = getLiteralProducts('cine').length;
-    const d = document.getElementById('literalDiscosCount');
-    const c = document.getElementById('literalCineCount');
-    if (d) d.textContent = `${discos} ${discos === 1 ? 'disponible' : 'disponibles'} →`;
-    if (c) c.textContent = `${cine} ${cine === 1 ? 'disponible' : 'disponibles'} →`;
-  };
-
-  const setLiteralKind = kind => {
-    literalCurrentKind = kind === 'cine' ? 'cine' : 'discos';
-    document.getElementById('literalTabDiscos')?.classList.toggle('active', literalCurrentKind === 'discos');
-    document.getElementById('literalTabCine')?.classList.toggle('active', literalCurrentKind === 'cine');
-    const search = document.getElementById('literalSearch');
-    if (search) search.placeholder = literalCurrentKind === 'discos' ? 'Buscá un artista, disco o año…' : 'Buscá una película, director o año…';
-    renderLiteralProducts();
-  };
-
-  const renderLiteralProducts = () => {
-    const grid = document.getElementById('literalGrid');
-    if (!grid) return;
-    const query = normalizeTextKey(document.getElementById('literalSearch')?.value || '');
-    const all = getLiteralProducts(literalCurrentKind);
-    const items = query ? all.filter(p => normalizeTextKey([p.title,p.description,p.sku].join(' ')).includes(query)) : all;
-    const meta = document.getElementById('literalResultsMeta');
-    if (meta) meta.textContent = `${items.length} ${items.length === 1 ? 'imagen disponible' : 'imágenes disponibles'} en ${literalCurrentKind === 'discos' ? 'DISCOS' : 'PELÍCULAS'}${query ? ' para tu búsqueda' : ''}.`;
-    const request = document.getElementById('literalRequestLink');
-    if (request) {
-      const text = `Hola SIN RECREO 👋\n\nEstoy viendo la colección LITERAL y no encontré ${literalCurrentKind === 'discos' ? 'el disco' : 'la película'} que buscaba.\n\nQuiero pedir: `;
-      request.href = `${getWhatsAppBase()}?text=${encodeURIComponent(text)}`;
-    }
-    if (!items.length) {
-      grid.innerHTML = `<div class="literal-empty"><div style="font-size:2rem;margin-bottom:10px">${literalCurrentKind === 'discos' ? '💿' : '🎬'}</div><strong>No encontramos esa imagen.</strong><p>Probá con otra búsqueda o pedínosla desde el botón de abajo.</p></div>`;
-      return;
-    }
-    grid.innerHTML = items.map(p => {
-      const image = getImageList(p)[0];
-      const label = literalCurrentKind === 'discos' ? 'DISCO' : 'PELÍCULA';
-      return `<article class="literal-card">
-        <div class="literal-art" onclick="openBuyModal('${p.id}',event)"><img src="${image}" alt="${escapeHtml(p.title)}" /><span class="literal-kind-badge">${label}</span></div>
-        <div class="literal-card-body">
-          <h3 class="literal-card-title">${escapeHtml(p.title)}</h3>
-          <div class="literal-card-meta">${escapeHtml(p.description || '')}</div>
-          <div class="literal-card-price">${fmt(getEffectiveUnitPrice(p, 'mp'))}</div>
-          <div class="literal-card-actions">
-            <button class="literal-card-buy" type="button" onclick="openBuyModal('${p.id}',event)">VER REMERA</button>
-            <button class="literal-card-share" type="button" onclick="shareProduct('${p.id}',event)" aria-label="Compartir ${escapeHtml(p.title)}">↗</button>
-          </div>
-        </div>
-      </article>`;
-    }).join('');
-  };
-
-  const openLiteralModal = (event, kind = null) => {
-    if (event) event.preventDefault();
-    closeMobileMenu();
-    if (kind) literalCurrentKind = kind === 'cine' ? 'cine' : 'discos';
-    const search = document.getElementById('literalSearch');
-    if (search) search.value = '';
-    setLiteralKind(literalCurrentKind);
-    document.getElementById('literalModal')?.classList.add('open');
-    refreshBodyScrollLock();
-  };
-
-  const closeLiteralModal = () => {
-    document.getElementById('literalModal')?.classList.remove('open');
-    refreshBodyScrollLock();
-  };
-
-  const surpriseLiteral = () => {
-    const items = getLiteralProducts(literalCurrentKind);
-    if (!items.length) return;
-    const pick = items[Math.floor(Math.random() * items.length)];
-    openBuyModal(pick.id);
-  };
-
   const getProductsModalItems = () => products
-    .filter(product => !isLiteralProduct(product))
     .filter(product => getTotalStock(product) > 0)
     .sort((a, b) => Number(b.featured) - Number(a.featured) || new Date(b.sortDate || 0) - new Date(a.sortDate || 0));
 
@@ -6517,15 +5595,13 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
   const initStore = async () => {
     try {
       if (isSupabaseConfigured()) {
-        const [remoteProducts, remoteCapsules, remotePromos] = await Promise.all([
+        const [remoteProducts, remoteCapsules] = await Promise.all([
           loadProductsFromSupabase(),
           loadCapsulesFromSupabase().catch(error => {
             console.error('Error cargando cápsulas desde Supabase:', error);
             return getCapsuleFallbackData();
-          }),
-          loadPromoCodesFromSupabase()
+          })
         ]);
-        dynamicPromoCodes = Array.isArray(remotePromos) ? remotePromos : [];
         if (remoteProducts?.length) {
           products = remoteProducts;
         } else {
@@ -6534,8 +5610,6 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
         capsulesData = remoteCapsules?.length ? remoteCapsules : getCapsuleFallbackData();
       } else {
         console.warn('Supabase no está configurado. Se muestran los productos de ejemplo.');
-        remotePromoCatalogLoaded = false;
-        dynamicPromoCodes = [];
         capsulesData = getCapsuleFallbackData();
       }
     } catch (error) {
@@ -6632,7 +5706,8 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
 
   const openPaymentHelp = () => {
     const status = getPaymentStatusFromUrl() || 'sin estado';
-    openWhatsApp(buildPaymentHelpMessage(status));
+    const msg = encodeURIComponent(buildPaymentHelpMessage(status));
+    window.open(`${getWhatsAppBase()}?text=${msg}`, '_blank');
   };
 
   const placeholderImage = (title, n, accent='#b35c44') => {
@@ -6742,7 +5817,6 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     const generalGrid = document.getElementById('generalCapsuleGrid');
     const activeCapsules = (capsulesData.length ? capsulesData : getCapsuleFallbackData())
       .filter(item => item.isActive !== false)
-      .filter(item => !isLiteralCapsuleName(item.name) && !isLiteralCapsuleName(item.rawName))
       .filter(item => (item.productCount || getCapsuleProducts(item.name).length) > 0);
 
     const renderCapsuleList = (items, emptyMessage) => {
@@ -6782,7 +5856,6 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     if (collectionGrid) collectionGrid.innerHTML = renderCapsuleList(collectionCapsules, 'Todavía no hay cápsulas de colección visibles. Cuando cargues una cápsula no general, va a aparecer acá.');
     if (generalGrid) generalGrid.innerHTML = renderCapsuleList(generalCapsules, 'Todavía no hay prendas en Línea Permanente. Si en el admin elegís “Línea Permanente”, aparecerán acá.');
     observeElements();
-    updateLiteralHomeCounts();
   };
 
   /* ─── FILTERS ─── */
@@ -6861,10 +5934,8 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
       const baseCardPrice = Number(p.price || 0);
       const displayPrice = getEffectiveProductPrice(p, 'normal');
       const transferPrice = getTransferPrice({ ...p, price: baseCardPrice });
-      const promoCardHtml = isSpringPromoActive()
-        ? `<div class="promo-price-old">${fmt(baseCardPrice)}</div><div class="promo-price-badge">Primavera en Remera · hasta ${escapeHtml(getSpringPromoEndLabel())}</div>`
-        : isPromoActive()
-          ? `<div class="promo-price-old">${fmt(baseCardPrice)}</div><div class="promo-price-badge">${getActivePromoDiscount()}% OFF · ${escapeHtml(getPromoLabel())}</div>`
+      const promoCardHtml = isPromoActive()
+        ? `<div class="promo-price-old">${fmt(baseCardPrice)}</div><div class="promo-price-badge">${getActivePromoDiscount()}% OFF · ${escapeHtml(getPromoLabel())}</div>`
         : '';
       const descData = truncateWords(p.description, PRODUCT_DESCRIPTION_WORD_LIMIT_DESKTOP);
       const descriptionHtml = truncateDescriptions && descData.truncated
@@ -6898,9 +5969,7 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
               ${promoCardHtml}
               <div class="pcard-price">${fmt(displayPrice)}</div>
               <div class="pcard-cuotas">3 x ${fmt(Math.round(displayPrice / 3))} sin interés</div>
-              <div class="pcard-transfer">${isSpringPromoActive()
-                ? `🌼 Precio final promocional hasta el ${escapeHtml(getSpringPromoEndLabel())}`
-                : (isPromoActive() ? '🎁 Precio promocional aplicado' : '💸 ' + fmt(transferPrice) + ' por transferencia')}</div>
+              <div class="pcard-transfer">${isPromoActive() ? '🎁 Precio promocional aplicado' : '💸 ' + fmt(transferPrice) + ' por transferencia'}</div>
             </div>
             <div class="size-row">${sizes.map(sz => {
               const parsedSize = parseVariantSizeKey(sz);
@@ -6962,7 +6031,8 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
       alert('Copiamos el link del producto para que puedas compartirlo.');
     } catch (error) {
       if (error?.name === 'AbortError') return;
-      openWhatsApp(shareData.text + ' ' + url);
+      const whatsappUrl = `${getWhatsAppBase()}?text=${encodeURIComponent(shareData.text + ' ' + url)}`;
+      window.open(whatsappUrl, '_blank');
     }
   };
 
@@ -6978,9 +6048,11 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     fitWrap.innerHTML = fits.map(fit => {
       const stock = getFitStockTotal(product, fit);
       const tone = getStockTone(stock);
+      const measurements = getFitMeasurementsSummary(fit);
       return `
-      <button class="fit-btn ${tone} ${selectedFit === fit ? 'selected' : ''}" type="button" onclick="selectFit(this,'${fit}')" ${stock <= 0 ? 'disabled' : ''}>
+      <button class="fit-btn fit-with-measurements ${tone} ${selectedFit === fit ? 'selected' : ''}" type="button" onclick="selectFit(this,'${fit}')" ${stock <= 0 ? 'disabled' : ''}>
         <span>${getFitLabel(fit)}</span>
+        ${measurements ? `<small class="garment-measurements">${measurements}</small>` : ''}
         <small class="garment-stock">${getStockLabel(stock)}</small>
       </button>`;
     }).join('');
@@ -6991,7 +6063,7 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     if (!colorWrap) return;
     const colors = getAllColorsForFit(product, selectedFit);
     if (!colors.length) {
-      colorWrap.innerHTML = '<div class="mini">Sin colores cargados para este corte</div>';
+      colorWrap.innerHTML = '<div class="mini">Sin colores cargados para este modelo</div>';
       return;
     }
     const preferredColor = colors.find(color => getColorStockTotal(product, selectedFit, color) > 0) || colors[0] || '';
@@ -7039,7 +6111,7 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     wrap.innerHTML = STAMP_SIZE_OPTIONS.map(option => `
       <button class="fit-btn ${selectedStampSize === option.id ? 'selected' : ''}" type="button" onclick="selectStampSize(this,'${option.id}')">
         <span>${option.label}</span>
-        <small>${isSpringPromoActive() ? 'Incluida en promo' : (option.surcharge > 0 ? '+' + fmt(option.surcharge) : 'Sin adicional')}</small>
+        <small>${option.surcharge > 0 ? '+' + fmt(option.surcharge) : 'Sin adicional'}</small>
       </button>`).join('');
   };
 
@@ -7055,35 +6127,25 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
   const openBuyModal = (id, e) => {
     if (e) e.stopPropagation();
     if (isPreLaunchMode()) { showPreLaunchNotice(); return; }
-    if (document.getElementById('literalModal')?.classList.contains('open')) {
-      pendingLiteralReturn = literalCurrentKind;
-      pendingCapsuleReturn = null;
-      pendingProductsReturn = false;
-      pendingEfemeridesReturn = false;
-      closeLiteralModal();
-    } else if (document.getElementById('capsuleModal')?.classList.contains('open')) {
+    if (document.getElementById('capsuleModal')?.classList.contains('open')) {
       pendingCapsuleReturn = currentCapsuleView;
       pendingProductsReturn = false;
       pendingEfemeridesReturn = false;
-      pendingLiteralReturn = null;
       closeCapsuleModal();
     } else if (document.getElementById('productsModal')?.classList.contains('open')) {
       pendingCapsuleReturn = null;
       pendingProductsReturn = true;
       pendingEfemeridesReturn = false;
-      pendingLiteralReturn = null;
       closeProductsModal();
     } else if (document.getElementById('efemeridesModal')?.classList.contains('open')) {
       pendingCapsuleReturn = null;
       pendingProductsReturn = false;
       pendingEfemeridesReturn = true;
-      pendingLiteralReturn = null;
       closeEfemeridesModal();
     } else {
       pendingCapsuleReturn = null;
       pendingProductsReturn = false;
       pendingEfemeridesReturn = false;
-      pendingLiteralReturn = null;
     }
     currentProduct = products.find(p => p.id === id);
     selectedPayMethod = 'mp';
@@ -7142,12 +6204,6 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
   const closeModal = ({ restoreCapsule = true } = {}) => {
     document.getElementById('buyModal').classList.remove('open');
     refreshBodyScrollLock();
-    if (restoreCapsule && pendingLiteralReturn) {
-      const kindToRestore = pendingLiteralReturn;
-      pendingLiteralReturn = null;
-      openLiteralModal(null, kindToRestore);
-      return;
-    }
     if (restoreCapsule && pendingCapsuleReturn) {
       const capsuleToRestore = pendingCapsuleReturn;
       pendingCapsuleReturn = null;
@@ -7205,7 +6261,7 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
 
   const addConfiguredToCart = (closeAfter = false) => {
     if (isPreLaunchMode()) { showPreLaunchNotice(); return; }
-    if (!currentProduct || !selectedSize) { alert('Elegí corte, color, talle y tamaño de estampa antes de agregar al carrito.'); return; }
+    if (!currentProduct || !selectedSize) { alert('Elegí modelo, color, talle y tamaño de estampa antes de agregar al carrito.'); return; }
     const selectedBlankStockId = getBlankStockId(currentProduct, selectedSize, selectedFit, selectedColor);
     if (!selectedBlankStockId) { alert('No encontramos stock base válido para esa combinación.'); return; }
     const stampSize = getStampSizeOption(selectedStampSize).id;
@@ -7263,19 +6319,15 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
       if (badge) badge.textContent = `${STORE_CONFIG.cuentaDniRebatePercent || 20}% REINTEGRO`;
       if (dataGrid) dataGrid.classList.add('hidden');
       if (actions) actions.classList.add('hidden');
-      if (note) note.innerHTML = `${isSpringPromoActive() ? `La promo ${escapeHtml(getSpringPromoLabel())} ya deja cada remera a ${fmt(getSpringPromoPrice())}. ` : ''}${getCuentaDniBenefitText()}. <strong>La tienda no descuenta ese reintegro en la orden de pago:</strong> el beneficio lo acredita Cuenta DNI según sus condiciones.`;
+      if (note) note.innerHTML = `${getCuentaDniBenefitText()}. <strong>La tienda no descuenta ese reintegro en la orden de pago:</strong> el total se cobra completo y el beneficio lo reintegra Cuenta DNI según sus condiciones.`;
       return;
     }
 
-    if (title) title.textContent = isSpringPromoActive() ? `Transferencia · ${getSpringPromoLabel()}` : 'Transferencia con contacto directo';
-    if (badge) badge.textContent = isSpringPromoActive()
-      ? fmt(getSpringPromoPrice())
-      : (isPromoActive() ? `${getActivePromoDiscount()}% OFF PROMO` : STORE_CONFIG.transferDiscount + '% OFF');
+    if (title) title.textContent = 'Transferencia con contacto directo';
+    if (badge) badge.textContent = isPromoActive() ? `${getActivePromoDiscount()}% OFF PROMO` : STORE_CONFIG.transferDiscount + '% OFF';
     if (dataGrid) dataGrid.classList.remove('hidden');
     if (actions) actions.classList.remove('hidden');
-    if (note) note.textContent = isSpringPromoActive()
-      ? `El precio de ${fmt(getSpringPromoPrice())} ya está aplicado y no acumula el descuento habitual por transferencia. Al confirmar, te abrimos WhatsApp con el pedido armado.`
-      : 'Al confirmar la transferencia, te abrimos WhatsApp con el pedido armado para que envíes el comprobante.';
+    if (note) note.textContent = 'Al confirmar la transferencia, te abrimos WhatsApp con el pedido armado para que envíes el comprobante.';
   };
 
   const updateModalTotal = () => {
@@ -7284,10 +6336,8 @@ _Me ayudan a confirmar si el pedido quedó registrado?_`;
     const finalPrice = getEffectiveProductPrice(currentProduct, selectedStampSize);
     const modalTotal = document.getElementById('modalTotal');
     const modalProductPrice = document.getElementById('modalProductPrice');
-    const priceHtml = isSpringPromoActive()
-      ? `<span class="promo-price-old">${fmt(basePrice)}</span><br>${fmt(finalPrice)} <span class="promo-price-badge">Primavera en Remera · hasta ${escapeHtml(getSpringPromoEndLabel())}</span>`
-      : isPromoActive()
-        ? `<span class="promo-price-old">${fmt(basePrice)}</span><br>${fmt(finalPrice)} <span class="promo-price-badge">${getActivePromoDiscount()}% OFF</span>`
+    const priceHtml = isPromoActive()
+      ? `<span class="promo-price-old">${fmt(basePrice)}</span><br>${fmt(finalPrice)} <span class="promo-price-badge">${getActivePromoDiscount()}% OFF</span>`
       : fmt(finalPrice);
     if (modalTotal) modalTotal.textContent = fmt(finalPrice);
     if (modalProductPrice) modalProductPrice.innerHTML = priceHtml;
@@ -7321,21 +6371,18 @@ ${value}`);
     const stampSurcharge = Number(item.stampSurcharge ?? item.stamp_surcharge ?? getStampSizeSurcharge(stampSize));
     const color = item.color || item.selectedColor || '';
     const paymentMethod = item.paymentMethod || item.payment_method || selectedPayMethod;
-    const benefitLabel = isSpringPromoActive()
-      ? `promo ${getSpringPromoLabel()}`
-      : (isPromoActive() ? `promo ${getPromoLabel()} (${getPromoBenefitLabel(activePromo)})` : 'transferencia');
-    const benefitLines = [];
-    if (discount > 0) benefitLines.push(`• Descuento ${benefitLabel}: ${fmt(discount)}`);
-    if (isCuentaDniPaymentMethod(paymentMethod)) benefitLines.push(`• Reintegro Cuenta DNI: ${getCuentaDniBenefitText()} (lo acredita Cuenta DNI)`);
+    const benefitLine = isCuentaDniPaymentMethod(paymentMethod)
+      ? `• Reintegro Cuenta DNI: ${getCuentaDniBenefitText()} (no aplicado por la tienda)`
+      : `• Descuento transferencia: ${fmt(discount)}`;
 
     return `👕 *${item.title || 'Producto'}*
 • Código: ${item.sku || 'Sin código'}
 • Cápsula: ${getDisplayCapsuleName(item.capsule || 'Sin cápsula')}
 • Variante: ${describeFitAndSize(item.fit || 'unisex', item.size || 'A confirmar', color)}
-• Estampa: ${stampLabel}${stampSurcharge > 0 && !isSpringPromoActive() ? ` (+${fmt(stampSurcharge)} por unidad)` : (isSpringPromoActive() ? ' (incluida en promo)' : '')}
+• Estampa: ${stampLabel}${stampSurcharge > 0 ? ` (+${fmt(stampSurcharge)} por unidad)` : ''}
 • Cantidad: ${quantity}
 • Precio lista: ${fmt(subTotal)}
-${benefitLines.join('\n')}
+${benefitLine}
 • Total prenda: *${fmt(total)}*`;
   };
 
@@ -7357,7 +6404,7 @@ ${benefitLines.join('\n')}
         stampSizeLabel: getStampSizeLabel(selectedStampSize),
         stampSurcharge: getStampSizeSurcharge(selectedStampSize),
         basePrice: getProductPriceWithStamp(currentProduct, selectedStampSize),
-        discount: Math.max(0, getProductPriceWithStamp(currentProduct, selectedStampSize) - Number(getEffectiveUnitPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize) }, getPricingPaymentMethod(selectedPayMethod)) || 0)),
+        discount: isTransferPaymentMethod(selectedPayMethod) ? getProductPriceWithStamp(currentProduct, selectedStampSize) - Number(getTransferPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize) }) || 0) : 0,
         lineTotal: Number(getEffectiveUnitPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize) }, getPricingPaymentMethod(selectedPayMethod)) || 0)
       }],
       paymentMethod: selectedPayMethod
@@ -7366,7 +6413,8 @@ ${benefitLines.join('\n')}
 
   const openTransferWhatsApp = (customMessage) => {
 
-    openWhatsApp(customMessage || buildTransferMessage());
+    const msg = encodeURIComponent(customMessage || buildTransferMessage());
+    window.open(`${getWhatsAppBase()}?text=${msg}`, '_blank');
   };
 
   const createTransferOrder = async (items, customer = {}, context = 'single', shipping = null, paymentMethod = 'transfer') => {
@@ -7386,8 +6434,9 @@ ${benefitLines.join('\n')}
           customer_email: customer.email || '',
           customer_phone: customer.phone || '',
           payment_method: isCuentaDniPaymentMethod(paymentMethod) ? 'cuenta_dni' : 'transferencia',
-          transfer_discount: isTransferPaymentMethod(paymentMethod) && !isSpringPromoActive() && !isPromoActive() ? STORE_CONFIG.transferDiscount : 0,
-          ...getPromoPayload(),
+          transfer_discount: isTransferPaymentMethod(paymentMethod) && !isPromoActive() ? STORE_CONFIG.transferDiscount : 0,
+          promo_code: isPromoActive() ? getPromoLabel() : '',
+          promo_discount: isPromoActive() ? getActivePromoDiscount() : 0,
           shipping: serializeShippingOption(shipping),
           shipping_price: Number(shipping?.charge || 0),
           shipping_provider: shipping ? (shipping.provider || 'PUDO') : null,
@@ -7437,7 +6486,7 @@ ${benefitLines.join('\n')}
           paymentMethod,
           basePrice: currentProduct ? getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') : 0,
           subTotal: currentProduct ? getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') : 0,
-          discount: currentProduct ? Math.max(0, getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') - Number(getEffectiveUnitPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') }, getPricingPaymentMethod(paymentMethod)) || 0)) : 0,
+          discount: currentProduct && isTransferPaymentMethod(paymentMethod) ? getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') - Number(getTransferPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') }) || 0) : 0,
           lineTotal: currentProduct ? Number(getEffectiveUnitPrice({ ...currentProduct, price: getProductPriceWithStamp(currentProduct, selectedStampSize || 'normal') }, getPricingPaymentMethod(paymentMethod)) || 0) : 0
         }];
 
@@ -7450,15 +6499,9 @@ ${benefitLines.join('\n')}
     const shippingText = describeShippingForMessage(shipping);
     const isCuentaDni = isCuentaDniPaymentMethod(paymentMethod);
     const paymentTitle = isCuentaDni ? 'Cuenta DNI' : 'transferencia bancaria';
-    const benefitSummaryLines = [];
-    if (computedDiscount > 0) {
-      const discountLabel = isSpringPromoActive()
-        ? `promo ${getSpringPromoLabel()}`
-        : (isPromoActive() ? `promo ${getPromoLabel()} (${getPromoBenefitLabel(activePromo)})` : 'transferencia');
-      benefitSummaryLines.push(`• Descuento ${discountLabel}: ${fmt(computedDiscount)}`);
-    }
-    if (isCuentaDni) benefitSummaryLines.push(`• Reintegro Cuenta DNI: ${getCuentaDniBenefitText()} (lo acredita Cuenta DNI)`);
-    const benefitSummary = benefitSummaryLines.join('\n');
+    const benefitSummary = isCuentaDni
+      ? `• Reintegro Cuenta DNI: ${getCuentaDniBenefitText()} (no aplicado por la tienda)`
+      : `• Descuento ${isPromoActive() ? 'promo ' + getPromoLabel() : 'transferencia'}: ${fmt(computedDiscount)}`;
     const totalLabel = isCuentaDni ? 'Total a pagar en tienda' : 'Total a transferir';
     const finalNote = isCuentaDni
       ? '_La tienda no aplica el reintegro en esta orden. Cuenta DNI lo acredita según sus condiciones._'
@@ -7510,7 +6553,8 @@ ${finalNote}`;
           customer_name: customer.name || '',
           customer_email: customer.email || '',
           customer_phone: customer.phone || '',
-          ...getPromoPayload(),
+          promo_code: isPromoActive() ? getPromoLabel() : '',
+          promo_discount: isPromoActive() ? getActivePromoDiscount() : 0,
           shipping: serializeShippingOption(shipping),
           shipping_price: Number(shipping?.charge || 0),
           shipping_provider: shipping ? (shipping.provider || 'PUDO') : null
@@ -7529,7 +6573,7 @@ ${finalNote}`;
   };
 
 
-  const buildCheckoutItem = (product, quantity = 1, fit = 'unisex', size = '', color = 'Hueso', paymentMethod = 'mp', linePricing = null) => {
+  const buildCheckoutItem = (product, quantity = 1, fit = 'unisex', size = '', color = 'Hueso', paymentMethod = 'mp') => {
     const normalizedFit = normalizeFit(fit);
     const normalizedColor = normalizeColor(color || product.selectedColor || 'Hueso');
     const blankStockId = getBlankStockId(product, size, normalizedFit, normalizedColor) || product.selectedBlankStockId || product.selectedVariantId || '';
@@ -7538,11 +6582,8 @@ ${finalNote}`;
     const stampSurcharge = Number(product.stampSurcharge ?? getStampSizeSurcharge(stampSize));
     const baseProductPrice = Number(product.baseProductPrice ?? Math.max(0, Number(product.price || 0) - stampSurcharge));
     const basePrice = Number(product.price || 0);
+    const unitPrice = Number(getEffectiveUnitPrice(product, paymentMethod) || 0);
     const qty = Number(quantity || 1);
-    const lineSubTotal = Number(linePricing?.subTotal ?? (basePrice * qty));
-    const lineTotal = Number(linePricing?.lineTotal ?? (Number(getEffectiveUnitPrice(product, paymentMethod) || 0) * qty));
-    const unitPrice = Number(linePricing?.unitPrice ?? (qty ? lineTotal / qty : lineTotal));
-    const lineDiscount = Number(linePricing?.discount ?? Math.max(0, lineSubTotal - lineTotal));
     return {
       product_id: product.dbId || product.product_id || null,
       product_slug: product.id || product.slug || '',
@@ -7557,15 +6598,13 @@ ${finalNote}`;
       stamp_size: stampSize,
       stamp_size_label: stampLabel,
       stamp_surcharge: stampSurcharge,
-      stamp_note: isSpringPromoActive()
-        ? `Estampa ${stampLabel} incluida en la promo ${getSpringPromoLabel()}`
-        : (stampSurcharge > 0 ? `Adicional por estampa ${stampLabel}: ${fmt(stampSurcharge)}` : 'Estampa Normal sin adicional'),
+      stamp_note: stampSurcharge > 0 ? `Adicional por estampa ${stampLabel}: ${fmt(stampSurcharge)}` : 'Estampa Normal sin adicional',
       quantity: qty,
       unit_price: unitPrice,
       base_price: basePrice,
       product_base_price: baseProductPrice,
-      line_total: lineTotal,
-      discount: lineDiscount
+      line_total: unitPrice * qty,
+      discount: Math.max(0, (basePrice - unitPrice) * qty)
     };
   };
 
@@ -7573,14 +6612,6 @@ ${finalNote}`;
 
   /* ─── CART ─── */
   const rememberCurrentShoppingContextForCart = () => {
-    if (document.getElementById('literalModal')?.classList.contains('open')) {
-      pendingLiteralReturn = literalCurrentKind;
-      pendingCapsuleReturn = null;
-      pendingProductsReturn = false;
-      pendingEfemeridesReturn = false;
-      closeLiteralModal();
-      return;
-    }
     if (document.getElementById('capsuleModal')?.classList.contains('open')) {
       pendingCapsuleReturn = currentCapsuleView;
       pendingProductsReturn = false;
@@ -7641,23 +6672,17 @@ ${finalNote}`;
     const body = document.getElementById('cartBody'); const footer = document.getElementById('cartFooter');
     if (!cart.length) { body.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛍️</div><p>' + (isPreLaunchMode() ? 'La compra online se habilitará próximamente.' : 'Tu carrito está vacío') + '</p></div>'; footer.style.display = 'none'; selectedCartShippingOption = null; cartShippingQuotes = []; cartCheckoutOpen = false; return; }
     footer.style.display = ''; fillDeliveryInputs('cart');
-    const cartPricing = getCartPromoPricing(selectedPayMethod);
     body.innerHTML = cart.map((item, cartIndex) => {
       const img = getImageList(item)[0];
       const stampSize = item.selectedStampSize || 'normal';
       const stampMeta = getStampSizeMeta(stampSize);
       const removeArgs = [item.id, item.selectedSize, item.selectedFit || 'unisex', item.selectedColor || 'Hueso', stampSize].map(value => JSON.stringify(value)).join(',');
-      const pricing = cartPricing[cartIndex] || {};
-      const lineTotal = Number(pricing.lineTotal ?? (Number(getEffectiveUnitPrice(item, getPricingPaymentMethod(selectedPayMethod)) || 0) * Number(item.qty || 1)));
-      const discount = Number(pricing.discount || 0);
-      const promoLine = isSpringPromoActive() && discount > 0
-        ? '<div class="cart-item-meta">Promo ' + escapeHtml(getSpringPromoLabel()) + ': ' + fmt(getSpringPromoPrice()) + ' por unidad · ahorro ' + fmt(discount) + '</div>'
-        : (isPromoActive() && discount > 0 ? '<div class="cart-item-meta">Promo ' + escapeHtml(getPromoLabel()) + ' (' + escapeHtml(getPromoBenefitLabel(activePromo)) + '): -' + fmt(discount) + '</div>' : '');
-      return '<div class="cart-item"><div class="cart-item-img"><img src="' + img + '" alt="' + escapeHtml(item.title) + '" style="width:100%;height:100%;object-fit:cover;display:block" /></div><div class="cart-item-info"><div class="cart-item-name">' + escapeHtml(item.title) + '</div><div class="cart-item-meta">' + escapeHtml(item.capsule) + ' · ' + describeFitAndSize(item.selectedFit || 'unisex', item.selectedSize, item.selectedColor || 'Hueso') + ' · Estampa ' + escapeHtml(stampMeta) + ' · x' + item.qty + '</div>' + promoLine + '<div class="cart-item-price">' + fmt(lineTotal) + '</div></div><button class="cart-item-remove" type="button" onclick="removeCartItemByIndex(' + cartIndex + ')" aria-label="Eliminar ' + escapeHtml(item.title) + '">✕</button></div>';
+      const unitDisplayPrice = getEffectiveUnitPrice(item, getPricingPaymentMethod(selectedPayMethod));
+      const promoLine = isPromoActive() ? '<div class="cart-item-meta">Promo ' + escapeHtml(getPromoLabel()) + ': -' + fmt(getPromoDiscountAmount(item.price) * item.qty) + '</div>' : '';
+      return '<div class="cart-item"><div class="cart-item-img"><img src="' + img + '" alt="' + escapeHtml(item.title) + '" style="width:100%;height:100%;object-fit:cover;display:block" /></div><div class="cart-item-info"><div class="cart-item-name">' + escapeHtml(item.title) + '</div><div class="cart-item-meta">' + escapeHtml(item.capsule) + ' · ' + describeFitAndSize(item.selectedFit || 'unisex', item.selectedSize, item.selectedColor || 'Hueso') + ' · Estampa ' + escapeHtml(stampMeta) + ' · x' + item.qty + '</div>' + promoLine + '<div class="cart-item-price">' + fmt(unitDisplayPrice * item.qty) + '</div></div><button class="cart-item-remove" type="button" onclick="removeCartItemByIndex(' + cartIndex + ')" aria-label="Eliminar ' + escapeHtml(item.title) + '">✕</button></div>';
     }).join('');
     renderPromoActiveUi();
-    renderCartPromoPanel();
-    const subtotal = cartPricing.reduce((sum, row) => sum + Number(row.lineTotal || 0), 0);
+    const subtotal = cart.reduce((sum, item) => sum + Number(getEffectiveUnitPrice(item, getPricingPaymentMethod(selectedPayMethod)) || 0) * Number(item.qty || 1), 0);
     const shipping = cartDeliveryMethod === 'pickup' ? getPickupShippingOption() : selectedCartShippingOption; const shippingCharge = Number(shipping?.charge || 0);
     document.getElementById('cartTotal').textContent = fmt(subtotal); const grand = document.getElementById('cartGrandTotal'); if (grand) grand.textContent = fmt(subtotal + shippingCharge);
     const checkoutPanel = document.getElementById('cartCheckoutPanel'); if (checkoutPanel) checkoutPanel.classList.toggle('hidden', !cartCheckoutOpen); const openBtn = document.getElementById('cartOpenCheckoutButton'); if (openBtn) { openBtn.classList.toggle('hidden', cartCheckoutOpen); const paymentBlocked = !isPaymentEnabled(); openBtn.disabled = paymentBlocked; openBtn.setAttribute('aria-disabled', paymentBlocked ? 'true' : 'false'); openBtn.classList.toggle('payment-locked-by-presale', paymentBlocked); openBtn.classList.remove('prelaunch-disabled'); openBtn.textContent = paymentBlocked ? 'Finalizar compra' : 'Finalizar compra'; }
@@ -7692,17 +6717,9 @@ ${finalNote}`;
     const capsuleWasOpen = document.getElementById('capsuleModal')?.classList.contains('open');
     const productsWasOpen = document.getElementById('productsModal')?.classList.contains('open');
     const efemeridesWasOpen = document.getElementById('efemeridesModal')?.classList.contains('open');
-    const literalWasOpen = document.getElementById('literalModal')?.classList.contains('open');
     closeCartDrawer();
 
-    if (capsuleWasOpen || productsWasOpen || efemeridesWasOpen || literalWasOpen) return;
-
-    if (pendingLiteralReturn) {
-      const kindToRestore = pendingLiteralReturn;
-      pendingLiteralReturn = null;
-      openLiteralModal(null, kindToRestore);
-      return;
-    }
+    if (capsuleWasOpen || productsWasOpen || efemeridesWasOpen) return;
 
     if (pendingCapsuleReturn) {
       const capsuleToRestore = pendingCapsuleReturn;
@@ -7791,6 +6808,25 @@ ${finalNote}`;
     if (!busy) updateCartCheckoutCta();
   };
 
+  const openSafePopup = (label = 'Preparando operación…') => {
+    const popup = window.open('', '_blank');
+    if (!popup) return null;
+    try {
+      popup.document.write('<!doctype html><html><head><title>SIN RECREO</title><meta name="viewport" content="width=device-width, initial-scale=1"><style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#faf9f6;color:#1a1a1b;display:grid;place-items:center;min-height:100vh;margin:0;padding:24px;text-align:center}strong{font-size:20px}p{color:#6d6863;line-height:1.6}</style></head><body><main><strong>' + label + '</strong><p>No cierres esta pestaña. Te redirigimos en unos segundos.</p></main></body></html>');
+      popup.document.close();
+    } catch (error) {}
+    return popup;
+  };
+
+  const navigateCheckoutTarget = (popup, url) => {
+    if (!url) return;
+    if (popup && !popup.closed) {
+      popup.location.href = url;
+      return;
+    }
+    window.location.href = url;
+  };
+
   const finishCartCheckout = async () => {
     if (isPreLaunchMode()) { showPreLaunchNotice(); return; }
     if (!isPaymentEnabled()) { openPreSaleModal(); return; }
@@ -7808,15 +6844,13 @@ ${finalNote}`;
     const shipping = validateSelectedShipping('cart');
     if (!shipping) return;
 
-    const cartPricing = getCartPromoPricing(paymentMethod);
-    const validItems = cart.map((item, index) => buildCheckoutItem(
+    const validItems = cart.map(item => buildCheckoutItem(
       item,
       item.qty,
       item.selectedFit || 'unisex',
       item.selectedSize || '',
       item.selectedColor || 'Hueso',
-      getPricingPaymentMethod(paymentMethod),
-      cartPricing[index]
+      getPricingPaymentMethod(paymentMethod)
     )).map(item => ({ ...item, payment_method: paymentMethod, paymentMethod })).filter(item => item.product_id && item.blank_stock_id);
 
     if (!validItems.length) {
@@ -7824,34 +6858,31 @@ ${finalNote}`;
       return;
     }
 
+    const popup = openSafePopup('Preparando WhatsApp…');
     setCartCheckoutBusy(true, 'Generando pedido…');
 
     try {
       const transferOrder = await createTransferOrder(validItems, customer, 'cart', shipping, paymentMethod);
 
-      const total = cartPricing.reduce((sum, row) => sum + Number(row.lineTotal || 0), 0) + Number(shipping.charge || 0);
+      const total = cart.reduce((sum, item) => sum + (getEffectiveUnitPrice(item, getPricingPaymentMethod(paymentMethod)) * item.qty), 0) + Number(shipping.charge || 0);
       const transferMessage = buildTransferOrderMessage({
         customer,
-        items: cart.map((item, index) => {
-          const pricing = cartPricing[index] || {};
-          return {
-            title: item.title,
-            sku: item.sku,
-            capsule: item.capsule,
-            size: item.selectedSize,
-            fit: item.selectedFit || 'unisex',
-            color: item.selectedColor || 'Hueso',
-            stampSize: item.selectedStampSize || 'normal',
-            stampSizeLabel: item.selectedStampLabel || getStampSizeLabel(item.selectedStampSize || 'normal'),
-            stampSurcharge: Number(item.stampSurcharge || 0),
-            quantity: item.qty,
-            paymentMethod,
-            basePrice: Number(item.price || 0),
-            subTotal: Number(pricing.subTotal ?? (Number(item.price || 0) * Number(item.qty || 1))),
-            discount: Number(pricing.discount || 0),
-            lineTotal: Number(pricing.lineTotal ?? (Number(getEffectiveUnitPrice(item, getPricingPaymentMethod(paymentMethod)) || 0) * Number(item.qty || 1)))
-          };
-        }),
+        items: cart.map(item => ({
+          title: item.title,
+          sku: item.sku,
+          capsule: item.capsule,
+          size: item.selectedSize,
+          fit: item.selectedFit || 'unisex',
+          color: item.selectedColor || 'Hueso',
+          stampSize: item.selectedStampSize || 'normal',
+          stampSizeLabel: item.selectedStampLabel || getStampSizeLabel(item.selectedStampSize || 'normal'),
+          stampSurcharge: Number(item.stampSurcharge || 0),
+          quantity: item.qty,
+          paymentMethod,
+          basePrice: Number(item.price || 0),
+          discount: isTransferPaymentMethod(paymentMethod) ? (Number(item.price || 0) - Number(getEffectiveUnitPrice(item, 'transfer') || 0)) * Number(item.qty || 1) : 0,
+          lineTotal: Number(getEffectiveUnitPrice(item, getPricingPaymentMethod(paymentMethod)) || 0) * Number(item.qty || 1)
+        })),
         total,
         paymentMethod,
         shipping,
@@ -7859,12 +6890,14 @@ ${finalNote}`;
         orderCode: transferOrder?.order_code || ''
       });
 
-      openWhatsApp(transferMessage);
+      const whatsappUrl = getWhatsAppBase() + '?text=' + encodeURIComponent(transferMessage);
+      navigateCheckoutTarget(popup, whatsappUrl);
 
       if (!transferOrder?.ok) {
         alert('Te abrimos WhatsApp, pero no pudimos registrar el pedido pendiente en Supabase.');
       }
     } catch (error) {
+      if (popup && !popup.closed) popup.close();
       console.error('Error cerrando transferencia:', error);
       alert('No pudimos iniciar la transferencia. Revisá la consola o la Edge Function create-transfer-order.');
     } finally {
@@ -7885,7 +6918,7 @@ ${finalNote}`;
     if (cart.length === 1) {
       const single = cart[0];
       const directLink = getMpLink(single, single.selectedSize, single.selectedFit || 'unisex');
-      if (!isSpringPromoActive() && !isPromoActive() && directLink && (single.selectedStampSize || 'normal') === 'normal') {
+      if (!isPromoActive() && directLink && (single.selectedStampSize || 'normal') === 'normal') {
         if (Number(shipping.charge || 0) > 0) {
           alert('Este carrito tiene envío PUDO. Para cobrar prendas + envío juntos, usá el checkout backend de Mercado Pago, no links directos por talle.');
           return;
@@ -7895,15 +6928,13 @@ ${finalNote}`;
       }
     }
 
-    const cartPricing = getCartPromoPricing('mp');
-    const mpItems = cart.map((item, index) => buildCheckoutItem(
+    const mpItems = cart.map(item => buildCheckoutItem(
       item,
       item.qty,
       item.selectedFit || 'unisex',
       item.selectedSize || '',
       item.selectedColor || 'Hueso',
-      'mp',
-      cartPricing[index]
+      'mp'
     )).filter(item => item.product_id && item.blank_stock_id);
 
     if (!mpItems.length) {
@@ -7947,7 +6978,6 @@ ${finalNote}`;
   });
   window.addEventListener('load', updateFixedHeaderHeight);
   setTimeout(updateFixedHeaderHeight, 250);
-  renderSpringPromoUi();
   initStore();
 
   /* ─── EVENT LISTENERS ─── */
@@ -8066,21 +7096,6 @@ ${finalNote}`;
       document.querySelectorAll('.catalog-pill[data-catalog-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.catalogView === state.catalogView));
       applyFilters();
     });
-  });
-
-  // En celulares, los enlaces wa.me se convierten en un enlace directo a la app.
-  // Esto evita que Android abra whatsapp.com/download aunque WhatsApp ya esté instalado.
-  document.addEventListener('click', event => {
-    const link = event.target.closest?.('a[href^="https://wa.me/"]');
-    if (!link || !isMobileWhatsAppClient()) return;
-    try {
-      const url = new URL(link.href);
-      const message = url.searchParams.get('text') || '';
-      event.preventDefault();
-      openWhatsApp(message);
-    } catch (error) {
-      // Si la URL no pudiera leerse, dejamos que el enlace original siga su curso.
-    }
   });
 
   /* ─── SCROLL ANIMATIONS ─── */
